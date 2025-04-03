@@ -1,15 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../app/assets/fonts/CormorantGaramond-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
 }
 
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../app/assets/fonts/CormorantGaramond-Bold.ttf') format('ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../app/assets/fonts/CormorantGaramond-Italic.ttf') format('ttf');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/*Ademas de la paleta de colores tambien se utilizara mucho la gama zinc*/
+/*Para el fondo general: bg-color: zinc-800*/
+@theme {
+  --color-glacier-50: #f2f8f9;
+  --color-glacier-100: #ddebf0;
+  --color-glacier-200: #bfd9e2;
+  --color-glacier-300: #7cafc4;
+  --color-glacier-400: #5e98b2;
+  --color-glacier-500: #437c97;
+  --color-glacier-600: #3a6680;
+  --color-glacier-700: #34556a;
+  --color-glacier-800: #314859;
+  --color-glacier-900: #2d3f4c;
+  --color-glacier-950: #1a2732;
+
+  --black: #171717;
+}
+
+
 @theme inline {
-  --color-background: var(--background);
+  --color-background: var(--black);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +53,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--black);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Cormorant Garamond", sans-serif;
 }
