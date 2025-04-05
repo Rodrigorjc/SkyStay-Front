@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('../app/assets/fonts/CormorantGaramond-Regular.ttf') format('ttf');
+  font-family: "Cormorant Garamond";
+  src: url("./assets/fonts/CormorantGaramond-Regular.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('../app/assets/fonts/CormorantGaramond-Bold.ttf') format('ttf');
+  font-family: "Cormorant Garamond";
+  src: url("./assets/fonts/CormorantGaramond-Bold.ttf") format("ttf");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('../app/assets/fonts/CormorantGaramond-Italic.ttf') format('ttf');
+  font-family: "Cormorant Garamond";
+  src: url("./assets/fonts/CormorantGaramond-Italic.ttf") format("ttf");
   font-weight: normal;
   font-style: italic;
 }
@@ -38,7 +38,6 @@
 
   --black: #171717;
 }
-
 
 @theme inline {
   --color-background: var(--black);
