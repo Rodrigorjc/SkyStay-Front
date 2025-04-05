@@ -1,0 +1,20 @@
+{
+  "ADMINISTRATION": {
+    "SIDEBAR": {
+      "AIRPORTS": "Airports",
+      "APARTMENTS": "Apartments",
+      "BASIC_LUGGAGE": "Basic Luggage",
+      "BOOKINGS": "Bookings",
+      "FLIGHTS": "Flights",
+      "HOME": "Home",
+      "HOTELS": "Hotels",
+      "PAYMENTS_BILLING": "Paymants and billing",
+      "PLANES": "Planes",
+      "REPORTS_STATISTICS": "Reports and statistics",
+      "SUPPORT": "Support"
+    }
+  },
+  "HOME": {
+    "WELCOME": "Welcome to SkyStay"
+  }
+}

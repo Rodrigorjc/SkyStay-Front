@@ -1,0 +1,20 @@
+{
+  "ADMINISTRATION": {
+    "SIDEBAR": {
+      "AIRPORTS": "Aeropuertos",
+      "APARTMENTS": "Apartamentos",
+      "BASIC_LUGGAGE": "Equipaje Básico",
+      "BOOKINGS": "Reservas",
+      "FLIGHTS": "Vuelos",
+      "HOME": "Inicio",
+      "HOTELS": "Hoteles",
+      "PAYMENTS_BILLING": "Pagos y Facturación",
+      "PLANES": "Aviones",
+      "REPORTS_STATISTICS": "Informes y Estadísticas",
+      "SUPPORT": "Soporte"
+    }
+  },
+  "HOME": {
+    "WELCOME": "Bienvenido a SkyStay"
+  }
+}
