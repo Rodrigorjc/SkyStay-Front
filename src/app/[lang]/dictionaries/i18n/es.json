@@ -11,7 +11,27 @@
       "PAYMENTS_BILLING": "Pagos y Facturación",
       "PLANES": "Aviones",
       "REPORTS_STATISTICS": "Informes y Estadísticas",
-      "SUPPORT": "Soporte"
+      "SUPPORT": "Soporte",
+      "USERS": "Usuarios"
+    },
+    "USERS": {
+      "AIRLANE_RATING": "Valoracion aerolinea",
+      "APARTMENT_RATING": "Valoracion apartamentos",
+      "EMAIL": "Correo electrónico",
+      "HOTEL_RATING": "Valoracion hoteles",
+      "LAST_NAME": "Apellidos",
+      "LIMIT": "Limite",
+      "NAME": "Nombre",
+      "NIF": "DNI",
+      "ORDER_AIRLANE": "Pedido vuelos",
+      "ORDER_APARTMENT": "Pedido apartamentos",
+      "ORDER_HOTEL": "Pedido hoteles",
+      "PHONE": "Teléfono",
+      "RESET_FILTER": "Reiniciar ",
+      "ROLE": "Rol",
+      "SEARCH_BAR": "Barra de busqueda",
+      "SHOW": "Mostrar",
+      "USER_CODE": "Codigo del usuario"
     }
   },
   "HOME": {
