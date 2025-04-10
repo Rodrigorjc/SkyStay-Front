@@ -1,15 +1,17 @@
 "use client";
+
 import { useDictionary } from "@context";
-export default function Home() {
-    const { dict } = useDictionary();
+import CloudinaryUpload from "../components/upload/UploadImage";
 
-    if (!dict) {
-        return;
-    }
+export default function Home({}: { params: { lang: string } }) {
+  const { dict } = useDictionary();
 
-    return (
-        <button>
-            {dict.HOME.WELCOME}
-        </button>
-    );
+  if (!dict) return null;
+
+  return (
+    <div className="h-dvh flex flex-col items-center justify-center gap-4">
+      <p className="text-3xl font-bold">{dict.HOME.WELCOME}</p>
+      <CloudinaryUpload />
+    </div>
+  );
 }
