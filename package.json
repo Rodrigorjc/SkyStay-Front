@@ -12,7 +12,9 @@
     "@cloudinary/react": "^1.14.1",
     "@cloudinary/url-gen": "^1.21.0",
     "cloudinary": "^2.6.0",
+    "axios": "^1.8.4",
     "i18next": "^24.2.3",
+    "js-cookie": "^3.0.5",
     "next": "15.2.3",
     "next-cloudinary": "^6.16.0",
     "next-i18next": "^15.4.2",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
