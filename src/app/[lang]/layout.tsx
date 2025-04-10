@@ -1,26 +1,29 @@
 import "../globals.css";
-
+import { notFound } from "next/navigation";
 import { DictionaryProvider } from "@context";
 
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "es" }];
-}
+const SUPPORTED_LANGUAGES = ["en", "es"];
 
-export default async function RootLayout({
-  children,
-  params,
-}: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ lang: "en" | "es" }>;
-}>) {
+export default function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
+  const { lang } = params;
+
+  if (!SUPPORTED_LANGUAGES.includes(lang)) {
+    notFound();
+  }
+
   return (
-    <html lang={(await params).lang}>
+    <html>
       <head>
         <link rel="icon" href="/favicon.png" />
+        <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
       </head>
       <body className="bg-zinc-800">
-        <DictionaryProvider>{children}</DictionaryProvider>
+        <DictionaryProvider lang={lang as "en" | "es"}>{children}</DictionaryProvider>
       </body>
     </html>
   );
+}
+
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "es" }];
 }
