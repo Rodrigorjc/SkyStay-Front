@@ -16,5 +16,19 @@
   },
   "HOME": {
     "WELCOME": "Welcome to SkyStay"
+  },
+  "CLIENT": {
+    "SIDEBAR": {
+      "FLIGHTS": "Flights",
+      "ACCOMMODATIONS": "Accommodations",
+      "LOGIN": "Login",
+      "REGISTER": "Register",
+      "WELCOME": "Welcome",
+      "PANEL": {
+        "PROFILE": "Profile",
+        "ACCOUNT": "Manage your account",
+        "LOGOUT": "Log out"
+      }
+    }
   }
 }
