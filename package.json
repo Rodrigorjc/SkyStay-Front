@@ -9,10 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "framer-motion": "^12.6.3",
+    "axios": "^1.8.4",
     "i18next": "^24.2.3",
     "js-cookie": "^3.0.5",
-    "jwt-decode": "^4.0.0",
     "next": "15.2.3",
     "next-i18next": "^15.4.2",
     "react": "^19.0.0",
