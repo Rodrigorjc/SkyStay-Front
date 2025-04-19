@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 import Link from "next/link";
 import {FaBars, FaTimes} from "react-icons/fa";
+import Image from "next/image";
 
 
 interface NavbarProps {
@@ -64,7 +65,7 @@ export default function Navbar({dict}: NavbarProps) {
                     <div className="max-sm:pl-3 pr-3">
                         <span className="text-4xl text-(--color-glacier-500) cursor-pointer logo"
                               onClick={() => router.push(`/${lang}`)}>
-                            SkyStay
+                            <Image src={"/favicon.png"} alt={"Logo SkyStay"} width={150} height={20}></Image>
                         </span>
                     </div>
                     <div className="absolute inset-y-0 right-2 flex items-center lg:hidden ">
@@ -104,7 +105,7 @@ export default function Navbar({dict}: NavbarProps) {
                                         <p>{usuario?.username}</p>
                                     </button>
 
-                                    {isUserMenuOpen && ( // Mostrar menú solo si isUserMenuOpen es true
+                                    {isUserMenuOpen && (
                                         <div className="absolute right-0 mt-4 w-60 rounded-xl bg-white shadow-lg divide-y divide-gray-200">
                                             <div className="p-3">
                                                 <Link
