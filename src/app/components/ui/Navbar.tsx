@@ -26,6 +26,7 @@ export default function Navbar({dict}: NavbarProps) {
     const [menuOpen, setMenuOpen] = useState(false);
     const navigation = getNavigation(dict);
     const router = useRouter();
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
     function cerrarSesion() {
         Cookies.remove("token");
@@ -50,6 +51,9 @@ export default function Navbar({dict}: NavbarProps) {
     const pathname = usePathname();
     const lang = pathname.split("/")[1] || "en"; // Idioma por defecto: "en"
 
+    const toggleUserMenu = () => {
+        setIsUserMenuOpen((prev) => !prev);
+    };
 
     return (
         <nav className="pt-3 sticky top-0 z-50">
@@ -95,28 +99,32 @@ export default function Navbar({dict}: NavbarProps) {
                             {token ? (
                                 <div>
                                     <button
+                                        onClick={toggleUserMenu}
                                         className="py-2 px-4 rounded-full text-white bg-(--color-glacier-400) text-xl font-medium transition active:scale-95 hover:scale-105">
                                         <p>{usuario?.username}</p>
                                     </button>
 
-                                    <div
-                                        className="absolute right-0 mt-4 w-60 rounded-xl bg-white shadow-lg divide-y divide-gray-200">
-                                        <div className="p-3">
-                                            <Link className="block rounded-lg py-2 px-3 transition hover:bg-gray-100"
-                                                  href={`${lang}/profile`}>
-                                                <p className="font-semibold text-gray-900">{dict.CLIENT.SIDEBAR.PANEL.PROFILE}</p>
-                                                <p className="text-gray-500 text-sm">{dict.CLIENT.SIDEBAR.PANEL.ACCOUNT}</p>
-                                            </Link>
+                                    {isUserMenuOpen && ( // Mostrar menú solo si isUserMenuOpen es true
+                                        <div className="absolute right-0 mt-4 w-60 rounded-xl bg-white shadow-lg divide-y divide-gray-200">
+                                            <div className="p-3">
+                                                <Link
+                                                    className="block rounded-lg py-2 px-3 transition hover:bg-gray-100"
+                                                    href={`${lang}/profile`}
+                                                >
+                                                    <p className="font-semibold text-gray-900">{dict.CLIENT.SIDEBAR.PANEL.PROFILE}</p>
+                                                    <p className="text-gray-500 text-sm">{dict.CLIENT.SIDEBAR.PANEL.ACCOUNT}</p>
+                                                </Link>
+                                            </div>
+                                            <div className="p-3">
+                                                <button
+                                                    onClick={cerrarSesion}
+                                                    className="block w-full rounded-lg py-2 px-3 text-left transition hover:bg-gray-100 text-red-600 font-semibold"
+                                                >
+                                                    {dict.CLIENT.SIDEBAR.PANEL.LOGOUT}
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="p-3">
-                                            <button
-                                                onClick={cerrarSesion}
-                                                className="block w-full rounded-lg py-2 px-3 text-left transition hover:bg-gray-100 text-red-600 font-semibold"
-                                            >
-                                                {dict.CLIENT.SIDEBAR.PANEL.LOGOUT}
-                                            </button>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
                             ) : (
                                 <button
