@@ -3,118 +3,158 @@
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Navbar from "@components/Navbar";
+import { useDictionary } from "@context";
+import { MdOutlineEmail, MdPassword, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import {Notifications} from "@/app/interfaces/Notifications";
+import NotificationComponent from "@components/Notification";
+import {usePathname, useRouter} from "next/navigation";
 
 const LoginPage = () => {
+    const { dict } = useDictionary();
     const [email, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
+    const [notification, setNotification] = useState<Notifications>();
+    const pathname = usePathname();
+    const lang = pathname.split("/")[1] || "en";
+
+    if (!dict || Object.keys(dict).length === 0) {
+        return;
+    }
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
+        if (!validateEmail() || !validatePassword()) {
+            return;
+        }
 
         try {
-            console.log("Sending login request...");
             const response = await axios.post("/api/user/login", {
                 email,
                 password,
             });
-            console.log("Response received:", response);
 
-            // Save the token in cookies
             const token = response.data.token;
-            Cookies.set("token", token, { expires: 1 }); // Expires in 1 day
-
-            alert("Login successful");
+            Cookies.set("token", token, { expires: 1 });
+            setNotification({
+                titulo: "Inicio de sesión exitoso",
+                mensaje: "¡Bienvenido de nuevo!",
+                code: 200,
+                tipo: "success",
+            });
+            setTimeout(() => {
+                router.push(`/${lang}`);
+            }, 1000);
         } catch (err) {
-            console.error("Error during login:", err);
-            setError("Invalid credentials. Please try again.");
+            setNotification({
+                titulo: "Error de autenticación",
+                mensaje: "Credenciales inválidas. Inténtalo de nuevo.",
+                code: 401,
+                tipo: "error",
+            });
         }
     };
 
+    const validateEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setNotification({
+                titulo: "Email inválido",
+                mensaje: "Introduce un email con formato válido.",
+                code: 400,
+                tipo: "warning",
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const validatePassword = () => {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
+        if (!passwordRegex.test(password)) {
+            setNotification({
+                titulo: "Contraseña inválida",
+                mensaje: "Debe tener al menos 6 caracteres, un número y un carácter especial.",
+                code: 400,
+                tipo: "warning",
+            });
+            return false;
+        }
+        return true;
+    };
+
+
     return (
-        <div
-            className="flex items-center justify-center min-h-screen"
-        >
-            <div
-                className="p-8 rounded-lg shadow-lg w-full max-w-md bg-(--glacier-50)"
-                style={{
-                    backgroundColor: "var(--color-glacier-50)",
-                    color: "var(--color-glacier-900)",
-                }}
-            >
-                <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-                <form onSubmit={handleLogin} className="space-y-4">
-                    <div>
-                        <label
-                            htmlFor="username"
-                            className="block text-sm font-medium mb-1"
-                        >
-                            Username:
-                        </label>
-                        <input
-                            type="text"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                            className="w-full p-2 rounded border"
-                            style={{
-                                backgroundColor: "var(--color-glacier-100)",
-                                color: "var(--color-glacier-900)",
-                                borderColor: "var(--color-glacier-300)",
-                            }}
-                        />
+        <div className="min-h-screen flex flex-col">
+            <Navbar dict={dict}></Navbar>
+            <div className="flex flex-grow items-center justify-center w-full px-4">
+                <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md flex flex-col justify-center">
+                    <div className="text-2xl sm:text-3xl md:text-4xl flex justify-center mb-5 pb-10 text-center">
+                        <p>Tu viaje comienza aquí. ¡Entra!</p>
                     </div>
-                    <div>
-                        <label
-                            htmlFor="password"
-                            className="block text-sm font-medium mb-1"
+                    <div className="flex flex-col space-y-4 justify-center w-full">
+                        <div className="relative">
+                    <span className="absolute text-xl sm:text-2xl left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <MdOutlineEmail />
+                    </span>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setUsername(e.target.value)}
+                                onBlur={validateEmail}
+                                required
+                                className="w-full text-sm sm:text-lg pl-12 pr-4 py-2.5 rounded-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
+                            />
+                        </div>
+                        <div className="relative text-sm sm:text-lg">
+                    <span className="absolute text-xl sm:text-2xl left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <MdPassword />
+                    </span>
+                            <span
+                                className="absolute text-xl sm:text-2xl right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                    </span>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                onBlur={validatePassword}
+                                required
+                                className="w-full pl-12 pr-10 py-2.5 rounded-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="text-right text-xs sm:text-sm text-gray-400 pe-3">
+                            ¿Has olvidado tu contraseña? <span className="underline cursor-pointer">Pincha aquí</span>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="py-2 px-4 rounded-full text-black bg-(--color-glacier-400) hover:bg-(--color-glacier-500) text-sm sm:text-lg font-medium active:bg-(--color-glacier-600) active:text-white transition active:scale-95 hover:scale-105"
                         >
-                            Password:
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            className="w-full p-2 rounded border"
-                            style={{
-                                backgroundColor: "var(--color-glacier-100)",
-                                color: "var(--color-glacier-900)",
-                                borderColor: "var(--color-glacier-300)",
-                            }}
-                        />
+                            Iniciar sesión
+                        </button>
+
+                        <div className="text-center text-xs sm:text-sm text-gray-400">
+                            ¿No tienes cuenta? <span className="underline cursor-pointer">Pincha aquí</span>
+                        </div>
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full py-2 px-4 font-semibold rounded transition"
-                        style={{
-                            backgroundColor: "var(--color-glacier-500)",
-                            color: "var(--color-glacier-50)",
-                        }}
-                        onMouseOver={(e) =>
-                            (e.currentTarget.style.backgroundColor =
-                                "var(--color-glacier-600)")
-                        }
-                        onMouseOut={(e) =>
-                            (e.currentTarget.style.backgroundColor =
-                                "var(--color-glacier-500)")
-                        }
-                    >
-                        Login
-                    </button>
                 </form>
-                {error && (
-                    <p
-                        className="mt-4 text-sm text-center"
-                        style={{ color: "var(--color-glacier-400)" }}
-                    >
-                        {error}
-                    </p>
-                )}
             </div>
+            {notification && (
+                <NotificationComponent
+                    Notifications={notification}
+                    onClose={() => setNotification(undefined)}
+                />
+            )}
         </div>
     );
 };
