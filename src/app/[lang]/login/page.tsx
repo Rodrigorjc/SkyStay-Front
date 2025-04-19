@@ -39,8 +39,8 @@ const LoginPage = () => {
             const token = response.data.token;
             Cookies.set("token", token, { expires: 1 });
             setNotification({
-                titulo: "Inicio de sesión exitoso",
-                mensaje: "¡Bienvenido de nuevo!",
+                titulo: dict.CLIENT.LOGIN.NOTIFICATION.SUCCES.TITLE,
+                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.SUCCES.MESSAGE,
                 code: 200,
                 tipo: "success",
             });
@@ -49,8 +49,8 @@ const LoginPage = () => {
             }, 1000);
         } catch (err) {
             setNotification({
-                titulo: "Error de autenticación",
-                mensaje: "Credenciales inválidas. Inténtalo de nuevo.",
+                titulo: dict.CLIENT.LOGIN.NOTIFICATION.ERROR.TITLE,
+                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.ERROR.MESSAGE,
                 code: 401,
                 tipo: "error",
             });
@@ -61,8 +61,8 @@ const LoginPage = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setNotification({
-                titulo: "Email inválido",
-                mensaje: "Introduce un email con formato válido.",
+                titulo: dict.CLIENT.LOGIN.NOTIFICATION.EMAIL.TITLE,
+                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.EMAIL.MESSAGE,
                 code: 400,
                 tipo: "warning",
             });
@@ -75,8 +75,8 @@ const LoginPage = () => {
         const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
         if (!passwordRegex.test(password)) {
             setNotification({
-                titulo: "Contraseña inválida",
-                mensaje: "Debe tener al menos 6 caracteres, un número y un carácter especial.",
+                titulo: dict.CLIENT.LOGIN.NOTIFICATION.PASSWORD.TITLE,
+                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.PASSWORD.MESSAGE,
                 code: 400,
                 tipo: "warning",
             });
@@ -92,7 +92,7 @@ const LoginPage = () => {
             <div className="flex flex-grow items-center justify-center w-full px-4">
                 <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md flex flex-col justify-center">
                     <div className="text-2xl sm:text-3xl md:text-4xl flex justify-center mb-5 pb-10 text-center">
-                        <p>Tu viaje comienza aquí. ¡Entra!</p>
+                        <p>{dict.CLIENT.LOGIN.START_TEXT}</p>
                     </div>
                     <div className="flex flex-col space-y-4 justify-center w-full">
                         <div className="relative">
@@ -100,9 +100,9 @@ const LoginPage = () => {
                         <MdOutlineEmail />
                     </span>
                             <input
-                                type="email"
+                                type="text"
                                 id="email"
-                                placeholder="Email"
+                                placeholder={dict.CLIENT.LOGIN.EMAIL}
                                 value={email}
                                 onChange={(e) => setUsername(e.target.value)}
                                 onBlur={validateEmail}
@@ -123,7 +123,7 @@ const LoginPage = () => {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 id="password"
-                                placeholder="Contraseña"
+                                placeholder={dict.CLIENT.LOGIN.PASSWORD}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 onBlur={validatePassword}
@@ -133,18 +133,18 @@ const LoginPage = () => {
                         </div>
 
                         <div className="text-right text-xs sm:text-sm text-gray-400 pe-3">
-                            ¿Has olvidado tu contraseña? <span className="underline cursor-pointer">Pincha aquí</span>
+                            {dict.CLIENT.LOGIN.FORGOT_PASSWORD} <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
                         </div>
 
                         <button
                             type="submit"
                             className="py-2 px-4 rounded-full text-black bg-(--color-glacier-400) hover:bg-(--color-glacier-500) text-sm sm:text-lg font-medium active:bg-(--color-glacier-600) active:text-white transition active:scale-95 hover:scale-105"
                         >
-                            Iniciar sesión
+                            {dict.CLIENT.LOGIN.LOGIN}
                         </button>
 
                         <div className="text-center text-xs sm:text-sm text-gray-400">
-                            ¿No tienes cuenta? <span className="underline cursor-pointer">Pincha aquí</span>
+                            {dict.CLIENT.LOGIN.HAVE_ACCOUNT} <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
                         </div>
                     </div>
                 </form>
