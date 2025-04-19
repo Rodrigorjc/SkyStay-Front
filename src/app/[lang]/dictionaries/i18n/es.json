@@ -29,6 +29,33 @@
         "ACCOUNT": "Gestiona tu cuenta",
         "LOGOUT": "Cerrar sesión"
       }
+    },
+    "LOGIN": {
+      "START_TEXT": "Tu viaje comienza aquí. ¡Entra!",
+      "EMAIL": "Correo electrónico",
+      "PASSWORD": "Contraseña",
+      "FORGOT_PASSWORD": "¿Has olvidado tu contraseña?",
+      "CLICK_HERE": "Pincha aquí",
+      "LOGIN": "Iniciar sesión",
+      "HAVE_ACCOUNT": "¿No tienes cuenta?",
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Inicio de sesión exitoso",
+          "MESSAGE": "¡Bienvenido de nuevo!"
+        },
+        "ERROR": {
+          "TITLE": "Error de autenticación",
+          "MESSAGE": "Credenciales inválidas. Inténtalo de nuevo."
+        },
+        "EMAIL": {
+          "TITLE": "Correo electrónico inválido",
+          "MESSAGE": "Por favor, introduce una dirección de correo válida."
+        },
+        "PASSWORD": {
+          "TITLE": "Contraseña inválida",
+          "MESSAGE": "Debe tener al menos 6 caracteres, un número y un carácter especial."
+        }
+      }
     }
   }
 }

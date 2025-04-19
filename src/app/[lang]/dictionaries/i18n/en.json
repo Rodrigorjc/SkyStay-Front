@@ -29,6 +29,33 @@
         "ACCOUNT": "Manage your account",
         "LOGOUT": "Log out"
       }
+    },
+    "LOGIN": {
+      "START_TEXT": "Your journey starts here. Come in!",
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "FORGOT_PASSWORD": "Forgot your password?",
+      "CLICK_HERE": "Click here",
+      "LOGIN": "Login",
+      "HAVE_ACCOUNT": "Don't have an account?",
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Login successful",
+          "MESSAGE": "Welcome back!"
+        },
+        "ERROR": {
+          "TITLE": "Authentication error",
+          "MESSAGE": "Invalid credentials. Please try again."
+        },
+        "EMAIL": {
+          "TITLE": "Invalid email",
+          "MESSAGE": "Please enter a valid email address."
+        },
+        "PASSWORD": {
+          "TITLE": "Invalid password",
+          "MESSAGE": "Must have at least 6 characters, a number and a special character."
+        }
+      }
     }
   }
 }
