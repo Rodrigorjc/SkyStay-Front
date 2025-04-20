@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { FaHome, FaPlane, FaHotel, FaBuilding, FaPlaneDeparture, FaSuitcase, FaBook, FaCreditCard, FaChartPie, FaLifeRing, FaBars, FaChevronLeft, FaUser } from "react-icons/fa";
 import { JSX } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Sidebar = ({ dict }: { dict: any }) => {
   const [collapsed, setCollapsed] = useState(true);
 
-  const pathname = window.location.pathname;
+  const pathname = usePathname();
   const toggleSidebar = () => setCollapsed(prev => !prev);
   const lang = window.location.pathname.includes("/en") ? "en" : "es";
 
   return (
     <div className={`h-screen bg-glacier-500 text-white flex flex-col p-4 transition-all duration-300 ${collapsed ? "w-20" : "w-64"}`}>
-      <div className={`mb-6 gap-4 ${collapsed ? "flex justify-center" : "flex items-center justify-between"}`}>
+      <div className={`mb-2 gap-4 ${collapsed ? "flex justify-center" : "flex items-center justify-between"}`}>
         {!collapsed && <h1 className="flex items-center text-2xl font-bold">SkyStay</h1>}
         <button onClick={toggleSidebar} className="text-white text-xl">
           {collapsed ? <FaBars /> : <FaChevronLeft />}
@@ -19,7 +21,7 @@ const Sidebar = ({ dict }: { dict: any }) => {
       </div>
 
       <nav className="flex-1">
-        <ul className="space-y-4">
+        <ul className="space-y-5">
           <SidebarItem icon={<FaHome />} text={dict.ADMINISTRATION.SIDEBAR.HOME} url={`/${lang}/administration`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaUser />} text={dict.ADMINISTRATION.SIDEBAR.USERS} url={`/${lang}/administration/users`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaPlane />} text={dict.ADMINISTRATION.SIDEBAR.FLIGHTS} url={`/${lang}/administration/flights`} collapsed={collapsed} currentPath={pathname} />
@@ -35,7 +37,7 @@ const Sidebar = ({ dict }: { dict: any }) => {
         </ul>
       </nav>
 
-      {/* User info */}
+      {/* Informacion relacionada con el administrador de la sesion*/}
       <div className={`mt-6 flex ${collapsed ? "justify-center" : "items-center space-x-3"}`}>
         <FaUser className="h-10 w-10 rounded-full" />
         {!collapsed && <span className="text-base font-medium">Tom Cook</span>}
@@ -48,19 +50,18 @@ const SidebarItem = ({ icon, text, url, badge, collapsed, currentPath }: { icon?
   const isActive = url === currentPath;
 
   return (
-    <a
-      href={url || "#"}
-      className={`px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 
-      ${collapsed ? "flex justify-center" : "flex items-center justify-between"} 
-      ${isActive ? "bg-glacier-700 hover:bg-glacier-800" : "hover:bg-gray-800"}`}>
-      <li>
+    <Link href={url || "#"}>
+      <li
+        className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 my-4
+        ${collapsed ? "flex justify-center" : "flex items-center justify-between"} 
+        ${isActive ? "bg-glacier-700 hover:bg-glacier-800" : "hover:bg-gray-800"}`}>
         <p className={`flex items-center ${collapsed ? "justify-center" : "space-x-3"}`}>
           {icon && <span className="text-lg">{icon}</span>}
           {!collapsed && <span>{text}</span>}
         </p>
         {!collapsed && badge && <span className="text-xs bg-blue-500 px-2 py-1 rounded-full">{badge}</span>}
       </li>
-    </a>
+    </Link>
   );
 };
 
