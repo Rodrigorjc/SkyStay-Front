@@ -1,9 +1,26 @@
 {
   "ADMINISTRATION": {
+    "AIRPORTS": {
+      "ADD_AIRPORT": "Add airport",
+      "CITY": "City",
+      "COUNTRY": "Country",
+      "DESCRIPTION": "Description",
+      "GATE": "Gate",
+      "GATE_EXPLANATION": "Number of gates at each terminal",
+      "IATA_CODE": "IATA code",
+      "LATITUDE": "Latitude",
+      "LONGITUDE": "Longitude",
+      "SELECT_CITY": "Select a city",
+      "TERMINAL": "Terminal",
+      "TERMINAL_EXPLANATION": "Total number of terminals",
+      "TIMEZONE": "Timezone"
+    },
+    "EDIT": "Edit",
+    "SAVE": "Save",
     "SIDEBAR": {
       "AIRPORTS": "Airports",
       "APARTMENTS": "Apartments",
-      "BASIC_LUGGAGE": "Basic Luggage",
+      "BASIC_LUGGAGE": "Basic luggage",
       "BOOKINGS": "Bookings",
       "FLIGHTS": "Flights",
       "HOME": "Home",
@@ -12,26 +29,45 @@
       "PLANES": "Planes",
       "REPORTS_STATISTICS": "Reports and statistics",
       "SUPPORT": "Support",
-      "USERS": "Usuarios"
+      "USERS": "Users"
     },
     "USERS": {
-      "AIRLANE_RATING": "Airlane Rating",
-      "APARTMENT_RATING": "Apartment Rating",
+      "AIRLINE_RATING": "Airline rating",
+      "APARTMENT_RATING": "Apartment rating",
+      "DETAILED_INFORMATION": "Detailed information",
+      "DETAILS": {
+        "AIRLANE_NAME": "Airlane name",
+        "AMOUNT": "Amount",
+        "APARTMENT_NAME": "Apartment name",
+        "APARTMENT_ORDER": "Apartments order",
+        "BILL": "Bill",
+        "CODE": "Code",
+        "DISCOUNT": "Discount",
+        "FLIGHT_ORDER": "Flights order",
+        "HOTEL_NAME": "Hotel name",
+        "HOTEL_ORDER": "Hotel orders",
+        "ORDER_CODE": "Order code",
+        "RATING": "Rating",
+        "ROLE": "Role",
+        "STATUS": "Status",
+        "USER": "User",
+        "USER_DETAILS": "User details"
+      },
       "EMAIL": "Email",
-      "HOTEL_RATING": "Hotel Rating",
+      "HOTEL_RATING": "Hotel rating",
       "LAST_NAME": "Last Name",
       "LIMIT": "Limit",
       "NAME": "Name",
       "NIF": "NIF",
-      "ORDER_AIRLANE": "Order Airlane",
-      "ORDER_APARTMENT": "Order Apartment",
-      "ORDER_HOTEL": "Order Hotel",
+      "ORDER_AIRLANE": "Order airlane",
+      "ORDER_APARTMENT": "Order apartment",
+      "ORDER_HOTEL": "Order hotel",
       "PHONE": "Phone",
       "RESET_FILTER": "Reset",
       "ROLE": "Role",
-      "SEARCH_BAR": "Search bar",
+      "SEARCH_BAR": "Search by username",
       "SHOW": "Show",
-      "USER_CODE": "User Code"
+      "USER_CODE": "User code"
     }
   },
   "HOME": {
