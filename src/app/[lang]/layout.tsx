@@ -4,15 +4,19 @@ import { DictionaryProvider } from "@context";
 
 const SUPPORTED_LANGUAGES = ["en", "es"];
 
-export default function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
-  const { lang } = params;
+export async function generateStaticParams() {
+  return SUPPORTED_LANGUAGES.map(lang => ({ lang }));
+}
+
+export default async function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
+  const { lang } = await Promise.resolve(params);
 
   if (!SUPPORTED_LANGUAGES.includes(lang)) {
     notFound();
   }
 
   return (
-    <html>
+    <html lang={lang}>
       <head>
         <link rel="icon" href="/favicon.png" />
         <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
@@ -22,8 +26,4 @@ export default function LangLayout({ children, params }: { children: React.React
       </body>
     </html>
   );
-}
-
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "es" }];
 }
