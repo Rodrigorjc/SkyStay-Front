@@ -57,27 +57,23 @@ body {
   font-family: "Cormorant Garamond", sans-serif;
 }
 
-body {
+.custom-scrollbar {
   --sb-track-color: #232e33;
   --sb-size: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-glacier-700) var(--sb-track-color);
 }
 
-body::-webkit-scrollbar {
+.custom-scrollbar::-webkit-scrollbar {
   width: var(--sb-size);
 }
 
-body::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar-track {
   background: var(--sb-track-color);
   border-radius: 25px;
 }
 
-body::-webkit-scrollbar-thumb {
+.custom-scrollbar::-webkit-scrollbar-thumb {
   background: var(--color-glacier-700);
   border-radius: 25px;
-}
-
-@supports not selector(::-webkit-scrollbar) {
-  body {
-    scrollbar-color: var(--color-glacier-700) var(--sb-track-color);
-  }
 }
