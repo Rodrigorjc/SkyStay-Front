@@ -15,9 +15,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="flex h-screen bg-zinc-800">
+    <div className="flex h-screen">
       <Sidebar dict={dict} />
-      <main className="flex-1 p-4 overflow-auto">{children}</main>
+      <div className="flex-1 p-4 bg-zinc-800 overflow-y-auto custom-scrollbar">
+        <main>{children}</main>
+      </div>
     </div>
   );
 };

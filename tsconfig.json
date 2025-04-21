@@ -20,9 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@services/*": ["./src/lib/services/*"],
       "@components/*": ["./src/app/components/ui/*"],
       "@dictionary": ["./src/app/[lang]/dictionaries"],
-      "@context": ["./src/app/context/DictionaryContext"],
+      "@context": ["./src/app/context/DictionaryContext"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

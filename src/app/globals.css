@@ -61,3 +61,24 @@ body {
 .logo {
   font-family: 'Fugaz One', sans-serif;
 }
+
+.custom-scrollbar {
+  --sb-track-color: #232e33;
+  --sb-size: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-glacier-700) var(--sb-track-color);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 25px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-glacier-700);
+  border-radius: 25px;
+}
