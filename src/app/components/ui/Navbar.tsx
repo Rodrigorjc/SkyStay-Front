@@ -63,7 +63,7 @@ export default function Navbar({dict}: NavbarProps) {
                 initial={{y: -50, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 0.4}}>
                 <div className="relative flex h-16 items-center ">
                     <div className="max-sm:pl-3 pr-3">
-                        <span className="text-4xl text-(--color-glacier-500) cursor-pointer logo"
+                        <span className="sm:text-4xl text-3xl text-(--color-glacier-500) cursor-pointer logo"
                               onClick={() => router.push(`/${lang}`)}>
                             <Image src={"/favicon.png"} alt={"Logo SkyStay"} width={150} height={20}></Image>
                         </span>
