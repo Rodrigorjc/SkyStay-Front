@@ -12,6 +12,7 @@ import { AirportAdminVO } from "@/types/admin/airport";
 import { CityVO } from "@/types/admin/city";
 import { ResponseVO } from "@/types/common/response";
 import { AirportForm, AirportFormEdit } from "@/types/admin/form";
+import { AirplaneShowVO } from "@/app/[lang]/administration/airplanes/types/airplane";
 
 export async function getAllUsers(limit: number, page: number): Promise<ResponsePaginatedVO<UserAdminVO>> {
   try {
@@ -99,7 +100,7 @@ export async function getOrderFlight(limit: number, page: number, userCode: stri
 
 export async function getUserInfoByCode(userCode: string): Promise<UserInfoVO> {
   try {
-    const response = await axiosClient.get(`/admin/user/getInfo/${userCode}`);
+    const response = await axiosClient.get(`/admin/users/getInfo/${userCode}`);
     return response.data.response.objects;
   } catch (error) {
     throw error;
@@ -144,3 +145,49 @@ export async function updateAirport(airportForm: AirportFormEdit): Promise<strin
     throw error;
   }
 }
+
+export async function getAllAirplanes(limit: number, page: number): Promise<ResponsePaginatedVO<AirplaneShowVO>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/all`, {
+      params: { limit, page },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+export async function getAllAirplanesTypes(): Promise<ResponseVO<[string]>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/types/all`);
+    return response.data.response.objects;
+  } catch (error) {
+    throw error;
+  }
+}
+export async function getAllAirplanesStatus(): Promise<ResponseVO<[string]>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/status/all`);
+    return response.data.response.objects;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// export async function createPlane(airplane: AirplaneVO): Promise<string> {
+//   try {
+//     const response = await axiosClient.post("/admin/airplanes/add", airplane);
+//     return response.data.response.message;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
+// export async function editPlane(airplane: AirplaneVO): Promise<string> {
+//   try {
+//     const response = await axiosClient.put(`/admin/airplanes/update/${airplane.code}`, airplane);
+//     return response.data.response.message;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
