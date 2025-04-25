@@ -31,7 +31,7 @@ export default function AdminUsersTable({ users }: AdminUsersTableProps) {
         <div className="mt-10 overflow-auto">
           <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300 rounded-xl overflow-hidden text-sm">
             <thead>
-              <tr className="text-left">
+              <tr className="text-bold text-justify text-base">
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.USER_CODE}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.NAME}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.LAST_NAME}</th>
@@ -44,7 +44,7 @@ export default function AdminUsersTable({ users }: AdminUsersTableProps) {
             </thead>
             <tbody>
               {users.map(user => (
-                <tr key={user.userCode}>
+                <tr key={user.userCode} className="text-center">
                   <td className="border border-gray-300 px-4 py-2">{user.userCode}</td>
                   <td className="border border-gray-300 px-4 py-2">{user.name}</td>
                   <td className="border border-gray-300 px-4 py-2">{user.lastName}</td>
@@ -52,7 +52,7 @@ export default function AdminUsersTable({ users }: AdminUsersTableProps) {
                   <td className="border border-gray-300 px-4 py-2">{user.nif}</td>
                   <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
                   <td className="border border-gray-300 px-4 py-2"> {user.rol.replace(/^ROLE_/, "")}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">
+                  <td className="border border-gray-300 px-4 py-2">
                     <Button
                       text={dict.ADMINISTRATION.USERS.SHOW}
                       onClick={e => {
