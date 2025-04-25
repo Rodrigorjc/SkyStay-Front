@@ -1,11 +1,31 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { FaHome, FaPlane, FaHotel, FaBuilding, FaPlaneDeparture, FaSuitcase, FaBook, FaCreditCard, FaChartPie, FaLifeRing, FaBars, FaChevronLeft, FaUser } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { JSX } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { decodeToken } from "@/lib/services/common.service";
+import { DecodeToken } from "@/types/common/decodeToken";
 
 const Sidebar = ({ dict }: { dict: any }) => {
   const [collapsed, setCollapsed] = useState(true);
+
+  const [user, setUser] = useState<DecodeToken | null>(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await decodeToken();
+        console.log("User info: ", response);
+        setUser(response);
+      } catch (error) {
+        console.error("Error fetching user info by code:  ", error);
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   const pathname = usePathname();
   const toggleSidebar = () => setCollapsed(prev => !prev);
@@ -19,7 +39,6 @@ const Sidebar = ({ dict }: { dict: any }) => {
           {collapsed ? <FaBars /> : <FaChevronLeft />}
         </button>
       </div>
-
       <nav className="flex-1">
         <ul className="space-y-5">
           <SidebarItem icon={<FaHome />} text={dict.ADMINISTRATION.SIDEBAR.HOME} url={`/${lang}/administration`} collapsed={collapsed} currentPath={pathname} />
@@ -28,7 +47,7 @@ const Sidebar = ({ dict }: { dict: any }) => {
           <SidebarItem icon={<FaHotel />} text={dict.ADMINISTRATION.SIDEBAR.HOTELS} url={`/${lang}/administration/hotels`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaBuilding />} text={dict.ADMINISTRATION.SIDEBAR.APARTMENTS} url={`/${lang}/administration/apartments`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaPlaneDeparture />} text={dict.ADMINISTRATION.SIDEBAR.AIRPORTS} url={`/${lang}/administration/airports`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaPlane />} text={dict.ADMINISTRATION.SIDEBAR.PLANES} url={`/${lang}/administration/planes`} collapsed={collapsed} currentPath={pathname} />
+          <SidebarItem icon={<FaPlane />} text={dict.ADMINISTRATION.SIDEBAR.AIRPLANES} url={`/${lang}/administration/airplanes`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaSuitcase />} text={dict.ADMINISTRATION.SIDEBAR.BASIC_LUGGAGE} url={`/${lang}/administration/basic-luggage`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaBook />} text={dict.ADMINISTRATION.SIDEBAR.BOOKINGS} url={`/${lang}/administration/bookings`} collapsed={collapsed} currentPath={pathname} />
           <SidebarItem icon={<FaCreditCard />} text={dict.ADMINISTRATION.SIDEBAR.PAYMENTS_BILLING} url={`/${lang}/administration/payments-billing`} collapsed={collapsed} currentPath={pathname} />
@@ -36,11 +55,15 @@ const Sidebar = ({ dict }: { dict: any }) => {
           <SidebarItem icon={<FaLifeRing />} text={dict.ADMINISTRATION.SIDEBAR.SUPPORT} url={`/${lang}/administration/support`} collapsed={collapsed} currentPath={pathname} />
         </ul>
       </nav>
-
       {/* Informacion relacionada con el administrador de la sesion*/}
       <div className={`mt-6 flex ${collapsed ? "justify-center" : "items-center space-x-3"}`}>
-        <FaUser className="h-10 w-10 rounded-full" />
-        {!collapsed && <span className="text-base font-medium">Tom Cook</span>}
+        <RiAdminFill className="h-10 w-10 rounded-full text-[#FFD580]" />
+        {!collapsed && user && (
+          <div className="flex flex-col">
+            <p className="text-base font-medium">{user?.name}</p>
+            <p className="text-sm text-gray-300">{user?.role}</p>
+          </div>
+        )}
       </div>
     </div>
   );
