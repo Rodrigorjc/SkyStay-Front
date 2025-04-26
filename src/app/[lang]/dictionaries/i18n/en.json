@@ -1,5 +1,28 @@
 {
   "ADMINISTRATION": {
+    "AIRPLANES": {
+      "ACTIVE": "Active",
+      "ADD_AIRPLANES": "Add airplanes",
+      "AIRPLANE_TYPE": "Airplane type",
+      "AIRPLANE_TYPE_CONFIGURATION": "Airplane type configuration",
+      "AIRPLANE_TYPE_NAME": "Airplane name",
+      "CAPACITY": "Capacity",
+      "CARGO_PLANES": "Cargo plane",
+      "COMMERCIAL": "Commercial",
+      "DECOMMISSIONED": "Decommissioned",
+      "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Select seating configuration",
+      "INACTIVE": "Inactive",
+      "IN_REPAIR": "In repeair",
+      "MANUFACTURER": "Manufacturer",
+      "MILITARY": "Military",
+      "MODEL": "Model",
+      "PRIVATE_JET": "Private jet",
+      "REGIONAL_JET": "Regional jet",
+      "REGISTRATION_NUMBER": "Registration number",
+      "TESTING": "In testing",
+      "TITLE": "Airplanes",
+      "YEAR_OF_MANUFACTURE": "Year of manufacturer"
+    },
     "AIRPORTS": {
       "ADD_AIRPORT": "Add airport",
       "CITY": "City",
@@ -15,9 +38,12 @@
       "TERMINAL_EXPLANATION": "Total number of terminals",
       "TIMEZONE": "Timezone"
     },
+    "CODE": "Code",
     "EDIT": "Edit",
+    "IMAGE": "Image",
     "SAVE": "Save",
     "SIDEBAR": {
+      "AIRPLANES": "Airplanes",
       "AIRPORTS": "Airports",
       "APARTMENTS": "Apartments",
       "BASIC_LUGGAGE": "Basic luggage",
@@ -26,11 +52,12 @@
       "HOME": "Home",
       "HOTELS": "Hotels",
       "PAYMENTS_BILLING": "Paymants and billing",
-      "PLANES": "Planes",
       "REPORTS_STATISTICS": "Reports and statistics",
       "SUPPORT": "Support",
       "USERS": "Users"
     },
+    "STATUS": "Status",
+    "TYPE": "Type",
     "USERS": {
       "AIRLINE_RATING": "Airline rating",
       "APARTMENT_RATING": "Apartment rating",
@@ -49,7 +76,6 @@
         "ORDER_CODE": "Order code",
         "RATING": "Rating",
         "ROLE": "Role",
-        "STATUS": "Status",
         "USER": "User",
         "USER_DETAILS": "User details"
       },
@@ -68,7 +94,8 @@
       "SEARCH_BAR": "Search by username",
       "SHOW": "Show",
       "USER_CODE": "User code"
-    }
+    },
+    "VIEW_IMAGE": "View image"
   },
   "HOME": {
     "WELCOME": "Welcome to SkyStay"

@@ -49,7 +49,7 @@ export default function AdminUsersPage() {
   return (
     <div>
       <h1 className="text-2xl">{dict.ADMINISTRATION.SIDEBAR.AIRPORTS}</h1>
-      <div className="bg-zinc-700 p-4 m-4 rounded-md">
+      <div className="bg-zinc-700 p-10 m-4 rounded-md">
         <TableAirports data={airports} onRefresh={fetchUsers} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>

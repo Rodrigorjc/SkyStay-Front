@@ -47,7 +47,7 @@ export default function AdminAirportsTable({ data, onRefresh }: AdminAirportsTab
         <div className="mt-4 overflow-auto">
           <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300 rounded-xl overflow-hidden text-sm">
             <thead>
-              <tr className="text-left">
+              <tr className="text-bold text-justify text-base">
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.DETAILS.CODE}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.NAME}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.AIRPORTS.DESCRIPTION}</th>
@@ -63,7 +63,7 @@ export default function AdminAirportsTable({ data, onRefresh }: AdminAirportsTab
             </thead>
             <tbody>
               {data.map(d => (
-                <tr key={d.code}>
+                <tr key={d.code} className="text-center">
                   <td className="border border-gray-300 px-4 py-2">{d.code}</td>
                   <td className="border border-gray-300 px-4 py-2">{d.name}</td>
                   <td className="border border-gray-300 px-4 py-2 truncate max-w-sm" title={d.description}>
@@ -76,7 +76,7 @@ export default function AdminAirportsTable({ data, onRefresh }: AdminAirportsTab
                   <td className="border border-gray-300 px-4 py-2">{d.timezone}</td>
                   <td className="border border-gray-300 px-4 py-2">{d.city.country.name}</td>
                   <td className="border border-gray-300 px-4 py-2">{d.city.name}</td>
-                  <td className="border border-gray-300 px-4 py-2 flex justify-center items-center">
+                  <td className="border border-gray-300 px-4 py-2 ">
                     <Button
                       text={dict.ADMINISTRATION.EDIT}
                       onClick={e => {

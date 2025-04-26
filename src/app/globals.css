@@ -82,3 +82,9 @@ body {
   background: var(--color-glacier-700);
   border-radius: 25px;
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

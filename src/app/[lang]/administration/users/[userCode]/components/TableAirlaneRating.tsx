@@ -17,7 +17,7 @@ export default function TableAirlineRating({ data }: TableAirlaneRatingProps) {
         <div className="overflow-auto">
           <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300 rounded-xl overflow-hidden text-sm">
             <thead>
-              <tr className="text-left">
+              <tr className="text-bold text-justify text-base">
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600 w-1/2">{dict.ADMINISTRATION.USERS.DETAILS.AIRLANE_NAME}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600 w-1/2">{dict.ADMINISTRATION.USERS.DETAILS.RATING}</th>
               </tr>

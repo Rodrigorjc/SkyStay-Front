@@ -208,7 +208,7 @@ export default function AdminUserDetails({ params }: { params: Promise<{ userCod
           </button>
         </div>
         <div>
-          <div className="bg-zinc-700 p-4 m-4 rounded-md">
+          <div className="bg-zinc-700 p-10 m-4 rounded-md">
             <div className="text-2xl font-semibold text-glacier-300 flex flex-row gap-4">
               <h1>
                 {dict.ADMINISTRATION.USERS.DETAILS.USER}: <span className="text-xl text-glacier-200">{dataUser?.name}</span>

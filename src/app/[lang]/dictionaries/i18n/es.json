@@ -1,5 +1,28 @@
 {
   "ADMINISTRATION": {
+    "AIRPLANES": {
+      "ACTIVE": "Activo",
+      "ADD_AIRPLANES": "Añadir aviones",
+      "AIRPLANE_TYPE": "Tipo de avión",
+      "AIRPLANE_TYPE_CONFIGURATION": "Configuración del tipo de avión",
+      "AIRPLANE_TYPE_NAME": "Nombre del avión",
+      "CAPACITY": "Capacidad",
+      "CARGO_PLANES": "Avión de carga",
+      "COMMERCIAL": "Comercial",
+      "DECOMMISSIONED": "Desmantelado",
+      "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Selecciona la configuración de asientos",
+      "INACTIVE": "Inactivo",
+      "IN_REPAIR": "En reparación",
+      "MANUFACTURER": "Fabricante",
+      "MILITARY": "Militar",
+      "MODEL": "Modelo",
+      "PRIVATE_JET": "Jet privado",
+      "REGIONAL_JET": "Jet regional",
+      "REGISTRATION_NUMBER": "Número de registro",
+      "TESTING": "En pruebas",
+      "TITLE": "Aviones",
+      "YEAR_OF_MANUFACTURE": "Año de fabricación"
+    },
     "AIRPORTS": {
       "ADD_AIRPORT": "Añadir aeropuerto",
       "CITY": "Ciudad",
@@ -15,9 +38,12 @@
       "TERMINAL_EXPLANATION": "Número total de terminales",
       "TIMEZONE": "Zona horaria"
     },
+    "CODE": "Código ",
     "EDIT": "Editar",
+    "IMAGE": "Imagen",
     "SAVE": "Guardar",
     "SIDEBAR": {
+      "AIRPLANES": "Aviones",
       "AIRPORTS": "Aeropuertos",
       "APARTMENTS": "Apartamentos",
       "BASIC_LUGGAGE": "Equipaje básico",
@@ -26,11 +52,12 @@
       "HOME": "Inicio",
       "HOTELS": "Hoteles",
       "PAYMENTS_BILLING": "Pagos y facturación",
-      "PLANES": "Aviones",
       "REPORTS_STATISTICS": "Informes y estadísticas",
       "SUPPORT": "Soporte",
       "USERS": "Usuarios"
     },
+    "STATUS": "Estado",
+    "TYPE": "Tipo",
     "USERS": {
       "AIRLINE_RATING": "Valoración aerolinea",
       "APARTMENT_RATING": "Valoración apartamentos",
@@ -49,7 +76,6 @@
         "ORDER_CODE": "Código de pedido",
         "RATING": "Valoración",
         "ROLE": "Rol",
-        "STATUS": "Estado",
         "USER": "Usuario",
         "USER_DETAILS": "Detalles del usuario"
       },
@@ -68,7 +94,8 @@
       "SEARCH_BAR": "Buscar por nombre de usuario",
       "SHOW": "Mostrar",
       "USER_CODE": "Codigo del usuario"
-    }
+    },
+    "VIEW_IMAGE": "Ver imagen"
   },
   "HOME": {
     "WELCOME": "Bienvenido a SkyStay"
