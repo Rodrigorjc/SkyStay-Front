@@ -8,9 +8,12 @@ import NotificationComponent from "@components/Notification";
 import { MdError } from "react-icons/md";
 import axiosClient from "@/lib/axiosClient";
 import {usePathname} from "next/navigation";
-import router from "next/router";
 
-const steps = ["Account", "Personal", "Image"];
+const getSteps = (dict: any) => [
+    dict.CLIENT.REGISTER.STEPS.ACCOUNT,
+    dict.CLIENT.REGISTER.STEPS.PERSONAL,
+    dict.CLIENT.REGISTER.STEPS.IMAGE
+];
 
 interface AccountData {
     email: string;
@@ -44,32 +47,34 @@ interface FormErrors {
     img?: string;
 }
 
-interface ProgressBarProps {
-    step: number;
-}
 
 const AccountStep: React.FC<{
     data: AccountData;
     errors: FormErrors;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     validateField: (name: string, value: string) => void;
-}> = ({ data, errors, handleChange, validateField }) => {
+    dict: any;
+}> = ({ data, errors, handleChange, validateField, dict }) => {
     return (
         <div className="text-left">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl text-purple-700 font-semibold">Información de la cuenta:</h2>
-                <h2 className="text-lg text-gray-500">Paso 1 - 4</h2>
+                <h2 className="text-xl text-(--color-glacier-500) font-semibold">
+                    {dict.CLIENT.REGISTER.ACCOUNT_STEP.TITLE}
+                </h2>
+                <h2 className="text-lg text-gray-500">
+                    {dict.CLIENT.REGISTER.STEP_INDICATOR.replace('{{current}}', '1').replace('{{total}}', '3')}
+                </h2>
             </div>
 
             <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Email: *</label>
+                <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.LABEL}</label>
                 <input
                     type="email"
                     name="email"
                     className={`form-input w-full px-3 py-2 border ${
-                        errors.email ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="Email"
+                        errors.email ? "border-red-500" : "border-(--color-glacier-500)"
+                    } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                    placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.PLACEHOLDER}
                     value={data.email}
                     onChange={handleChange}
                     onBlur={(e) => validateField("email", e.target.value)}
@@ -82,14 +87,14 @@ const AccountStep: React.FC<{
             </div>
 
             <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Contraseña: *</label>
+                <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.LABEL}</label>
                 <input
                     type="password"
                     name="password"
                     className={`form-input w-full px-3 py-2 border ${
-                        errors.password ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="Contraseña"
+                        errors.password ? "border-red-500" : "border-(--color-glacier-500)"
+                    } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                    placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.PLACEHOLDER}
                     value={data.password}
                     onChange={handleChange}
                     onBlur={(e) => validateField("password", e.target.value)}
@@ -102,14 +107,14 @@ const AccountStep: React.FC<{
             </div>
 
             <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Confirmar Contraseña: *</label>
+                <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL}</label>
                 <input
                     type="password"
                     name="confirmPassword"
                     className={`form-input w-full px-3 py-2 border ${
-                        errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="Confirmar Contraseña"
+                        errors.confirmPassword ? "border-red-500" : "border-(--color-glacier-500)"
+                    } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                    placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.PLACEHOLDER}
                     value={data.confirmPassword}
                     onChange={handleChange}
                     onBlur={(e) => validateField("confirmPassword", e.target.value)}
@@ -129,134 +134,152 @@ const PersonalStep: React.FC<{
     errors: FormErrors;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     validateField: (name: string, value: string) => void;
-}> = ({ data, errors, handleChange, validateField }) => {
+    dict: any;
+}> = ({ data, errors, handleChange, validateField, dict }) => {
     return (
         <div className="text-left">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl text-purple-700 font-semibold">Información Personal:</h2>
-                <h2 className="text-lg text-gray-500">Paso 2 - 4</h2>
+                <h2 className="text-xl text-(--color-glacier-500) font-semibold">
+                    {dict.CLIENT.REGISTER.PERSONAL_STEP.TITLE}
+                </h2>
+                <h2 className="text-lg text-gray-500">
+                    {dict.CLIENT.REGISTER.STEP_INDICATOR.replace('{{current}}', '2').replace('{{total}}', '3')}
+                </h2>
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Nombre: *</label>
-                <input
-                    type="text"
-                    name="name"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.name ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="Nombre"
-                    value={data.name}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("name", e.target.value)}
-                />
-                {errors.name && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.name}
-                    </p>
-                )}
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.LABEL}</label>
+                    <input
+                        type="text"
+                        name="name"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.name ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                        placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.PLACEHOLDER}
+                        value={data.name}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("name", e.target.value)}
+                    />
+                    {errors.name && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center">
+                            <MdError className="mr-1" /> {errors.name}
+                        </p>
+                    )}
+                </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Apellidos: *</label>
-                <input
-                    type="text"
-                    name="lastName"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.lastName ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="Apellidos"
-                    value={data.lastName}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("lastName", e.target.value)}
-                />
-                {errors.lastName && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.lastName}
-                    </p>
-                )}
-            </div>
+                <div>
+                    <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.LABEL}</label>
+                    <input
+                        type="text"
+                        name="lastName"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.lastName ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                        placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.PLACEHOLDER}
+                        value={data.lastName}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("lastName", e.target.value)}
+                    />
+                    {errors.lastName && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center">
+                            <MdError className="mr-1" /> {errors.lastName}
+                        </p>
+                    )}
+                </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-600 mb-1">NIF/DNI: *</label>
-                <input
-                    type="text"
-                    name="nif"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.nif ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="NIF/DNI"
-                    value={data.nif}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("nif", e.target.value)}
-                />
-                {errors.nif && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.nif}
-                    </p>
-                )}
-            </div>
+                <div>
+                    <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.LABEL}</label>
+                    <input
+                        type="text"
+                        name="nif"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.nif ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                        placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.PLACEHOLDER}
+                        value={data.nif}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("nif", e.target.value)}
+                    />
+                    {errors.nif && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center">
+                            <MdError className="mr-1" /> {errors.nif}
+                        </p>
+                    )}
+                </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Teléfono: *</label>
-                <input
-                    type="text"
-                    name="phone"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.phone ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    placeholder="Teléfono"
-                    value={data.phone}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("phone", e.target.value)}
-                />
-                {errors.phone && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.phone}
-                    </p>
-                )}
-            </div>
+                <div>
+                    <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.LABEL}</label>
+                    <input
+                        type="text"
+                        name="phone"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.phone ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+                        placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.PLACEHOLDER}
+                        value={data.phone}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("phone", e.target.value)}
+                    />
+                    {errors.phone && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center">
+                            <MdError className="mr-1" /> {errors.phone}
+                        </p>
+                    )}
+                </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Fecha de Nacimiento: *</label>
-                <input
-                    type="date"
-                    name="birthDate"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.birthDate ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    value={data.birthDate}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("birthDate", e.target.value)}
-                />
-                {errors.birthDate && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.birthDate}
-                    </p>
-                )}
-            </div>
+                <div>
+                    <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.LABEL}</label>
+                    <input
+                        type="date"
+                        name="birthDate"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.birthDate ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) min-h-[42px]`}
+                        value={data.birthDate}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("birthDate", e.target.value)}
+                        max={(() => {
+                            const today = new Date();
+                            const eighteenYearsAgo = new Date(
+                                today.getFullYear() - 18,
+                                today.getMonth(),
+                                today.getDate()
+                            );
+                            return eighteenYearsAgo.toISOString().split('T')[0];
+                        })()}
+                    />
+                    {errors.birthDate && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center">
+                            <MdError className="mr-1" /> {errors.birthDate}
+                        </p>
+                    )}
+                </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Género: *</label>
-                <select
-                    name="gender"
-                    className={`form-select w-full px-3 py-2 border ${
-                        errors.gender ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
-                    value={data.gender}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("gender", e.target.value)}
-                >
-                    <option value="">Seleccionar</option>
-                    <option value="0">Masculino</option>
-                    <option value="1">Femenino</option>
-                    <option value="2">Otro</option>
-                </select>
-                {errors.gender && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.gender}
-                    </p>
-                )}
+                <div>
+                    <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.LABEL}</label>
+                    <select
+                        name="gender"
+                        className={`form-select w-full px-3 py-2 border ${
+                            errors.gender ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) min-h-[42px] pr-10`}
+                        style={{
+                            backgroundPositionX: "calc(100% - 8px)"
+                        }}
+                        value={data.gender}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("gender", e.target.value)}
+                    >
+                        <option value="0">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.OPTIONS.MALE}</option>
+                        <option value="1">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.OPTIONS.FEMALE}</option>
+                        <option value="2">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.OPTIONS.OTHER}</option>
+                    </select>
+                    {errors.gender && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center">
+                            <MdError className="mr-1" /> {errors.gender}
+                        </p>
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -266,23 +289,30 @@ const ImageStep: React.FC<{
     data: ImageData;
     errors: FormErrors;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ data, errors, handleFileChange }) => {
+    dict: any;
+}> = ({ data, errors, handleFileChange, dict }) => {
     return (
         <div className="text-left">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl text-purple-700 font-semibold">Foto de Perfil:</h2>
-                <h2 className="text-lg text-gray-500">Paso 3 - 4</h2>
+                <h2 className="text-xl text-(--color-glacier-500) font-semibold">
+                    {dict.CLIENT.REGISTER.IMAGE_STEP.TITLE}
+                </h2>
+                <h2 className="text-lg text-gray-500">
+                    {dict.CLIENT.REGISTER.STEP_INDICATOR.replace('{{current}}', '3').replace('{{total}}', '3')}
+                </h2>
             </div>
 
             <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Sube tu foto de perfil:</label>
+                <label className="block text-gray-600 mb-1">
+                    {dict.CLIENT.REGISTER.IMAGE_STEP.UPLOAD_LABEL}
+                </label>
                 <input
                     type="file"
                     name="img"
                     accept="image/*"
                     className={`form-input w-full px-3 py-2 border ${
-                        errors.img ? "border-red-500" : "border-gray-300"
-                    } rounded-md`}
+                        errors.img ? "border-red-500" : "border-(--color-glacier-500)"
+                    } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
                     onChange={handleFileChange}
                 />
                 {errors.img && (
@@ -304,20 +334,23 @@ const ImageStep: React.FC<{
     );
 };
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
+const ProgressBar: React.FC<{
+    step: number;
+    steps: string[];
+}> = ({ step, steps }) => {
     const percentage = ((step + 1) / steps.length) * 100;
 
     return (
         <div className="mb-4">
             <ul className="flex justify-between text-sm text-gray-400 mb-2">
                 {steps.map((label, idx) => (
-                    <li key={label} className={`flex-1 text-center ${idx <= step ? "text-purple-700 font-bold" : ""}`}>
+                    <li key={label} className={`flex-1 text-center ${idx <= step ? "text-(--color-glacier-700) font-bold" : ""}`}>
                         {label}
                     </li>
                 ))}
             </ul>
             <div className="w-full bg-gray-300 h-2 rounded-full">
-                <div className="h-2 bg-purple-700 rounded-full transition-all" style={{ width: `${percentage}%` }} />
+                <div className="h-2 bg-(--color-glacier-500) rounded-full transition-all" style={{ width: `${percentage}%` }} />
             </div>
         </div>
     );
@@ -326,7 +359,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
 const MultiStepForm: React.FC = () => {
     const [step, setStep] = useState(0);
     const { dict } = useDictionary();
+    const pathname = usePathname();
     const [notification, setNotification] = useState<Notifications>();
+    const steps = dict ? getSteps(dict) : [];
+
 
     const [accountData, setAccountData] = useState<AccountData>({
         email: "",
@@ -360,9 +396,9 @@ const MultiStepForm: React.FC = () => {
             case "email":
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!value) {
-                    newErrors.email = "El email es obligatorio";
+                    newErrors.email = dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.REQUIRED;
                 } else if (!emailRegex.test(value)) {
-                    newErrors.email = "El formato del email no es válido";
+                    newErrors.email = dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.INVALID;
                 } else {
                     delete newErrors.email;
                 }
@@ -370,16 +406,16 @@ const MultiStepForm: React.FC = () => {
             case "password":
                 const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
                 if (!value) {
-                    newErrors.password = "La contraseña es obligatoria";
+                    newErrors.password = dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.REQUIRED;
                 } else if (!passwordRegex.test(value)) {
-                    newErrors.password = "La contraseña debe tener al menos 6 caracteres, un número y un carácter especial";
+                    newErrors.password = dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.INVALID;
                 } else {
                     delete newErrors.password;
                 }
                 // Validar también confirmPassword si ya existe
                 if (accountData.confirmPassword) {
                     if (value !== accountData.confirmPassword) {
-                        newErrors.confirmPassword = "Las contraseñas no coinciden";
+                        newErrors.confirmPassword = dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.MISMATCH;
                     } else {
                         delete newErrors.confirmPassword;
                     }
@@ -387,23 +423,23 @@ const MultiStepForm: React.FC = () => {
                 break;
             case "confirmPassword":
                 if (!value) {
-                    newErrors.confirmPassword = "Debe confirmar la contraseña";
+                    newErrors.confirmPassword = dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.REQUIRED;
                 } else if (value !== accountData.password) {
-                    newErrors.confirmPassword = "Las contraseñas no coinciden";
+                    newErrors.confirmPassword = dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.MISMATCH;
                 } else {
                     delete newErrors.confirmPassword;
                 }
                 break;
             case "name":
                 if (!value) {
-                    newErrors.name = "El nombre es obligatorio";
+                    newErrors.name = dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.REQUIRED;
                 } else {
                     delete newErrors.name;
                 }
                 break;
             case "lastName":
                 if (!value) {
-                    newErrors.lastName = "Los apellidos son obligatorios";
+                    newErrors.lastName = dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.REQUIRED;
                 } else {
                     delete newErrors.lastName;
                 }
@@ -411,9 +447,9 @@ const MultiStepForm: React.FC = () => {
             case "nif":
                 const nifRegex = /^[0-9]{8}[A-Z]$/;
                 if (!value) {
-                    newErrors.nif = "El NIF/DNI es obligatorio";
+                    newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.REQUIRED;
                 } else if (!nifRegex.test(value)) {
-                    newErrors.nif = "El formato del NIF/DNI no es válido";
+                    newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.INVALID;
                 } else {
                     delete newErrors.nif;
                 }
@@ -421,23 +457,23 @@ const MultiStepForm: React.FC = () => {
             case "phone":
                 const phoneRegex = /^\d{9,15}$/;
                 if (!value) {
-                    newErrors.phone = "El número de teléfono es obligatorio";
+                    newErrors.phone = dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.REQUIRED;
                 } else if (!phoneRegex.test(value)) {
-                    newErrors.phone = "El formato del número de teléfono no es válido";
+                    newErrors.phone = dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.INVALID;
                 } else {
                     delete newErrors.phone;
                 }
                 break;
             case "birthDate":
                 if (!value) {
-                    newErrors.birthDate = "La fecha de nacimiento es obligatoria";
+                    newErrors.birthDate = dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.REQUIRED;
                 } else {
                     delete newErrors.birthDate;
                 }
                 break;
             case "gender":
                 if (value === "") {
-                    newErrors.gender = "El género es obligatorio";
+                    newErrors.gender = dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.REQUIRED;
                 } else {
                     delete newErrors.gender;
                 }
@@ -454,63 +490,63 @@ const MultiStepForm: React.FC = () => {
 
         if (step === 0) {
             if (!accountData.email) {
-                newErrors.email = "El email es obligatorio";
+                newErrors.email = dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.REQUIRED;
                 isValid = false;
             } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(accountData.email)) {
-                newErrors.email = "El formato del email no es válido";
+                newErrors.email = dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.INVALID;
                 isValid = false;
             }
 
             const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
             if (!accountData.password) {
-                newErrors.password = "La contraseña es obligatoria";
+                newErrors.password = dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.REQUIRED;
                 isValid = false;
             } else if (!passwordRegex.test(accountData.password)) {
-                newErrors.password = "La contraseña debe tener al menos 6 caracteres, un número y un carácter especial";
+                newErrors.password = dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.INVALID;
                 isValid = false;
             }
 
             if (!accountData.confirmPassword) {
-                newErrors.confirmPassword = "Debe confirmar la contraseña";
+                newErrors.confirmPassword = dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.REQUIRED;
                 isValid = false;
             } else if (accountData.confirmPassword !== accountData.password) {
-                newErrors.confirmPassword = "Las contraseñas no coinciden";
+                newErrors.confirmPassword = dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.MISMATCH;
                 isValid = false;
             }
         } else if (step === 1) {
             if (!personalData.name) {
-                newErrors.name = "El nombre es obligatorio";
+                newErrors.name = dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.REQUIRED;
                 isValid = false;
             }
 
             if (!personalData.lastName) {
-                newErrors.lastName = "El apellido es obligatorio";
+                newErrors.lastName = dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.REQUIRED;
                 isValid = false;
             }
 
             if (!personalData.nif) {
-                newErrors.nif = "El NIF/DNI es obligatorio";
+                newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.REQUIRED;
                 isValid = false;
             } else if (!/^[0-9]{8}[A-Z]$/.test(personalData.nif)) {
-                newErrors.nif = "El formato del NIF/DNI no es válido";
+                newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.INVALID;
                 isValid = false;
             }
 
             if (!personalData.phone) {
-                newErrors.phone = "El número de teléfono es obligatorio";
+                newErrors.phone = dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.REQUIRED;
                 isValid = false;
             } else if (!/^\d{9,15}$/.test(personalData.phone)) {
-                newErrors.phone = "El formato del número de teléfono no es válido";
+                newErrors.phone = dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.INVALID;
                 isValid = false;
             }
 
             if (!personalData.birthDate) {
-                newErrors.birthDate = "La fecha de nacimiento es obligatoria";
+                newErrors.birthDate = dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.REQUIRED;
                 isValid = false;
             }
 
             if (personalData.gender === undefined) {
-                newErrors.gender = "El género es obligatorio";
+                newErrors.gender = dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.REQUIRED;
                 isValid = false;
             }
         } else if (step === 2) {
@@ -545,9 +581,9 @@ const MultiStepForm: React.FC = () => {
             const newErrors = { ...errors };
 
             if (file.size > 5 * 1024 * 1024) {
-                newErrors[name as keyof FormErrors] = "El archivo no debe superar los 5MB";
+                newErrors[name as keyof FormErrors] = dict.CLIENT.REGISTER.IMAGE_STEP.VALIDATION.SIZE_ERROR;
             } else if (!file.type.startsWith("image/")) {
-                newErrors[name as keyof FormErrors] = "El archivo debe ser una imagen";
+                newErrors[name as keyof FormErrors] = dict.CLIENT.REGISTER.IMAGE_STEP.VALIDATION.TYPE_ERROR;
             } else {
                 delete newErrors[name as keyof FormErrors];
             }
@@ -560,8 +596,8 @@ const MultiStepForm: React.FC = () => {
         if (validateStep()) {
             if (step === steps.length - 1) {
                 setNotification({
-                    titulo: "Registro completado",
-                    mensaje: "Tu cuenta ha sido creada correctamente",
+                    titulo: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.TITLE,
+                    mensaje: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.MESSAGE,
                     code: 200,
                     tipo: "success",
                 });
@@ -569,8 +605,8 @@ const MultiStepForm: React.FC = () => {
             setStep((prev) => Math.min(prev + 1, steps.length - 1));
         } else {
             setNotification({
-                titulo: "Error de validación",
-                mensaje: "Por favor, completa correctamente todos los campos requeridos",
+                titulo: dict.CLIENT.REGISTER.NOTIFICATIONS.VALIDATION_ERROR.TITLE,
+                mensaje: dict.CLIENT.REGISTER.NOTIFICATIONS.VALIDATION_ERROR.MESSAGE,
                 code: 400,
                 tipo: "error",
             });
@@ -582,6 +618,9 @@ const MultiStepForm: React.FC = () => {
     };
 
     const renderStep = () => {
+        if (!dict || Object.keys(dict).length === 0) {
+            return;
+        }
         switch (step) {
             case 0:
                 return (
@@ -590,6 +629,7 @@ const MultiStepForm: React.FC = () => {
                         errors={errors}
                         handleChange={handleAccountChange}
                         validateField={validateField}
+                        dict={dict}
                     />
                 );
             case 1:
@@ -599,6 +639,7 @@ const MultiStepForm: React.FC = () => {
                         errors={errors}
                         handleChange={handlePersonalChange}
                         validateField={validateField}
+                        dict={dict}
                     />
                 );
             case 2:
@@ -607,6 +648,7 @@ const MultiStepForm: React.FC = () => {
                         data={imageData}
                         errors={errors}
                         handleFileChange={handleFileChange}
+                        dict={dict}
                     />
                 );
             default:
@@ -643,17 +685,16 @@ const MultiStepForm: React.FC = () => {
 
                 console.log("Respuesta del servidor:", response.data);
 
-
                 setNotification({
-                    titulo: "Registro completado",
-                    mensaje: "Tu cuenta ha sido creada correctamente",
+                    titulo: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.TITLE,
+                    mensaje: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.MESSAGE,
                     code: 200,
                     tipo: "success",
                 });
-                const pathname = usePathname();
+
                 const lang = pathname.split("/")[1] || "en";
                 setTimeout(() => {
-                    router.push(`/${lang}/login`);
+                    window.location.href = `/${lang}/login`;
                 }, 1000);
 
             } catch (error: any) {
@@ -662,16 +703,16 @@ const MultiStepForm: React.FC = () => {
                 const errorData = error.response?.data;
 
                 setNotification({
-                    titulo: errorData?.title || "Error en el registro",
-                    mensaje: errorData?.message || "No se pudo completar el registro",
+                    titulo: errorData?.title || dict.CLIENT.REGISTER.NOTIFICATIONS.ERROR.TITLE,
+                    mensaje: errorData?.message || dict.CLIENT.REGISTER.NOTIFICATIONS.ERROR.MESSAGE,
                     code: error.response?.status || 500,
                     tipo: "error",
                 });
             }
         } else {
             setNotification({
-                titulo: "Error de validación",
-                mensaje: "Por favor, completa correctamente todos los campos requeridos",
+                titulo: dict.CLIENT.REGISTER.NOTIFICATIONS.VALIDATION_ERROR.TITLE,
+                mensaje: dict.CLIENT.REGISTER.NOTIFICATIONS.VALIDATION_ERROR.MESSAGE,
                 code: 400,
                 tipo: "error",
             });
@@ -682,15 +723,15 @@ const MultiStepForm: React.FC = () => {
         <div className="min-h-screen flex flex-col">
             <Navbar dict={dict} />
             <div className="flex flex-grow justify-center items-center p-4">
-                <div className="w-full max-w-4xl bg-white rounded-md shadow-lg p-6">
-                    <h2 className="text-2xl font-semibold text-purple-700 text-center uppercase mb-2">
-                        Sign Up Your User Account
+                <div className="w-full max-w-4xl bg-(--color-glacier-50) rounded-md shadow-lg p-6">
+                    <h2 className="text-2xl font-semibold text-(--color-glacier-600) text-center uppercase mb-2">
+                        {dict.CLIENT.REGISTER.TITLE}
                     </h2>
                     <p className="text-center text-gray-500 mb-4">
-                        Fill all form fields to go to next step
+                        {dict.CLIENT.REGISTER.SUBTITLE}
                     </p>
 
-                    <ProgressBar step={step} />
+                    <ProgressBar step={step} steps={steps} />
 
                     <motion.div
                         key={step}
@@ -708,22 +749,22 @@ const MultiStepForm: React.FC = () => {
                                 onClick={prevStep}
                                 className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-black"
                             >
-                                Previous
+                                {dict.CLIENT.REGISTER.BUTTONS.PREVIOUS}
                             </button>
                         )}
                         {step < steps.length - 1 ? (
                             <button
                                 onClick={nextStep}
-                                className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-900 ml-auto"
+                                className="bg-(--color-glacier-500) text-white px-4 py-2 rounded hover:bg-(--color-glacier-600) ml-auto"
                             >
-                                Next
+                                {dict.CLIENT.REGISTER.BUTTONS.NEXT}
                             </button>
                         ) : step === steps.length - 1 ? (
                             <button
                                 onClick={submitForm}
                                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800 ml-auto"
                             >
-                                Finalizar
+                                {dict.CLIENT.REGISTER.BUTTONS.FINISH}
                             </button>
                         ) : null}
                     </div>
