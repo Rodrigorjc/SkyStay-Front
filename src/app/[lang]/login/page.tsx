@@ -9,6 +9,7 @@ import {Notifications} from "@/app/interfaces/Notifications";
 import NotificationComponent from "@components/Notification";
 import {usePathname, useRouter} from "next/navigation";
 import axiosClient from "@/lib/axiosClient";
+import Link from "next/link";
 
 const LoginPage = () => {
     const { dict } = useDictionary();
@@ -151,7 +152,10 @@ const LoginPage = () => {
                         </button>
 
                         <div className="text-center text-xs sm:text-sm text-gray-400">
-                            {dict.CLIENT.LOGIN.HAVE_ACCOUNT} <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+                            {dict.CLIENT.LOGIN.HAVE_ACCOUNT} &nbsp;
+                            <Link href={`/${lang}/register`}>
+                                <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+                            </Link>
                         </div>
                     </div>
                 </form>
