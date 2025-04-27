@@ -139,6 +139,105 @@
           "MESSAGE": "Debe tener al menos 6 caracteres, un número y un carácter especial."
         }
       }
+    },
+    "REGISTER": {
+      "STEP_INDICATOR": "Paso {{current}} - {{total}}",
+      "TITLE": "Registra tu cuenta de usuario",
+      "SUBTITLE": "Completa todos los campos del formulario para continuar al siguiente paso",
+      "STEPS": {
+        "ACCOUNT": "Cuenta",
+        "PERSONAL": "Personal",
+        "IMAGE": "Imagen"
+      },
+      "ACCOUNT_STEP": {
+        "TITLE": "Información de la cuenta:",
+        "EMAIL": {
+          "LABEL": "Email: *",
+          "PLACEHOLDER": "Email",
+          "REQUIRED": "El email es obligatorio",
+          "INVALID": "El formato del email no es válido"
+        },
+        "PASSWORD": {
+          "LABEL": "Contraseña: *",
+          "PLACEHOLDER": "Contraseña",
+          "REQUIRED": "La contraseña es obligatoria",
+          "INVALID": "La contraseña debe tener al menos 6 caracteres, un número y un carácter especial"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirmar Contraseña: *",
+          "PLACEHOLDER": "Confirmar Contraseña",
+          "REQUIRED": "Debe confirmar la contraseña",
+          "MISMATCH": "Las contraseñas no coinciden"
+        }
+      },
+      "PERSONAL_STEP": {
+        "TITLE": "Información Personal:",
+        "STEP_INDICATOR": "Paso 2 - 3",
+        "NAME": {
+          "LABEL": "Nombre: *",
+          "PLACEHOLDER": "Nombre",
+          "REQUIRED": "El nombre es obligatorio"
+        },
+        "LAST_NAME": {
+          "LABEL": "Apellidos: *",
+          "PLACEHOLDER": "Apellidos",
+          "REQUIRED": "Los apellidos son obligatorios"
+        },
+        "NIF": {
+          "LABEL": "NIF/DNI: *",
+          "PLACEHOLDER": "NIF/DNI",
+          "REQUIRED": "El NIF/DNI es obligatorio",
+          "INVALID": "El formato del NIF/DNI no es válido"
+        },
+        "PHONE": {
+          "LABEL": "Teléfono: *",
+          "PLACEHOLDER": "Teléfono",
+          "REQUIRED": "El número de teléfono es obligatorio",
+          "INVALID": "El formato del número de teléfono no es válido"
+        },
+        "BIRTH_DATE": {
+          "LABEL": "Fecha de Nacimiento: *",
+          "REQUIRED": "La fecha de nacimiento es obligatoria",
+          "MIN_AGE": "Debes tener al menos 18 años"
+        },
+        "GENDER": {
+          "LABEL": "Género: *",
+          "REQUIRED": "El género es obligatorio",
+          "OPTIONS": {
+            "MALE": "Masculino",
+            "FEMALE": "Femenino",
+            "OTHER": "Otro"
+          }
+        }
+      },
+      "IMAGE_STEP": {
+        "TITLE": "Foto de Perfil:",
+        "STEP_INDICATOR": "Paso 3 - 3",
+        "UPLOAD_LABEL": "Sube tu foto de perfil:",
+        "VALIDATION": {
+          "SIZE_ERROR": "El archivo no debe superar los 5MB",
+          "TYPE_ERROR": "El archivo debe ser una imagen"
+        }
+      },
+      "BUTTONS": {
+        "PREVIOUS": "Anterior",
+        "NEXT": "Siguiente",
+        "FINISH": "Finalizar"
+      },
+      "NOTIFICATIONS": {
+        "VALIDATION_ERROR": {
+          "TITLE": "Error de validación",
+          "MESSAGE": "Por favor, completa correctamente todos los campos requeridos"
+        },
+        "REGISTER_SUCCESS": {
+          "TITLE": "Registro completado",
+          "MESSAGE": "Tu cuenta ha sido creada correctamente"
+        },
+        "ERROR": {
+          "TITLE": "Error en el registro",
+          "MESSAGE": "No se pudo completar el registro"
+        }
+      }
     }
   }
 }

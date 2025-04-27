@@ -139,6 +139,105 @@
           "MESSAGE": "Must have at least 6 characters, a number and a special character."
         }
       }
+    },
+    "REGISTER": {
+      "STEP_INDICATOR": "Step {{current}} - {{total}}",
+      "TITLE": "Sign Up Your User Account",
+      "SUBTITLE": "Fill all form fields to go to next step",
+      "STEPS": {
+        "ACCOUNT": "Account",
+        "PERSONAL": "Personal",
+        "IMAGE": "Image"
+      },
+      "ACCOUNT_STEP": {
+        "TITLE": "Account Information:",
+        "EMAIL": {
+          "LABEL": "Email: *",
+          "PLACEHOLDER": "Email",
+          "REQUIRED": "Email is required",
+          "INVALID": "Email format is invalid"
+        },
+        "PASSWORD": {
+          "LABEL": "Password: *",
+          "PLACEHOLDER": "Password",
+          "REQUIRED": "Password is required",
+          "INVALID": "Password must have at least 6 characters, one number and one special character"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirm Password: *",
+          "PLACEHOLDER": "Confirm Password",
+          "REQUIRED": "Password confirmation is required",
+          "MISMATCH": "Passwords don't match"
+        }
+      },
+      "PERSONAL_STEP": {
+        "TITLE": "Personal Information:",
+        "STEP_INDICATOR": "Step 2 - 3",
+        "NAME": {
+          "LABEL": "First Name: *",
+          "PLACEHOLDER": "First Name",
+          "REQUIRED": "First name is required"
+        },
+        "LAST_NAME": {
+          "LABEL": "Last Name: *",
+          "PLACEHOLDER": "Last Name",
+          "REQUIRED": "Last name is required"
+        },
+        "NIF": {
+          "LABEL": "NIF Number: *",
+          "PLACEHOLDER": "NIF Number",
+          "REQUIRED": "NIF number is required",
+          "INVALID": "NIF number format is invalid"
+        },
+        "PHONE": {
+          "LABEL": "Phone: *",
+          "PLACEHOLDER": "Phone",
+          "REQUIRED": "Phone number is required",
+          "INVALID": "Phone number format is invalid"
+        },
+        "BIRTH_DATE": {
+          "LABEL": "Date of Birth: *",
+          "REQUIRED": "Date of birth is required",
+          "MIN_AGE": "You must be at least 18 years old"
+        },
+        "GENDER": {
+          "LABEL": "Gender: *",
+          "REQUIRED": "Gender is required",
+          "OPTIONS": {
+            "MALE": "Male",
+            "FEMALE": "Female",
+            "OTHER": "Other"
+          }
+        }
+      },
+      "IMAGE_STEP": {
+        "TITLE": "Profile Picture:",
+        "STEP_INDICATOR": "Step 3 - 3",
+        "UPLOAD_LABEL": "Upload your profile picture:",
+        "VALIDATION": {
+          "SIZE_ERROR": "File size should not exceed 5MB",
+          "TYPE_ERROR": "File must be an image"
+        }
+      },
+      "BUTTONS": {
+        "PREVIOUS": "Previous",
+        "NEXT": "Next",
+        "FINISH": "Finish"
+      },
+      "NOTIFICATIONS": {
+        "VALIDATION_ERROR": {
+          "TITLE": "Validation Error",
+          "MESSAGE": "Please correctly fill in all required fields"
+        },
+        "REGISTER_SUCCESS": {
+          "TITLE": "Registration Complete",
+          "MESSAGE": "Your account has been successfully created"
+        },
+        "ERROR": {
+          "TITLE": "Registration Error",
+          "MESSAGE": "Could not complete registration"
+        }
+      }
     }
   }
 }
