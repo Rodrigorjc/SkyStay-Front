@@ -53,7 +53,7 @@
 }
 
 body {
-  background: var(--black);
+  background: var(--color-glacier-800);
   color: var(--foreground);
   font-family: "Cormorant Garamond", sans-serif;
 }
