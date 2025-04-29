@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 import Navbar from "@components/Navbar";
 import { useDictionary } from "@context";
@@ -9,6 +8,8 @@ import { MdOutlineEmail, MdPassword, MdVisibility, MdVisibilityOff } from "react
 import {Notifications} from "@/app/interfaces/Notifications";
 import NotificationComponent from "@components/Notification";
 import {usePathname, useRouter} from "next/navigation";
+import axiosClient from "@/lib/axiosClient";
+import Link from "next/link";
 
 const LoginPage = () => {
     const { dict } = useDictionary();
@@ -31,27 +32,34 @@ const LoginPage = () => {
         }
 
         try {
-            const response = await axios.post("/api/user/login", {
+            const response = await axiosClient.post("auth/login", {
                 email,
                 password,
             });
 
-            const token = response.data.token;
+            const token = response.data.response.objects.token;
             Cookies.set("token", token, { expires: 1 });
             setNotification({
-                titulo: dict.CLIENT.LOGIN.NOTIFICATION.SUCCES.TITLE,
-                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.SUCCES.MESSAGE,
+                titulo: dict.CLIENT.LOGIN.NOTIFICATION.SUCCESS.TITLE,
+                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.SUCCESS.MESSAGE,
                 code: 200,
                 tipo: "success",
             });
             setTimeout(() => {
                 router.push(`/${lang}`);
             }, 1000);
-        } catch (err) {
+        } catch (err: any) {
+            console.error("Error de login:", err);
+
+            // Intenta obtener el mensaje de error del backend si está disponible
+            const errorMessage = err.response?.data?.messages?.message ||
+                "Error al iniciar sesión. Verifica tus credenciales.";
+            const errorCode = err.response?.data?.messages?.code || 401;
+
             setNotification({
-                titulo: dict.CLIENT.LOGIN.NOTIFICATION.ERROR.TITLE,
-                mensaje: dict.CLIENT.LOGIN.NOTIFICATION.ERROR.MESSAGE,
-                code: 401,
+                titulo: "Error de inicio de sesión",  // Valor fijo para evitar problemas con dict
+                mensaje: errorMessage,
+                code: errorCode,
                 tipo: "error",
             });
         }
@@ -144,7 +152,10 @@ const LoginPage = () => {
                         </button>
 
                         <div className="text-center text-xs sm:text-sm text-gray-400">
-                            {dict.CLIENT.LOGIN.HAVE_ACCOUNT} <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+                            {dict.CLIENT.LOGIN.HAVE_ACCOUNT} &nbsp;
+                            <Link href={`/${lang}/register`}>
+                                <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+                            </Link>
                         </div>
                     </div>
                 </form>

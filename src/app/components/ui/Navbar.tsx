@@ -7,6 +7,8 @@ import {jwtDecode} from "jwt-decode";
 import Link from "next/link";
 import {FaBars, FaTimes} from "react-icons/fa";
 import Image from "next/image";
+import { IoLanguage } from "react-icons/io5";
+import { FaChevronDown } from "react-icons/fa";
 
 
 interface NavbarProps {
@@ -28,6 +30,18 @@ export default function Navbar({dict}: NavbarProps) {
     const navigation = getNavigation(dict);
     const router = useRouter();
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+
+    const toggleLangMenu = () => {
+        setIsLangMenuOpen((prev) => !prev);
+    };
+
+    const changeLanguage = (newLang: string) => {
+        const pathWithoutLang = pathname.split('/').slice(2).join('/');
+        router.push(`/${newLang}/${pathWithoutLang}`);
+        setIsLangMenuOpen(false);
+    };
 
     function cerrarSesion() {
         Cookies.remove("token");
@@ -63,7 +77,7 @@ export default function Navbar({dict}: NavbarProps) {
                 initial={{y: -50, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 0.4}}>
                 <div className="relative flex h-16 items-center ">
                     <div className="max-sm:pl-3 pr-3">
-                        <span className="text-4xl text-(--color-glacier-500) cursor-pointer logo"
+                        <span className="sm:text-4xl text-3xl text-(--color-glacier-500) cursor-pointer logo"
                               onClick={() => router.push(`/${lang}`)}>
                             <Image src={"/favicon.png"} alt={"Logo SkyStay"} width={150} height={20}></Image>
                         </span>
@@ -136,6 +150,47 @@ export default function Navbar({dict}: NavbarProps) {
                                 </button>
                             )}
                         </div>
+                        {/* Language Switcher */}
+                        <div className="relative mr-3">
+                            <button
+                                onClick={toggleLangMenu}
+                                className="py-2 px-4 rounded-full text-white bg-(--color-glacier-400) text-xl font-medium transition active:scale-95 hover:scale-105 flex items-center"
+                            >
+                                <IoLanguage className="mr-2" />
+                                <span className="uppercase">{lang}</span>
+                                <FaChevronDown className="ml-2 h-3 w-3" />
+                            </button>
+
+                            {isLangMenuOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="absolute right-0 mt-2 w-40 rounded-xl bg-white shadow-lg"
+                                >
+                                    <div className="p-2">
+                                        <button
+                                            onClick={() => changeLanguage('en')}
+                                            className={`flex items-center w-full rounded-lg py-2 px-3 text-left transition ${
+                                                lang === 'en' ? 'bg-(--color-glacier-100) text-(--color-glacier-700) font-bold' : 'hover:bg-gray-100'
+                                            }`}
+                                        >
+                                            <span className="flex-1">English</span>
+                                            {lang === 'en' && <span className="h-2 w-2 rounded-full bg-(--color-glacier-500)"></span>}
+                                        </button>
+                                        <button
+                                            onClick={() => changeLanguage('es')}
+                                            className={`flex items-center w-full rounded-lg py-2 px-3 text-left transition ${
+                                                lang === 'es' ? 'bg-(--color-glacier-100) text-(--color-glacier-700) font-bold' : 'hover:bg-gray-100'
+                                            }`}
+                                        >
+                                            <span className="flex-1">Español</span>
+                                            {lang === 'es' && <span className="h-2 w-2 rounded-full bg-(--color-glacier-500)"></span>}
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </motion.div>
@@ -188,6 +243,32 @@ export default function Navbar({dict}: NavbarProps) {
                                 {dict.CLIENT.SIDEBAR.LOGIN}
                             </button>
                         )}
+                    </div>
+                    {/* Mobile Language Switcher */}
+                    <div className="px-3 py-2 border-t border-gray-200">
+                        <p className="text-sm text-gray-500 mb-2">{dict.CLIENT.SIDEBAR.LANGUAGE || "Language"}</p>
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={() => changeLanguage('en')}
+                                className={`flex-1 py-2 px-3 rounded-lg transition ${
+                                    lang === 'en'
+                                        ? 'bg-(--color-glacier-500) text-white'
+                                        : 'border border-gray-300 hover:bg-gray-100'
+                                }`}
+                            >
+                                English
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('es')}
+                                className={`flex-1 py-2 px-3 rounded-lg transition ${
+                                    lang === 'es'
+                                        ? 'bg-(--color-glacier-500) text-white'
+                                        : 'border border-gray-300 hover:bg-gray-100'
+                                }`}
+                            >
+                                Español
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

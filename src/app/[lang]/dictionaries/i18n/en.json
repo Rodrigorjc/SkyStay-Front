@@ -1,18 +1,101 @@
 {
   "ADMINISTRATION": {
+    "AIRPLANES": {
+      "ACTIVE": "Active",
+      "ADD_AIRPLANES": "Add airplanes",
+      "AIRPLANE_TYPE": "Airplane type",
+      "AIRPLANE_TYPE_CONFIGURATION": "Airplane type configuration",
+      "AIRPLANE_TYPE_NAME": "Airplane name",
+      "CAPACITY": "Capacity",
+      "CARGO_PLANES": "Cargo plane",
+      "COMMERCIAL": "Commercial",
+      "DECOMMISSIONED": "Decommissioned",
+      "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Select seating configuration",
+      "INACTIVE": "Inactive",
+      "IN_REPAIR": "In repeair",
+      "MANUFACTURER": "Manufacturer",
+      "MILITARY": "Military",
+      "MODEL": "Model",
+      "PRIVATE_JET": "Private jet",
+      "REGIONAL_JET": "Regional jet",
+      "REGISTRATION_NUMBER": "Registration number",
+      "TESTING": "In testing",
+      "TITLE": "Airplanes",
+      "YEAR_OF_MANUFACTURE": "Year of manufacturer"
+    },
+    "AIRPORTS": {
+      "ADD_AIRPORT": "Add airport",
+      "CITY": "City",
+      "COUNTRY": "Country",
+      "DESCRIPTION": "Description",
+      "GATE": "Gate",
+      "GATE_EXPLANATION": "Number of gates at each terminal",
+      "IATA_CODE": "IATA code",
+      "LATITUDE": "Latitude",
+      "LONGITUDE": "Longitude",
+      "SELECT_CITY": "Select a city",
+      "TERMINAL": "Terminal",
+      "TERMINAL_EXPLANATION": "Total number of terminals",
+      "TIMEZONE": "Timezone"
+    },
+    "CODE": "Code",
+    "EDIT": "Edit",
+    "IMAGE": "Image",
+    "SAVE": "Save",
     "SIDEBAR": {
+      "AIRPLANES": "Airplanes",
       "AIRPORTS": "Airports",
       "APARTMENTS": "Apartments",
-      "BASIC_LUGGAGE": "Basic Luggage",
+      "BASIC_LUGGAGE": "Basic luggage",
       "BOOKINGS": "Bookings",
       "FLIGHTS": "Flights",
       "HOME": "Home",
       "HOTELS": "Hotels",
       "PAYMENTS_BILLING": "Paymants and billing",
-      "PLANES": "Planes",
       "REPORTS_STATISTICS": "Reports and statistics",
-      "SUPPORT": "Support"
-    }
+      "SUPPORT": "Support",
+      "USERS": "Users"
+    },
+    "STATUS": "Status",
+    "TYPE": "Type",
+    "USERS": {
+      "AIRLINE_RATING": "Airline rating",
+      "APARTMENT_RATING": "Apartment rating",
+      "DETAILED_INFORMATION": "Detailed information",
+      "DETAILS": {
+        "AIRLANE_NAME": "Airlane name",
+        "AMOUNT": "Amount",
+        "APARTMENT_NAME": "Apartment name",
+        "APARTMENT_ORDER": "Apartments order",
+        "BILL": "Bill",
+        "CODE": "Code",
+        "DISCOUNT": "Discount",
+        "FLIGHT_ORDER": "Flights order",
+        "HOTEL_NAME": "Hotel name",
+        "HOTEL_ORDER": "Hotel orders",
+        "ORDER_CODE": "Order code",
+        "RATING": "Rating",
+        "ROLE": "Role",
+        "USER": "User",
+        "USER_DETAILS": "User details"
+      },
+      "EMAIL": "Email",
+      "HOTEL_RATING": "Hotel rating",
+      "LAST_NAME": "Last Name",
+      "LIMIT": "Limit",
+      "NAME": "Name",
+      "NIF": "NIF",
+      "ORDER_AIRLANE": "Order airlane",
+      "ORDER_APARTMENT": "Order apartment",
+      "ORDER_HOTEL": "Order hotel",
+      "PHONE": "Phone",
+      "RESET_FILTER": "Reset",
+      "ROLE": "Role",
+      "SEARCH_BAR": "Search by username",
+      "SHOW": "Show",
+      "USER_CODE": "User code"
+    },
+    "VIEW_IMAGE": "View image"
   },
   "HOME": {
     "WELCOME": "Welcome to SkyStay"
@@ -28,7 +111,8 @@
         "PROFILE": "Profile",
         "ACCOUNT": "Manage your account",
         "LOGOUT": "Log out"
-      }
+      },
+      "LANGUAGE": "Language"
     },
     "LOGIN": {
       "START_TEXT": "Your journey starts here. Come in!",
@@ -54,6 +138,105 @@
         "PASSWORD": {
           "TITLE": "Invalid password",
           "MESSAGE": "Must have at least 6 characters, a number and a special character."
+        }
+      }
+    },
+    "REGISTER": {
+      "STEP_INDICATOR": "Step {{current}} - {{total}}",
+      "TITLE": "Sign Up Your User Account",
+      "SUBTITLE": "Fill all form fields to go to next step",
+      "STEPS": {
+        "ACCOUNT": "Account",
+        "PERSONAL": "Personal",
+        "IMAGE": "Image"
+      },
+      "ACCOUNT_STEP": {
+        "TITLE": "Account Information:",
+        "EMAIL": {
+          "LABEL": "Email: *",
+          "PLACEHOLDER": "Email",
+          "REQUIRED": "Email is required",
+          "INVALID": "Email format is invalid"
+        },
+        "PASSWORD": {
+          "LABEL": "Password: *",
+          "PLACEHOLDER": "Password",
+          "REQUIRED": "Password is required",
+          "INVALID": "Password must have at least 6 characters, one number and one special character"
+        },
+        "CONFIRM_PASSWORD": {
+          "LABEL": "Confirm Password: *",
+          "PLACEHOLDER": "Confirm Password",
+          "REQUIRED": "Password confirmation is required",
+          "MISMATCH": "Passwords don't match"
+        }
+      },
+      "PERSONAL_STEP": {
+        "TITLE": "Personal Information:",
+        "STEP_INDICATOR": "Step 2 - 3",
+        "NAME": {
+          "LABEL": "First Name: *",
+          "PLACEHOLDER": "First Name",
+          "REQUIRED": "First name is required"
+        },
+        "LAST_NAME": {
+          "LABEL": "Last Name: *",
+          "PLACEHOLDER": "Last Name",
+          "REQUIRED": "Last name is required"
+        },
+        "NIF": {
+          "LABEL": "NIF Number: *",
+          "PLACEHOLDER": "NIF Number",
+          "REQUIRED": "NIF number is required",
+          "INVALID": "NIF number format is invalid"
+        },
+        "PHONE": {
+          "LABEL": "Phone: *",
+          "PLACEHOLDER": "Phone",
+          "REQUIRED": "Phone number is required",
+          "INVALID": "Phone number format is invalid"
+        },
+        "BIRTH_DATE": {
+          "LABEL": "Date of Birth: *",
+          "REQUIRED": "Date of birth is required",
+          "MIN_AGE": "You must be at least 18 years old"
+        },
+        "GENDER": {
+          "LABEL": "Gender: *",
+          "REQUIRED": "Gender is required",
+          "OPTIONS": {
+            "MALE": "Male",
+            "FEMALE": "Female",
+            "OTHER": "Other"
+          }
+        }
+      },
+      "IMAGE_STEP": {
+        "TITLE": "Profile Picture:",
+        "STEP_INDICATOR": "Step 3 - 3",
+        "UPLOAD_LABEL": "Upload your profile picture:",
+        "VALIDATION": {
+          "SIZE_ERROR": "File size should not exceed 5MB",
+          "TYPE_ERROR": "File must be an image"
+        }
+      },
+      "BUTTONS": {
+        "PREVIOUS": "Previous",
+        "NEXT": "Next",
+        "FINISH": "Finish"
+      },
+      "NOTIFICATIONS": {
+        "VALIDATION_ERROR": {
+          "TITLE": "Validation Error",
+          "MESSAGE": "Please correctly fill in all required fields"
+        },
+        "REGISTER_SUCCESS": {
+          "TITLE": "Registration Complete",
+          "MESSAGE": "Your account has been successfully created"
+        },
+        "ERROR": {
+          "TITLE": "Registration Error",
+          "MESSAGE": "Could not complete registration"
         }
       }
     }
