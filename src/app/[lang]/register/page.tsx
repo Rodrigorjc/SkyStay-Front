@@ -8,6 +8,8 @@ import NotificationComponent from "@components/Notification";
 import { MdError } from "react-icons/md";
 import axiosClient from "@/lib/axiosClient";
 import {usePathname} from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 const getSteps = (dict: any) => [
     dict.CLIENT.REGISTER.STEPS.ACCOUNT,
@@ -55,6 +57,9 @@ const AccountStep: React.FC<{
     validateField: (name: string, value: string) => void;
     dict: any;
 }> = ({ data, errors, handleChange, validateField, dict }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     return (
         <div className="text-left">
             <div className="flex justify-between items-center mb-4">
@@ -88,40 +93,67 @@ const AccountStep: React.FC<{
 
             <div className="mb-4">
                 <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.LABEL}</label>
-                <input
-                    type="password"
-                    name="password"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.password ? "border-red-500" : "border-(--color-glacier-500)"
-                    } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
-                    placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.PLACEHOLDER}
-                    value={data.password}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("password", e.target.value)}
-                />
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.password ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) pr-10`}
+                        placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.PLACEHOLDER}
+                        value={data.password}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("password", e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? (
+                            <FaEye className="h-5 w-5 text-gray-500"/>
+                        ) : (
+                            <FaEyeSlash className="h-5 w-5 text-gray-500"/>
+                        )}
+                    </button>
+                </div>
                 {errors.password && (
                     <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.password}
+                        <MdError className="mr-1"/> {errors.password}
                     </p>
                 )}
             </div>
 
             <div className="mb-4">
-                <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL}</label>
-                <input
-                    type="password"
-                    name="confirmPassword"
-                    className={`form-input w-full px-3 py-2 border ${
-                        errors.confirmPassword ? "border-red-500" : "border-(--color-glacier-500)"
-                    } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
-                    placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.PLACEHOLDER}
-                    value={data.confirmPassword}
-                    onChange={handleChange}
-                    onBlur={(e) => validateField("confirmPassword", e.target.value)}
-                />
+                <label
+                    className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL}</label>
+                <div className="relative">
+                    <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        className={`form-input w-full px-3 py-2 border ${
+                            errors.confirmPassword ? "border-red-500" : "border-(--color-glacier-500)"
+                        } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) pr-10`}
+                        placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.PLACEHOLDER}
+                        value={data.confirmPassword}
+                        onChange={handleChange}
+                        onBlur={(e) => validateField("confirmPassword", e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                        {showConfirmPassword ? (
+                            <FaEye className="h-5 w-5 text-gray-500"/>
+                        ) : (
+                            <FaEyeSlash className="h-5 w-5 text-gray-500"/>
+                        )}
+                    </button>
+                </div>
                 {errors.confirmPassword && (
                     <p className="text-red-500 text-xs mt-1 flex items-center">
-                        <MdError className="mr-1" /> {errors.confirmPassword}
+                        <MdError className="mr-1"/> {errors.confirmPassword}
                     </p>
                 )}
             </div>
@@ -135,7 +167,7 @@ const PersonalStep: React.FC<{
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     validateField: (name: string, value: string) => void;
     dict: any;
-}> = ({ data, errors, handleChange, validateField, dict }) => {
+}> = ({data, errors, handleChange, validateField, dict}) => {
     return (
         <div className="text-left">
             <div className="flex justify-between items-center mb-4">
@@ -350,7 +382,7 @@ const ProgressBar: React.FC<{
                 ))}
             </ul>
             <div className="w-full bg-gray-300 h-2 rounded-full">
-                <div className="h-2 bg-(--color-glacier-500) rounded-full transition-all" style={{ width: `${percentage}%` }} />
+                <div className="h-2 bg-(--color-glacier-500) rounded-full transition-all duration-400" style={{ width: `${percentage}%` }} />
             </div>
         </div>
     );
@@ -723,7 +755,7 @@ const MultiStepForm: React.FC = () => {
         <div className="min-h-screen flex flex-col">
             <Navbar dict={dict} />
             <div className="flex flex-grow justify-center items-center p-4">
-                <div className="w-full max-w-4xl bg-(--color-glacier-50) rounded-md shadow-lg p-6">
+                <div className="w-full max-w-4xl bg-(--color-glacier-50) rounded-2xl shadow-lg p-6">
                     <h2 className="text-2xl font-semibold text-(--color-glacier-600) text-center uppercase mb-2">
                         {dict.CLIENT.REGISTER.TITLE}
                     </h2>
@@ -738,7 +770,7 @@ const MultiStepForm: React.FC = () => {
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ duration: 0.6 }}
                     >
                         {renderStep()}
                     </motion.div>
@@ -747,7 +779,9 @@ const MultiStepForm: React.FC = () => {
                         {step > 0 && (
                             <button
                                 onClick={prevStep}
-                                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-black"
+                                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700
+                                transition-all duration-400 hover:scale-105
+                                active:scale-95 active:bg-gray-800 rounded-full"
                             >
                                 {dict.CLIENT.REGISTER.BUTTONS.PREVIOUS}
                             </button>
@@ -755,14 +789,18 @@ const MultiStepForm: React.FC = () => {
                         {step < steps.length - 1 ? (
                             <button
                                 onClick={nextStep}
-                                className="bg-(--color-glacier-500) text-white px-4 py-2 rounded hover:bg-(--color-glacier-600) ml-auto"
+                                className="bg-(--color-glacier-500) text-white px-4 py-2 rounded
+                                hover:bg-(--color-glacier-600) ml-auto transition-all duration-400 hover:scale-105
+                                active:scale-95 active:bg-(--color-glacier-700) rounded-full"
                             >
                                 {dict.CLIENT.REGISTER.BUTTONS.NEXT}
                             </button>
                         ) : step === steps.length - 1 ? (
                             <button
                                 onClick={submitForm}
-                                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800 ml-auto"
+                                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-auto ml-auto
+                                transition-all duration-400 hover:scale-105
+                                active:scale-95 active:bg-green-900 rounded-full"
                             >
                                 {dict.CLIENT.REGISTER.BUTTONS.FINISH}
                             </button>
