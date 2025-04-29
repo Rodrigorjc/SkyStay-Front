@@ -111,7 +111,8 @@
         "PROFILE": "Perfil",
         "ACCOUNT": "Gestiona tu cuenta",
         "LOGOUT": "Cerrar sesión"
-      }
+      },
+      "LANGUAGE": "Idioma"
     },
     "LOGIN": {
       "START_TEXT": "Tu viaje comienza aquí. ¡Entra!",
