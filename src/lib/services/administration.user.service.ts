@@ -12,7 +12,15 @@ import { AirportAdminVO } from "@/types/admin/airport";
 import { CityVO } from "@/types/admin/city";
 import { ResponseVO } from "@/types/common/response";
 import { AirportForm, AirportFormEdit } from "@/types/admin/form";
-import { AirplaneShowVO } from "@/app/[lang]/administration/airplanes/types/airplane";
+import {
+  AirplaneForm1VO,
+  AirplaneForm2VO,
+  AirplaneShowVO,
+  AirplanesTypesFormVO,
+  CreateAirplanesTypesFormVO,
+  CreateSeatConfigurationVO,
+  SeatConfigurationVO,
+} from "@/app/[lang]/administration/airplanes/types/airplane";
 
 export async function getAllUsers(limit: number, page: number): Promise<ResponsePaginatedVO<UserAdminVO>> {
   try {
@@ -157,10 +165,10 @@ export async function getAllAirplanes(limit: number, page: number): Promise<Resp
     throw error;
   }
 }
-export async function getAllAirplanesTypes(): Promise<ResponseVO<[string]>> {
+export async function getAllAirplanesTypesEmun(): Promise<ResponseVO<[string]>> {
   try {
     const response = await axiosClient.get(`/admin/airplanes/types/all`);
-    return response.data.response.objects;
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -168,21 +176,74 @@ export async function getAllAirplanesTypes(): Promise<ResponseVO<[string]>> {
 export async function getAllAirplanesStatus(): Promise<ResponseVO<[string]>> {
   try {
     const response = await axiosClient.get(`/admin/airplanes/status/all`);
-    return response.data.response.objects;
+    return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-// export async function createPlane(airplane: AirplaneVO): Promise<string> {
-//   try {
-//     const response = await axiosClient.post("/admin/airplanes/add", airplane);
-//     return response.data.response.message;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+export async function getAllAirplanesSeatClases(): Promise<ResponseVO<[string]>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/seat-classes/all`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
+export async function getAllSeatConfigurations(): Promise<ResponseVO<[SeatConfigurationVO]>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/seat-configurations/all`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllAirplanesTypes(): Promise<ResponseVO<[AirplanesTypesFormVO]>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/airplanes-types/all`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createAirplanePart1(airplane: AirplaneForm1VO): Promise<ResponseVO<number>> {
+  try {
+    const response = await axiosClient.post("/admin/airplanes/create/part1", airplane);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createAirplanePart2(airplanes: AirplaneForm2VO[]): Promise<string> {
+  try {
+    const response = await axiosClient.post("/admin/airplanes/create/part2", airplanes);
+    return response.data.response.message;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createAirplaneType(form: CreateAirplanesTypesFormVO): Promise<string> {
+  try {
+    const response = await axiosClient.post("/admin/airplanes/airplanes-types/create", form);
+    return response.data.response.message;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createSeatConfiguration(form: CreateSeatConfigurationVO): Promise<string> {
+  try {
+    const response = await axiosClient.post("/admin/airplanes/seat-configuration/create", form);
+    return response.data.response.message;
+  } catch (error) {
+    throw error;
+  }
+}
 // export async function editPlane(airplane: AirplaneVO): Promise<string> {
 //   try {
 //     const response = await axiosClient.put(`/admin/airplanes/update/${airplane.code}`, airplane);
