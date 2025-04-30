@@ -20,3 +20,54 @@ interface AirplaneTypeVO {
   manufacturer: string;
   capacity: number;
 }
+
+export interface AirplaneForm1VO {
+  // AirplaneType
+  airplane_type_id: number;
+
+  // Airplane
+  model: string;
+  registrationNumber: string;
+  yearOfManufacture: number;
+
+  //Enums
+  status: string;
+  type: string;
+}
+
+export interface AirplaneForm2VO {
+  airplane_id: number;
+
+  // Seat Configuration
+  seat_configuration_id: number;
+
+  // Airplane Cabin
+  rowStart: number;
+  rowEnd: number;
+}
+
+export interface SeatConfigurationVO {
+  id: number;
+  totalRows: number;
+  seatClass: string;
+  seatPattern: string;
+}
+
+export interface AirplanesTypesFormVO {
+  id: number;
+  name: string;
+  manufacturer: string;
+  capacity: number;
+}
+
+export interface CreateSeatConfigurationVO {
+  totalRows: number;
+  seatClass: string;
+  seatPattern: string;
+  description: string;
+}
+export interface CreateAirplanesTypesFormVO {
+  name: string;
+  manufacturer: string;
+  capacity: number;
+}
