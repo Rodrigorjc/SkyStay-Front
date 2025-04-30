@@ -7,7 +7,11 @@ import { getAllAirplanes } from "@services/administration.user.service";
 import Loader from "@/app/components/ui/Loader";
 import TablePlanes from "./components/TableAirplanes";
 import Pagination from "@/app/components/ui/Pagination";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import AirplaneModalForm from "./components/AirplanesFormAdd";
+import AirplaneTypeModalForm from "./components/AirplaneTypeModalForm";
+import CabinDetailsModalForm from "./components/SeatConfigurationModalForm";
+
+import { FaPlane, FaPlus, FaThLarge } from "react-icons/fa";
 
 export default function Page() {
   const { dict } = useDictionary();
@@ -18,7 +22,8 @@ export default function Page() {
   const [loading, setLoading] = useState<boolean>(true);
 
   const [isCreating, setIsCreating] = useState(false);
-  const [editingPlane, setEditingPlane] = useState<AirplaneShowVO | null>(null);
+  const [isCreatingAirplaneType, setIsCreatingAirplaneType] = useState(false);
+  const [isCreatingCabinDetails, setIsCreatingCabinDetails] = useState(false);
 
   const fetchPlanes = async () => {
     setLoading(true);
@@ -51,12 +56,13 @@ export default function Page() {
   }
 
   const handleCreate = () => setIsCreating(true);
-
-  const handleEdit = (plane: AirplaneShowVO) => setEditingPlane(plane);
+  const handleCreateAirplaneType = () => setIsCreatingAirplaneType(true);
+  const handleCreateCabinDetails = () => setIsCreatingCabinDetails(true);
 
   const handleModalClose = () => {
     setIsCreating(false);
-    setEditingPlane(null);
+    setIsCreatingAirplaneType(false);
+    setIsCreatingCabinDetails(false);
   };
 
   const handleSuccess = () => {
@@ -68,16 +74,42 @@ export default function Page() {
     <div>
       <h1 className="text-2xl">{dict.ADMINISTRATION.AIRPLANES.TITLE}</h1>
       <div className="bg-zinc-700 p-10 m-4 rounded-md">
-        <button onClick={handleCreate} className="text-5xl rounded-xl font-semibold transition-all duration-400 hover:scale-110 active:scale-90 text-glacier-400">
-          <IoIosAddCircleOutline />
-        </button>
+        <div className="relative group inline-flex items-center">
+          {/* Botón principal a la izquierda */}
+          <button
+            onClick={handleCreate}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-glacier-500 text-white hover:bg-glacier-600 transition-all"
+            title={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANES}>
+            <FaPlane />
+          </button>
 
-        <TablePlanes planes={planes} onEdit={handleEdit} />
+          {/* Botones secundarios que aparecen a la derecha en hover */}
+          <div className="flex space-x-3 ml-3 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
+            <button
+              onClick={handleCreateAirplaneType}
+              className="flex items-center gap-2 text-base rounded-xl bg-glacier-400 px-4 py-3 font-semibold text-white hover:bg-glacier-500 transition-all"
+              title={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE}>
+              <FaPlus />
+              {dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE}
+            </button>
+
+            <button
+              onClick={handleCreateCabinDetails}
+              className="flex items-center gap-2 text-base rounded-xl bg-glacier-400 px-4 py-2.5 font-semibold text-white hover:bg-glacier-500 transition-all"
+              title={dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION}>
+              <FaThLarge />
+              {dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION}
+            </button>
+          </div>
+        </div>
+
+        <TablePlanes planes={planes} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
 
-      {/* {isCreating && <PlanesCreateModal onClose={handleModalClose} onSuccess={handleSuccess} />}
-      {editingPlane && <PlanesEditModal onClose={handleModalClose} onSuccess={handleSuccess} planeToEdit={editingPlane} />} */}
+      {isCreating && <AirplaneModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
+      {isCreatingAirplaneType && <AirplaneTypeModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
+      {isCreatingCabinDetails && <CabinDetailsModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
     </div>
   );
 }

@@ -29,9 +29,9 @@ export default function AdminUsersTable({ users }: AdminUsersTableProps) {
         </div>
 
         <div className="mt-10 overflow-auto">
-          <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300 rounded-xl overflow-hidden text-sm">
+          <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300  overflow-hidden text-sm">
             <thead>
-              <tr className="text-bold text-justify text-base">
+              <tr className="text-bold text-left text-sm">
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.USER_CODE}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.NAME}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.LAST_NAME}</th>

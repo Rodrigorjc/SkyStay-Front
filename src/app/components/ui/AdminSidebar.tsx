@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { decodeToken } from "@/lib/services/common.service";
 import { DecodeToken } from "@/types/common/decodeToken";
+import { PiLighthouse } from "react-icons/pi";
 
 const Sidebar = ({ dict }: { dict: any }) => {
   const [collapsed, setCollapsed] = useState(true);
@@ -18,7 +19,6 @@ const Sidebar = ({ dict }: { dict: any }) => {
     const fetchUserInfo = async () => {
       try {
         const response = await decodeToken();
-        console.log("User info: ", response);
         setUser(response);
       } catch (error) {
         console.error("Error fetching user info by code:  ", error);
@@ -41,18 +41,102 @@ const Sidebar = ({ dict }: { dict: any }) => {
       </div>
       <nav className="flex-1">
         <ul className="space-y-5">
-          <SidebarItem icon={<FaHome />} text={dict.ADMINISTRATION.SIDEBAR.HOME} url={`/${lang}/administration`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaUser />} text={dict.ADMINISTRATION.SIDEBAR.USERS} url={`/${lang}/administration/users`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaPlane />} text={dict.ADMINISTRATION.SIDEBAR.FLIGHTS} url={`/${lang}/administration/flights`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaHotel />} text={dict.ADMINISTRATION.SIDEBAR.HOTELS} url={`/${lang}/administration/hotels`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaBuilding />} text={dict.ADMINISTRATION.SIDEBAR.APARTMENTS} url={`/${lang}/administration/apartments`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaPlaneDeparture />} text={dict.ADMINISTRATION.SIDEBAR.AIRPORTS} url={`/${lang}/administration/airports`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaPlane />} text={dict.ADMINISTRATION.SIDEBAR.AIRPLANES} url={`/${lang}/administration/airplanes`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaSuitcase />} text={dict.ADMINISTRATION.SIDEBAR.BASIC_LUGGAGE} url={`/${lang}/administration/basic-luggage`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaBook />} text={dict.ADMINISTRATION.SIDEBAR.BOOKINGS} url={`/${lang}/administration/bookings`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaCreditCard />} text={dict.ADMINISTRATION.SIDEBAR.PAYMENTS_BILLING} url={`/${lang}/administration/payments-billing`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaChartPie />} text={dict.ADMINISTRATION.SIDEBAR.REPORTS_STATISTICS} url={`/${lang}/administration/reports-statistics`} collapsed={collapsed} currentPath={pathname} />
-          <SidebarItem icon={<FaLifeRing />} text={dict.ADMINISTRATION.SIDEBAR.SUPPORT} url={`/${lang}/administration/support`} collapsed={collapsed} currentPath={pathname} />
+          <SidebarItem
+            icon={<FaHome />}
+            text={dict.ADMINISTRATION.SIDEBAR.HOME}
+            title={dict.ADMINISTRATION.SIDEBAR.HOME}
+            url={`/${lang}/administration`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaUser />}
+            text={dict.ADMINISTRATION.SIDEBAR.USERS}
+            title={dict.ADMINISTRATION.SIDEBAR.USERS}
+            url={`/${lang}/administration/users`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaPlaneDeparture />}
+            text={dict.ADMINISTRATION.SIDEBAR.FLIGHTS}
+            title={dict.ADMINISTRATION.SIDEBAR.FLIGHTS}
+            url={`/${lang}/administration/flights`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<PiLighthouse />}
+            text={dict.ADMINISTRATION.SIDEBAR.AIRPORTS}
+            title={dict.ADMINISTRATION.SIDEBAR.AIRPORTS}
+            url={`/${lang}/administration/airports`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaPlane />}
+            text={dict.ADMINISTRATION.AIRPLANES.TITLE}
+            title={dict.ADMINISTRATION.AIRPLANES.TITLE}
+            url={`/${lang}/administration/airplanes`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaHotel />}
+            text={dict.ADMINISTRATION.SIDEBAR.HOTELS}
+            title={dict.ADMINISTRATION.SIDEBAR.HOTELS}
+            url={`/${lang}/administration/hotels`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaBuilding />}
+            text={dict.ADMINISTRATION.SIDEBAR.APARTMENTS}
+            title={dict.ADMINISTRATION.SIDEBAR.APARTMENTS}
+            url={`/${lang}/administration/apartments`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaSuitcase />}
+            text={dict.ADMINISTRATION.SIDEBAR.BASIC_LUGGAGE}
+            title={dict.ADMINISTRATION.SIDEBAR.BASIC_LUGGAGE}
+            url={`/${lang}/administration/basic-luggage`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaBook />}
+            text={dict.ADMINISTRATION.SIDEBAR.BOOKINGS}
+            title={dict.ADMINISTRATION.SIDEBAR.BOOKINGS}
+            url={`/${lang}/administration/bookings`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaCreditCard />}
+            text={dict.ADMINISTRATION.SIDEBAR.PAYMENTS_BILLING}
+            title={dict.ADMINISTRATION.SIDEBAR.PAYMENTS_BILLING}
+            url={`/${lang}/administration/payments-billing`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaChartPie />}
+            text={dict.ADMINISTRATION.SIDEBAR.REPORTS_STATISTICS}
+            title={dict.ADMINISTRATION.SIDEBAR.REPORTS_STATISTICS}
+            url={`/${lang}/administration/reports-statistics`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
+          <SidebarItem
+            icon={<FaLifeRing />}
+            text={dict.ADMINISTRATION.SIDEBAR.SUPPORT}
+            title={dict.ADMINISTRATION.SIDEBAR.SUPPORT}
+            url={`/${lang}/administration/support`}
+            collapsed={collapsed}
+            currentPath={pathname}
+          />
         </ul>
       </nav>
       {/* Informacion relacionada con el administrador de la sesion*/}
@@ -69,12 +153,29 @@ const Sidebar = ({ dict }: { dict: any }) => {
   );
 };
 
-const SidebarItem = ({ icon, text, url, badge, collapsed, currentPath }: { icon?: JSX.Element; text: string; url?: string; badge?: string; collapsed?: boolean; currentPath: string }) => {
+const SidebarItem = ({
+  icon,
+  text,
+  url,
+  badge,
+  collapsed,
+  currentPath,
+  title,
+}: {
+  icon?: JSX.Element;
+  text: string;
+  url?: string;
+  badge?: string;
+  collapsed?: boolean;
+  currentPath: string;
+  title: string;
+}) => {
   const isActive = url === currentPath;
 
   return (
     <Link href={url || "#"}>
       <li
+        title={title}
         className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 my-4
         ${collapsed ? "flex justify-center" : "flex items-center justify-between"} 
         ${isActive ? "bg-glacier-700 hover:bg-glacier-800" : "hover:bg-gray-800"}`}>
