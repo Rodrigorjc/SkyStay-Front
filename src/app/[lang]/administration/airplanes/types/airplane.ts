@@ -42,13 +42,13 @@ export interface AirplaneForm2VO {
   seat_configuration_id: number;
 
   // Airplane Cabin
+  seat_class: string;
   rowStart: number;
   rowEnd: number;
 }
 
 export interface SeatConfigurationVO {
   id: number;
-  totalRows: number;
   seatClass: string;
   seatPattern: string;
 }
@@ -61,8 +61,6 @@ export interface AirplanesTypesFormVO {
 }
 
 export interface CreateSeatConfigurationVO {
-  totalRows: number;
-  seatClass: string;
   seatPattern: string;
   description: string;
 }
