@@ -39,7 +39,7 @@ export default function AdminUsersTable({ users }: AdminUsersTableProps) {
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.NIF}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.PHONE}</th>
                 <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.ROLE}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.DETAILED_INFORMATION}</th>
+                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.DETAILED_INFORMATION}</th>
               </tr>
             </thead>
             <tbody>
@@ -54,16 +54,16 @@ export default function AdminUsersTable({ users }: AdminUsersTableProps) {
                   <td className="border border-gray-300 px-4 py-2"> {user.rol.replace(/^ROLE_/, "")}</td>
                   <td className="border border-gray-300 px-4 py-2">
                     <Button
-                      text={dict.ADMINISTRATION.USERS.SHOW}
+                      text={dict.ADMINISTRATION.SHOW}
                       onClick={e => {
-                        if (user.rol === "ROLE_ADMIN") {
+                        if (user.rol === "ROLE_ADMIN" || user.rol === "ROLE_MODERATOR") {
                           e.preventDefault();
                         } else {
                           router.push(`/es/administration/users/${user.userCode}`);
                         }
                       }}
                       color="light"
-                      className={`button w-fit ${user.rol === "ROLE_ADMIN" ? "opacity-50 cursor-not-allowed" : ""}`}
+                      className={`button w-fit ${user.rol === "ROLE_ADMIN" || user.rol === "ROLE_MODERATOR" ? "opacity-50 cursor-not-allowed" : ""}`}
                     />
                   </td>
                 </tr>
