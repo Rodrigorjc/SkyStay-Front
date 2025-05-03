@@ -16,18 +16,22 @@
       "CARGO_PLANES": "Cargo plane",
       "COMMERCIAL": "Commercial",
       "DECOMMISSIONED": "Decommissioned",
+      "EXCEEDS_CAPACITY": "The maximum number of seats available on the aircraft has been exceeded.",
       "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Select seating configuration",
+      "FREE": "Free",
       "INACTIVE": "Inactive",
       "IN_REPAIR": "In repeair",
       "MANUFACTURER": "Manufacturer",
       "MILITARY": "Military",
       "MODEL": "Aircraft model",
       "NUMBER_OF_CABINS": "Numbers of cabins",
+      "OCCUPIED": "Occupied",
       "PRIVATE_JET": "Private jet",
       "REGIONAL_JET": "Regional jet",
       "REGISTRATION_NUMBER": "Registration number",
       "ROW_END": "Row end",
       "ROW_START": "Row start",
+      "SEATS_REMAINING": "Remaining seats",
       "SEAT_CLASS": "Seat class",
       "SEAT_CONFIGURATION": "Seat configuration",
       "SEAT_PATTERN": "Seat pattern ",
@@ -58,10 +62,12 @@
     "BACK": "Back",
     "CODE": "Code",
     "DESCRIPTION": "Description",
+    "DETAILED_INFORMATION": "Detailed information",
     "EDIT": "Edit",
     "IMAGE": "Image",
     "NEXT": "Next",
     "SAVE": "Save",
+    "SHOW": "Show",
     "SIDEBAR": {
       "AIRPORTS": "Airports",
       "APARTMENTS": "Apartments",
@@ -80,7 +86,6 @@
     "USERS": {
       "AIRLINE_RATING": "Airline rating",
       "APARTMENT_RATING": "Apartment rating",
-      "DETAILED_INFORMATION": "Detailed information",
       "DETAILS": {
         "AIRLANE_NAME": "Airlane name",
         "AMOUNT": "Amount",
@@ -111,153 +116,164 @@
       "RESET_FILTER": "Reset",
       "ROLE": "Role",
       "SEARCH_BAR": "Search by username",
-      "SHOW": "Show",
       "USER_CODE": "User code"
     },
     "VIEW_IMAGE": "View image"
   },
-  "HOME": {
-    "WELCOME": "Welcome to SkyStay"
-  },
   "CLIENT": {
-    "SIDEBAR": {
-      "FLIGHTS": "Flights",
-      "ACCOMMODATIONS": "Accommodations",
-      "LOGIN": "Login",
-      "REGISTER": "Register",
-      "WELCOME": "Welcome",
-      "PANEL": {
-        "PROFILE": "Profile",
-        "ACCOUNT": "Manage your account",
-        "LOGOUT": "Log out"
-      },
-      "LANGUAGE": "Language"
-    },
     "LOGIN": {
-      "START_TEXT": "Your journey starts here. Come in!",
-      "EMAIL": "Email",
-      "PASSWORD": "Password",
-      "FORGOT_PASSWORD": "Forgot your password?",
       "CLICK_HERE": "Click here",
-      "LOGIN": "Login",
+      "EMAIL": "Email",
+      "FORGOT_PASSWORD": "Forgot your password?",
       "HAVE_ACCOUNT": "Don't have an account?",
+      "LOGIN": "Login",
       "NOTIFICATION": {
-        "SUCCESS": {
-          "TITLE": "Login successful",
-          "MESSAGE": "Welcome back!"
+        "EMAIL": {
+          "MESSAGE": "Please enter a valid email address.",
+          "TITLE": "Invalid email"
         },
         "ERROR": {
-          "TITLE": "Authentication error",
-          "MESSAGE": "Invalid credentials. Please try again."
-        },
-        "EMAIL": {
-          "TITLE": "Invalid email",
-          "MESSAGE": "Please enter a valid email address."
+          "MESSAGE": "Invalid credentials. Please try again.",
+          "TITLE": "Authentication error"
         },
         "PASSWORD": {
-          "TITLE": "Invalid password",
-          "MESSAGE": "Must have at least 6 characters, a number and a special character."
+          "MESSAGE": "Must have at least 6 characters, a number and a special character.",
+          "TITLE": "Invalid password"
+        },
+        "SUCCESS": {
+          "MESSAGE": "Welcome back!",
+          "TITLE": "Login successful"
         }
-      }
+      },
+      "PASSWORD": "Password",
+      "START_TEXT": "Your journey starts here. Come in!"
     },
     "REGISTER": {
-      "STEP_INDICATOR": "Step {{current}} - {{total}}",
-      "TITLE": "Sign Up Your User Account",
-      "SUBTITLE": "Fill all form fields to go to next step",
-      "STEPS": {
-        "ACCOUNT": "Account",
-        "PERSONAL": "Personal",
-        "IMAGE": "Image"
-      },
       "ACCOUNT_STEP": {
-        "TITLE": "Account Information:",
-        "EMAIL": {
-          "LABEL": "Email: *",
-          "PLACEHOLDER": "Email",
-          "REQUIRED": "Email is required",
-          "INVALID": "Email format is invalid"
-        },
-        "PASSWORD": {
-          "LABEL": "Password: *",
-          "PLACEHOLDER": "Password",
-          "REQUIRED": "Password is required",
-          "INVALID": "Password must have at least 6 characters, one number and one special character"
-        },
         "CONFIRM_PASSWORD": {
           "LABEL": "Confirm Password: *",
+          "MISMATCH": "Passwords don't match",
           "PLACEHOLDER": "Confirm Password",
-          "REQUIRED": "Password confirmation is required",
-          "MISMATCH": "Passwords don't match"
-        }
+          "REQUIRED": "Password confirmation is required"
+        },
+        "EMAIL": {
+          "INVALID": "Email format is invalid",
+          "LABEL": "Email: *",
+          "PLACEHOLDER": "Email",
+          "REQUIRED": "Email is required"
+        },
+        "PASSWORD": {
+          "INVALID": "Password must have at least 6 characters, one number and one special character",
+          "LABEL": "Password: *",
+          "PLACEHOLDER": "Password",
+          "REQUIRED": "Password is required"
+        },
+        "TITLE": "Account Information:"
       },
-      "PERSONAL_STEP": {
-        "TITLE": "Personal Information:",
-        "STEP_INDICATOR": "Step 2 - 3",
-        "NAME": {
-          "LABEL": "First Name: *",
-          "PLACEHOLDER": "First Name",
-          "REQUIRED": "First name is required"
-        },
-        "LAST_NAME": {
-          "LABEL": "Last Name: *",
-          "PLACEHOLDER": "Last Name",
-          "REQUIRED": "Last name is required"
-        },
-        "NIF": {
-          "LABEL": "NIF Number: *",
-          "PLACEHOLDER": "NIF Number",
-          "REQUIRED": "NIF number is required",
-          "INVALID": "NIF number format is invalid"
-        },
-        "PHONE": {
-          "LABEL": "Phone: *",
-          "PLACEHOLDER": "Phone",
-          "REQUIRED": "Phone number is required",
-          "INVALID": "Phone number format is invalid"
-        },
-        "BIRTH_DATE": {
-          "LABEL": "Date of Birth: *",
-          "REQUIRED": "Date of birth is required",
-          "MIN_AGE": "You must be at least 18 years old"
-        },
-        "GENDER": {
-          "LABEL": "Gender: *",
-          "REQUIRED": "Gender is required",
-          "OPTIONS": {
-            "MALE": "Male",
-            "FEMALE": "Female",
-            "OTHER": "Other"
-          }
-        }
+      "BUTTONS": {
+        "FINISH": "Finish",
+        "NEXT": "Next",
+        "PREVIOUS": "Previous"
       },
       "IMAGE_STEP": {
-        "TITLE": "Profile Picture:",
         "STEP_INDICATOR": "Step 3 - 3",
+        "TITLE": "Profile Picture:",
         "UPLOAD_LABEL": "Upload your profile picture:",
         "VALIDATION": {
           "SIZE_ERROR": "File size should not exceed 5MB",
           "TYPE_ERROR": "File must be an image"
         }
       },
-      "BUTTONS": {
-        "PREVIOUS": "Previous",
-        "NEXT": "Next",
-        "FINISH": "Finish"
-      },
       "NOTIFICATIONS": {
-        "VALIDATION_ERROR": {
-          "TITLE": "Validation Error",
-          "MESSAGE": "Please correctly fill in all required fields"
+        "ERROR": {
+          "MESSAGE": "Could not complete registration",
+          "TITLE": "Registration Error"
         },
         "REGISTER_SUCCESS": {
-          "TITLE": "Registration Complete",
-          "MESSAGE": "Your account has been successfully created"
+          "MESSAGE": "Your account has been successfully created",
+          "TITLE": "Registration Complete"
         },
-        "ERROR": {
-          "TITLE": "Registration Error",
-          "MESSAGE": "Could not complete registration"
+        "VALIDATION_ERROR": {
+          "MESSAGE": "Please correctly fill in all required fields",
+          "TITLE": "Validation Error"
         }
-      }
+      },
+      "PERSONAL_STEP": {
+        "BIRTH_DATE": {
+          "LABEL": "Date of Birth: *",
+          "MIN_AGE": "You must be at least 18 years old",
+          "REQUIRED": "Date of birth is required"
+        },
+        "GENDER": {
+          "LABEL": "Gender: *",
+          "OPTIONS": {
+            "FEMALE": "Female",
+            "MALE": "Male",
+            "OTHER": "Other"
+          },
+          "REQUIRED": "Gender is required"
+        },
+        "LAST_NAME": {
+          "LABEL": "Last Name: *",
+          "PLACEHOLDER": "Last Name",
+          "REQUIRED": "Last name is required"
+        },
+        "NAME": {
+          "LABEL": "First Name: *",
+          "PLACEHOLDER": "First Name",
+          "REQUIRED": "First name is required"
+        },
+        "NIF": {
+          "INVALID": "NIF number format is invalid",
+          "LABEL": "NIF Number: *",
+          "PLACEHOLDER": "NIF Number",
+          "REQUIRED": "NIF number is required"
+        },
+        "PHONE": {
+          "INVALID": "Phone number format is invalid",
+          "LABEL": "Phone: *",
+          "PLACEHOLDER": "Phone",
+          "REQUIRED": "Phone number is required"
+        },
+        "STEP_INDICATOR": "Step 2 - 3",
+        "TITLE": "Personal Information:"
+      },
+      "STEPS": {
+        "ACCOUNT": "Account",
+        "IMAGE": "Image",
+        "PERSONAL": "Personal"
+      },
+      "STEP_INDICATOR": "Step {{current}} - {{total}}",
+      "SUBTITLE": "Fill all form fields to go to next step",
+      "TITLE": "Sign Up Your User Account"
+    },
+    "SIDEBAR": {
+      "ACCOMMODATIONS": "Accommodations",
+      "FLIGHTS": "Flights",
+      "LANGUAGE": "Language",
+      "LOGIN": "Login",
+      "PANEL": {
+        "ACCOUNT": "Manage your account",
+        "ADMIN": "Administration",
+        "ADMIN_SUBTITLE": "Manage the administration",
+        "LOGOUT": "Log out",
+        "PROFILE": "Profile"
+      },
+      "REGISTER": "Register",
+      "WELCOME": "Welcome"
     }
+  },
+  "HOME": {
+    "WELCOME": "Welcome to SkyStay"
+  },
+  "NOT_FOUND": {
+    "BUTTON": "Go back to the previous page",
+    "SUBTITLE": "Sorry, we couldn't find the page you're looking for.",
+    "TITLE": "Page not found"
+  },
+  "UNAUTHORIZED": {
+    "BUTTON": "Back to home",
+    "SUBTITLE": "You are not allowed to view this page. If you think it is an error, please contact the administrator.",
+    "TITLE": "Unauthorised access"
   }
 }
