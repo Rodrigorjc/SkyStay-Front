@@ -50,8 +50,11 @@ export default function AirplaneModalForm({ onClose }: Props) {
   const [cabinsData, setCabinsData] = useState<AirplaneForm2VO[]>([]);
 
   const [selectedAirplaneType, setSelectedAirplaneType] = useState<number | null>(null);
-  const [selectedSeatConfiguration, setSelectedSeatConfiguration] = useState<number | null>(null);
   const [selectedSeatConfigurations, setSelectedSeatConfigurations] = useState<number[]>([]);
+  const [airplaneSeatClasses, setAirplaneSeatClasses] = useState<string[]>([]);
+
+  const [capacity, setCapacity] = useState<number>(0);
+  const [remainingSeats, setRemainingSeats] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,6 +100,7 @@ export default function AirplaneModalForm({ onClose }: Props) {
       {
         airplane_id: idAirplane,
         seat_configuration_id: 0,
+        seat_class: "",
         rowStart: 0,
         rowEnd: 0,
       },
@@ -112,6 +116,7 @@ export default function AirplaneModalForm({ onClose }: Props) {
         airplane_id: idAirplane,
         seat_configuration_id: 0,
         airplane_cabin_id: 0,
+        seat_class: "",
         rowStart: 0,
         rowEnd: 0,
       }))
@@ -126,7 +131,31 @@ export default function AirplaneModalForm({ onClose }: Props) {
       ...prev,
       airplane_type_id: type.id,
     }));
+    setCapacity(type.capacity);
   };
+
+  useEffect(() => {
+    const totalAssignedSeats = cabinsData.reduce((sum, cabin) => {
+      const rowStart = cabin.rowStart || 0;
+      const rowEnd = cabin.rowEnd || 0;
+
+      // Validar que rowStart y rowEnd sean válidos
+      if (rowStart <= 0 || rowEnd <= 0 || rowEnd < rowStart) {
+        return sum; // Ignorar esta cabina si los valores no son válidos
+      }
+
+      const rows = rowEnd - rowStart + 1;
+      const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
+
+      // Calcular asientos por fila
+      const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
+
+      // Sumar al total solo si los valores son válidos
+      return sum + (rows > 0 ? rows * seatsPerRow : 0);
+    }, 0);
+
+    setRemainingSeats(capacity - totalAssignedSeats);
+  }, [cabinsData, capacity, seatConfiguration]);
 
   const handleSeatConfigurationSelection = (cabinIndex: number, configIndex: number, config: any) => {
     setSelectedSeatConfigurations(prev => {
@@ -148,26 +177,60 @@ export default function AirplaneModalForm({ onClose }: Props) {
   const handleCabinDataChange = (index: number, field: string, value: any) => {
     const updatedCabins = [...cabinsData];
     updatedCabins[index] = { ...updatedCabins[index], [field]: value };
-    setCabinsData(updatedCabins);
+
+    const totalAssignedSeats = updatedCabins.reduce((sum, cabin) => {
+      const rows = cabin.rowEnd - cabin.rowStart + 1;
+      const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
+
+      const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
+      return sum + (rows > 0 ? rows * seatsPerRow : 0);
+    }, 0);
+
+    if (totalAssignedSeats <= capacity) {
+      setCabinsData(updatedCabins);
+    } else {
+      alert(dict.ADMINISTRATION.AIRPLANES.EXCEEDS_CAPACITY);
+    }
   };
 
   const handleSubmitStep2 = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       // Envía solo los datos necesarios
       const formattedCabinsData = cabinsData.map(cabin => ({
         airplane_id: idAirplane,
         seat_configuration_id: cabin.seat_configuration_id,
+        seat_class: cabin.seat_class,
         rowStart: cabin.rowStart,
         rowEnd: cabin.rowEnd,
       }));
 
+      console.log("Cabins Data:", formattedCabinsData);
       await createAirplanePart2(formattedCabinsData);
-      setStep(3);
     } catch (error) {
       console.error("Error creating Airplane:", error);
+    } finally {
+      setIsLoading(false);
+      onClose();
     }
-    onClose();
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const seatClassesResponse = await getAllAirplanesSeatClases();
+        setAirplaneSeatClasses(seatClassesResponse.response.objects);
+      } catch (error) {
+        console.error("Error fetching airplane types or statuses:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Función para calcular el número de asientos por fila
+  const getSeatsPerRow = (seatPattern: string): number => {
+    return (seatPattern.match(/[A-Z]/g) || []).length;
   };
 
   const renderStepContent = () => {
@@ -293,6 +356,12 @@ export default function AirplaneModalForm({ onClose }: Props) {
       case 2:
         return (
           <form onSubmit={handleSubmitStep2} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.REMAINING_SEATS}</label>
+              <div className="text-lg font-semibold text-glacier-500">
+                {dict.ADMINISTRATION.AIRPLANES.SEATS_REMAINING}: {remainingSeats}
+              </div>
+            </div>
             <div className="flex flex-col gap-2 ">
               <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.NUMBER_OF_CABINS}</label>
               <select value={numberOfCabins} onChange={e => handleNumberOfCabinsChange(e)} className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800" required>
@@ -336,6 +405,26 @@ export default function AirplaneModalForm({ onClose }: Props) {
                       className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800"
                     />
                   </div>
+
+                  {/* Tipos de asientos de la cabina */}
+                  <div className="flex flex-col gap-1 col-span-2">
+                    <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.SEAT_CLASS}</label>
+                    <select
+                      name="seatClass"
+                      value={cabin.seat_class}
+                      onChange={e => handleCabinDataChange(index, "seat_class", e.target.value)}
+                      className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800"
+                      required>
+                      <option value="" disabled>
+                        {dict.ADMINISTRATION.AIRPLANES.SEAT_CLASS}
+                      </option>
+                      {airplaneSeatClasses.map(seatClass => (
+                        <option key={seatClass} value={seatClass}>
+                          {seatClass}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 <div className="col-span-2 flex flex-col text-xl font-medium gap-4 my-4">{dict.ADMINISTRATION.AIRPLANES.SEAT_CONFIGURATION}</div>
@@ -343,9 +432,7 @@ export default function AirplaneModalForm({ onClose }: Props) {
                   <table className="table-auto border-collapse border border-glacier-500 w-full text-white max-h-[50vh] overflow-y-auto">
                     <thead>
                       <tr>
-                        <th className="border border-glacier-500 px-4 py-2">{dict.ADMINISTRATION.AIRPLANES.SEAT_CLASS}</th>
                         <th className="border border-glacier-500 px-4 py-2">{dict.ADMINISTRATION.AIRPLANES.SEAT_PATTERN}</th>
-                        <th className="border border-glacier-500 px-4 py-2">{dict.ADMINISTRATION.AIRPLANES.TOTAL_ROWS}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -354,9 +441,7 @@ export default function AirplaneModalForm({ onClose }: Props) {
                           key={config.id}
                           className={`cursor-pointer ${selectedSeatConfigurations[index] === configIndex ? "bg-glacier-500 text-white" : "hover:bg-glacier-700"}`}
                           onClick={() => handleSeatConfigurationSelection(index, configIndex, config)}>
-                          <td className="border border-glacier-500 px-4 py-2">{config.seatClass}</td>
                           <td className="border border-glacier-500 px-4 py-2">{config.seatPattern}</td>
-                          <td className="border border-glacier-500 px-4 py-2">{config.totalRows}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -366,13 +451,6 @@ export default function AirplaneModalForm({ onClose }: Props) {
             ))}
 
             <div className="flex space-x-4 w-full mt-4">
-              {/* Botón ATRÁS */}
-              <button
-                onClick={() => setStep(step - 1)}
-                className="flex-1 px-4 py-2 bg-gray-500 active:bg-gray-600 rounded-xl font-semibold transition-all duration-400 hover:scale-105 active:scale-95">
-                {dict.ADMINISTRATION.BACK}
-              </button>
-
               {/* Botón SIGUIENTE */}
               <button type="submit" className="flex-1 px-4 py-2 bg-glacier-500 active:bg-glacier-600 rounded-xl font-semibold transition-all duration-400 hover:scale-105 active:scale-95">
                 {dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANES}

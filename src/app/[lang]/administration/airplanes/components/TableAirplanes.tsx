@@ -1,7 +1,7 @@
 import Button from "@/app/components/ui/Button";
 import { useDictionary } from "@context";
 import { AirplaneShowVO } from "../types/airplane";
-
+import { useRouter } from "next/navigation";
 interface Props {
   planes: AirplaneShowVO[];
 }
@@ -9,6 +9,7 @@ interface Props {
 export default function TablePlanes({ planes }: Props) {
   const { dict } = useDictionary();
 
+  const router = useRouter();
   return (
     <div className="mt-4 overflow-auto">
       <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300  overflow-hidden overflow-x-scroll text-sm">
@@ -24,6 +25,7 @@ export default function TablePlanes({ planes }: Props) {
             <th className="border border-gray-300 px-4 py-2 bg-glacier-600 ">{dict.ADMINISTRATION.STATUS}</th>
             <th className="border border-gray-300 px-4 py-2 bg-glacier-600 ">{dict.ADMINISTRATION.IMAGE}</th>
             <th className="border border-gray-300 px-4 py-2 bg-glacier-600 ">{dict.ADMINISTRATION.AIRPLANES.CAPACITY}</th>
+            <th className="border border-gray-300 px-4 py-2 bg-glacier-600 ">{dict.ADMINISTRATION.DETAILED_INFORMATION}</th>
           </tr>
         </thead>
         <tbody className="">
@@ -39,6 +41,16 @@ export default function TablePlanes({ planes }: Props) {
               <td className="border border-gray-300 px-4 py-2">{plane.status}</td>
               <td className="border border-gray-300 px-4 py-2">{plane.image?.url ? plane.image.url : "No hay imagen asociada"}</td>
               <td className="border border-gray-300 px-4 py-2">{plane.airplaneType.capacity}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                <Button
+                  text={dict.ADMINISTRATION.SHOW}
+                  onClick={e => {
+                    router.push(`/es/administration/airplanes/${plane.code}`);
+                  }}
+                  color="light"
+                  className="button w-fit"
+                />
+              </td>
             </tr>
           ))}
         </tbody>
