@@ -40,7 +40,7 @@ export default function airplaneCodePage({ params }: { params: Promise<{ airplan
   return (
     <>
       {loading ? (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-screen ">
           <Loader />
         </div>
       ) : (

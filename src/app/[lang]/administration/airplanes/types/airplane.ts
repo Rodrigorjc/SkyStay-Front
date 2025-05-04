@@ -6,12 +6,8 @@ export interface AirplaneShowVO {
   manufacturer: string;
   type: string;
   status: string;
-  image: ImageVO;
+  image: string;
   airplaneType: AirplaneTypeVO;
-}
-
-interface ImageVO {
-  url: string;
 }
 
 interface AirplaneTypeVO {
@@ -68,4 +64,14 @@ export interface CreateAirplanesTypesFormVO {
   name: string;
   manufacturer: string;
   capacity: number;
+}
+
+export interface ChangeAirplaneStatusVO {
+  airplaneCode: string;
+  status: string;
+}
+
+export interface AddImageAirplaneVO {
+  airplaneCode: string;
+  image: string;
 }
