@@ -1,4 +1,5 @@
 "use client";
+import { useDictionary } from "@/app/context/DictionaryContext";
 import React, { useEffect, useRef, useState } from "react";
 
 declare global {
@@ -14,6 +15,8 @@ interface UploadImageProps {
 }
 
 const UploadImage: React.FC<UploadImageProps> = ({ onUpload, buttonClassName, onWidgetOpen, onWidgetClose }) => {
+  const { dict } = useDictionary();
+
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const widgetRef = useRef<any>(null);
 
@@ -47,8 +50,8 @@ const UploadImage: React.FC<UploadImageProps> = ({ onUpload, buttonClassName, on
           onWidgetOpen?.();
           widgetRef.current && widgetRef.current.open();
         }}
-        className={`px-6 py-3 rounded-full font-semibold transition-all duration-400 hover:scale-105 active:scale-95 bg-glacier-800 text-black active:bg-glacier-950 ${buttonClassName}`}>
-        Subir imágenes
+        className={`px-6 py-3 rounded-full font-semibold transition-all duration-400 hover:scale-105 active:scale-95 bg-glacier-300 text-black active:bg-glacier-950 ${buttonClassName}`}>
+        {dict.UPLOAD_IMAGE}
       </button>
     </div>
   );
