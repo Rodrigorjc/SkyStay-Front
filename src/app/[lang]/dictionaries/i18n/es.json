@@ -65,6 +65,7 @@
     "DETAILED_INFORMATION": "Información detallada",
     "EDIT": "Editar",
     "IMAGE": "Imagen",
+    "IMAGE_EXPLANATION": "Por favor sube solo una imagen",
     "NEXT": "Siguiente",
     "SAVE": "Guardar",
     "SHOW": "Mostrar",
@@ -271,9 +272,11 @@
     "SUBTITLE": "Lo sentimos, no pudimos encontrar la página que estás buscando.",
     "TITLE": "Página no encontrada"
   },
+  "SHOW_IMAGE": "Mostrar imágen",
   "UNAUTHORIZED": {
     "BUTTON": "Volver al inicio",
     "SUBTITLE": "No tienes permisos para ver esta página. Si crees que es un error, contacta al administrador.",
     "TITLE": "Acceso no autorizado"
-  }
+  },
+  "UPLOAD_IMAGE": "Subir imagen"
 }

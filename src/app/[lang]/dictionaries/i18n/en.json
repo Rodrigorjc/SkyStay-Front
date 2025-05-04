@@ -65,6 +65,7 @@
     "DETAILED_INFORMATION": "Detailed information",
     "EDIT": "Edit",
     "IMAGE": "Image",
+    "IMAGE_EXPLANATION": "Please upload only one image",
     "NEXT": "Next",
     "SAVE": "Save",
     "SHOW": "Show",
@@ -271,9 +272,11 @@
     "SUBTITLE": "Sorry, we couldn't find the page you're looking for.",
     "TITLE": "Page not found"
   },
+  "SHOW_IMAGE": "Show image",
   "UNAUTHORIZED": {
     "BUTTON": "Back to home",
     "SUBTITLE": "You are not allowed to view this page. If you think it is an error, please contact the administrator.",
     "TITLE": "Unauthorised access"
-  }
+  },
+  "UPLOAD_IMAGE": "Upload image"
 }
