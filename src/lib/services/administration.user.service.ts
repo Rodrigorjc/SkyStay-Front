@@ -13,10 +13,12 @@ import { CityVO } from "@/types/admin/city";
 import { ResponseVO } from "@/types/common/response";
 import { AirportForm, AirportFormEdit } from "@/types/admin/form";
 import {
+  AddImageAirplaneVO,
   AirplaneForm1VO,
   AirplaneForm2VO,
   AirplaneShowVO,
   AirplanesTypesFormVO,
+  ChangeAirplaneStatusVO,
   CreateAirplanesTypesFormVO,
   CreateSeatConfigurationVO,
   SeatConfigurationVO,
@@ -244,11 +246,21 @@ export async function createSeatConfiguration(form: CreateSeatConfigurationVO): 
     throw error;
   }
 }
-// export async function editPlane(airplane: AirplaneVO): Promise<string> {
-//   try {
-//     const response = await axiosClient.put(`/admin/airplanes/update/${airplane.code}`, airplane);
-//     return response.data.response.message;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+
+export async function updateAirplaneStatus(form: ChangeAirplaneStatusVO): Promise<string> {
+  try {
+    const response = await axiosClient.post("/admin/airplanes/update/status", form);
+    return response.data.response.message;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function addImageOnAirplane(form: AddImageAirplaneVO): Promise<string> {
+  try {
+    const response = await axiosClient.post("/admin/airplanes/add/image", form);
+    return response.data.response.message;
+  } catch (error) {
+    throw error;
+  }
+}
