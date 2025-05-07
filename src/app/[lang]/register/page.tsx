@@ -779,7 +779,7 @@ const MultiStepForm: React.FC = () => {
                         {step > 0 && (
                             <button
                                 onClick={prevStep}
-                                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700
+                                className="bg-gray-600 text-white px-4 py-2 hover:bg-gray-700
                                 transition-all duration-400 hover:scale-105
                                 active:scale-95 active:bg-gray-800 rounded-full"
                             >
@@ -789,7 +789,7 @@ const MultiStepForm: React.FC = () => {
                         {step < steps.length - 1 ? (
                             <button
                                 onClick={nextStep}
-                                className="bg-(--color-glacier-500) text-white px-4 py-2 rounded
+                                className="bg-(--color-glacier-500) text-white px-4 py-2
                                 hover:bg-(--color-glacier-600) ml-auto transition-all duration-400 hover:scale-105
                                 active:scale-95 active:bg-(--color-glacier-700) rounded-full"
                             >
@@ -798,7 +798,7 @@ const MultiStepForm: React.FC = () => {
                         ) : step === steps.length - 1 ? (
                             <button
                                 onClick={submitForm}
-                                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-auto ml-auto
+                                className="bg-green-600 text-white px-4 py-2 hover:bg-green-700 ml-auto
                                 transition-all duration-400 hover:scale-105
                                 active:scale-95 active:bg-green-900 rounded-full"
                             >
