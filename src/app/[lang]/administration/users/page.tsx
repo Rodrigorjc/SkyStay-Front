@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getAllUsers } from "@services/administration.user.service";
+import { getAllUsers } from "./services/user.service";
 import { UserAdminVO } from "@/types/admin/user";
 import TableUser from "./components/TableUser";
 import Loader from "@/app/components/ui/Loader";

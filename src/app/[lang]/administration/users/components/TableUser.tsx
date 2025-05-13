@@ -1,9 +1,11 @@
 "use client";
 
 import Button from "@/app/components/ui/Button";
-import { useDictionary } from "@context";
+import { useDictionary, useLanguage } from "@context";
 import { UserAdminVO } from "@/types/admin/user";
 import { useRouter } from "next/navigation";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 
 interface AdminUsersTableProps {
   users: UserAdminVO[];
@@ -11,65 +13,71 @@ interface AdminUsersTableProps {
 
 export default function AdminUsersTable({ users }: AdminUsersTableProps) {
   const { dict } = useDictionary();
+  const lang = useLanguage();
   const router = useRouter();
   return (
     <div>
       <section>
-        <div className="flex flex-row gap-4 items-end">
-          <div className="flex flex-col w-3/5 gap-2">
-            <label htmlFor="search-bar" className="mb-1">
-              {dict.ADMINISTRATION.USERS.SEARCH_BAR}:
-            </label>
-            <input type="text" id="search-bar" className="border border-white rounded-md px-5 py-2" />
+        <div className="flex flex-row gap-6 items-end">
+          <div className="relative w-full max-w-md">
+            <input
+              type="text"
+              id="search-bar"
+              placeholder={dict.ADMINISTRATION.USERS.SEARCH_BAR}
+              className="w-full px-4 py-2 pr-12 rounded-2xl border border-glacier-500 bg-glacier-700/40 text-white placeholder-glacier-300 focus:outline-none focus:ring-2 focus:ring-glacier-400/70 transition-all shadow-sm"
+            />
+            <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-glacier-300 hover:text-white transition-colors" aria-label="Search">
+              <FaMagnifyingGlass className="w-5 h-5" />
+            </button>
           </div>
 
           <div className="flex w-auto">
-            <Button text={dict.ADMINISTRATION.USERS.RESET_FILTER} onClick={() => console.log("Reset filters")} color="light" className="button w-full items-end" />
+            <Button text={dict.ADMINISTRATION.USERS.RESET_FILTER} onClick={() => console.log("Reset filters")} color="admin" className="" />
           </div>
         </div>
 
-        <div className="mt-10 overflow-auto">
-          <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300  overflow-hidden text-sm">
-            <thead>
-              <tr className="text-bold text-left text-sm">
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.USER_CODE}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.NAME}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.LAST_NAME}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.EMAIL}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.NIF}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.PHONE}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.USERS.ROLE}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600">{dict.ADMINISTRATION.DETAILED_INFORMATION}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map(user => (
-                <tr key={user.userCode} className="text-center">
-                  <td className="border border-gray-300 px-4 py-2">{user.userCode}</td>
-                  <td className="border border-gray-300 px-4 py-2">{user.name}</td>
-                  <td className="border border-gray-300 px-4 py-2">{user.lastName}</td>
-                  <td className="border border-gray-300 px-4 py-2">{user.email}</td>
-                  <td className="border border-gray-300 px-4 py-2">{user.nif}</td>
-                  <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
-                  <td className="border border-gray-300 px-4 py-2"> {user.rol.replace(/^ROLE_/, "")}</td>
-                  <td className="border border-gray-300 px-4 py-2">
+        <div className="mt-8 overflow-y-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{dict.ADMINISTRATION.USERS.USER_CODE}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.NAME}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.LAST_NAME}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.EMAIL}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.NIF}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.PHONE}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.ROLE}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.DETAILED_INFORMATION}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {users.map((user, index) => (
+                <TableRow key={user.userCode} isOdd={index % 2 === 0}>
+                  <TableCell>{user.userCode}</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.nif}</TableCell>
+                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{user.rol.replace(/^ROLE_/, "")}</TableCell>
+                  <TableCell className="text-center">
                     <Button
                       text={dict.ADMINISTRATION.SHOW}
                       onClick={e => {
                         if (user.rol === "ROLE_ADMIN" || user.rol === "ROLE_MODERATOR") {
                           e.preventDefault();
                         } else {
-                          router.push(`/es/administration/users/${user.userCode}`);
+                          router.push(`/${lang}/administration/users/${user.userCode}`);
                         }
                       }}
                       color="light"
                       className={`button w-fit ${user.rol === "ROLE_ADMIN" || user.rol === "ROLE_MODERATOR" ? "opacity-50 cursor-not-allowed" : ""}`}
                     />
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </section>
     </div>

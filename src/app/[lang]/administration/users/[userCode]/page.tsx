@@ -1,32 +1,29 @@
 "use client";
 
-import { MdArrowBack } from "react-icons/md";
 import { useDictionary } from "@context";
 import { useRouter } from "next/navigation";
 import Pagination from "@/app/components/ui/Pagination";
 import { useEffect, useState } from "react";
-import { getAirlaneRating, getApartmentRating, getHotelRating, getOrderApartment, getOrderFlight, getOrderHotel, getUserInfoByCode } from "@/lib/services/administration.user.service";
+import { getAirlaneRating, getApartmentRating, getHotelRating, getOrderApartment, getOrderFlight, getOrderHotel } from "../services/user.service";
 import React from "react";
-import { HotelRatingVO } from "@/types/admin/hotelRating";
 import TableHotelRating from "./components/TableHotelRating";
-import { ApartmentRatingVO } from "@/types/admin/apartmentRating";
+import { AirlineRatingVO, ApartmentRatingVO, HotelRatingVO } from "@/app/[lang]/administration/users/[userCode]/types/rating";
+import { OrderApartmentVO, OrderFlightVO, OrderHotelVO } from "@/app/[lang]/administration/users/[userCode]/types/order";
 import TableApartmentRating from "./components/TableApartmentRating";
 import TableAirlineRating from "./components/TableAirlaneRating";
-import { AirlineRatingVO } from "@/types/admin/airlineRating";
-import { UserInfoVO } from "@/types/admin/userInfo";
-import { OrderApartmentVO } from "@/types/admin/orderApartment";
-import { OrderHotelVO } from "@/types/admin/orderHotel";
-import { OrderFlightVO } from "@/types/admin/orderFlight";
+import { DecodeToken } from "@/types/common/decodeToken";
 import TableOrderApartment from "./components/TableOrderApartment";
 import TableOrderHotel from "./components/TableOrderHotel";
 import TableOrderFlight from "./components/TableOrderFlight";
+import { InfoCardLight } from "@/app/components/ui/admin/InfoCard";
+import { getUserInfoByCode } from "@/lib/services/administration.user.service";
 
 export default function AdminUserDetails({ params }: { params: Promise<{ userCode: string }> }) {
   const { dict } = useDictionary();
   const { userCode } = React.use(params);
   const router = useRouter();
 
-  const [dataUser, setDataUser] = useState<UserInfoVO>();
+  const [dataUser, setDataUser] = useState<DecodeToken>();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -203,29 +200,31 @@ export default function AdminUserDetails({ params }: { params: Promise<{ userCod
       <section>
         <div>
           <button onClick={() => router.push(`/es/administration/users`)} className="flex flex-row gap-2 items-center justify-start">
-            <MdArrowBack className="text-3xl" />
             <h1 className="text-2xl">{dict.ADMINISTRATION.USERS.DETAILS.USER_DETAILS}</h1>
           </button>
         </div>
         <div>
-          <div className="bg-zinc-700 p-10 m-4 rounded-md">
-            <div className="text-2xl font-semibold text-glacier-300 flex flex-row gap-4">
-              <h1>
-                {dict.ADMINISTRATION.USERS.DETAILS.USER}: <span className="text-xl text-glacier-200">{dataUser?.name}</span>
-              </h1>
-              <h1>
-                {dict.ADMINISTRATION.USERS.DETAILS.ROLE}: <span className="text-xl text-glacier-200">{dataUser?.role}</span>
-              </h1>
+          <div className=" p-10 m-4 rounded-md">
+            {dataUser && (
+              <div className="mb-12">
+                <InfoCardLight label={dataUser?.name} value={dataUser?.role} />
+              </div>
+            )}
+
+            <div className="grid grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 gap-6">
+              <div>
+                <TableAirlineRating data={dataAirlaneRating} />
+                <Pagination page={pageAirlaneRating} hasNextPage={hasNextPageAirlaneRating} hasPreviousPage={hasPreviousPageAirlaneRating} onPageChange={handlePageChangeAirlaneRating} />
+              </div>
+              <div>
+                <TableApartmentRating data={dataApartmentRating} />
+                <Pagination page={pageApartmentRating} hasNextPage={hasNextPageApartmentRating} hasPreviousPage={hasPreviousPageApartmentRating} onPageChange={handlePageChangeApartmentRating} />
+              </div>
+              <div>
+                <TableHotelRating data={dataHotelRating} />
+                <Pagination page={pageHotelRating} hasNextPage={hasNextPageHotelRating} hasPreviousPage={hasPreviousPageHotelRating} onPageChange={handlePageChangeHotelRating} />
+              </div>
             </div>
-
-            <TableAirlineRating data={dataAirlaneRating} />
-            <Pagination page={pageAirlaneRating} hasNextPage={hasNextPageAirlaneRating} hasPreviousPage={hasPreviousPageAirlaneRating} onPageChange={handlePageChangeAirlaneRating} />
-
-            <TableApartmentRating data={dataApartmentRating} />
-            <Pagination page={pageApartmentRating} hasNextPage={hasNextPageApartmentRating} hasPreviousPage={hasPreviousPageApartmentRating} onPageChange={handlePageChangeApartmentRating} />
-
-            <TableHotelRating data={dataHotelRating} />
-            <Pagination page={pageHotelRating} hasNextPage={hasNextPageHotelRating} hasPreviousPage={hasPreviousPageHotelRating} onPageChange={handlePageChangeHotelRating} />
 
             <TableOrderFlight data={dataOrderFlight} />
             <Pagination page={pageOrderFlight} hasNextPage={hasNextPageOrderFlight} hasPreviousPage={hasPreviousPageOrderFlight} onPageChange={handlePageChangeOrderFlight} />
