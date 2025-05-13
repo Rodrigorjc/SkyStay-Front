@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useDictionary } from "@context";
 import { AirplaneShowVO } from "./types/airplane";
-import { getAllAirplanes } from "@services/administration.user.service";
 import Loader from "@/app/components/ui/Loader";
 import TablePlanes from "./components/TableAirplanes";
 import Pagination from "@/app/components/ui/Pagination";
@@ -12,6 +11,8 @@ import AirplaneTypeModalForm from "./components/AirplaneTypeModalForm";
 import CabinDetailsModalForm from "./components/SeatConfigurationModalForm";
 
 import { FaPlane, FaPlus, FaThLarge } from "react-icons/fa";
+import Button from "@/app/components/ui/Button";
+import { getAllAirplanes } from "./services/airplane.service";
 
 export default function Page() {
   const { dict } = useDictionary();
@@ -74,33 +75,10 @@ export default function Page() {
     <div>
       <h1 className="text-2xl">{dict.ADMINISTRATION.AIRPLANES.TITLE}</h1>
       <div className="bg-zinc-700 p-10 m-4 rounded-md">
-        <div className="relative group inline-flex items-center">
-          {/* Botón principal a la izquierda */}
-          <button
-            onClick={handleCreate}
-            className="flex items-center justify-center w-12 h-12 rounded-full bg-glacier-500 text-white hover:bg-glacier-600 transition-all"
-            title={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANES}>
-            <FaPlane />
-          </button>
-
-          {/* Botones secundarios que aparecen a la derecha en hover */}
-          <div className="flex space-x-3 ml-3 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
-            <button
-              onClick={handleCreateAirplaneType}
-              className="flex items-center gap-2 text-base rounded-xl bg-glacier-400 px-4 py-3 font-semibold text-white hover:bg-glacier-500 transition-all"
-              title={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE}>
-              <FaPlus />
-              {dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE}
-            </button>
-
-            <button
-              onClick={handleCreateCabinDetails}
-              className="flex items-center gap-2 text-base rounded-xl bg-glacier-400 px-4 py-2.5 font-semibold text-white hover:bg-glacier-500 transition-all"
-              title={dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION}>
-              <FaThLarge />
-              {dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION}
-            </button>
-          </div>
+        <div className="flex flex-row justify-start items-center mb-4 gap-4">
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANES} onClick={() => handleCreate()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE} onClick={() => handleCreateAirplaneType()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION} onClick={() => handleCreateCabinDetails()} color="admin" className="" />
         </div>
 
         <TablePlanes planes={planes} />

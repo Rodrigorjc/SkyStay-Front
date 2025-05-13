@@ -44,13 +44,7 @@ export default function airplaneCodePage({ params }: { params: Promise<{ airplan
           <Loader />
         </div>
       ) : (
-        <div className="p-6 space-y-6 text-zinc-100">
-          <div className="flex items-center justify-center rounded-2xl py-8 bg-gradient-to-b from-zinc-800/40 to-zinc-900/80 text-white shadow-xl border border-zinc-700 hover:border-glacier-400 transition-all duration-300">
-            <h1 className="text-3xl font-bold font-mono tracking-wide">
-              Airplane Code: <span className="text-glacier-400">{airplaneCode}</span>
-            </h1>
-          </div>
-
+        <div className="max-md:p-0 p-6 space-y-6 text-zinc-100">
           {airplaneInfo && <InfoCard airplaneInfo={airplaneInfo} />}
           {!loading && cabinDetails.length > 0 && <AirplaneCabins cabins={cabinDetails} />}
         </div>

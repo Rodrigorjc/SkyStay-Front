@@ -70,8 +70,3 @@ export interface ChangeAirplaneStatusVO {
   airplaneCode: string;
   status: string;
 }
-
-export interface AddImageAirplaneVO {
-  airplaneCode: string;
-  image: string;
-}

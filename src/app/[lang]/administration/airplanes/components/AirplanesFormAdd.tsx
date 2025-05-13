@@ -11,7 +11,7 @@ import {
   getAllAirplanesTypes,
   getAllAirplanesTypesEmun,
   getAllSeatConfigurations,
-} from "@/lib/services/administration.user.service";
+} from "../services/airplane.service";
 import { AirplaneForm1VO, AirplaneForm2VO, AirplanesTypesFormVO, SeatConfigurationVO } from "../types/airplane";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import Loader from "@/app/components/ui/Loader";

@@ -1,5 +1,5 @@
 import axiosClient from "@/lib/axiosClient";
-import { AirplaneAllCodeVO, CabinVO } from "../types/airplane.info";
+import { AirplaneAllCodeVO, Cabin } from "../types/airplane.info";
 
 export async function getBasicInfoByCode(airplaneCode: string): Promise<AirplaneAllCodeVO> {
   try {
@@ -10,7 +10,7 @@ export async function getBasicInfoByCode(airplaneCode: string): Promise<Airplane
   }
 }
 
-export async function getCabinsWithSeatsByAirplaneCode(airplaneCode: string): Promise<CabinVO[]> {
+export async function getCabinsWithSeatsByAirplaneCode(airplaneCode: string): Promise<Cabin[]> {
   try {
     const response = await axiosClient.get(`/admin/airplanes/cabins/${airplaneCode}`);
     return response.data.response.objects;

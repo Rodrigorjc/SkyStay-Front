@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useDictionary } from "@context";
 import { CreateSeatConfigurationVO } from "../types/airplane";
-import { createSeatConfiguration, getAllAirplanesSeatClases } from "@/lib/services/administration.user.service";
+import { createSeatConfiguration, getAllAirplanesSeatClases } from "../services/airplane.service";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
 interface Props {

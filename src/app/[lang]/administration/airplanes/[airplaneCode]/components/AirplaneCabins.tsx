@@ -17,7 +17,7 @@ const AirplaneCabins: React.FC<{ cabins: Cabin[] }> = ({ cabins }) => {
   const { dict } = useDictionary();
 
   return (
-    <div className="my-8 flex flex-row items-start justify-center overflow-x-auto gap-12 px-6 text-zinc-100 scrollbar-thin scrollbar-thumb-cyan-500">
+    <div className="my-8 flex flex-row items-start justify-center overflow-x-auto gap-12 px-6 text-zinc-100 scrollbar-thin scrollbar-thumb-cyan-500 ">
       {cabins.map(cabin => {
         const rows = groupSeatsByRow(cabin.seats);
         const seatGroups = cabin.seatconfigurationName.split(" "); // Ej: "ABC DEF"
@@ -25,7 +25,7 @@ const AirplaneCabins: React.FC<{ cabins: Cabin[] }> = ({ cabins }) => {
         return (
           <div
             key={cabin.cabinId}
-            className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-glacier-500/30 rounded-2xl p-8 shadow-2xl flex flex-col gap-6 min-w-[360px] hover:border-glacier-400 transition-all duration-300">
+            className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-glacier-500/30 rounded-2xl p-8 shadow-2xl flex flex-col gap-6 min-w-[560px] sm:min-w-32 hover:border-glacier-400 transition-all duration-300">
             {/* Título de la clase */}
             <h2 className="text-xl font-semibold text-glacier-400 border-b border-glacier-700 pb-2 uppercase tracking-wide">Clase: {cabin.seatClass}</h2>
 
