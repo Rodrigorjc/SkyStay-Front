@@ -1,5 +1,8 @@
 {
   "ADMINISTRATION": {
+    "AIRPLANE": {
+      "AIRPLANE_CODE": "Airplane code"
+    },
     "AIRPLANES": {
       "ACTIVE": "Active",
       "ADD_AIRPLANES": "Create airplane",
@@ -59,17 +62,59 @@
       "TERMINAL_EXPLANATION": "Total number of terminals",
       "TIMEZONE": "Timezone"
     },
+    "APARTMENTS": {
+      "ADD_APPARTMENTS": "Create apartments"
+    },
     "BACK": "Back",
     "CODE": "Code",
+    "CREATE_AIRPORTS": "Create airport",
     "DESCRIPTION": "Description",
     "DETAILED_INFORMATION": "Detailed information",
     "EDIT": "Edit",
+    "HOTELS": {
+      "ADDRESS": "Address",
+      "ADD_HOTELS": "Create hotel",
+      "CAPACITY": "Capacity",
+      "CHOOSE_CITY": "Choose a city",
+      "CITY": "City",
+      "CODE": "Code",
+      "DESCRIPTION": "Description",
+      "EMAIL": "Email",
+      "IMAGE": "Image",
+      "INFO": "Basic hotel information",
+      "NAME": "Name",
+      "NUMBER_ROOM_TYPES": "Number of room types",
+      "PHONE_NUMBER": "Phone number",
+      "POSTAL_CODE": "Postal code",
+      "ROOM_TYPES": "Room types",
+      "SELECT": "Select",
+      "SELECTED": "Selected",
+      "SELECT_TYPE": "Select a type",
+      "STARS": "Average rating",
+      "TOTAL_ROOMS": "Total rooms",
+      "TYPES": "Type ",
+      "WEBSITE": "Website"
+    },
+    "HOTEL_DETAILS": {
+      "ADDRESS": "Address",
+      "AVAILABLE": "Available",
+      "EDIT_HOTEL": "Edit hotel",
+      "NAME": "Name",
+      "NO_ROOMS_AVAILABLE": "No rooms available",
+      "OCCUPIED": "Occupied",
+      "PEOPLE": "People",
+      "ROOM": "Room",
+      "ROOMS": "Rooms"
+    },
     "IMAGE": "Image",
     "IMAGE_EXPLANATION": "Please upload only one image",
     "NEXT": "Next",
+    "NO_DATA_AVAILABLE": "No data available",
+    "RELOAD": "Reload",
     "SAVE": "Save",
     "SHOW": "Show",
     "SIDEBAR": {
+      "AIRPLANES": "Airplanes",
       "AIRPORTS": "Airports",
       "APARTMENTS": "Apartments",
       "BASIC_LUGGAGE": "Basic luggage",

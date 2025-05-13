@@ -1,5 +1,8 @@
 {
   "ADMINISTRATION": {
+    "AIRPLANE": {
+      "AIRPLANE_CODE": "Código del avión"
+    },
     "AIRPLANES": {
       "ACTIVE": "Activo",
       "ADD_AIRPLANES": "Crear avión",
@@ -59,17 +62,59 @@
       "TERMINAL_EXPLANATION": "Número total de terminales",
       "TIMEZONE": "Zona horaria"
     },
+    "APARTMENTS": {
+      "ADD_APPARTMENTS": "Crear apartamentos"
+    },
     "BACK": "Atrás",
     "CODE": "Código ",
+    "CREATE_AIRPORTS": "Crear aeropuerto",
     "DESCRIPTION": "Descripción",
     "DETAILED_INFORMATION": "Información detallada",
     "EDIT": "Editar",
+    "HOTELS": {
+      "ADDRESS": "Dirección",
+      "ADD_HOTELS": "Crear hotel",
+      "CAPACITY": "Capacidad",
+      "CHOOSE_CITY": "Elige una ciudad",
+      "CITY": "Ciudad",
+      "CODE": "Código",
+      "DESCRIPTION": "Descripción",
+      "EMAIL": "Correo electrónico",
+      "IMAGE": "Imagen",
+      "INFO": "Información básica del hotel",
+      "NAME": "Nombre",
+      "NUMBER_ROOM_TYPES": "Cantidad de tipos de habitación",
+      "PHONE_NUMBER": "Número de teléfono",
+      "POSTAL_CODE": "Código postal",
+      "ROOM_TYPES": "Tipos de habitaciones",
+      "SELECT": "Seleccionar",
+      "SELECTED": "Seleccionado",
+      "SELECT_TYPE": "Selecciona un tipo",
+      "STARS": "Valoración media",
+      "TOTAL_ROOMS": "Total habitaciones ",
+      "TYPES": "Tipo",
+      "WEBSITE": "Página web"
+    },
+    "HOTEL_DETAILS": {
+      "ADDRESS": "Dirección",
+      "AVAILABLE": "Disponible",
+      "EDIT_HOTEL": "Editar hotel",
+      "NAME": "Nombre",
+      "NO_ROOMS_AVAILABLE": "No hay habitaciones disponibles",
+      "OCCUPIED": "Ocupado",
+      "PEOPLE": "Personas",
+      "ROOM": "Habitación",
+      "ROOMS": "Habitaciones"
+    },
     "IMAGE": "Imagen",
     "IMAGE_EXPLANATION": "Por favor sube solo una imagen",
     "NEXT": "Siguiente",
+    "NO_DATA_AVAILABLE": "No hay datos disponibles",
+    "RELOAD": "Recargar",
     "SAVE": "Guardar",
     "SHOW": "Mostrar",
     "SIDEBAR": {
+      "AIRPLANES": "Aviones",
       "AIRPORTS": "Aeropuertos",
       "APARTMENTS": "Apartamentos",
       "BASIC_LUGGAGE": "Equipaje básico",
