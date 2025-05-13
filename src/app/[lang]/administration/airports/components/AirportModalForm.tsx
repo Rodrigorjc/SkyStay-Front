@@ -6,9 +6,10 @@ import { useDictionary } from "@context";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import LocationSelector from "@/app/components/ui/MapSelector";
 import { Coordinates } from "@/types/common/coordinates";
-import { createAirport, getAllCities } from "@/lib/services/administration.user.service";
+import { getAllCities } from "@/lib/services/administration.user.service";
 import { CityVO } from "@/types/admin/city";
-import { AirportForm } from "@/types/admin/form";
+import { AirportForm } from "../types/airport";
+import { createAirport } from "../services/airports.service";
 
 interface Props {
   onClose: () => void;
@@ -75,7 +76,7 @@ export default function AirportModalForm({ onClose }: Props) {
     const fetchCities = async () => {
       try {
         const response = await getAllCities();
-        setCities(response);
+        setCities(response.objects);
       } catch (error) {
         console.error("Error fetching cities:", error);
       }

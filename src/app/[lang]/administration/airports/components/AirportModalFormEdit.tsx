@@ -5,9 +5,11 @@ import { IoMdClose } from "react-icons/io";
 import { useDictionary } from "@context";
 import LocationSelector from "@/app/components/ui/MapSelector";
 import { Coordinates } from "@/types/common/coordinates";
-import { updateAirport, getAllCities } from "@/lib/services/administration.user.service";
+import { getAllCities } from "@/lib/services/administration.user.service";
 import { CityVO } from "@/types/admin/city";
-import { AirportFormEdit } from "@/types/admin/form";
+import { AirportFormEdit } from "../types/airport";
+import { updateAirport } from "../services/airports.service";
+import { ResponseVO } from "@/types/common/response";
 
 interface Props {
   onClose: () => void;
@@ -62,7 +64,7 @@ export default function AirportModalFormEdit({ onClose, defaultValues }: Props) 
     const fetchCities = async () => {
       try {
         const response = await getAllCities();
-        setCities(response);
+        setCities(response.objects.flat());
       } catch (error) {
         console.error("Error fetching cities:", error);
       }
