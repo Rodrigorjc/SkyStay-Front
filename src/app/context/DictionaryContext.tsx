@@ -5,6 +5,7 @@ import { fetchDictionary } from "@dictionary";
 interface DictionaryContextType {
   dict: any;
   setDict: React.Dispatch<React.SetStateAction<any>>;
+  lang: "en" | "es";
 }
 
 const DictionaryContext = createContext<DictionaryContextType | undefined>(undefined);
@@ -24,7 +25,7 @@ export const DictionaryProvider: React.FC<{
     getDict();
   }, [lang]);
 
-  return <DictionaryContext.Provider value={{ dict, setDict }}>{children}</DictionaryContext.Provider>;
+  return <DictionaryContext.Provider value={{ dict, setDict, lang }}>{children}</DictionaryContext.Provider>;
 };
 
 export const useDictionary = (): DictionaryContextType => {
@@ -33,4 +34,9 @@ export const useDictionary = (): DictionaryContextType => {
     throw new Error("useDictionary must be used within a DictionaryProvider");
   }
   return context;
+};
+
+export const useLanguage = (): "en" | "es" => {
+  const { lang } = useDictionary();
+  return lang;
 };
