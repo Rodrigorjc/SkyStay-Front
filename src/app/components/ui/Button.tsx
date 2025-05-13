@@ -5,16 +5,17 @@ import React, { ReactNode, MouseEventHandler } from "react";
 interface ButtonProps {
   text: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
-  color?: "default" | "dark" | "light";
+  color?: "default" | "dark" | "light" | "admin";
   className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ text, onClick, color = "default", className = "" }) => {
-  const baseStyles = "px-6 py-3 rounded-full font-semibold transition-all duration-400 hover:scale-105 active:scale-95";
-  const colors: { [key in "default" | "dark" | "light"]: string } = {
-    default: "bg-glacier-500 text-white active:bg-glacier-600",
-    dark: "bg-glacier-700 text-white  active:bg-glacier-800",
-    light: "bg-glacier-200 text-black active:bg-glacier-300",
+  const baseStyles = "px-4 py-2 rounded-2xl font-medium transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-sm";
+  const colors: { [key in "default" | "dark" | "light" | "admin"]: string } = {
+    default: "bg-glacier-500 text-white hover:bg-glacier-400 active:bg-glacier-600",
+    dark: "bg-glacier-700 text-white hover:bg-glacier-600 active:bg-glacier-800",
+    light: "bg-glacier-200 text-black hover:bg-glacier-100 active:bg-glacier-300",
+    admin: "bg-glacier-700/40 text-white border border-glacier-500 hover:bg-glacier-600/40 active:bg-glacier-800/40",
   };
 
   return (

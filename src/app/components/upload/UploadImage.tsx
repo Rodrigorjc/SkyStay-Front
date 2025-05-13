@@ -12,13 +12,26 @@ interface UploadImageProps {
   buttonClassName?: string;
   onWidgetOpen?: () => void;
   onWidgetClose?: () => void;
+  color?: "default" | "admin"; // Nueva propiedad para estilos
 }
 
-const UploadImage: React.FC<UploadImageProps> = ({ onUpload, buttonClassName, onWidgetOpen, onWidgetClose }) => {
+const UploadImage: React.FC<UploadImageProps> = ({
+  onUpload,
+  buttonClassName = "",
+  onWidgetOpen,
+  onWidgetClose,
+  color = "default", // Valor predeterminado
+}) => {
   const { dict } = useDictionary();
 
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const widgetRef = useRef<any>(null);
+
+  const baseStyles = "px-4 py-2 rounded-2xl font-medium transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-sm";
+  const colors: { [key in "default" | "admin"]: string } = {
+    default: "bg-glacier-200 text-black hover:bg-glacier-100 active:bg-glacier-300",
+    admin: "bg-glacier-700/40 text-white border border-glacier-500 hover:bg-glacier-600/40 active:bg-glacier-800/40",
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined" && !widgetRef.current) {
@@ -50,7 +63,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ onUpload, buttonClassName, on
           onWidgetOpen?.();
           widgetRef.current && widgetRef.current.open();
         }}
-        className={`px-6 py-3 rounded-full font-semibold transition-all duration-400 hover:scale-105 active:scale-95 bg-glacier-300 text-black active:bg-glacier-950 ${buttonClassName}`}>
+        className={`${baseStyles} ${colors[color]} ${buttonClassName}`}>
         {dict.UPLOAD_IMAGE}
       </button>
     </div>
