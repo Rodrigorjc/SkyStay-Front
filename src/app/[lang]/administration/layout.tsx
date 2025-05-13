@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, useEffect, useState } from "react";
-import Sidebar from "@components/AdminSidebar";
+import Sidebar from "@/app/[lang]/administration/components/AdminSidebar";
 import { useDictionary } from "@context";
 import { decodeToken } from "@/lib/services/common.service";
 import { useParams, useRouter } from "next/navigation";
