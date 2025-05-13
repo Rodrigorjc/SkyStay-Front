@@ -6,3 +6,8 @@ export interface CityVO {
 interface CountryVO {
   name: string;
 }
+
+export interface CityTableVO {
+  id: number;
+  name: string;
+}
