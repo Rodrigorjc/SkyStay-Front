@@ -6,12 +6,8 @@ export interface AirplaneShowVO {
   manufacturer: string;
   type: string;
   status: string;
-  image: ImageVO;
+  image: string;
   airplaneType: AirplaneTypeVO;
-}
-
-interface ImageVO {
-  url: string;
 }
 
 interface AirplaneTypeVO {
@@ -42,13 +38,13 @@ export interface AirplaneForm2VO {
   seat_configuration_id: number;
 
   // Airplane Cabin
+  seat_class: string;
   rowStart: number;
   rowEnd: number;
 }
 
 export interface SeatConfigurationVO {
   id: number;
-  totalRows: number;
   seatClass: string;
   seatPattern: string;
 }
@@ -61,8 +57,6 @@ export interface AirplanesTypesFormVO {
 }
 
 export interface CreateSeatConfigurationVO {
-  totalRows: number;
-  seatClass: string;
   seatPattern: string;
   description: string;
 }
@@ -70,4 +64,9 @@ export interface CreateAirplanesTypesFormVO {
   name: string;
   manufacturer: string;
   capacity: number;
+}
+
+export interface ChangeAirplaneStatusVO {
+  airplaneCode: string;
+  status: string;
 }

@@ -23,7 +23,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar({ dict }: NavbarProps) {
-  const [usuario, setUser] = useState<{ sub: string; roles: string } | null>(null);
+  const [usuario, setUser] = useState<{ sub: string; rol: string } | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigation = getNavigation(dict);
@@ -54,7 +54,7 @@ export default function Navbar({ dict }: NavbarProps) {
 
     if (tokenFromCookies) {
       try {
-        const tokenDescodificado = jwtDecode<{ sub: string; roles: string }>(tokenFromCookies);
+        const tokenDescodificado = jwtDecode<{ sub: string; rol: string }>(tokenFromCookies);
         console.info(tokenDescodificado);
         setUser(tokenDescodificado);
       } catch (error) {
@@ -123,6 +123,14 @@ export default function Navbar({ dict }: NavbarProps) {
                           <p className="text-gray-500 text-sm">{dict.CLIENT.SIDEBAR.PANEL.ACCOUNT}</p>
                         </Link>
                       </div>
+                      {usuario?.rol && (usuario.rol.includes("ROLE_ADMIN") || usuario.rol.includes("ROLE_MODERATOR")) && (
+                        <div className="p-3">
+                          <Link href={`/${lang}/administration`} className="block rounded-lg py-2 px-3 transition hover:bg-gray-100">
+                            <p className="font-semibold text-gray-900">{dict.CLIENT.SIDEBAR.PANEL.ADMIN}</p>
+                            <p className="text-gray-500 text-sm">{dict.CLIENT.SIDEBAR.PANEL.ADMIN_SUBTITLE}</p>
+                          </Link>
+                        </div>
+                      )}
                       <div className="p-3">
                         <button onClick={cerrarSesion} className="block w-full rounded-lg py-2 px-3 text-left transition hover:bg-gray-100 text-red-600 font-semibold">
                           {dict.CLIENT.SIDEBAR.PANEL.LOGOUT}
@@ -198,6 +206,13 @@ export default function Navbar({ dict }: NavbarProps) {
                     {dict.CLIENT.SIDEBAR.PANEL.PROFILE}
                     <p className="text-gray-500 text-sm">{dict.CLIENT.SIDEBAR.PANEL.ACCOUNT}</p>
                   </button>
+                  {usuario?.rol && (usuario.rol.includes("ROLE_ADMIN") || usuario.rol.includes("ROLE_MODERATOR")) && (
+                    <button
+                      onClick={() => router.push(`/${lang}/administration`)}
+                      className="block w-full rounded-lg py-2 px-3 text-left transition hover:bg-blue-100 text-blue-600 font-semibold mt-2">
+                      {dict.CLIENT.SIDEBAR.PANEL.ADMIN}
+                    </button>
+                  )}
                   <button onClick={cerrarSesion} className="block w-full rounded-lg py-2 px-3 text-left transition hover:bg-red-100 text-red-600 font-semibold mt-2">
                     {dict.CLIENT.SIDEBAR.PANEL.LOGOUT}
                   </button>
