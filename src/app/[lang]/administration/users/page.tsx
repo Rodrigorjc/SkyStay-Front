@@ -15,12 +15,13 @@ export default function AdminUsersPage() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const response = await getAllUsers(20, page);
+        const response = await getAllUsers(20, page, search);
         setUsers(response.objects);
         setHasNextPage(response.hasNextPage);
         setHasPreviousPage(response.hasPreviousPage);
@@ -32,10 +33,20 @@ export default function AdminUsersPage() {
     };
 
     fetchUsers();
-  }, [page]);
+  }, [page, search]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+  };
+
+  const handleSearch = (value: string) => {
+    setPage(1);
+    setSearch(value);
+  };
+
+  const handleReset = () => {
+    setSearch("");
+    setPage(1);
   };
 
   if (loading) {
@@ -50,7 +61,7 @@ export default function AdminUsersPage() {
     <div>
       <h1 className="text-2xl">{dict.ADMINISTRATION.SIDEBAR.USERS}</h1>
       <div className="bg-zinc-700 p-10 m-4 rounded-md">
-        <TableUser users={users} />
+        <TableUser users={users} onSearch={handleSearch} searchValue={search} onReset={handleReset} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
     </div>

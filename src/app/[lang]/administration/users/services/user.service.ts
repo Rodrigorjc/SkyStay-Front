@@ -4,9 +4,12 @@ import { ResponsePaginatedVO } from "@/types/common/responsePaginated";
 import { AirlineRatingVO, ApartmentRatingVO, HotelRatingVO } from "../[userCode]/types/rating";
 import { OrderApartmentVO, OrderFlightVO, OrderHotelVO } from "../[userCode]/types/order";
 
-export async function getAllUsers(limit: number, page: number): Promise<ResponsePaginatedVO<UserAdminVO>> {
+export async function getAllUsers(limit: number, page: number, search?: string): Promise<ResponsePaginatedVO<UserAdminVO>> {
   try {
-    const response = await axiosClient.get("/admin/users/all", {
+    let url = "/admin/users/all?";
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+
+    const response = await axiosClient.get(url, {
       params: { limit, page },
     });
 
