@@ -726,7 +726,7 @@ const MultiStepForm: React.FC = () => {
 
                 const lang = pathname.split("/")[1] || "en";
                 setTimeout(() => {
-                    window.location.href = `/${lang}/login`;
+                    window.location.href = `/${lang}/code_validation`;
                 }, 1000);
 
             } catch (error: any) {
