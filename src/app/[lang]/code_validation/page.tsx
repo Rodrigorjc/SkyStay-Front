@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Navbar from '@components/Navbar';
@@ -7,6 +7,8 @@ import axiosClient from "@/lib/axiosClient";
 import NotificationComponent from '@components/Notification';
 import { useDictionary } from "@context";
 import { Notifications } from "@/app/interfaces/Notifications";
+import Cookies from 'js-cookie';
+
 
 const CodeValidation: React.FC = () => {
     const { dict } = useDictionary();
@@ -18,6 +20,15 @@ const CodeValidation: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [emailInput, setEmailInput] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [userEmail, setUserEmail] = useState<string>('');
+
+    useEffect(() => {
+        const savedEmail = Cookies.get('registrationEmail');
+        if (savedEmail) {
+            setUserEmail(savedEmail);
+            setEmailInput(savedEmail);
+        }
+    }, []);
 
     const handleCodeChange = (index: number, value: string) => {
         if (value && !/^\d+$/.test(value)) return;
@@ -63,8 +74,11 @@ const CodeValidation: React.FC = () => {
 
         try {
             await axiosClient.post('auth/verify-code', {
-                code: parseInt(code.join(''))
+                code: parseInt(code.join('')),
+                email: userEmail || emailInput
             });
+
+            Cookies.remove('registrationEmail');
 
             setNotification({
                 titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.TITLE,
@@ -114,6 +128,12 @@ const CodeValidation: React.FC = () => {
                 mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_SUCCESS.MESSAGE,
                 code: 200,
                 tipo: "success",
+            });
+
+            Cookies.set('registrationEmail', emailInput, {
+                expires: 1/24, // 1 hora en días
+                secure: true, // Solo HTTPS
+                sameSite: 'strict' // Protección contra CSRF
             });
 
             setIsModalOpen(false);
