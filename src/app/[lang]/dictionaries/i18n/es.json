@@ -307,6 +307,44 @@
       },
       "REGISTER": "Registro",
       "WELCOME": "Bienvenido"
+    },
+    "CODE_VALIDATION": {
+      "TITLE": "Código de Verificación",
+      "SUBTITLE": "Introduce el código de 6 dígitos enviado a tu correo:",
+      "BUTTONS": {
+        "VERIFY": "Verificar Código",
+        "LOADING": "Verificando...",
+        "RESEND": "Reenviar Código"
+      },
+      "NOTIFICATIONS": {
+        "VALIDATION_ERROR": {
+          "TITLE": "Error de Validación",
+          "MESSAGE": "Por favor introduce el código completo de 6 dígitos"
+        },
+        "SUCCESS": {
+          "TITLE": "Verificación Exitosa",
+          "MESSAGE": "Tu correo ha sido verificado correctamente"
+        },
+        "ERROR": {
+          "TITLE": "Error de Verificación",
+          "MESSAGE": "Código de verificación inválido. Por favor inténtalo de nuevo"
+        },
+        "RESEND_SUCCESS": {
+          "TITLE": "Código Reenviado",
+          "MESSAGE": "Un nuevo código de verificación ha sido enviado a tu correo"
+        },
+        "RESEND_ERROR": {
+          "TITLE": "Error al Reenviar",
+          "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+        }
+      },
+      "RESEND_MODAL": {
+        "TITLE": "Reenviar Código de Verificación",
+        "SUBTITLE": "Introduce tu dirección de correo para recibir un nuevo código de verificación",
+        "EMAIL_PLACEHOLDER": "Introduce tu correo",
+        "SEND": "Enviar Código",
+        "CANCEL": "Cancelar"
+      }
     }
   },
   "HOME": {

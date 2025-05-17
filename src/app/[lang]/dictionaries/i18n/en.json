@@ -307,6 +307,44 @@
       },
       "REGISTER": "Register",
       "WELCOME": "Welcome"
+    },
+    "CODE_VALIDATION": {
+      "TITLE": "Verification Code",
+      "SUBTITLE": "Enter the 6-digit code sent to your email:",
+      "BUTTONS": {
+        "VERIFY": "Verify Code",
+        "LOADING": "Verifying...",
+        "RESEND": "Resend Code"
+      },
+      "NOTIFICATIONS": {
+        "VALIDATION_ERROR": {
+          "TITLE": "Validation Error",
+          "MESSAGE": "Please enter the complete 6-digit code"
+        },
+        "SUCCESS": {
+          "TITLE": "Verification Successful",
+          "MESSAGE": "Your email has been successfully verified"
+        },
+        "ERROR": {
+          "TITLE": "Verification Error",
+          "MESSAGE": "Invalid verification code. Please try again"
+        },
+        "RESEND_SUCCESS": {
+          "TITLE": "Code Resent",
+          "MESSAGE": "A new verification code has been sent to your email"
+        },
+        "RESEND_ERROR": {
+          "TITLE": "Resend Error",
+          "MESSAGE": "Could not send a new code. Please try again later"
+        }
+      },
+      "RESEND_MODAL": {
+        "TITLE": "Resend Verification Code",
+        "SUBTITLE": "Enter your email address to receive a new verification code",
+        "EMAIL_PLACEHOLDER": "Enter your email",
+        "SEND": "Send Code",
+        "CANCEL": "Cancel"
+      }
     }
   },
   "HOME": {
