@@ -9,6 +9,7 @@ import { MdError } from "react-icons/md";
 import axiosClient from "@/lib/axiosClient";
 import {usePathname} from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Cookies from 'js-cookie';
 
 
 const getSteps = (dict: any) => [
@@ -716,6 +717,12 @@ const MultiStepForm: React.FC = () => {
                 const response = await axiosClient.post('auth/register', formData);
 
                 console.log("Respuesta del servidor:", response.data);
+
+                Cookies.set('registrationEmail', accountData.email, {
+                    expires: 1/24, // 1 hora en días
+                    secure: true, // Solo HTTPS
+                    sameSite: 'strict' // Protección contra CSRF
+                });
 
                 setNotification({
                     titulo: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.TITLE,
