@@ -228,18 +228,18 @@ const CodeValidation: React.FC = () => {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-(--color-zinc-800)/75 bg- flex items-center justify-center z-50">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-white rounded-xl p-6 w-full max-w-md mx-4"
+                        className="bg-(--color-glacier-50) rounded-xl p-6 w-full max-w-md mx-4"
                     >
-                        <h3 className="text-xl font-semibold mb-4">{dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.TITLE}</h3>
+                        <h3 className="text-(--color-glacier-600) text-xl font-semibold mb-4">{dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.TITLE}</h3>
                         <p className="text-gray-600 mb-4">{dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.SUBTITLE}</p>
 
                         <input
                             type="email"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-(--color-glacier-400)"
+                            className="w-full text-(--color-glacier-400) px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-(--color-glacier-400)"
                             placeholder={dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.EMAIL_PLACEHOLDER}
                             value={emailInput}
                             onChange={(e) => setEmailInput(e.target.value)}
@@ -255,7 +255,7 @@ const CodeValidation: React.FC = () => {
                             </button>
                             <button
                                 onClick={resendCode}
-                                className={`px-4 py-2 text-white rounded-lg ${isLoading ? 'bg-gray-400' : 'bg-(--color-glacier-500) hover:bg-(--color-glacier-600)'}`}
+                                className={`px-4 py-2 text-(--color-glacier-50) rounded-lg ${isLoading ? 'bg-gray-400' : 'bg-(--color-glacier-500) hover:bg-(--color-glacier-600)'}`}
                                 disabled={isLoading}
                             >
                                 {isLoading ? dict.CLIENT.CODE_VALIDATION.BUTTONS.LOADING : dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.SEND}
