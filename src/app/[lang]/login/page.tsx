@@ -51,10 +51,10 @@ const LoginPage = () => {
       }, 1000);
     } catch (err: any) {
       console.error("Error de login:", err);
-
+      const errorData = err.response?.data;
       // Intenta obtener el mensaje de error del backend si está disponible
-      const errorMessage = err.response?.data?.messages?.message || "Error al iniciar sesión. Verifica tus credenciales.";
-      const errorCode = err.response?.data?.messages?.code || 401;
+      const errorMessage = errorData?.message || "Error al iniciar sesión. Verifica tus credenciales.";
+      const errorCode = err.response?.status || 401;
 
       setNotification({
         titulo: "Error de inicio de sesión", // Valor fijo para evitar problemas con dict
