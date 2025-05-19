@@ -273,7 +273,8 @@
           "INVALID": "El formato del NIF/DNI no es válido",
           "LABEL": "NIF/DNI: *",
           "PLACEHOLDER": "NIF/DNI",
-          "REQUIRED": "El NIF/DNI es obligatorio"
+          "REQUIRED": "El NIF/DNI es obligatorio",
+          "INVALID_DATA": "Numeros o letra NIF/DNI inválidos"
         },
         "PHONE": {
           "INVALID": "El formato del número de teléfono no es válido",

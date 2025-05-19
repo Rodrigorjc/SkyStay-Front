@@ -273,7 +273,8 @@
           "INVALID": "NIF number format is invalid",
           "LABEL": "NIF Number: *",
           "PLACEHOLDER": "NIF Number",
-          "REQUIRED": "NIF number is required"
+          "REQUIRED": "NIF number is required",
+          "INVALID_DATA": "NIF number or letter is invalid"
         },
         "PHONE": {
           "INVALID": "Phone number format is invalid",
