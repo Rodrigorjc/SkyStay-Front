@@ -510,7 +510,18 @@ const MultiStepForm: React.FC = () => {
                 if (!value) {
                     newErrors.birthDate = dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.REQUIRED;
                 } else {
-                    delete newErrors.birthDate;
+                    const birthDate = new Date(value);
+                    const today = new Date();
+                    const eighteenYearsAgo = new Date(
+                        today.getFullYear() - 18,
+                        today.getMonth(),
+                        today.getDate()
+                    );
+                    if (birthDate > eighteenYearsAgo) {
+                        newErrors.birthDate = dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.MIN_AGE;
+                    } else {
+                        delete newErrors.birthDate;
+                    }
                 }
                 break;
             case "gender":
