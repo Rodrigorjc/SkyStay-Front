@@ -478,13 +478,22 @@ const MultiStepForm: React.FC = () => {
                 }
                 break;
             case "nif":
+                const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
                 const nifRegex = /^[0-9]{8}[A-Z]$/;
                 if (!value) {
                     newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.REQUIRED;
                 } else if (!nifRegex.test(value)) {
                     newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.INVALID;
                 } else {
-                    delete newErrors.nif;
+                    const number = parseInt(value.substring(0, 8));
+                    const providedLetter = value.charAt(8);
+                    const correctLetter = letters.charAt(number % 23);
+
+                    if (providedLetter !== correctLetter) {
+                        newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.INVALID_DATA;
+                    } else {
+                        delete newErrors.nif;
+                    }
                 }
                 break;
             case "phone":
