@@ -137,7 +137,10 @@ const LoginPage = () => {
             </div>
 
             <div className="text-right text-xs sm:text-sm text-gray-400 pe-3">
-              {dict.CLIENT.LOGIN.FORGOT_PASSWORD} <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+              {dict.CLIENT.LOGIN.FORGOT_PASSWORD}
+              <Link href={`/${lang}/restore_password`}>
+                <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+              </Link>
             </div>
 
             <button
