@@ -330,6 +330,14 @@
           "TITLE": "Verification Error",
           "MESSAGE": "Invalid verification code. Please try again"
         },
+        "SEND_SUCCESS": {
+          "TITLE": "Code Sent",
+          "MESSAGE": "A verification code has been sent to your email"
+        },
+        "SEND_ERROR": {
+          "TITLE": "Send Error",
+          "MESSAGE": "Could not send a new code. Please try again later"
+        },
         "RESEND_SUCCESS": {
           "TITLE": "Code Resent",
           "MESSAGE": "A new verification code has been sent to your email"
@@ -337,6 +345,14 @@
         "RESEND_ERROR": {
           "TITLE": "Resend Error",
           "MESSAGE": "Could not send a new code. Please try again later"
+        },
+        "PASSWORD_CHANGED": {
+          "TITLE": "Password changed",
+          "MESSAGE": "Your password has been change successfully"
+        },
+        "PASSWORD_CHANGED_ERROR": {
+          "TITLE": "Password changed Error",
+          "MESSAGE": "There was a problem changing your password"
         }
       },
       "RESEND_MODAL": {

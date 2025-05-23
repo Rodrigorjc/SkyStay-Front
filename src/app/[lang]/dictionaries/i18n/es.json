@@ -330,6 +330,14 @@
           "TITLE": "Error de Verificación",
           "MESSAGE": "Código de verificación inválido. Por favor inténtalo de nuevo"
         },
+        "SEND_SUCCESS": {
+          "TITLE": "Código Enviado",
+          "MESSAGE": "Un código de verificación ha sido enviado a tu correo"
+        },
+        "SEND_ERROR": {
+          "TITLE": "Error al Enviar",
+          "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+        },
         "RESEND_SUCCESS": {
           "TITLE": "Código Reenviado",
           "MESSAGE": "Un nuevo código de verificación ha sido enviado a tu correo"
@@ -337,6 +345,14 @@
         "RESEND_ERROR": {
           "TITLE": "Error al Reenviar",
           "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+        },
+        "PASSWORD_CHANGED": {
+          "TITLE": "Contraseña cambiada",
+          "MESSAGE": "Su contraseña ha sido actualizada con éxito"
+        },
+        "PASSWORD_CHANGED_ERROR": {
+          "TITLE": "Error en el cambio de contraseña",
+          "MESSAGE": "Ha habido un problema cambiando tu contraseña"
         }
       },
       "RESEND_MODAL": {
