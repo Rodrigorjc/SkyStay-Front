@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { useDictionary } from "@context";
-import { createAirplaneType } from "@/lib/services/administration.user.service";
+import { createAirplaneType } from "../services/airplane.service";
 import { CreateAirplanesTypesFormVO } from "../types/airplane";
 
 interface Props {

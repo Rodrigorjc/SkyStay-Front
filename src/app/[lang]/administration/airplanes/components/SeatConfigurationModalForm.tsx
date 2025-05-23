@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useDictionary } from "@context";
 import { CreateSeatConfigurationVO } from "../types/airplane";
-import { createSeatConfiguration, getAllAirplanesSeatClases } from "@/lib/services/administration.user.service";
+import { createSeatConfiguration, getAllAirplanesSeatClases } from "../services/airplane.service";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 interface Props {
   onClose: () => void;
@@ -12,26 +13,10 @@ interface Props {
 export default function SeatConfigurationModalForm({ onClose, onSuccess }: Props) {
   const { dict } = useDictionary();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const seatClassesResponse = await getAllAirplanesSeatClases();
-        setAirplaneSeatClasses(seatClassesResponse.response.objects);
-      } catch (error) {
-        console.error("Error fetching airplane types or statuses:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
   const [formData, setFormData] = useState<CreateSeatConfigurationVO>({
     seatPattern: "",
-    totalRows: 0,
     description: "",
-    seatClass: "",
   });
-
-  const [airplaneSeatClasses, setAirplaneSeatClasses] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -64,7 +49,10 @@ export default function SeatConfigurationModalForm({ onClose, onSuccess }: Props
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 text-base">
           {/* Patrón de los asientos */}
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.SEAT_PATTERN}</label>
+            <div className="flex flex-row items-center gap-2 mb-1">
+              <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.SEAT_PATTERN}</label>
+              <IoInformationCircleOutline className="text-lg" title="A-B C-D E-F | A-B-C D-E-F" />
+            </div>
             <input
               type="text"
               name="seatPattern"
@@ -76,23 +64,8 @@ export default function SeatConfigurationModalForm({ onClose, onSuccess }: Props
             />
           </div>
 
-          {/* Número total de filas */}
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.TOTAL_ROWS}</label>
-            <input
-              type="number"
-              name="totalRows"
-              value={formData.totalRows}
-              onChange={handleChange}
-              placeholder={dict.ADMINISTRATION.AIRPLANES.TOTAL_ROWS}
-              className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800"
-              required
-              min={1}
-            />
-          </div>
-
           {/* Descripción */}
-          <div className="flex flex-col gap-1 col-span-2">
+          <div className="flex flex-col gap-1 col-span-1">
             <label className="text-sm font-medium">{dict.ADMINISTRATION.DESCRIPTION}</label>
             <input
               type="text"
@@ -102,21 +75,6 @@ export default function SeatConfigurationModalForm({ onClose, onSuccess }: Props
               placeholder={dict.ADMINISTRATION.DESCRIPTION}
               className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800"
             />
-          </div>
-
-          {/* Tipos de asientos de la cabina */}
-          <div className="flex flex-col gap-1 col-span-2">
-            <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.SEAT_CLASS}</label>
-            <select name="seatClass" value={formData.seatClass} onChange={handleChange} className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800" required>
-              <option value="" disabled>
-                {dict.ADMINISTRATION.AIRPLANES.SEAT_CLASS}
-              </option>
-              {airplaneSeatClasses.map(seatClass => (
-                <option key={seatClass} value={seatClass}>
-                  {seatClass}
-                </option>
-              ))}
-            </select>
           </div>
 
           {/* Botones */}

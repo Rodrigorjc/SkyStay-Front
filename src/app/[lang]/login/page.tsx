@@ -51,10 +51,10 @@ const LoginPage = () => {
       }, 1000);
     } catch (err: any) {
       console.error("Error de login:", err);
-
+      const errorData = err.response?.data;
       // Intenta obtener el mensaje de error del backend si está disponible
-      const errorMessage = err.response?.data?.messages?.message || "Error al iniciar sesión. Verifica tus credenciales.";
-      const errorCode = err.response?.data?.messages?.code || 401;
+      const errorMessage = errorData?.message || "Error al iniciar sesión. Verifica tus credenciales.";
+      const errorCode = err.response?.status || 401;
 
       setNotification({
         titulo: "Error de inicio de sesión", // Valor fijo para evitar problemas con dict
@@ -137,7 +137,10 @@ const LoginPage = () => {
             </div>
 
             <div className="text-right text-xs sm:text-sm text-gray-400 pe-3">
-              {dict.CLIENT.LOGIN.FORGOT_PASSWORD} <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+              {dict.CLIENT.LOGIN.FORGOT_PASSWORD}
+              <Link href={`/${lang}/restore_password`}>
+                <span className="underline cursor-pointer">{dict.CLIENT.LOGIN.CLICK_HERE}</span>
+              </Link>
             </div>
 
             <button

@@ -1,7 +1,10 @@
 "use client";
-import React, { ReactNode } from "react";
-import Sidebar from "@components/AdminSidebar";
+import React, { ReactNode, useEffect, useState } from "react";
+import Sidebar from "@/app/[lang]/administration/components/AdminSidebar";
 import { useDictionary } from "@context";
+import { decodeToken } from "@/lib/services/common.service";
+import { useParams, useRouter } from "next/navigation";
+import { DecodeToken } from "@/types/common/decodeToken";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -9,6 +12,32 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const { dict } = useDictionary();
+  const router = useRouter();
+  const [user, setUser] = useState<DecodeToken | null>(null);
+
+  const params = useParams();
+  const lang = params.lang;
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await decodeToken();
+        setUser(response);
+
+        if (!response) {
+          throw new Error("Token decoding failed: response is null");
+        }
+
+        if (!["ADMIN", "MODERATOR"].includes(response.role)) {
+          router.push(`/${lang}/unauthorized`);
+        }
+      } catch (error) {
+        console.error("Error fetching user info by code: ", error);
+        router.push(`/${lang}/login`);
+      }
+    };
+    fetchUserInfo();
+  }, [router]);
 
   if (!dict) {
     return;

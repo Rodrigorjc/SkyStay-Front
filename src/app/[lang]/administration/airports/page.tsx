@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getAllAirports } from "@services/administration.user.service";
+import { getAllAirports } from "./services/airports.service";
 import Loader from "@/app/components/ui/Loader";
 import Pagination from "@/app/components/ui/Pagination";
 import { useDictionary } from "@/app/context/DictionaryContext";
-import { AirportAdminVO } from "@/types/admin/airport";
 import TableAirports from "./components/TableAirports";
+import { AirportAdminVO } from "./types/airport";
 
 export default function AdminUsersPage() {
   const { dict } = useDictionary();

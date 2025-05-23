@@ -20,7 +20,7 @@ export default async function LangLayout({ children, params }: { children: React
       <head>
         <link rel="icon" href="/favicon.png" />
         <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-          <title>SkyStay</title>
+        <title>SkyStay</title>
       </head>
       <body className="bg-zinc-800">
         <DictionaryProvider lang={lang as "en" | "es"}>{children}</DictionaryProvider>

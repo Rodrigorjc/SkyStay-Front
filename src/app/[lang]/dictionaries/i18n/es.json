@@ -1,5 +1,8 @@
 {
   "ADMINISTRATION": {
+    "AIRPLANE": {
+      "AIRPLANE_CODE": "Código del avión"
+    },
     "AIRPLANES": {
       "ACTIVE": "Activo",
       "ADD_AIRPLANES": "Crear avión",
@@ -16,18 +19,22 @@
       "CARGO_PLANES": "Avión de carga",
       "COMMERCIAL": "Comercial",
       "DECOMMISSIONED": "Desmantelado",
+      "EXCEEDS_CAPACITY": "Se ha excedido el número máximo de asientos que dispone el avión.",
       "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Selecciona la configuración de asientos",
+      "FREE": "Libre",
       "INACTIVE": "Inactivo",
       "IN_REPAIR": "En reparación",
       "MANUFACTURER": "Fabricante",
       "MILITARY": "Militar",
       "MODEL": "Modelo del avión",
       "NUMBER_OF_CABINS": "Número de cabinas",
+      "OCCUPIED": "Ocupado",
       "PRIVATE_JET": "Jet privado",
       "REGIONAL_JET": "Jet regional",
       "REGISTRATION_NUMBER": "Número de registro",
       "ROW_END": "Fin de fila",
       "ROW_START": "Inicio de fila",
+      "SEATS_REMAINING": "Asientos restantes",
       "SEAT_CLASS": "Tipo de asiento",
       "SEAT_CONFIGURATION": "Configuración de asientos",
       "SEAT_PATTERN": "Patrón de asientos ",
@@ -55,14 +62,59 @@
       "TERMINAL_EXPLANATION": "Número total de terminales",
       "TIMEZONE": "Zona horaria"
     },
+    "APARTMENTS": {
+      "ADD_APPARTMENTS": "Crear apartamentos"
+    },
     "BACK": "Atrás",
     "CODE": "Código ",
+    "CREATE_AIRPORTS": "Crear aeropuerto",
     "DESCRIPTION": "Descripción",
+    "DETAILED_INFORMATION": "Información detallada",
     "EDIT": "Editar",
+    "HOTELS": {
+      "ADDRESS": "Dirección",
+      "ADD_HOTELS": "Crear hotel",
+      "CAPACITY": "Capacidad",
+      "CHOOSE_CITY": "Elige una ciudad",
+      "CITY": "Ciudad",
+      "CODE": "Código",
+      "DESCRIPTION": "Descripción",
+      "EMAIL": "Correo electrónico",
+      "IMAGE": "Imagen",
+      "INFO": "Información básica del hotel",
+      "NAME": "Nombre",
+      "NUMBER_ROOM_TYPES": "Cantidad de tipos de habitación",
+      "PHONE_NUMBER": "Número de teléfono",
+      "POSTAL_CODE": "Código postal",
+      "ROOM_TYPES": "Tipos de habitaciones",
+      "SELECT": "Seleccionar",
+      "SELECTED": "Seleccionado",
+      "SELECT_TYPE": "Selecciona un tipo",
+      "STARS": "Valoración media",
+      "TOTAL_ROOMS": "Total habitaciones ",
+      "TYPES": "Tipo",
+      "WEBSITE": "Página web"
+    },
+    "HOTEL_DETAILS": {
+      "ADDRESS": "Dirección",
+      "AVAILABLE": "Disponible",
+      "EDIT_HOTEL": "Editar hotel",
+      "NAME": "Nombre",
+      "NO_ROOMS_AVAILABLE": "No hay habitaciones disponibles",
+      "OCCUPIED": "Ocupado",
+      "PEOPLE": "Personas",
+      "ROOM": "Habitación",
+      "ROOMS": "Habitaciones"
+    },
     "IMAGE": "Imagen",
+    "IMAGE_EXPLANATION": "Por favor sube solo una imagen",
     "NEXT": "Siguiente",
+    "NO_DATA_AVAILABLE": "No hay datos disponibles",
+    "RELOAD": "Recargar",
     "SAVE": "Guardar",
+    "SHOW": "Mostrar",
     "SIDEBAR": {
+      "AIRPLANES": "Aviones",
       "AIRPORTS": "Aeropuertos",
       "APARTMENTS": "Apartamentos",
       "BASIC_LUGGAGE": "Equipaje básico",
@@ -80,7 +132,6 @@
     "USERS": {
       "AIRLINE_RATING": "Valoración aerolinea",
       "APARTMENT_RATING": "Valoración apartamentos",
-      "DETAILED_INFORMATION": "Información detallada",
       "DETAILS": {
         "AIRLANE_NAME": "Nombre de aerolinea",
         "AMOUNT": "Importe",
@@ -111,153 +162,221 @@
       "RESET_FILTER": "Reiniciar ",
       "ROLE": "Rol",
       "SEARCH_BAR": "Buscar por nombre de usuario",
-      "SHOW": "Mostrar",
       "USER_CODE": "Codigo del usuario"
     },
     "VIEW_IMAGE": "Ver imagen"
   },
-  "HOME": {
-    "WELCOME": "Bienvenido a SkyStay"
-  },
   "CLIENT": {
-    "SIDEBAR": {
-      "FLIGHTS": "Vuelos",
-      "ACCOMMODATIONS": "Alojamiento",
-      "LOGIN": "Iniciar sesión",
-      "REGISTER": "Registro",
-      "WELCOME": "Bienvenido",
-      "PANEL": {
-        "PROFILE": "Perfil",
-        "ACCOUNT": "Gestiona tu cuenta",
-        "LOGOUT": "Cerrar sesión"
-      },
-      "LANGUAGE": "Idioma"
-    },
     "LOGIN": {
-      "START_TEXT": "Tu viaje comienza aquí. ¡Entra!",
-      "EMAIL": "Correo electrónico",
-      "PASSWORD": "Contraseña",
-      "FORGOT_PASSWORD": "¿Has olvidado tu contraseña?",
       "CLICK_HERE": "Pincha aquí",
-      "LOGIN": "Iniciar sesión",
+      "EMAIL": "Correo electrónico",
+      "FORGOT_PASSWORD": "¿Has olvidado tu contraseña?",
       "HAVE_ACCOUNT": "¿No tienes cuenta?",
+      "LOGIN": "Iniciar sesión",
       "NOTIFICATION": {
-        "SUCCESS": {
-          "TITLE": "Inicio de sesión exitoso",
-          "MESSAGE": "¡Bienvenido de nuevo!"
+        "EMAIL": {
+          "MESSAGE": "Por favor, introduce una dirección de correo válida.",
+          "TITLE": "Correo electrónico inválido"
         },
         "ERROR": {
-          "TITLE": "Error de autenticación",
-          "MESSAGE": "Credenciales inválidas. Inténtalo de nuevo."
-        },
-        "EMAIL": {
-          "TITLE": "Correo electrónico inválido",
-          "MESSAGE": "Por favor, introduce una dirección de correo válida."
+          "MESSAGE": "Credenciales inválidas. Inténtalo de nuevo.",
+          "TITLE": "Error de autenticación"
         },
         "PASSWORD": {
-          "TITLE": "Contraseña inválida",
-          "MESSAGE": "Debe tener al menos 6 caracteres, un número y un carácter especial."
+          "MESSAGE": "Debe tener al menos 6 caracteres, un número y un carácter especial.",
+          "TITLE": "Contraseña inválida"
+        },
+        "SUCCESS": {
+          "MESSAGE": "¡Bienvenido de nuevo!",
+          "TITLE": "Inicio de sesión exitoso"
         }
-      }
+      },
+      "PASSWORD": "Contraseña",
+      "START_TEXT": "Tu viaje comienza aquí. ¡Entra!"
     },
     "REGISTER": {
-      "STEP_INDICATOR": "Paso {{current}} - {{total}}",
-      "TITLE": "Registra tu cuenta de usuario",
-      "SUBTITLE": "Completa todos los campos del formulario para continuar al siguiente paso",
-      "STEPS": {
-        "ACCOUNT": "Cuenta",
-        "PERSONAL": "Personal",
-        "IMAGE": "Imagen"
-      },
       "ACCOUNT_STEP": {
-        "TITLE": "Información de la cuenta:",
-        "EMAIL": {
-          "LABEL": "Email: *",
-          "PLACEHOLDER": "Email",
-          "REQUIRED": "El email es obligatorio",
-          "INVALID": "El formato del email no es válido"
-        },
-        "PASSWORD": {
-          "LABEL": "Contraseña: *",
-          "PLACEHOLDER": "Contraseña",
-          "REQUIRED": "La contraseña es obligatoria",
-          "INVALID": "La contraseña debe tener al menos 6 caracteres, un número y un carácter especial"
-        },
         "CONFIRM_PASSWORD": {
           "LABEL": "Confirmar Contraseña: *",
+          "MISMATCH": "Las contraseñas no coinciden",
           "PLACEHOLDER": "Confirmar Contraseña",
-          "REQUIRED": "Debe confirmar la contraseña",
-          "MISMATCH": "Las contraseñas no coinciden"
-        }
+          "REQUIRED": "Debe confirmar la contraseña"
+        },
+        "EMAIL": {
+          "INVALID": "El formato del email no es válido",
+          "LABEL": "Email: *",
+          "PLACEHOLDER": "Email",
+          "REQUIRED": "El email es obligatorio"
+        },
+        "PASSWORD": {
+          "INVALID": "La contraseña debe tener al menos 6 caracteres, un número y un carácter especial",
+          "LABEL": "Contraseña: *",
+          "PLACEHOLDER": "Contraseña",
+          "REQUIRED": "La contraseña es obligatoria"
+        },
+        "TITLE": "Información de la cuenta:"
       },
-      "PERSONAL_STEP": {
-        "TITLE": "Información Personal:",
-        "STEP_INDICATOR": "Paso 2 - 3",
-        "NAME": {
-          "LABEL": "Nombre: *",
-          "PLACEHOLDER": "Nombre",
-          "REQUIRED": "El nombre es obligatorio"
-        },
-        "LAST_NAME": {
-          "LABEL": "Apellidos: *",
-          "PLACEHOLDER": "Apellidos",
-          "REQUIRED": "Los apellidos son obligatorios"
-        },
-        "NIF": {
-          "LABEL": "NIF/DNI: *",
-          "PLACEHOLDER": "NIF/DNI",
-          "REQUIRED": "El NIF/DNI es obligatorio",
-          "INVALID": "El formato del NIF/DNI no es válido"
-        },
-        "PHONE": {
-          "LABEL": "Teléfono: *",
-          "PLACEHOLDER": "Teléfono",
-          "REQUIRED": "El número de teléfono es obligatorio",
-          "INVALID": "El formato del número de teléfono no es válido"
-        },
-        "BIRTH_DATE": {
-          "LABEL": "Fecha de Nacimiento: *",
-          "REQUIRED": "La fecha de nacimiento es obligatoria",
-          "MIN_AGE": "Debes tener al menos 18 años"
-        },
-        "GENDER": {
-          "LABEL": "Género: *",
-          "REQUIRED": "El género es obligatorio",
-          "OPTIONS": {
-            "MALE": "Masculino",
-            "FEMALE": "Femenino",
-            "OTHER": "Otro"
-          }
-        }
+      "BUTTONS": {
+        "FINISH": "Finalizar",
+        "NEXT": "Siguiente",
+        "PREVIOUS": "Anterior"
       },
       "IMAGE_STEP": {
-        "TITLE": "Foto de Perfil:",
         "STEP_INDICATOR": "Paso 3 - 3",
+        "TITLE": "Foto de Perfil:",
         "UPLOAD_LABEL": "Sube tu foto de perfil:",
         "VALIDATION": {
           "SIZE_ERROR": "El archivo no debe superar los 5MB",
           "TYPE_ERROR": "El archivo debe ser una imagen"
         }
       },
+      "NOTIFICATIONS": {
+        "ERROR": {
+          "MESSAGE": "No se pudo completar el registro",
+          "TITLE": "Error en el registro"
+        },
+        "REGISTER_SUCCESS": {
+          "MESSAGE": "Tu cuenta ha sido creada correctamente",
+          "TITLE": "Registro completado"
+        },
+        "VALIDATION_ERROR": {
+          "MESSAGE": "Por favor, completa correctamente todos los campos requeridos",
+          "TITLE": "Error de validación"
+        }
+      },
+      "PERSONAL_STEP": {
+        "BIRTH_DATE": {
+          "LABEL": "Fecha de Nacimiento: *",
+          "MIN_AGE": "Debes tener al menos 18 años",
+          "REQUIRED": "La fecha de nacimiento es obligatoria"
+        },
+        "GENDER": {
+          "LABEL": "Género: *",
+          "OPTIONS": {
+            "FEMALE": "Femenino",
+            "MALE": "Masculino",
+            "OTHER": "Otro"
+          },
+          "REQUIRED": "El género es obligatorio"
+        },
+        "LAST_NAME": {
+          "LABEL": "Apellidos: *",
+          "PLACEHOLDER": "Apellidos",
+          "REQUIRED": "Los apellidos son obligatorios"
+        },
+        "NAME": {
+          "LABEL": "Nombre: *",
+          "PLACEHOLDER": "Nombre",
+          "REQUIRED": "El nombre es obligatorio"
+        },
+        "NIF": {
+          "INVALID": "El formato del NIF/DNI no es válido",
+          "LABEL": "NIF/DNI: *",
+          "PLACEHOLDER": "NIF/DNI",
+          "REQUIRED": "El NIF/DNI es obligatorio",
+          "INVALID_DATA": "Numeros o letra NIF/DNI inválidos"
+        },
+        "PHONE": {
+          "INVALID": "El formato del número de teléfono no es válido",
+          "LABEL": "Teléfono: *",
+          "PLACEHOLDER": "Teléfono",
+          "REQUIRED": "El número de teléfono es obligatorio"
+        },
+        "STEP_INDICATOR": "Paso 2 - 3",
+        "TITLE": "Información Personal:"
+      },
+      "STEPS": {
+        "ACCOUNT": "Cuenta",
+        "IMAGE": "Imagen",
+        "PERSONAL": "Personal"
+      },
+      "STEP_INDICATOR": "Paso {{current}} - {{total}}",
+      "SUBTITLE": "Completa todos los campos del formulario para continuar al siguiente paso",
+      "TITLE": "Registra tu cuenta de usuario"
+    },
+    "SIDEBAR": {
+      "ACCOMMODATIONS": "Alojamiento",
+      "FLIGHTS": "Vuelos",
+      "LANGUAGE": "Idioma",
+      "LOGIN": "Iniciar sesión",
+      "PANEL": {
+        "ACCOUNT": "Gestiona tu cuenta",
+        "ADMIN": "Administración",
+        "ADMIN_SUBTITLE": "Gestiona la adminitración",
+        "LOGOUT": "Cerrar sesión",
+        "PROFILE": "Perfil"
+      },
+      "REGISTER": "Registro",
+      "WELCOME": "Bienvenido"
+    },
+    "CODE_VALIDATION": {
+      "TITLE": "Código de Verificación",
+      "SUBTITLE": "Introduce el código de 6 dígitos enviado a tu correo:",
       "BUTTONS": {
-        "PREVIOUS": "Anterior",
-        "NEXT": "Siguiente",
-        "FINISH": "Finalizar"
+        "VERIFY": "Verificar Código",
+        "LOADING": "Verificando...",
+        "RESEND": "Reenviar Código"
       },
       "NOTIFICATIONS": {
         "VALIDATION_ERROR": {
-          "TITLE": "Error de validación",
-          "MESSAGE": "Por favor, completa correctamente todos los campos requeridos"
+          "TITLE": "Error de Validación",
+          "MESSAGE": "Por favor introduce el código completo de 6 dígitos"
         },
-        "REGISTER_SUCCESS": {
-          "TITLE": "Registro completado",
-          "MESSAGE": "Tu cuenta ha sido creada correctamente"
+        "SUCCESS": {
+          "TITLE": "Verificación Exitosa",
+          "MESSAGE": "Tu correo ha sido verificado correctamente"
         },
         "ERROR": {
-          "TITLE": "Error en el registro",
-          "MESSAGE": "No se pudo completar el registro"
+          "TITLE": "Error de Verificación",
+          "MESSAGE": "Código de verificación inválido. Por favor inténtalo de nuevo"
+        },
+        "SEND_SUCCESS": {
+          "TITLE": "Código Enviado",
+          "MESSAGE": "Un código de verificación ha sido enviado a tu correo"
+        },
+        "SEND_ERROR": {
+          "TITLE": "Error al Enviar",
+          "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+        },
+        "RESEND_SUCCESS": {
+          "TITLE": "Código Reenviado",
+          "MESSAGE": "Un nuevo código de verificación ha sido enviado a tu correo"
+        },
+        "RESEND_ERROR": {
+          "TITLE": "Error al Reenviar",
+          "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+        },
+        "PASSWORD_CHANGED": {
+          "TITLE": "Contraseña cambiada",
+          "MESSAGE": "Su contraseña ha sido actualizada con éxito"
+        },
+        "PASSWORD_CHANGED_ERROR": {
+          "TITLE": "Error en el cambio de contraseña",
+          "MESSAGE": "Ha habido un problema cambiando tu contraseña"
         }
+      },
+      "RESEND_MODAL": {
+        "TITLE": "Reenviar Código de Verificación",
+        "SUBTITLE": "Introduce tu dirección de correo para recibir un nuevo código de verificación",
+        "EMAIL_PLACEHOLDER": "Introduce tu correo",
+        "SEND": "Enviar Código",
+        "CANCEL": "Cancelar"
       }
     }
-  }
+  },
+  "HOME": {
+    "WELCOME": "Bienvenido a SkyStay"
+  },
+  "NOT_FOUND": {
+    "BUTTON": "Volver a la página anterior.",
+    "SUBTITLE": "Lo sentimos, no pudimos encontrar la página que estás buscando.",
+    "TITLE": "Página no encontrada"
+  },
+  "SHOW_IMAGE": "Mostrar imágen",
+  "UNAUTHORIZED": {
+    "BUTTON": "Volver al inicio",
+    "SUBTITLE": "No tienes permisos para ver esta página. Si crees que es un error, contacta al administrador.",
+    "TITLE": "Acceso no autorizado"
+  },
+  "UPLOAD_IMAGE": "Subir imagen"
 }
