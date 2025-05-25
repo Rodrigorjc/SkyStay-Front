@@ -9,6 +9,8 @@ import { InfoCardHotel } from "@components/admin/InfoCard";
 import UploadImage from "@/app/components/upload/UploadImage";
 import EditHotelModal from "./components/EditHotelModal";
 import Button from "@/app/components/ui/Button";
+import { Notifications } from "@/app/interfaces/Notifications";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
 
 export default function HotelsDetails() {
   const { dict } = useDictionary();
@@ -17,12 +19,21 @@ export default function HotelsDetails() {
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
+  const handleOpenModal = () => setIsModalOpen(true);
+
   const fetchHotel = async () => {
     try {
       const response = await getHotelByCode(hotelCode as string);
       setHotel(response.response.objects);
     } catch (error) {
-      console.error("Error fetching hotel:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
+      });
     } finally {
       setLoading(false);
     }
@@ -32,15 +43,19 @@ export default function HotelsDetails() {
     const parsedHotelCode = Array.isArray(hotelCode) ? hotelCode[0] : hotelCode;
 
     if (!parsedHotelCode || !url || !roomType) {
-      console.error("Faltan parámetros: hotelCode, url o roomType.");
+      new Error("Invalid parameters");
       return;
     }
-
     try {
       await addRoomImage({ url, hotelCode: parsedHotelCode, roomType });
       fetchHotel();
     } catch (error) {
-      console.error("Error al añadir la imagen de habitación:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTEL.ERRORS.ADD_IMAGE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.ADD_IMAGE_MESSAGE,
+      });
     }
   };
   useEffect(() => {
@@ -58,17 +73,15 @@ export default function HotelsDetails() {
   if (!hotel) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-red-500">Error: No se pudo cargar la información del hotel.</p>
+        <p className="text-red-500">{dict.ADMINISTRATION.ERROR_LOAD_HOTEL}</p>
       </div>
     );
   }
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
+  const handleEditSuccess = (notification: Notifications) => {
+    setNotification(notification);
     setIsModalOpen(false);
+    fetchHotel();
   };
 
   return (
@@ -109,8 +122,8 @@ export default function HotelsDetails() {
 
           {hotel.roomsDetails && hotel.roomsDetails.length > 0 ? (
             hotel.roomsDetails.map((roomType, index) => (
-              <div key={index} className="space-y-4 mb-10">
-                <div className="flex flex-wrap items-center gap-2">
+              <div key={index} className="space-y-8 mb-8">
+                <div className="flex flex-col gap-4">
                   {/* Título */}
                   <h3 className="text-lg text-zinc-300 font-semibold ">
                     {roomType.roomType} – {roomType.roomCapacity} {dict.ADMINISTRATION.HOTEL_DETAILS.PEOPLE}
@@ -123,8 +136,19 @@ export default function HotelsDetails() {
                         onUpload={urls => {
                           if (urls && urls.length > 0) {
                             handleCreateRoomImage(urls[0] as string, hotelCode as string, roomType.roomType);
+                            setNotification({
+                              tipo: "success",
+                              titulo: dict.ADMINISTRATION.HOTEL.SUCCESS.ADD_IMAGE_TITLE,
+                              code: 200,
+                              mensaje: dict.ADMINISTRATION.HOTEL.SUCCESS.ADD_IMAGE_MESSAGE,
+                            });
                           } else {
-                            console.error("No se recibieron URLs de imagen.");
+                            setNotification({
+                              tipo: "error",
+                              titulo: dict.ADMINISTRATION.HOTEL.ERRORS.ADD_IMAGE_TITLE,
+                              code: 400,
+                              mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.ADD_IMAGE_MESSAGE,
+                            });
                           }
                         }}
                       />
@@ -154,20 +178,23 @@ export default function HotelsDetails() {
           )}
         </section>
       </div>
+      {isModalOpen && (
+        <EditHotelModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          hotelCode={hotelCode as string}
+          initialData={{
+            code: hotelCode as string,
+            phoneNumber: hotel.phone_number,
+            email: hotel.email,
+            website: hotel.website,
+            description: hotel.description,
+          }}
+          onSuccess={handleEditSuccess}
+        />
+      )}
 
-      <EditHotelModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        hotelCode={hotelCode as string}
-        initialData={{
-          code: hotelCode as string,
-          phoneNumber: hotel.phone_number,
-          email: hotel.email,
-          website: hotel.website,
-          description: hotel.description,
-        }}
-        onSuccess={fetchHotel}
-      />
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
     </div>
   );
 }
