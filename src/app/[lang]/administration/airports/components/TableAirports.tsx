@@ -7,6 +7,9 @@ import { useState } from "react";
 import Button from "@/app/components/ui/Button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 import { AirportAdminVO } from "../types/airport";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
+import { Notifications } from "@/app/interfaces/Notifications";
+import { on } from "events";
 
 interface AdminAirportsTableProps {
   data: AirportAdminVO[];
@@ -18,19 +21,40 @@ export default function AdminAirportsTable({ data, onRefresh }: AdminAirportsTab
   const [selectedAirport, setSelectedAirport] = useState<AirportAdminVO | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
+
+  const handleCreateSuccess = (notification: Notifications) => {
+    setNotification(notification);
+    setIsCreateModalOpen(false);
+    setTimeout(() => {
+      onRefresh();
+    }, 2500);
+  };
+
+  const handleEditSuccess = (notification: Notifications) => {
+    setNotification(notification);
+    setSelectedAirport(null);
+    setTimeout(() => {
+      onRefresh();
+    }, 2500);
+  };
+
   return (
     <div>
-      {isCreateModalOpen && <AirportModalForm onClose={() => setIsCreateModalOpen(false)} />}
+      {isCreateModalOpen && <AirportModalForm onClose={() => setIsCreateModalOpen(false)} onSuccess={handleCreateSuccess} />}
       {selectedAirport && (
         <AirportModalFormEdit
           defaultValues={{
             ...selectedAirport,
             city: selectedAirport.city.name,
           }}
-          onClose={() => setSelectedAirport(null)}
+          onSuccess={handleEditSuccess}
+          onClose={() => {
+            setSelectedAirport(null);
+          }}
         />
       )}
-
       <section>
         <div className="flex flex-row items-end gap-4">
           <Button
@@ -92,6 +116,7 @@ export default function AdminAirportsTable({ data, onRefresh }: AdminAirportsTab
           </Table>
         </div>
       </section>
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
     </div>
   );
 }
