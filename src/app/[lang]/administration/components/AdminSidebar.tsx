@@ -1,42 +1,37 @@
 "use client";
 
 import { useState, useEffect, JSX } from "react";
-import { FaBars, FaChevronLeft, FaHome, FaUser, FaPlaneDeparture, FaHotel, FaBuilding, FaSuitcase, FaBook, FaCreditCard, FaChartPie, FaLifeRing, FaPlane } from "react-icons/fa";
+import { FaBars, FaChevronLeft, FaHome, FaUser, FaPlaneDeparture, FaHotel, FaBuilding, FaLifeRing, FaPlane } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { PiLighthouse } from "react-icons/pi";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { SiAmericanairlines } from "react-icons/si";
+import { usePathname, useRouter } from "next/navigation";
 import { decodeToken } from "@/lib/services/common.service";
 import { DecodeToken } from "@/types/common/decodeToken";
+import { IoFastFood } from "react-icons/io5";
+import { MdLuggage } from "react-icons/md";
+import Cookies from "js-cookie";
+import Button from "@/app/components/ui/Button";
+import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
 
 const ROUTES = [
   { icon: <FaHome />, textKey: "HOME", url: "/administration" },
   { icon: <FaUser />, textKey: "USERS", url: "/administration/users" },
-  { icon: <FaPlaneDeparture />, textKey: "FLIGHTS", url: "/administration/flights" },
+  { icon: <SiAmericanairlines />, textKey: "AIRLINES", url: "/administration/airlines" },
   { icon: <PiLighthouse />, textKey: "AIRPORTS", url: "/administration/airports" },
   { icon: <FaPlane />, textKey: "AIRPLANES", url: "/administration/airplanes" },
+  { icon: <FaPlaneDeparture />, textKey: "FLIGHTS", url: "/administration/flights" },
   { icon: <FaHotel />, textKey: "HOTELS", url: "/administration/hotels" },
   { icon: <FaBuilding />, textKey: "APARTMENTS", url: "/administration/apartments" },
-  { icon: <FaLifeRing />, textKey: "SUPPORT", url: "/administration/support" },
+  { icon: <IoFastFood />, textKey: "MEALS", url: "/administration/meals" },
+  { icon: <MdLuggage />, textKey: "ADDITIONAL_BAGGAGE", url: "/administration/additional-baggage" },
 ];
 
-const Sidebar = ({ dict }: { dict: any }) => {
+const Sidebar = ({ dict, user }: { dict: any; user: DecodeToken }) => {
   const [collapsed, setCollapsed] = useState(true);
-  const [user, setUser] = useState<DecodeToken | null>(null);
   const pathname = usePathname();
   const lang = window.location.pathname.includes("/en") ? "en" : "es";
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await decodeToken();
-        setUser(response);
-      } catch (error) {
-        console.error("Error fetching user info: ", error);
-      }
-    };
-    fetchUserInfo();
-  }, []);
 
   const toggleSidebar = () => setCollapsed(prev => !prev);
 
@@ -83,16 +78,38 @@ const SidebarItem = ({ icon, text, url, collapsed, currentPath }: { icon?: JSX.E
   );
 };
 
-const SidebarFooter = ({ collapsed, user }: { collapsed: boolean; user: DecodeToken | null }) => (
-  <div className={`mt-6 flex ${collapsed ? "justify-center" : "items-center space-x-3"}`}>
-    <RiAdminFill className="h-10 w-10 rounded-full text-[#FFD580]" />
-    {!collapsed && user && (
-      <div className="flex flex-col">
-        <p className="text-base font-medium">{user.name}</p>
-        <p className="text-sm text-gray-300">{user.role}</p>
-      </div>
-    )}
-  </div>
-);
+const SidebarFooter = ({ collapsed, user }: { collapsed: boolean; user: DecodeToken | null }) => {
+  const router = useRouter();
+  const { dict } = useDictionary();
+  const lang = useLanguage();
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    router.push(`login`);
+  };
+
+  const [showLogout, setShowLogout] = useState(false);
+
+  const toggleLogout = () => {
+    setShowLogout(prev => !prev);
+  };
+
+  return (
+    <div className={` mt-6 flex ${collapsed ? "justify-center p-0" : "items-center space-x-3 p-4 bg-glacier-900 rounded-xl"}`}>
+      <RiAdminFill className="h-10 w-10 rounded-full text-[#FFD580] cursor-pointer" onClick={toggleLogout} />
+      {!collapsed && user && !showLogout && (
+        <div className="flex flex-col cursor-pointer select-none">
+          <p className="text-base font-medium">{user.name}</p>
+          <p className="text-sm text-gray-300">{user.role}</p>
+        </div>
+      )}
+      {!collapsed && showLogout && (
+        <div className="flex flex-col">
+          <Button onClick={handleLogout} text={dict.ADMINISTRATION.SIDEBAR.LOGOUT} color="dark" />
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Sidebar;
