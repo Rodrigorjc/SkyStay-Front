@@ -2,7 +2,6 @@
 
 import { useDictionary } from "@context";
 import Navbar from "../components/ui/Navbar";
-import CloudinaryUpload from "../components/upload/UploadImage";
 import { useState } from "react";
 import { Notifications } from "@/app/interfaces/Notifications";
 import NotificationComponent from "@components/Notification";
