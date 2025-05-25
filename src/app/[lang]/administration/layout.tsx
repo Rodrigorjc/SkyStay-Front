@@ -14,7 +14,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const { dict } = useDictionary();
   const router = useRouter();
   const [user, setUser] = useState<DecodeToken | null>(null);
-
   const params = useParams();
   const lang = params.lang;
 
@@ -23,29 +22,26 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       try {
         const response = await decodeToken();
         setUser(response);
-
         if (!response) {
           throw new Error("Token decoding failed: response is null");
         }
-
         if (!["ADMIN", "MODERATOR"].includes(response.role)) {
-          router.push(`/${lang}/unauthorized`);
+          router.replace(`/${lang}/forbidden`);
         }
       } catch (error) {
-        console.error("Error fetching user info by code: ", error);
-        router.push(`/${lang}/login`);
+        router.replace(`/${lang}/forbidden`);
       }
     };
     fetchUserInfo();
-  }, [router]);
+  }, []);
 
-  if (!dict) {
-    return;
+  if (!dict || !user) {
+    return null;
   }
 
   return (
     <div className="flex h-screen">
-      <Sidebar dict={dict} />
+      <Sidebar dict={dict} user={user} />
       <div className="flex-1 p-4 bg-zinc-800 overflow-y-auto custom-scrollbar">
         <main>{children}</main>
       </div>
