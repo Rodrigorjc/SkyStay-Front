@@ -8,11 +8,12 @@ import TablePlanes from "./components/TableAirplanes";
 import Pagination from "@/app/components/ui/Pagination";
 import AirplaneModalForm from "./components/AirplanesFormAdd";
 import AirplaneTypeModalForm from "./components/AirplaneTypeModalForm";
-import CabinDetailsModalForm from "./components/SeatConfigurationModalForm";
-
-import { FaPlane, FaPlus, FaThLarge } from "react-icons/fa";
 import Button from "@/app/components/ui/Button";
 import { getAllAirplanes } from "./services/airplane.service";
+import { Notifications } from "@/app/interfaces/Notifications";
+import SeatConfigurationModalForm from "./components/SeatConfigurationModalForm";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
+import { Title } from "../components/Title";
 
 export default function Page() {
   const { dict } = useDictionary();
@@ -26,6 +27,9 @@ export default function Page() {
   const [isCreatingAirplaneType, setIsCreatingAirplaneType] = useState(false);
   const [isCreatingCabinDetails, setIsCreatingCabinDetails] = useState(false);
 
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
+
   const fetchPlanes = async () => {
     setLoading(true);
     try {
@@ -34,7 +38,11 @@ export default function Page() {
       setHasNextPage(response.hasNextPage);
       setHasPreviousPage(response.hasPreviousPage);
     } catch (error) {
-      console.error("Error fetching airports:", error);
+      return (
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <h1 className="text-2xl">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
+        </div>
+      );
     } finally {
       setLoading(false);
     }
@@ -66,28 +74,31 @@ export default function Page() {
     setIsCreatingCabinDetails(false);
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = (notification: Notifications) => {
     fetchPlanes();
     handleModalClose();
+    setNotification(notification);
   };
 
   return (
-    <div>
-      <h1 className="text-2xl">{dict.ADMINISTRATION.AIRPLANES.TITLE}</h1>
-      <div className="bg-zinc-700 p-10 m-4 rounded-md">
+    <>
+      <Title title={dict.ADMINISTRATION.AIRPLANES.TITLE} />
+      <div className="p-1 m-4">
         <div className="flex flex-row justify-start items-center mb-4 gap-4">
-          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANES} onClick={() => handleCreate()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE} onClick={() => handleCreate()} color="admin" className="" />
           <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE} onClick={() => handleCreateAirplaneType()} color="admin" className="" />
           <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION} onClick={() => handleCreateCabinDetails()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.RELOAD} onClick={() => fetchPlanes()} color="admin" className="" />
         </div>
 
         <TablePlanes planes={planes} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
 
-      {isCreating && <AirplaneModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
-      {isCreatingAirplaneType && <AirplaneTypeModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
-      {isCreatingCabinDetails && <CabinDetailsModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
-    </div>
+      {isCreating && <AirplaneModalForm onClose={handleModalClose} onSuccess={handleSuccess} notifications={notification} />}
+      {isCreatingAirplaneType && <AirplaneTypeModalForm onClose={handleModalClose} onSuccess={handleSuccess} notifications={notification} />}
+      {isCreatingCabinDetails && <SeatConfigurationModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
+    </>
   );
 }

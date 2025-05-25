@@ -8,6 +8,9 @@ import UploadImage from "@/app/components/upload/UploadImage";
 import ImageModal from "../../components/ImageModal";
 import { AddImageVO } from "@/types/common/image";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
+import { Notifications } from "@/app/interfaces/Notifications";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
+import { Select } from "@/app/components/ui/admin/Label";
 
 interface Props {
   planes: AirplaneShowVO[];
@@ -19,6 +22,9 @@ export default function TablePlanes({ planes }: Props) {
   const [airplaneStatuses, setAirplaneStatuses] = useState<string[]>([]);
   const [localPlanes, setLocalPlanes] = useState(planes);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,18 +41,42 @@ export default function TablePlanes({ planes }: Props) {
 
   const handleStatusChange = async (form: ChangeAirplaneStatusVO) => {
     try {
-      const response = await updateAirplaneStatus(form);
-      console.log(`Estado actualizado correctamente: ${response}`);
+      await updateAirplaneStatus(form);
+      setNotification({
+        tipo: "success",
+        titulo: dict.ADMINISTRATION.AIRPLANES.SUCCESS.AIRPLANE_TYPE.STATUS_UPDATE_TITLE,
+        code: 200,
+        mensaje: dict.ADMINISTRATION.AIRPLANES.SUCCESS.AIRPLANE_TYPE.STATUS_UPDATE_MESSAGE,
+      });
       setLocalPlanes(prevPlanes => prevPlanes.map(plane => (plane.code === form.airplaneCode ? { ...plane, status: form.status } : plane)));
     } catch (error) {
-      console.error("Error al actualizar el estado del avión:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.AIRPLANES.ERRORS.AIRPLANE_TYPE.UPDATE_FAILED_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.AIRPLANES.ERRORS.AIRPLANE_TYPE.UPDATE_FAILED_MESSAGE,
+      });
     }
   };
 
   const handleImageUpload = async (form: AddImageVO) => {
-    const response = await addImageOnAirplane(form);
-    console.log(`Imagen subida correctamente: ${response}`);
-    setLocalPlanes(prevPlanes => prevPlanes.map(plane => (plane.code === form.code ? { ...plane, image: form.image[0] } : plane)));
+    try {
+      await addImageOnAirplane(form);
+      setNotification({
+        tipo: "success",
+        titulo: dict.ADMINISTRATION.AIRPLANES.SUCCESS.IMAGE_UPLOAD_TITLE,
+        code: 200,
+        mensaje: dict.ADMINISTRATION.AIRPLANES.SUCCESS.IMAGE_UPLOAD_MESSAGE,
+      });
+      setLocalPlanes(prevPlanes => prevPlanes.map(plane => (plane.code === form.code ? { ...plane, image: form.image } : plane)));
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.AIRPLANES.ERRORS.IMAGE_UPLOAD_FAILED_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.AIRPLANES.ERRORS.IMAGE_UPLOAD_FAILED_MESSAGE,
+      });
+    }
   };
 
   const router = useRouter();
@@ -79,13 +109,13 @@ export default function TablePlanes({ planes }: Props) {
               <TableCell>{plane.yearOfManufacture}</TableCell>
               <TableCell>{plane.type}</TableCell>
               <TableCell>
-                <select value={plane.status} onChange={e => handleStatusChange({ airplaneCode: plane.code, status: e.target.value })} className="border border-gray-300 rounded px-2 py-1">
+                <Select value={plane.status} onChange={e => handleStatusChange({ airplaneCode: plane.code, status: e.target.value })} className="border border-gray-300 rounded px-2 py-1">
                   {airplaneStatuses?.map((status, index) => (
                     <option key={index} value={status}>
                       {status}
                     </option>
                   ))}
-                </select>
+                </Select>
               </TableCell>
               <TableCell>
                 {plane.image ? (
@@ -103,6 +133,7 @@ export default function TablePlanes({ planes }: Props) {
         </TableBody>
       </Table>
       {selectedImage && <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />}
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
     </div>
   );
 }
