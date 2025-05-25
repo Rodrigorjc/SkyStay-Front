@@ -1,6 +1,6 @@
 "use client";
 
-import { useDictionary } from "@context";
+import { useDictionary, useLanguage } from "@context";
 import { useRouter } from "next/navigation";
 import Pagination from "@/app/components/ui/Pagination";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ export default function AdminUserDetails({ params }: { params: Promise<{ userCod
   const { dict } = useDictionary();
   const { userCode } = React.use(params);
   const router = useRouter();
-
+  const lang = useLanguage();
   const [dataUser, setDataUser] = useState<DecodeToken>();
 
   useEffect(() => {
@@ -198,13 +198,11 @@ export default function AdminUserDetails({ params }: { params: Promise<{ userCod
   return (
     <div>
       <section>
-        <div>
-          <button onClick={() => router.push(`/es/administration/users`)} className="flex flex-row gap-2 items-center justify-start">
+        <div className="px-10 py-6 m-4 rounded-md">
+          <button onClick={() => router.push(`/${lang}/administration/users`)} className="flex flex-row gap-2 items-center justify-star cursor-pointer mb-6">
             <h1 className="text-2xl">{dict.ADMINISTRATION.USERS.DETAILS.USER_DETAILS}</h1>
           </button>
-        </div>
-        <div>
-          <div className=" p-10 m-4 rounded-md">
+          <div>
             {dataUser && (
               <div className="mb-12">
                 <InfoCardLight label={dataUser?.name} value={dataUser?.role} />

@@ -44,12 +44,9 @@ export default function AdminUsersTable({ users, onSearch, searchValue, onReset 
   return (
     <div>
       <section>
-        <div className="flex flex-row gap-6 items-end">
+        <div className="flex flex-row gap-6 items-center justify-start">
           <SearchBar id="find-user" placeholder={dict.ADMINISTRATION.USERS.SEARCH_BAR} value={inputValue} onChange={handleInputChange} onSearch={handleSearchClick} onKeyDown={handleKeyDown} />
-
-          <div className="flex w-auto">
-            <Button text={dict.ADMINISTRATION.USERS.RESET_FILTER} onClick={() => onReset()} color="admin" className="" />
-          </div>
+          <Button text={dict.ADMINISTRATION.USERS.RESET_FILTER} onClick={() => onReset()} color="admin" className="" />
         </div>
 
         <div className="mt-8 overflow-y-auto">

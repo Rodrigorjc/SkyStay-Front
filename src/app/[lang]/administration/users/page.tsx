@@ -6,6 +6,7 @@ import TableUser from "./components/TableUser";
 import Loader from "@/app/components/ui/Loader";
 import Pagination from "@/app/components/ui/Pagination";
 import { useDictionary } from "@/app/context/DictionaryContext";
+import { Title } from "../components/Title";
 
 export default function AdminUsersPage() {
   const { dict } = useDictionary();
@@ -26,7 +27,11 @@ export default function AdminUsersPage() {
         setHasNextPage(response.hasNextPage);
         setHasPreviousPage(response.hasPreviousPage);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        return (
+          <div className="flex items-center justify-center min-h-screen w-full">
+            <h1 className="text-2xl">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
+          </div>
+        );
       } finally {
         setLoading(false);
       }
@@ -59,8 +64,8 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl">{dict.ADMINISTRATION.SIDEBAR.USERS}</h1>
-      <div className="bg-zinc-700 p-10 m-4 rounded-md">
+      <Title title={dict.ADMINISTRATION.SIDEBAR.USERS} />
+      <div className="p-1 m-4">
         <TableUser users={users} onSearch={handleSearch} searchValue={search} onReset={handleReset} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
