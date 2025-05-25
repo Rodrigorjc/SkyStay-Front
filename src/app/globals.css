@@ -62,6 +62,7 @@ body {
   font-family: "Fugaz One", sans-serif;
 }
 
+/* Scrollbar custom */
 .custom-scrollbar {
   --sb-track-color: #232e33;
   --sb-size: 8px;
@@ -83,8 +84,14 @@ body {
   border-radius: 25px;
 }
 
+/* Quitar el seleccionar hacia arriba y abajo en inputs de tipo numero */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* Cambiar el color del icono del calendario en el input selector de fecha y hora (azul claro) */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(48%) sepia(67%) saturate(747%) hue-rotate(150deg) brightness(95%) contrast(92%);
 }
