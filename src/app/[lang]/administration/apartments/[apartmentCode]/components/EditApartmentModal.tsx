@@ -6,53 +6,121 @@ import { useDictionary } from "@/app/context/DictionaryContext";
 import { InputWithLabel, TextareaWithLabel } from "@/app/components/ui/admin/Label";
 import Modal from "@/app/components/ui/admin/Modal";
 import Button from "@/app/components/ui/Button";
+import { z } from "zod";
+import { Notifications } from "@/app/interfaces/Notifications";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
+import { Card, CardContent, CardHeader } from "@/app/components/ui/admin/Card";
 
 interface EditHotelModalProps {
   isOpen: boolean;
   onClose: () => void;
   hotelCode: string;
   initialData: EditHotelVO;
-  onSuccess: () => void;
+  onSuccess: (notification: Notifications) => void;
 }
+
+export const apartmentEditFormSchema = z.object({
+  code: z.string().min(1),
+  phoneNumber: z.string().min(1),
+  email: z.string().min(1).email(),
+  website: z.string().min(1),
+  description: z.string().min(1),
+});
+
+export type ApartmentFormValues = z.infer<typeof apartmentEditFormSchema>;
 
 const EditApartmentModal: React.FC<EditHotelModalProps> = ({ isOpen, onClose, hotelCode, initialData, onSuccess }) => {
   const [editHotelData, setEditHotelData] = useState<EditHotelVO>(initialData);
 
   const { dict } = useDictionary();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setEditHotelData((prev: any) => ({ ...prev, [name]: value }));
-  };
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
 
-  const handleUpdateApartment = async () => {
+  const { handleSubmit, register, getValues, trigger } = useForm<ApartmentFormValues>({
+    resolver: zodResolver(apartmentEditFormSchema),
+    defaultValues: initialData,
+  });
+
+  const onSubmit = async () => {
     try {
-      await updateApartments(editHotelData);
-      onSuccess();
-      onClose();
+      await updateApartments(getValues());
+      const notification: Notifications = {
+        tipo: "success",
+        titulo: dict.ADMINISTRATION.APARTMENTS.SUCCESS.UPDATE_APARTMENT_TITLE,
+        code: 200,
+        mensaje: dict.ADMINISTRATION.APARTMENTS.SUCCESS.UPDATE_APARTMENT_MESSAGE,
+      };
+      onSuccess(notification);
     } catch (error) {
-      console.error("Error updating hotel details:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.APARTMENTS.ERRORS.EDIT_FAILED_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.APARTMENTS.ERRORS.EDIT_FAILED_MESSAGE,
+      });
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <Modal onClose={onClose} onSubmit={handleUpdateApartment}>
-      <div className="p-6">
-        <h2 className="text-3xl font-semibold mb-4 text-center">{dict.ADMINISTRATION.HOTEL_DETAILS.EDIT_HOTEL}</h2>
+    <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Card>
+        <CardHeader color="glacier">{dict.ADMINISTRATION.HOTEL_DETAILS.EDIT_HOTEL}</CardHeader>
+        <CardContent>
+          <div className="flex flex-col space-y-4">
+            <InputWithLabel label={dict.ADMINISTRATION.HOTELS.PHONE_NUMBER} id="phoneNumber" {...register("phoneNumber")} />
+            <InputWithLabel label={dict.ADMINISTRATION.HOTELS.EMAIL} id="email" type="email" {...register("email")} />
+            <InputWithLabel label={dict.ADMINISTRATION.HOTELS.WEBSITE} id="website" {...register("website")} />
+            <TextareaWithLabel label={dict.ADMINISTRATION.HOTELS.DESCRIPTION} id="description" {...register("description")} />
+          </div>
+          <div className="mt-8 flex justify-end space-x-4">
+            <Button
+              text={dict.ADMINISTRATION.SAVE}
+              onClick={async () => {
+                const values = getValues();
 
-        <div className="flex flex-col space-y-4">
-          <InputWithLabel label={dict.ADMINISTRATION.HOTELS.PHONE_NUMBER} id="phone_number" name="phone_number" value={editHotelData.phoneNumber} onChange={handleInputChange} />
-          <InputWithLabel label={dict.ADMINISTRATION.HOTELS.EMAIL} id="email" name="email" type="email" value={editHotelData.email} onChange={handleInputChange} />
-          <InputWithLabel label={dict.ADMINISTRATION.HOTELS.WEBSITE} id="website" name="website" value={editHotelData.website} onChange={handleInputChange} />
-          <TextareaWithLabel label={dict.ADMINISTRATION.HOTELS.DESCRIPTION} id="description" name="description" value={editHotelData.description} onChange={handleInputChange} />
-        </div>
-        <div className="mt-8 flex justify-between space-x-4">
-          <Button text={dict.ADMINISTRATION.BACK} onClick={() => onClose()} color="admin" className="" />
-          <Button text={dict.ADMINISTRATION.SAVE} onClick={() => handleUpdateApartment()} color="admin" className="" />
-        </div>
-      </div>
+                if (values.phoneNumber && /[^\d\s+]/.test(values.phoneNumber) && values.phoneNumber.length > 5 && values.phoneNumber.length <= 16) {
+                  setNotification({
+                    tipo: "error",
+                    titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                    code: 400,
+                    mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.PHONE_NUMBER_FORMAT,
+                  });
+                  return;
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (values.email && !emailRegex.test(values.email)) {
+                  setNotification({
+                    tipo: "error",
+                    titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                    code: 400,
+                    mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.EMAIL_FORMAT,
+                  });
+                  return;
+                }
+
+                const isValid = await trigger(["code", "phoneNumber", "email", "website", "description"]);
+                if (!isValid) {
+                  setNotification({
+                    tipo: "error",
+                    titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                    code: 400,
+                    mensaje: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_MESSAGE,
+                  });
+                  return;
+                }
+                handleSubmit(onSubmit)();
+              }}
+              color="admin"
+            />
+          </div>
+        </CardContent>
+      </Card>
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
     </Modal>
   );
 };

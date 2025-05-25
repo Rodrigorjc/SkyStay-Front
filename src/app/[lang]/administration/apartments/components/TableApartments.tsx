@@ -11,6 +11,8 @@ import ImageModal from "../../components/ImageModal";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 import { useRouter } from "next/navigation";
 import ApartmentsFormAdd from "./ApartmentsFormAdd";
+import { Notifications } from "@/app/interfaces/Notifications";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
 
 interface AdminApartmentsTableProps {
   data: HotelVO[];
@@ -24,29 +26,48 @@ export default function AdminApartmentsTable({ data, onRefresh }: AdminApartment
   const [isCreating, setIsCreating] = useState(false);
 
   const handleCreate = () => setIsCreating(true);
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
 
   const handleModalClose = () => {
     setIsCreating(false);
   };
 
-  const handleSuccess = () => {
-    handleModalClose();
+  const handleCreateSuccess = (notification: Notifications) => {
+    setNotification(notification);
+    setIsCreating(false);
+    setTimeout(() => {
+      onRefresh();
+    }, 2500);
   };
-
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageUpload = async (form: AddImageVO) => {
     if (!form.image) {
-      console.error("No se proporcionó una imagen para subir.");
-      return;
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTEL_APARTMENT.ERRORS.LOAD_FAILURE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTEL_APARTMENT.ERRORS.LOAD_FAILURE_MESSAGE,
+      });
     }
-
     try {
-      const response = await addImageApartment(form);
-      console.log(`Imagen subida correctamente: ${response}`);
+      await addImageApartment(form);
+      const notification = {
+        tipo: "success",
+        titulo: dict.ADMINISTRATION.HOTEL.SUCCESS.ADD_IMAGE_TITLE,
+        code: 200,
+        mensaje: dict.ADMINISTRATION.HOTEL.SUCCESS.ADD_IMAGE_MESSAGE,
+      };
+      setNotification(notification);
       onRefresh();
     } catch (error) {
-      console.error("Error al subir la imagen:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTEL.ERRORS.ADD_IMAGE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.ADD_IMAGE_MESSAGE,
+      });
     }
   };
 
@@ -101,7 +122,12 @@ export default function AdminApartmentsTable({ data, onRefresh }: AdminApartment
                           if (urls && urls.length > 0) {
                             handleImageUpload({ code: d.code, image: urls[0] });
                           } else {
-                            console.error("No se recibieron URLs de imagen.");
+                            setNotification({
+                              tipo: "error",
+                              titulo: dict.ADMINISTRATION.HOTEL_APARTMENT.ERRORS.LOAD_FAILURE_TITLE,
+                              code: 500,
+                              mensaje: dict.ADMINISTRATION.HOTEL_APARTMENT.ERRORS.LOAD_FAILURE_MESSAGE,
+                            });
                           }
                         }}
                       />
@@ -117,7 +143,8 @@ export default function AdminApartmentsTable({ data, onRefresh }: AdminApartment
         </div>
       </section>
       {selectedImage && <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />}
-      {isCreating && <ApartmentsFormAdd onClose={handleModalClose} onSuccess={handleSuccess} />}
+      {isCreating && <ApartmentsFormAdd onClose={handleModalClose} onSuccess={handleCreateSuccess} />}
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
     </div>
   );
 }

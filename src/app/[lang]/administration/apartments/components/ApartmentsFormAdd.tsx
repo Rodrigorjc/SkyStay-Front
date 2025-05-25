@@ -18,27 +18,29 @@ import { Notifications } from "@/app/interfaces/Notifications";
 import NotificacionComponent from "@/app/components/ui/Notification";
 import { useDictionary } from "@/app/context/DictionaryContext";
 import { RoomConfigurationVO } from "../../hotels/types/hotel";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
 
 interface ApartmentsFormAddProps {
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (notification: Notifications) => void;
+  isOpen?: boolean;
 }
 
 const roomSchema = z.object({
-  type: z.string().min(1, "El tipo de habitación es obligatorio"),
-  total_rooms: z.number().min(1, "Debe haber al menos 1 habitación"),
-  capacity: z.number().min(1, "La capacidad debe ser al menos 1"),
+  type: z.string().min(1),
+  total_rooms: z.number().min(1),
+  capacity: z.number().min(1),
 });
 
 const formSchema = z.object({
-  name: z.string().min(1, "El nombre es obligatorio"),
-  address: z.string().min(1, "La dirección es obligatoria"),
-  postalCode: z.string().min(1, "El código postal es obligatorio"),
-  phone_number: z.string().min(1, "El teléfono es obligatorio"),
-  email: z.string().email("Debe ser un correo válido"),
-  website: z.string().optional(),
-  description: z.string().min(1, "La descripción es obligatoria"),
-  cityId: z.number().min(1, "Debe seleccionar una ciudad"),
+  name: z.string().min(1),
+  address: z.string().min(1),
+  postalCode: z.string().min(1),
+  phone_number: z.string().min(1),
+  email: z.string().email(),
+  website: z.string().min(1),
+  description: z.string().min(1),
+  cityId: z.number().min(1),
   rooms: z.array(roomSchema),
 });
 
@@ -57,7 +59,9 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [notifications, setNotifications] = useState<Notifications[]>([]);
+
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
 
   const { dict } = useDictionary();
 
@@ -69,7 +73,12 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
       setHasNextPage(response.hasNextPage);
       setHasPreviousPage(response.hasPreviousPage);
     } catch (error) {
-      console.error("Error fetching airports:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE,
+      });
     } finally {
       setLoading(false);
     }
@@ -81,7 +90,12 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
       const response = await getAllRoomConfigurations();
       setRoomConfigurations(response.response.objects);
     } catch (error) {
-      console.error("Error al obtener configuraciones de habitaciones:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE,
+      });
     } finally {
       setLoading(false);
     }
@@ -95,14 +109,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const { register, handleSubmit, control, setValue, watch, trigger, getValues } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -122,25 +129,26 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     name: "rooms",
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async () => {
+    setIsSubmitting(true);
     try {
-      const response = await createApartment({
-        ...data,
-        website: data.website || "",
-      });
-      console.log("Hotel creado:", response);
-      onSuccess();
+      await createApartment(getValues());
+      const successNotification = {
+        tipo: "success",
+        titulo: dict.ADMINISTRATION.HOTELS.SUCCESS.CREATION_SUCCESS_TITLE,
+        code: 300,
+        mensaje: dict.ADMINISTRATION.HOTELS.SUCCESS.CREATION_SUCCESS_MESSAGE,
+      };
+      onSuccess(successNotification);
     } catch (error) {
-      console.error("Error al crear el hotel:", error);
-      setNotifications(prev => [
-        ...prev,
-        {
-          tipo: "error",
-          titulo: "Error al crear el hotel",
-          mensaje: "Ocurrió un error al intentar guardar el hotel.",
-          code: 500,
-        },
-      ]);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTELS.ERRORS.CREATION_FAILED_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.CREATION_FAILED_MESSAGE,
+      });
     }
   };
 
@@ -150,7 +158,12 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
       const response = await getAllRoomType();
       setRoomTypes(response.response.objects);
     } catch (error) {
-      console.error("Error fetching airports:", error);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_MESSAGE,
+      });
     } finally {
       setLoading(false);
     }
@@ -170,10 +183,10 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
   }, [roomTypeCount, setValue]);
 
   return (
-    <Modal onSubmit={handleSubmit(onSubmit)} onClose={onClose}>
+    <Modal onSubmit={e => e.preventDefault()} onClose={onClose}>
       {step === 1 && (
         <Card>
-          <CardHeader>{dict.ADMINISTRATION.APARTMENTS.INFO}</CardHeader>
+          <CardHeader color="glacier">{dict.ADMINISTRATION.APARTMENTS.INFO}</CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -183,10 +196,10 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
                 <InputWithLabel id="address" label={dict.ADMINISTRATION.HOTELS.ADDRESS} {...register("address")} />
               </div>
               <div>
-                <InputWithLabel id="postalCode" label={dict.ADMINISTRATION.HOTELS.POSTAL_CODE} {...register("postalCode")} />
+                <InputWithLabel id="postalCode" label={dict.ADMINISTRATION.HOTELS.POSTAL_CODE} type="text" maxLength={5} {...register("postalCode")} />
               </div>
               <div>
-                <InputWithLabel id="phone_number" label={dict.ADMINISTRATION.HOTELS.PHONE_NUMBER} {...register("phone_number")} />
+                <InputWithLabel id="phone_number" label={dict.ADMINISTRATION.HOTELS.PHONE_NUMBER} maxLength={16} {...register("phone_number")} />
               </div>
               <div>
                 <InputWithLabel id="email" label={dict.ADMINISTRATION.HOTELS.EMAIL} {...register("email")} />
@@ -200,14 +213,64 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
             </div>
 
             <div className="flex justify-end">
-              <Button onClick={() => setStep(2)} color="light" text={dict.ADMINISTRATION.NEXT} />
+              <Button
+                onClick={async () => {
+                  const values = getValues();
+                  let customError = false;
+
+                  if (values.postalCode && values.postalCode.length > 5 && !/^\d{1,5}$/.test(values.postalCode)) {
+                    setNotification({
+                      tipo: "error",
+                      titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                      code: 400,
+                      mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.POSTAL_CODE_LENGTH,
+                    });
+                    customError = true;
+                  }
+                  if (values.phone_number && /[^\d\s+]/.test(values.phone_number) && values.phone_number.length > 5 && values.phone_number.length <= 16) {
+                    setNotification({
+                      tipo: "error",
+                      titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                      code: 400,
+                      mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.PHONE_NUMBER_FORMAT,
+                    });
+                    customError = true;
+                  }
+                  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                  if (values.email && !emailRegex.test(values.email)) {
+                    setNotification({
+                      tipo: "error",
+                      titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                      code: 400,
+                      mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.EMAIL_FORMAT,
+                    });
+                    customError = true;
+                  }
+
+                  const isValid = await trigger(["name", "address", "postalCode", "phone_number", "email", "website", "description"]);
+                  if (!isValid || customError) {
+                    if (!customError) {
+                      setNotification({
+                        tipo: "error",
+                        titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                        code: 400,
+                        mensaje: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_MESSAGE,
+                      });
+                    }
+                    return;
+                  }
+                  setStep(2);
+                }}
+                color="light"
+                text={dict.ADMINISTRATION.NEXT}
+              />
             </div>
           </CardContent>
         </Card>
       )}
       {step === 2 && (
         <div>
-          <CardHeader>{dict.ADMINISTRATION.HOTELS.CHOOSE_CITY}</CardHeader>
+          <CardHeader color="glacier">{dict.ADMINISTRATION.HOTELS.CHOOSE_CITY}</CardHeader>
           <div className="max-h-96 overflow-y-auto">
             <Table>
               <TableHeader>
@@ -239,17 +302,31 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
 
           <div className="flex justify-between">
             <Button onClick={() => setStep(1)} color="light" text={dict.ADMINISTRATION.BACK} />
-            <Button onClick={() => setStep(3)} color="light" text={dict.ADMINISTRATION.NEXT} />
+            <Button
+              onClick={async () => {
+                const isValid = await trigger(["cityId"]);
+                if (!isValid) {
+                  setNotification({
+                    tipo: "error",
+                    titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                    code: 400,
+                    mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.REQUIRED_CITY_MESSAGE,
+                  });
+                  return;
+                }
+                setStep(3);
+              }}
+              color="light"
+              text={dict.ADMINISTRATION.NEXT}
+            />
           </div>
         </div>
       )}
       {step === 3 && (
         <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold">{dict.ADMINISTRATION.NEXT}</h2>
-          </CardHeader>
+          <CardHeader color="glacier">{dict.ADMINISTRATION.HOTELS.ROOM_TYPES}</CardHeader>
           <CardContent className="space-y-6">
-            <div className="w-64">
+            <div className="grid grid-cols-1 w-full">
               <SelectWithLabel id="roomTypeCount" label={dict.ADMINISTRATION.HOTELS.NUMBER_ROOM_TYPES} onChange={e => setRoomTypeCount(Number(e.target.value))} defaultValue="1">
                 {Array.from({ length: roomTypes.length }).map((_, idx) => (
                   <option key={idx + 1} value={idx + 1}>
@@ -295,43 +372,47 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
 
             <div className="flex justify-between">
               <Button onClick={() => setStep(1)} color="light" text={dict.ADMINISTRATION.BACK} />
-              <Button onClick={handleSubmit(onSubmit)} color="light" text={dict.ADMINISTRATION.SAVE} />
-            </div>
-          </CardContent>
-        </Card>
-      )}
-      {step === 4 && (
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold">{dict.ADMINISTRATION.NEXT}</h2>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="w-64">
-              <SelectWithLabel id="roomTypeCount" label={dict.ADMINISTRATION.HOTELS.NUMBER_ROOM_TYPES} onChange={e => setRoomTypeCount(Number(e.target.value))} defaultValue="1">
-                {Array.from({ length: roomTypes.length }).map((_, idx) => (
-                  <option key={idx + 1} value={idx + 1}>
-                    {idx + 1}
-                  </option>
-                ))}
-              </SelectWithLabel>
-            </div>
+              <Button
+                onClick={async () => {
+                  const isValid = await trigger(["rooms", "rooms.0.type", "rooms.0.total_rooms", "rooms.0.capacity"]);
+                  const values = getValues();
+                  let customError = false;
+                  if (
+                    !values.rooms ||
+                    values.rooms.length === 0 ||
+                    values.rooms.some(room => !room.type || room.total_rooms === undefined || room.total_rooms === null || room.capacity === undefined || room.capacity === null)
+                  ) {
+                    setNotification({
+                      tipo: "error",
+                      titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                      code: 400,
+                      mensaje: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_MESSAGE,
+                    });
+                    customError = true;
+                  }
 
-            <div className="flex justify-between">
-              <Button onClick={() => setStep(1)} color="light" text={dict.ADMINISTRATION.BACK} />
-              <Button onClick={handleSubmit(onSubmit)} color="light" text={dict.ADMINISTRATION.SAVE} />
+                  if (!isValid || customError) {
+                    if (!customError) {
+                      setNotification({
+                        tipo: "error",
+                        titulo: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_TITLE,
+                        code: 400,
+                        mensaje: dict.ADMINISTRATION.ERRORS.REQUIRED_FIELDS_MESSAGE,
+                      });
+                    }
+                    return;
+                  }
+                  handleSubmit(onSubmit)();
+                }}
+                color="light"
+                text={isSubmitting ? dict.ADMINISTRATION.SAVING : dict.ADMINISTRATION.SAVE}
+                disabled={isSubmitting}
+              />
             </div>
           </CardContent>
         </Card>
       )}
-      {notifications.map((notification, index) => (
-        <NotificacionComponent
-          key={index}
-          Notifications={notification}
-          onClose={() => {
-            setNotifications(prev => prev.filter((_, i) => i !== index));
-          }}
-        />
-      ))}
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
     </Modal>
   );
 };

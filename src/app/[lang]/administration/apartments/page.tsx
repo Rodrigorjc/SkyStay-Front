@@ -7,6 +7,7 @@ import { HotelVO } from "../hotels/types/hotel";
 import { getAllApartments } from "./services/apartment.service";
 import TableHotels from "./components/TableApartments";
 import TableApartments from "./components/TableApartments";
+import { Title } from "../components/Title";
 
 export default function AdminUsersPage() {
   const { dict } = useDictionary();
@@ -49,8 +50,8 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl">{dict.ADMINISTRATION.SIDEBAR.APARTMENTS}</h1>
-      <div className="bg-zinc-700 p-10 m-4 rounded-md">
+      <Title title={dict.ADMINISTRATION.SIDEBAR.APARTMENTS} />
+      <div className="p-1 m-4">
         <TableApartments data={hotel} onRefresh={fetchHotels} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
