@@ -32,3 +32,10 @@ export const InfoCardLight: React.FC<InfoCardProps> = ({ label, value }) => (
     </div>
   </div>
 );
+
+export const InfoCardFlight: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
+  <div className="bg-zinc-800 rounded-xl shadow-md border border-zinc-700 hover:border-glacier-400 transition-all px-4 py-6">
+    <h4 className="text-sm font-mono text-glacier-400 uppercase mb-2">{label}</h4>
+    <div className="text-base text-zinc-200 font-medium">{value}</div>
+  </div>
+);

@@ -7,10 +7,11 @@ interface ButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
   color?: "default" | "dark" | "light" | "admin";
   className?: string;
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick, color = "default", className = "" }) => {
-  const baseStyles = "px-4 py-2 rounded-2xl font-medium transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-sm";
+const Button: React.FC<ButtonProps> = ({ text, onClick, color = "default", className = "", disabled }) => {
+  const baseStyles = "px-4 py-2 rounded-2xl font-medium transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-sm cursor-pointer";
   const colors: { [key in "default" | "dark" | "light" | "admin"]: string } = {
     default: "bg-glacier-500 text-white hover:bg-glacier-400 active:bg-glacier-600",
     dark: "bg-glacier-700 text-white hover:bg-glacier-600 active:bg-glacier-800",
@@ -19,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, color = "default", class
   };
 
   return (
-    <button onClick={onClick} className={`${baseStyles} ${colors[color]} ${className}`}>
+    <button onClick={onClick} className={`${baseStyles} ${colors[color]} ${className} ${disabled ? "disabled" : ""}`} disabled={disabled}>
       {text}
     </button>
   );

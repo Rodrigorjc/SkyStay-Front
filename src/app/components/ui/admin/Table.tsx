@@ -15,8 +15,8 @@ export const TableRow = ({ children, isOdd }: { children: ReactNode; isOdd?: boo
 export const TableHead = ({ children }: { children: ReactNode }) => <th className="px-4 py-3 font-semibold truncate">{children}</th>;
 
 export const TableCell = ({ children, className = "", title, colSpan }: { children: ReactNode; className?: string; title?: string; colSpan?: number }) => (
-  <td className={`px-4 py-3 ${className}`} colSpan={colSpan}>
-    <div title={title} className="truncate">
+  <td className={`px-2 py-3 ${className}`} colSpan={colSpan}>
+    <div title={title} className="truncate px-2">
       {children}
     </div>
   </td>

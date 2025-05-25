@@ -5,8 +5,19 @@ import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-export default function LocationSelector({ onChange }: { onChange: (latlng: { lat: number; lng: number }) => void }) {
-  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+interface LocationSelectorProps {
+  onChange: (latlng: { lat: number; lng: number }) => void;
+  initialPosition?: { lat: number; lng: number };
+}
+
+export default function LocationSelector({ onChange, initialPosition = { lat: 0, lng: 0 } }: LocationSelectorProps) {
+  const [position, setPosition] = useState(initialPosition);
+
+  useEffect(() => {
+    if (position.lat !== initialPosition.lat || position.lng !== initialPosition.lng) {
+      setPosition(initialPosition);
+    }
+  }, [initialPosition.lat, initialPosition.lng]);
 
   useEffect(() => {
     L.Icon.Default.mergeOptions({
@@ -31,7 +42,7 @@ export default function LocationSelector({ onChange }: { onChange: (latlng: { la
   };
 
   return (
-    <MapContainer center={[0, 0]} zoom={2} className="h-64 w-full rounded-xl" scrollWheelZoom={true}>
+    <MapContainer center={[position.lat, position.lng]} zoom={2} className="h-64 w-full rounded-xl" scrollWheelZoom={true}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <MapClickHandler />
       <Marker position={[position.lat, position.lng]} />
