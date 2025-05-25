@@ -1,11 +1,59 @@
 {
   "ADMINISTRATION": {
+    "ADDITIONAL_BAGGAGE": {
+      "ADD_BAGGAGE": "Añadir equipaje adicional",
+      "AIRLINE_CODE": "Código de aerolínea",
+      "AIRLINE_EMAIL": "Correo electrónico de aerolínea",
+      "AIRLINE_IATA_CODE": "Código IATA de aerolínea",
+      "AIRLINE_IMAGE": "Imagen de aerolínea",
+      "AIRLINE_NAME": "Nombre de aerolínea",
+      "AIRLINE_PHONE": "Teléfono de aerolínea",
+      "AIRLINE_WEBSITE": "Sitio web de aerolínea",
+      "CODE": "Código",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el equipaje adicional. Por favor, inténtelo de nuevo",
+        "CREATION_FAILED_TITLE": "Error al añadir equipaje"
+      },
+      "NAME": "Nombre del equipaje",
+      "PRICE": "Precio",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "El equipaje adicional se ha añadido correctamente",
+        "CREATION_SUCCESS_TITLE": "Equipaje añadido"
+      },
+      "WEIGHT": "Peso"
+    },
+    "AIRLINE": {
+      "ADD_AIRLINE": "Crear aerolínea",
+      "CODE": "Código",
+      "EDIT_AIRLINE": "Editar aerolínea",
+      "EMAIL": "Correo electrónico",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar añadir la aerolínea. Por favor, inténtelo de nuevo",
+        "CREATION_FAILED_TITLE": "Error al añadir aerolínea",
+        "EDIT_FAILED_MESSAGE": "Se ha producido un error al intentar editar la aerolínea. Por favor, inténtelo de nuevo",
+        "EDIT_FAILED_TITLE": "Error al editar aerolínea",
+        "IMAGE_UPLOAD_MESSAGE": "Se ha producido un error al intentar subir la imagen de la aerolínea. Por favor, inténtelo de nuevo",
+        "IMAGE_UPLOAD_TITLE": "Error al subir imagen de aerolínea"
+      },
+      "IATA_CODE": "Código IATA",
+      "NAME": "Nombre",
+      "PHONE": "Teléfono",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "La aerolínea se ha añadido correctamente",
+        "CREATION_SUCCESS_TITLE": "Aerolínea añadida",
+        "EDIT_SUCCESS_MESSAGE": "La aerolínea se ha editado correctamente",
+        "EDIT_SUCCESS_TITLE": "Aerolínea editada",
+        "IMAGE_UPLOAD_MESSAGE": "La imagen de la aerolínea se ha subido correctamente",
+        "IMAGE_UPLOAD_TITLE": "Imagen de aerolínea subida"
+      },
+      "WEBSITE": "Página web"
+    },
     "AIRPLANE": {
       "AIRPLANE_CODE": "Código del avión"
     },
     "AIRPLANES": {
       "ACTIVE": "Activo",
-      "ADD_AIRPLANES": "Crear avión",
+      "ADD_AIRPLANE": "Crear avión",
       "ADD_AIRPLANE_TYPE": "Crear tipo de avión",
       "ADD_SEAT_CONFIGURATION": "Crear configuración de asientos",
       "AIRPLANE": "Avión",
@@ -19,6 +67,27 @@
       "CARGO_PLANES": "Avión de carga",
       "COMMERCIAL": "Comercial",
       "DECOMMISSIONED": "Desmantelado",
+      "ERRORS": {
+        "AIRPLANE_TYPE": {
+          "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el tipo de avión. Por favor, inténtelo de nuevo",
+          "CREATION_FAILED_TITLE": "Error al añadir tipo de avión",
+          "UPDATE_FAILED_MESSAGE": "Se ha producido un error al intentar actualizar el tipo de avión. Por favor, inténtelo de nuevo",
+          "UPDATE_FAILED_TITLE": "Error al actualizar tipo de avión"
+        },
+        "EXCEEDS_CAPACITY_TITLE": "Capacidad excedida",
+        "IMAGE_UPLOAD_FAILED_MESSAGE": "Se ha producido un error al intentar subir la imagen del avión. Por favor, inténtelo de nuevo",
+        "IMAGE_UPLOAD_FAILED_TITLE": "Error al subir imagen del avión",
+        "INVALID_ROWS": "Las filas de cada cabina deben ser válidas y el fin debe ser mayor o igual al inicio.",
+        "MISSING_ROWS": "Debes asignar filas a todas las cabinas.",
+        "MISSING_SEAT_CLASS": "Debes seleccionar un tipo de asiento para todas las cabinas.",
+        "MISSING_SEAT_CONFIGURATION": "Debes seleccionar una configuración de asientos para todas las cabinas.",
+        "SEAT_CONFIGURATION": {
+          "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear la configuración de asientos. Por favor, inténtelo de nuevo",
+          "CREATION_FAILED_TITLE": "Error al añadir configuración de asientos"
+        },
+        "YEAR_OF_MANUFACTURE_MESSAGE": "El año debe ser mayor o igual a 1900 y menor  al año actual",
+        "YEAR_OF_MANUFACTURE_TITLE": "Error en el año de fabricación"
+      },
       "EXCEEDS_CAPACITY": "Se ha excedido el número máximo de asientos que dispone el avión.",
       "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Selecciona la configuración de asientos",
       "FREE": "Libre",
@@ -38,6 +107,22 @@
       "SEAT_CLASS": "Tipo de asiento",
       "SEAT_CONFIGURATION": "Configuración de asientos",
       "SEAT_PATTERN": "Patrón de asientos ",
+      "SUCCESS": {
+        "AIRPLANE_TYPE": {
+          "CREATION_SUCCESS_MESSAGE": "El tipo de avión se ha añadido correctamente",
+          "CREATION_SUCCESS_TITLE": "Tipo de avión añadido",
+          "STATUS_UPDATE_MESSAGE": "El estado del avión se ha actualizado correctamente.",
+          "STATUS_UPDATE_TITLE": "Estado actualizado"
+        },
+        "CREATION_SUCCESS_MESSAGE": "El avión se ha añadido correctamente",
+        "CREATION_SUCCESS_TITLE": "Avión añadido",
+        "IMAGE_UPLOAD_MESSAGE": "La imagen del avión se ha subido correctamente.",
+        "IMAGE_UPLOAD_TITLE": "Imagen subida",
+        "SEAT_CONFIGURATION": {
+          "CREATION_SUCCESS_MESSAGE": "La configuración de asientos se ha añadido correctamente",
+          "CREATION_SUCCESS_TITLE": "Configuración de asientos añadida"
+        }
+      },
       "SUMMARY": "Resumen",
       "TESTING": "En pruebas",
       "TITLE": "Aviones",
@@ -46,10 +131,19 @@
     },
     "AIRPORTS": {
       "ADD_AIRPORT": "Añadir aeropuerto",
+      "ARPORT_NAME": "Nombre del aeropuerto",
       "CITY": "Ciudad",
       "CODE_EXPLANATION": "Ejemplos. 320, 737.",
       "COUNTRY": "Pais",
       "DESCRIPTION": "Descripcion",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el aeropuerto. Por favor, inténtelo de nuevo",
+        "CREATION_FAILED_TITLE": "Error al añadir aeropuerto",
+        "EDIT_MESSAGE": "Se ha producido un error al intentar editar el aeropuerto. Por favor, inténtelo de nuevo",
+        "EDIT_TITLE": "Error al editar aeropuerto",
+        "SELECT_CITY_MESSAGE": "Debes seleccionar una ciudad para añadir el aeropuerto",
+        "SELECT_CITY_TITLE": "Error al seleccionar ciudad"
+      },
       "GATE": "Puerta",
       "GATE_EXPLANATION": "Número de puertas en cada terminal",
       "IATA_CODE": "Código IATA",
@@ -58,19 +152,139 @@
       "MODEL_EXPLANATION": "Modelo exacto del avion (Ejemplo: Airbus A320neo)",
       "REGISTRATION_NUMBER_EXPLANATION": "Matrícula del avión",
       "SELECT_CITY": "Selecciona una ciudad",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "El aeropuerto se ha añadido correctamente",
+        "CREATION_SUCCESS_TITLE": "Aeropuerto añadido",
+        "EDIT_SUCCESS_MESSAGE": "El aeropuerto se ha editado correctamente",
+        "EDIT_SUCCESS_TITLE": "Aeropuerto editado"
+      },
       "TERMINAL": "Terminal",
       "TERMINAL_EXPLANATION": "Número total de terminales",
       "TIMEZONE": "Zona horaria"
     },
     "APARTMENTS": {
-      "ADD_APPARTMENTS": "Crear apartamentos"
+      "ADD_APPARTMENTS": "Crear apartamentos",
+      "ERRORS": {
+        "EDIT_FAILED_MESSAGE": "Se ha producido un error al intentar editar el apartamento. Por favor, inténtelo de nuevo",
+        "EDIT_FAILED_TITLE": "Error al editar apartamento"
+      },
+      "INFO": "Información básica del hotel",
+      "SUCCESS": {
+        "UPDATE_APARTMENT_MESSAGE": "El apartamento se ha actualizado correctamente",
+        "UPDATE_APARTMENT_TITLE": "Apartamento editado correctamente"
+      }
     },
     "BACK": "Atrás",
+    "CLEAR_ALL": "Borrar todo",
     "CODE": "Código ",
     "CREATE_AIRPORTS": "Crear aeropuerto",
+    "DASHBOARD": {
+      "AIRLINE": "Aerolínea",
+      "DASHBOARD": "Panel de control",
+      "DATE": "Fecha",
+      "DESTINATION": "Destino",
+      "EMAIL": "Correo electrónico",
+      "FLIGHT_CODE": "Código de vuelo",
+      "LAST_5_FLIGHTS": "Últimos 5 vuelos",
+      "LAST_5_USERS": "Últimos 5 usuarios",
+      "ORIGIN": "Origen",
+      "PHONE": "Teléfono",
+      "ROLE": "Rol",
+      "STATUS": "Estado",
+      "TOTAL_FLIGHTS_ACTIVE": "Vuelos activos",
+      "TOTAL_REVENUE": "Ingresos totales",
+      "TOTAL_USERS_ACCOUNTS": "Cuentas de usuario",
+      "USER": "Usuario"
+    },
     "DESCRIPTION": "Descripción",
     "DETAILED_INFORMATION": "Información detallada",
     "EDIT": "Editar",
+    "ERRORS": {
+      "IMAGE_LOAD": "Error: No se pudo cargar la imagen.",
+      "LOAD_FAILURE_MESSAGE": "No se pudieron cargar los datos iniciales.",
+      "LOAD_FAILURE_TITLE": "Error al cargar datos",
+      "NEGATIVE_VALUE_MESSAGE": "El valor de los campos no puede ser negativo",
+      "NEGATIVE_VALUE_TITLE": "No se permiten valores negativos",
+      "REQUIRED_FIELDS_MESSAGE": "Por favor, completa todos los campos obligatorios",
+      "REQUIRED_FIELDS_TITLE": "Error en el formulario"
+    },
+    "ERROR_LOAD_APARTMENT": "Error: No se pudo cargar la información del apartamento",
+    "ERROR_LOAD_FLIGHT": "Error: No se pudo cargar la información del vuelo.",
+    "ERROR_LOAD_HOTEL": "Error: No se pudo cargar la información del hotel.",
+    "FLIGHTS": {
+      "ADD_SINGLE_FLIGHT": "Crear un vuelo",
+      "AIRLINE_IATA_CODE": "Código IATA de la aerolinea",
+      "AIRLINE_NAME": "Nombre de la aerolinea",
+      "AIRPLANE_MODEL": "Modelo de avión",
+      "AIRPLANE_REGISTRATION_NUMBER": "Número de registro del avión",
+      "ARRIVAL": "Llegada",
+      "ARRIVAL_AIRPORT": "Aeropuerto de llegada",
+      "ARRIVAL_AIRPORT_IATA_CODE": "Código IATA del aeropuerto de salida",
+      "ARRIVAL_AIRPORT_NAME": "Nombre del aeropuerto de llegada",
+      "CODE": "Código",
+      "DATE_TIME": "Fecha y hora de salida",
+      "DATE_TIME_ARRIVAL": "Fecha hora llegada",
+      "DEPARTURE": "Salida",
+      "DEPARTURE_AIRPORT": "Aeropuerto de origen",
+      "DEPARTURE_ARRIVAL_TIME": "Hora de salida y de llegada",
+      "DEPATURE_AIRPORT_IATA_CODE": "Código IATA del aeropuerto de salida",
+      "DEPATURE_AIRPORT_NAME": "Nombre del aeropuerto de salida",
+      "DEPATURE_TIME": "Hora de salida",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "Ocurrió un error al intentar crear el vuelo. Intenta nuevamente",
+        "CREATION_FAILED_TITLE": "Error al crear vuelo",
+        "INVALID_TIMES_MESSAGE": "La hora de llegada no puede ser anterior a la hora de salida",
+        "INVALID_TIMES_TITLE": "Error en el formulario",
+        "LOAD_FAILURE_MESSAGE": "No se pudieron cargar los datos iniciales",
+        "LOAD_FAILURE_TITLE": "Error al cargar datos",
+        "MISSING_AIRCRAFT_MESSAGE": "Debes seleccionar un avión",
+        "MISSING_AIRCRAFT_TITLE": "Selecciona un avión",
+        "MISSING_AIRLINE_MESSAGE": "Debes seleccionar una aerolínea",
+        "MISSING_AIRLINE_TITLE": "Selecciona una aerolínea",
+        "MISSING_AIRPORTS_MESSAGE": "Debes seleccionar aeropuerto de salida y llegada",
+        "MISSING_AIRPORTS_TITLE": "Selecciona ambos aeropuertos",
+        "REQUIRED_FIELDS_MESSAGE": "Por favor, completa todos los campos obligatorios",
+        "REQUIRED_FIELDS_TITLE": "Error en el formulario",
+        "SAME_AIRPORTS_MESSAGE": "El aeropuerto de salida y llegada no pueden ser el mismo",
+        "SAME_AIRPORTS_TITLE": "Aeropuertos iguales"
+      },
+      "SELECT_AIRLINE": "Selecciona una aerolinea",
+      "SELECT_AIRPLANE": "Selecciona un avión",
+      "SELECT_AIRPORTS": "Selecciona los aeropuertos de ida y vuelta",
+      "STATUS": "Estado",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "El vuelo se creó correctamente",
+        "CREATION_SUCCESS_TITLE": "Vuelo creado"
+      },
+      "TIME_ARRIVAL": "Hora de llegada",
+      "TIME_DEPARTURED": "Hora de salida",
+      "TYPE": "Tipo de aeropuerto"
+    },
+    "FLIGHT_DETAILS": {
+      "AIRLINE": "Aerolínea",
+      "AIRPLANE": "Avión",
+      "AIRPORT": "Aeropuertos",
+      "AIRPORT_NAME": "Nombre del aeropuerto",
+      "ARRIVAL": "Fecha y hora de llegada",
+      "ARRIVAL_AIRPORT": "Llegada",
+      "CAPACITY": "Capacidad",
+      "CITY": "Ciudad",
+      "CODE": "Código del vuelo",
+      "DATE": "Fecha y hora de salida",
+      "DEPARTURE": "Salida",
+      "EMAIL": "Correo electrónico",
+      "GATE": "Puertas de embarques",
+      "MANUFACTURER": "Fabricante",
+      "MODEL": "Modelo",
+      "NAME": "Nombre",
+      "PHONE": "Teléfono",
+      "REGISTRATION": "Número de registro",
+      "STATUS": "Estado",
+      "TERMINAL": "Terminales",
+      "TITLE": "Detalles del vuelo",
+      "TYPE": "Tipo",
+      "WEBSITE": "Sitio web"
+    },
     "HOTELS": {
       "ADDRESS": "Dirección",
       "ADD_HOTELS": "Crear hotel",
@@ -80,6 +294,22 @@
       "CODE": "Código",
       "DESCRIPTION": "Descripción",
       "EMAIL": "Correo electrónico",
+      "ERRORS": {
+        "ADD_IMAGE_MESSAGE": "Se ha producido un error al intentar añadir la imagen. Por favor, inténtelo de nuevo",
+        "ADD_IMAGE_TITLE": "Error al añadir imagen",
+        "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el hotel. Por favor, inténtelo de nuevo",
+        "CREATION_FAILED_TITLE": "Error al crear hotel",
+        "EDIT_FAILED_MESSAGE": "Se ha producido un error al intentar editar el hotel. Por favor, inténtelo de nuevo",
+        "EDIT_FAILED_TITLE": "Error al editar hotel",
+        "EMAIL_FORMAT": "El formato del correo electrónico no es válido",
+        "LOAD_CITY_MESSAGE": "Se ha producido un error al intentar cargar las ciudades. Por favor, inténtelo de nuevo",
+        "LOAD_CITY_TITLE": "Error al cargar las ciudades",
+        "LOAD_ROOM_TYPE_MESSAGE": "Se ha producido un error al intentar cargar los tipos de habitación. Por favor, inténtelo de nuevo",
+        "LOAD_ROOM_TYPE_TITLE": "Error al cargar tipos de habitación",
+        "PHONE_NUMBER_FORMAT": "El formato del número de teléfono no es válido",
+        "POSTAL_CODE_LENGTH": "El código postal debe tener 5 dígitos",
+        "REQUIRED_CITY_MESSAGE": "Debes seleccionar una ciudad"
+      },
       "IMAGE": "Imagen",
       "INFO": "Información básica del hotel",
       "NAME": "Nombre",
@@ -91,9 +321,25 @@
       "SELECTED": "Seleccionado",
       "SELECT_TYPE": "Selecciona un tipo",
       "STARS": "Valoración media",
+      "SUCCESS": {
+        "ADD_IMAGE_MESSAGE": "La imagen se ha añadido correctamente",
+        "ADD_IMAGE_TITLE": "Imagen añadida",
+        "CREATION_SUCCESS_MESSAGE": "El hotel se ha creado correctamente",
+        "CREATION_SUCCESS_TITLE": "Hotel creado",
+        "EDIT_SUCCESS_MESSAGE": "El hotel se ha editado correctamente",
+        "EDIT_SUCCESS_TITLE": "Hotel editado",
+        "UPDATE_HOTEL_MESSAGE": "El hotel se ha actualizado correctamente",
+        "UPDATE_HOTEL_TITLE": "Hotel actualizado"
+      },
       "TOTAL_ROOMS": "Total habitaciones ",
       "TYPES": "Tipo",
       "WEBSITE": "Página web"
+    },
+    "HOTEL_APARTMENT": {
+      "ERRORS": {
+        "LOAD_FAILURE_MESSAGE": "No se ha encontrado ninguna imagen",
+        "LOAD_FAILURE_TITLE": "Error al cargar la imagen"
+      }
     },
     "HOTEL_DETAILS": {
       "ADDRESS": "Dirección",
@@ -108,12 +354,30 @@
     },
     "IMAGE": "Imagen",
     "IMAGE_EXPLANATION": "Por favor sube solo una imagen",
+    "MEALS": {
+      "ADD_SINGLE_MEAL": "Añadir comida",
+      "CODE": "Código",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear la comida. Por favor, inténtelo de nuevo",
+        "CREATION_FAILED_TITLE": "Error al añadir comida"
+      },
+      "NAME": "Nombre de la comida",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "La comida se ha añadido correctamente",
+        "CREATION_SUCCESS_TITLE": "Comida añadida"
+      }
+    },
     "NEXT": "Siguiente",
     "NO_DATA_AVAILABLE": "No hay datos disponibles",
     "RELOAD": "Recargar",
     "SAVE": "Guardar",
+    "SAVING": "Guardando",
+    "SELECT": "Seleccionar",
+    "SELECTED": "Seleccionado",
     "SHOW": "Mostrar",
     "SIDEBAR": {
+      "ADDITIONAL_BAGGAGE": "Equipaje adicional",
+      "AIRLINES": "Aerolíneas",
       "AIRPLANES": "Aviones",
       "AIRPORTS": "Aeropuertos",
       "APARTMENTS": "Apartamentos",
@@ -122,12 +386,15 @@
       "FLIGHTS": "Vuelos",
       "HOME": "Inicio",
       "HOTELS": "Hoteles",
+      "LOGOUT": "Cerrar sesión",
+      "MEALS": "Comidas",
       "PAYMENTS_BILLING": "Pagos y facturación",
       "REPORTS_STATISTICS": "Informes y estadísticas",
       "SUPPORT": "Soporte",
       "USERS": "Usuarios"
     },
     "STATUS": "Estado",
+    "SUMMARY": "Resumen",
     "TYPE": "Tipo",
     "USERS": {
       "AIRLINE_RATING": "Valoración aerolinea",
@@ -309,6 +576,11 @@
       "REGISTER": "Registro",
       "WELCOME": "Bienvenido"
     }
+  },
+  "FORBIDDEN": {
+    "BUTTON": "Volver",
+    "SUBTITLE": "No tienes permiso para ver esta página.",
+    "TITLE": "Acceso denegado"
   },
   "HOME": {
     "WELCOME": "Bienvenido a SkyStay"
