@@ -1,48 +1,384 @@
 {
   "ADMINISTRATION": {
+    "ADDITIONAL_BAGGAGE": {
+      "ADD_BAGGAGE": "Add additional baggage",
+      "AIRLINE_CODE": "Airline code",
+      "AIRLINE_EMAIL": "Airline email",
+      "AIRLINE_IATA_CODE": "Airline IATA code",
+      "AIRLINE_IMAGE": "Airline image",
+      "AIRLINE_NAME": "Airline name",
+      "AIRLINE_PHONE": "Airline phone",
+      "AIRLINE_WEBSITE": "Airline website",
+      "CODE": "Code",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the additional baggage. Please try again",
+        "CREATION_FAILED_TITLE": "Error adding baggage"
+      },
+      "NAME": "Baggage name",
+      "PRICE": "Price",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "The additional baggage has been added successfully",
+        "CREATION_SUCCESS_TITLE": "Baggage added"
+      },
+      "WEIGHT": "Weight"
+    },
+    "AIRLINE": {
+      "ADD_AIRLINE": "Add airline",
+      "CODE": "Code",
+      "EDIT_AIRLINE": "Edit airline",
+      "EMAIL": "Email",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the airline. Please try again",
+        "CREATION_FAILED_TITLE": "Error adding airline",
+        "EDIT_FAILED_MESSAGE": "An error occurred while trying to edit the airline. Please try again",
+        "EDIT_FAILED_TITLE": "Error editing airline",
+        "IMAGE_UPLOAD_MESSAGE": "An error occurred while trying to upload the airline image. Please try again",
+        "IMAGE_UPLOAD_TITLE": "Error uploading airline image"
+      },
+      "IATA_CODE": "IATA code",
+      "IMAGE": "Image",
+      "NAME": "Name",
+      "PHONE": "Phone",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "The airline has been added successfully",
+        "CREATION_SUCCESS_TITLE": "Airline added",
+        "EDIT_SUCCESS_MESSAGE": "The airline has been successfully edited",
+        "EDIT_SUCCESS_TITLE": "Airline edited",
+        "IMAGE_UPLOAD_MESSAGE": "The airline image has been uploaded successfully",
+        "IMAGE_UPLOAD_TITLE": "Airline image uploaded"
+      },
+      "WEBSITE": "Website"
+    },
+    "AIRPLANE": {
+      "AIRPLANE_CODE": "Airplane code"
+    },
     "AIRPLANES": {
       "ACTIVE": "Active",
-      "ADD_AIRPLANES": "Add airplanes",
+      "ADD_AIRPLANE": "Create airplane",
+      "ADD_AIRPLANE_TYPE": "Create airplane type",
+      "ADD_SEAT_CONFIGURATION": "Create seat configuration",
+      "AIRPLANE": "Airplane",
+      "AIRPLANES_CODE": "Airplane code",
+      "AIRPLANE_CABIN": "Airplane cabin",
       "AIRPLANE_TYPE": "Airplane type",
       "AIRPLANE_TYPE_CONFIGURATION": "Airplane type configuration",
       "AIRPLANE_TYPE_NAME": "Airplane name",
+      "CABIN": "Cabin",
       "CAPACITY": "Capacity",
       "CARGO_PLANES": "Cargo plane",
       "COMMERCIAL": "Commercial",
       "DECOMMISSIONED": "Decommissioned",
+      "ERRORS": {
+        "AIRPLANE_TYPE": {
+          "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the airplane type. Please try again",
+          "CREATION_FAILED_TITLE": "Error Adding Airplane Type",
+          "UPDATE_FAILED_MESSAGE": "An error occurred while trying to update the airplane type. Please try again",
+          "UPDATE_FAILED_TITLE": "Error Updating Airplane Type"
+        },
+        "EXCEEDS_CAPACITY_TITLE": "Capacity exceeded",
+        "IMAGE_UPLOAD_FAILED_MESSAGE": "An error occurred while trying to upload the airplane image. Please try again",
+        "IMAGE_UPLOAD_FAILED_TITLE": "Error Uploading Airplane Image",
+        "INVALID_ROWS": "The rows for each cabin must be valid and the end must be greater than or equal to the start.",
+        "MISSING_ROWS": "You must assign rows to all cabins.",
+        "MISSING_SEAT_CLASS": "You must select a seat type for all cabins.",
+        "MISSING_SEAT_CONFIGURATION": "You must select a seat configuration for all cabins.",
+        "SEAT_CONFIGURATION": {
+          "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the seat configuration. Please try again",
+          "CREATION_FAILED_TITLE": "Error Adding Seat Configuration"
+        },
+        "YEAR_OF_MANUFACTURE_MESSAGE": "The year must be greater than or equal to 1900 and less than the current year",
+        "YEAR_OF_MANUFACTURE_TITLE": "Year of manufacture error"
+      },
+      "EXCEEDS_CAPACITY": "The maximum number of seats available on the aircraft has been exceeded.",
       "EXPLAIN_AIRPLANE_TYPE_CONFIGURATION": "Select seating configuration",
+      "FREE": "Free",
       "INACTIVE": "Inactive",
       "IN_REPAIR": "In repeair",
       "MANUFACTURER": "Manufacturer",
       "MILITARY": "Military",
-      "MODEL": "Model",
+      "MODEL": "Aircraft model",
+      "NUMBER_OF_CABINS": "Numbers of cabins",
+      "OCCUPIED": "Occupied",
       "PRIVATE_JET": "Private jet",
       "REGIONAL_JET": "Regional jet",
       "REGISTRATION_NUMBER": "Registration number",
+      "ROW_END": "Row end",
+      "ROW_START": "Row start",
+      "SEATS_REMAINING": "Remaining seats",
+      "SEAT_CLASS": "Seat class",
+      "SEAT_CONFIGURATION": "Seat configuration",
+      "SEAT_PATTERN": "Seat pattern ",
+      "SUCCESS": {
+        "AIRPLANE_TYPE": {
+          "CREATION_SUCCESS_MESSAGE": "The airplane type has been successfully added",
+          "CREATION_SUCCESS_TITLE": "Airplane Type Added",
+          "STATUS_UPDATE_MESSAGE": "The airplane status has been successfully updated.",
+          "STATUS_UPDATE_TITLE": "Status Updated"
+        },
+        "CREATION_SUCCESS_MESSAGE": "The airplane has been successfully added",
+        "CREATION_SUCCESS_TITLE": "Airplane added",
+        "IMAGE_UPLOAD_MESSAGE": "The airplane image has been successfully uploaded.",
+        "IMAGE_UPLOAD_TITLE": "Image Uploaded",
+        "SEAT_CONFIGURATION": {
+          "CREATION_SUCCESS_MESSAGE": "The seat configuration has been successfully added",
+          "CREATION_SUCCESS_TITLE": "Seat Configuration Added"
+        }
+      },
+      "SUMMARY": "Summary",
       "TESTING": "In testing",
       "TITLE": "Airplanes",
+      "TOTAL_ROWS": "Total rows",
       "YEAR_OF_MANUFACTURE": "Year of manufacturer"
     },
     "AIRPORTS": {
       "ADD_AIRPORT": "Add airport",
+      "ARPORT_NAME": "Airport name",
       "CITY": "City",
+      "CODE_EXPLANATION": "Examples: 320, 737.",
       "COUNTRY": "Country",
       "DESCRIPTION": "Description",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el aeropuerto. Por favor, inténtelo de nuevo",
+        "CREATION_FAILED_TITLE": "Error al añadir aeropuerto",
+        "EDIT_MESSAGE": "Se ha producido un error al intentar editar el aeropuerto. Por favor, inténtelo de nuevo",
+        "EDIT_TITLE": "Error al editar aeropuerto",
+        "SELECT_CITY_MESSAGE": "Debes seleccionar una ciudad para añadir el aeropuerto",
+        "SELECT_CITY_TITLE": "Error al seleccionar ciudad"
+      },
       "GATE": "Gate",
       "GATE_EXPLANATION": "Number of gates at each terminal",
       "IATA_CODE": "IATA code",
       "LATITUDE": "Latitude",
       "LONGITUDE": "Longitude",
+      "MODEL_EXPLANATION": "Exact aircraft model (Example: Airbus A320neo )",
+      "REGISTRATION_NUMBER_EXPLANATION": "Aircraft registration",
       "SELECT_CITY": "Select a city",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "El aeropuerto se ha añadido correctamente",
+        "CREATION_SUCCESS_TITLE": "Aeropuerto añadido",
+        "EDIT_SUCCESS_MESSAGE": "El aeropuerto se ha editado correctamente",
+        "EDIT_SUCCESS_TITLE": "Aeropuerto editado"
+      },
       "TERMINAL": "Terminal",
       "TERMINAL_EXPLANATION": "Total number of terminals",
       "TIMEZONE": "Timezone"
     },
+    "APARTMENTS": {
+      "ADD_APARTMENTS": "Create apartments",
+      "ERRORS": {
+        "EDIT_FAILED_MESSAGE": "An error occurred while trying to edit the apartment. Please try again",
+        "EDIT_FAILED_TITLE": "Error editing apartment"
+      },
+      "INFO": "Basic apartment information",
+      "SUCCESS": {
+        "UPDATE_APARTMENT_MESSAGE": "The apartment has been updated successfully",
+        "UPDATE_APARTMENT_TITLE": "Apartment edited successfully"
+      }
+    },
+    "BACK": "Back",
+    "CLEAR_ALL": "Clear all",
     "CODE": "Code",
+    "CREATE_AIRPORTS": "Create airport",
+    "DASHBOARD": {
+      "AIRLINE": "Airline",
+      "DASHBOARD": "Dashboard",
+      "DATE": "Date",
+      "DESTINATION": "Destination",
+      "EMAIL": "Email",
+      "FLIGHT_CODE": "Flight code",
+      "LAST_5_FLIGHTS": "Last 5 flights",
+      "LAST_5_USERS": "Last 5 users",
+      "ORIGIN": "Origin",
+      "PHONE": "Phone",
+      "ROLE": "Role",
+      "STATUS": "Status",
+      "TOTAL_FLIGHTS_ACTIVE": "Active flights",
+      "TOTAL_REVENUE": "Total revenue",
+      "TOTAL_USERS_ACCOUNTS": "User accounts",
+      "USER": "User"
+    },
+    "DESCRIPTION": "Description",
+    "DETAILED_INFORMATION": "Detailed information",
     "EDIT": "Edit",
+    "ERRORS": {
+      "IMAGE_LOAD": "Error: Image could not be loaded.",
+      "LOAD_FAILURE_MESSAGE": "Initial data could not be loaded",
+      "LOAD_FAILURE_TITLE": "Error loading data",
+      "NEGATIVE_VALUE_MESSAGE": "Field values cannot be negative",
+      "NEGATIVE_VALUE_TITLE": "Negative values are not allowed",
+      "REQUIRED_FIELDS_MESSAGE": "Please complete all required fields",
+      "REQUIRED_FIELDS_TITLE": "Form error"
+    },
+    "ERROR_LOAD_APARTMENT": "Error: Apartment information could not be uploaded.",
+    "ERROR_LOAD_FLIGHT": "Error: Flight information could not be uploaded.",
+    "ERROR_LOAD_HOTEL": "Error: Hotel information could not be uploaded.",
+    "FLIGHTS": {
+      "ADD_SINGLE_FLIGHT": "Create a flight",
+      "AIRLINE_IATA_CODE": "Airline IATA code",
+      "AIRLINE_NAME": "Airline name",
+      "AIRPLANE_MODEL": "Airplane model",
+      "AIRPLANE_REGISTRATION_NUMBER": "Airplane registration number",
+      "ARRIVAL": "Arrival",
+      "ARRIVAL_AIRPORT": "Arrival airport",
+      "ARRIVAL_AIRPORT_IATA_CODE": "Arrival airport IATA code",
+      "ARRIVAL_AIRPORT_NAME": "Arrival airport name",
+      "CODE": "Code",
+      "DATE_TIME": "Date time of departure",
+      "DATE_TIME_ARRIVAL": "Date time of arrival",
+      "DEPARTURE": "Depature",
+      "DEPARTURE_AIRPORT": "Departured airport",
+      "DEPARTURE_ARRIVAL_TIME": "Time of departure and arrival",
+      "DEPATURE_AIRPORT_IATA_CODE": "Depature airport IATA code",
+      "DEPATURE_AIRPORT_NAME": "Depature airport name",
+      "DEPATURE_TIME": "Depature time",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the flight. Please try again",
+        "CREATION_FAILED_TITLE": "Error creating flight",
+        "INVALID_TIMES_MESSAGE": "Arrival time cannot be earlier than departure time",
+        "INVALID_TIMES_TITLE": "Form error",
+        "LOAD_FAILURE_MESSAGE": "Initial data could not be loaded",
+        "LOAD_FAILURE_TITLE": "Error loading data",
+        "MISSING_AIRCRAFT_MESSAGE": "You must select an aircraft",
+        "MISSING_AIRCRAFT_TITLE": "Select an aircraft",
+        "MISSING_AIRLINE_MESSAGE": "You must select an airline",
+        "MISSING_AIRLINE_TITLE": "Select an airline",
+        "MISSING_AIRPORTS_MESSAGE": "You must select both departure and arrival airports",
+        "MISSING_AIRPORTS_TITLE": "Select both airports",
+        "REQUIRED_FIELDS_MESSAGE": "Please complete all required fields",
+        "REQUIRED_FIELDS_TITLE": "Form error",
+        "SAME_AIRPORTS_MESSAGE": "Departure and arrival airports cannot be the same",
+        "SAME_AIRPORTS_TITLE": "Same airports"
+      },
+      "SELECT_AIRLINE": "Select an airline",
+      "SELECT_AIRPLANE": "Select an airplane",
+      "SELECT_AIRPORTS": "Select your departure and return airports",
+      "STATUS": "Status",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "The flight has been successfully created",
+        "CREATION_SUCCESS_TITLE": "Flight created"
+      },
+      "TIME_ARRIVAL": "Arrival time",
+      "TIME_DEPARTURED": "Departured time ",
+      "TYPE": "Type of airport"
+    },
+    "FLIGHT_DETAILS": {
+      "AIRLINE": "Airline",
+      "AIRPLANE": "Airplane",
+      "AIRPORT": "Airports",
+      "AIRPORT_NAME": "Airport name",
+      "ARRIVAL": "Arrival date & time",
+      "ARRIVAL_AIRPORT": "Arrival",
+      "CAPACITY": "Capacity",
+      "CITY": "City",
+      "CODE": "Flight code",
+      "DATE": "Departure date & time",
+      "DEPARTURE": "Departure",
+      "EMAIL": "Email",
+      "GATE": "Gates",
+      "MANUFACTURER": "Manufacturer",
+      "MODEL": "Model",
+      "NAME": "Name",
+      "PHONE": "Phone",
+      "REGISTRATION": "Registration number",
+      "STATUS": "Status",
+      "TERMINAL": "Terminals",
+      "TITLE": "Flight details",
+      "TYPE": "Type",
+      "WEBSITE": "Website"
+    },
+    "HOTELS": {
+      "ADDRESS": "Address",
+      "ADD_HOTELS": "Create hotel",
+      "CAPACITY": "Capacity",
+      "CHOOSE_CITY": "Choose a city",
+      "CITY": "City",
+      "CODE": "Code",
+      "DESCRIPTION": "Description",
+      "EMAIL": "Email",
+      "ERRORS": {
+        "ADD_IMAGE_MESSAGE": "An error occurred while trying to add the image. Please try again",
+        "ADD_IMAGE_TITLE": "Error adding image",
+        "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the hotel. Please try again",
+        "CREATION_FAILED_TITLE": "Error creating hotel",
+        "EDIT_FAILED_MESSAGE": "An error occurred while trying to edit the hotel. Please try again",
+        "EDIT_FAILED_TITLE": "Error editing hotel",
+        "EMAIL_FORMAT": "Email format is invalid",
+        "LOAD_CITY_MESSAGE": "An error occurred while trying to load the cities. Please try again",
+        "LOAD_CITY_TITLE": "Error loading cities",
+        "LOAD_ROOM_TYPE_MESSAGE": "An error occurred while trying to load the room types. Please try again",
+        "LOAD_ROOM_TYPE_TITLE": "Error loading room types",
+        "PHONE_NUMBER_FORMAT": "The phone number format is invalid",
+        "POSTAL_CODE_LENGTH": "The postal code must be 5 digits long",
+        "REQUIRED_CITY_MESSAGE": "You must select a city"
+      },
+      "IMAGE": "Image",
+      "INFO": "Basic hotel information",
+      "NAME": "Name",
+      "NUMBER_ROOM_TYPES": "Number of room types",
+      "PHONE_NUMBER": "Phone number",
+      "POSTAL_CODE": "Postal code",
+      "ROOM_TYPES": "Room types",
+      "SELECT": "Select",
+      "SELECTED": "Selected",
+      "SELECT_TYPE": "Select a type",
+      "STARS": "Average rating",
+      "SUCCESS": {
+        "ADD_IMAGE_MESSAGE": "The image has been added successfully",
+        "ADD_IMAGE_TITLE": "Image added",
+        "CREATION_SUCCESS_MESSAGE": "The hotel has been created successfully",
+        "CREATION_SUCCESS_TITLE": "Hotel created",
+        "EDIT_SUCCESS_MESSAGE": "The hotel has been edited successfully",
+        "EDIT_SUCCESS_TITLE": "Hotel edited",
+        "UPDATE_HOTEL_MESSAGE": "The hotel has been updated successfully",
+        "UPDATE_HOTEL_TITLE": "Hotel updated"
+      },
+      "TOTAL_ROOMS": "Total rooms",
+      "TYPES": "Type ",
+      "WEBSITE": "Website"
+    },
+    "HOTEL_APARTMENT": {
+      "ERRORS": {
+        "LOAD_FAILURE_MESSAGE": "No image found",
+        "LOAD_FAILURE_TITLE": "Error loading image"
+      }
+    },
+    "HOTEL_DETAILS": {
+      "ADDRESS": "Address",
+      "AVAILABLE": "Available",
+      "EDIT_HOTEL": "Edit hotel",
+      "NAME": "Name",
+      "NO_ROOMS_AVAILABLE": "No rooms available",
+      "OCCUPIED": "Occupied",
+      "PEOPLE": "People",
+      "ROOM": "Room",
+      "ROOMS": "Rooms"
+    },
     "IMAGE": "Image",
+    "IMAGE_EXPLANATION": "Please upload only one image",
+    "MEALS": {
+      "ADD_SINGLE_MEAL": "Add meal",
+      "CODE": "Code",
+      "ERRORS": {
+        "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the meal. Please try again",
+        "CREATION_FAILED_TITLE": "Error when adding meal"
+      },
+      "NAME": "Name of the meal",
+      "SUCCESS": {
+        "CREATION_SUCCESS_MESSAGE": "Meal was added correctly",
+        "CREATION_SUCCESS_TITLE": "Meal added"
+      }
+    },
+    "NEXT": "Next",
+    "NO_DATA_AVAILABLE": "No data available",
+    "RELOAD": "Reload",
     "SAVE": "Save",
+    "SAVING": "Saving",
+    "SELECT": "Select",
+    "SELECTED": "Selected",
+    "SHOW": "Show",
     "SIDEBAR": {
+      "ADDITIONAL_BAGGAGE": "Additional baggage",
+      "AIRLINES": "Airlines",
       "AIRPLANES": "Airplanes",
       "AIRPORTS": "Airports",
       "APARTMENTS": "Apartments",
@@ -51,17 +387,19 @@
       "FLIGHTS": "Flights",
       "HOME": "Home",
       "HOTELS": "Hotels",
+      "LOGOUT": "Logout",
+      "MEALS": "Meals",
       "PAYMENTS_BILLING": "Paymants and billing",
       "REPORTS_STATISTICS": "Reports and statistics",
       "SUPPORT": "Support",
       "USERS": "Users"
     },
     "STATUS": "Status",
+    "SUMMARY": "Summary",
     "TYPE": "Type",
     "USERS": {
       "AIRLINE_RATING": "Airline rating",
       "APARTMENT_RATING": "Apartment rating",
-      "DETAILED_INFORMATION": "Detailed information",
       "DETAILS": {
         "AIRLANE_NAME": "Airlane name",
         "AMOUNT": "Amount",
@@ -81,6 +419,7 @@
       },
       "EMAIL": "Email",
       "HOTEL_RATING": "Hotel rating",
+      "INFO_SEARCH_BAR": "Search by user name only",
       "LAST_NAME": "Last Name",
       "LIMIT": "Limit",
       "NAME": "Name",
@@ -92,153 +431,171 @@
       "RESET_FILTER": "Reset",
       "ROLE": "Role",
       "SEARCH_BAR": "Search by username",
-      "SHOW": "Show",
       "USER_CODE": "User code"
     },
     "VIEW_IMAGE": "View image"
   },
-  "HOME": {
-    "WELCOME": "Welcome to SkyStay"
-  },
   "CLIENT": {
-    "SIDEBAR": {
-      "FLIGHTS": "Flights",
-      "ACCOMMODATIONS": "Accommodations",
-      "LOGIN": "Login",
-      "REGISTER": "Register",
-      "WELCOME": "Welcome",
-      "PANEL": {
-        "PROFILE": "Profile",
-        "ACCOUNT": "Manage your account",
-        "LOGOUT": "Log out"
-      },
-      "LANGUAGE": "Language"
-    },
     "LOGIN": {
-      "START_TEXT": "Your journey starts here. Come in!",
-      "EMAIL": "Email",
-      "PASSWORD": "Password",
-      "FORGOT_PASSWORD": "Forgot your password?",
       "CLICK_HERE": "Click here",
-      "LOGIN": "Login",
+      "EMAIL": "Email",
+      "FORGOT_PASSWORD": "Forgot your password?",
       "HAVE_ACCOUNT": "Don't have an account?",
+      "LOGIN": "Login",
       "NOTIFICATION": {
-        "SUCCESS": {
-          "TITLE": "Login successful",
-          "MESSAGE": "Welcome back!"
+        "EMAIL": {
+          "MESSAGE": "Please enter a valid email address.",
+          "TITLE": "Invalid email"
         },
         "ERROR": {
-          "TITLE": "Authentication error",
-          "MESSAGE": "Invalid credentials. Please try again."
-        },
-        "EMAIL": {
-          "TITLE": "Invalid email",
-          "MESSAGE": "Please enter a valid email address."
+          "MESSAGE": "Invalid credentials. Please try again.",
+          "TITLE": "Authentication error"
         },
         "PASSWORD": {
-          "TITLE": "Invalid password",
-          "MESSAGE": "Must have at least 6 characters, a number and a special character."
+          "MESSAGE": "Must have at least 6 characters, a number and a special character.",
+          "TITLE": "Invalid password"
+        },
+        "SUCCESS": {
+          "MESSAGE": "Welcome back!",
+          "TITLE": "Login successful"
         }
-      }
+      },
+      "PASSWORD": "Password",
+      "START_TEXT": "Your journey starts here. Come in!"
     },
     "REGISTER": {
-      "STEP_INDICATOR": "Step {{current}} - {{total}}",
-      "TITLE": "Sign Up Your User Account",
-      "SUBTITLE": "Fill all form fields to go to next step",
-      "STEPS": {
-        "ACCOUNT": "Account",
-        "PERSONAL": "Personal",
-        "IMAGE": "Image"
-      },
       "ACCOUNT_STEP": {
-        "TITLE": "Account Information:",
-        "EMAIL": {
-          "LABEL": "Email: *",
-          "PLACEHOLDER": "Email",
-          "REQUIRED": "Email is required",
-          "INVALID": "Email format is invalid"
-        },
-        "PASSWORD": {
-          "LABEL": "Password: *",
-          "PLACEHOLDER": "Password",
-          "REQUIRED": "Password is required",
-          "INVALID": "Password must have at least 6 characters, one number and one special character"
-        },
         "CONFIRM_PASSWORD": {
           "LABEL": "Confirm Password: *",
+          "MISMATCH": "Passwords don't match",
           "PLACEHOLDER": "Confirm Password",
-          "REQUIRED": "Password confirmation is required",
-          "MISMATCH": "Passwords don't match"
-        }
+          "REQUIRED": "Password confirmation is required"
+        },
+        "EMAIL": {
+          "INVALID": "Email format is invalid",
+          "LABEL": "Email: *",
+          "PLACEHOLDER": "Email",
+          "REQUIRED": "Email is required"
+        },
+        "PASSWORD": {
+          "INVALID": "Password must have at least 6 characters, one number and one special character",
+          "LABEL": "Password: *",
+          "PLACEHOLDER": "Password",
+          "REQUIRED": "Password is required"
+        },
+        "TITLE": "Account Information:"
       },
-      "PERSONAL_STEP": {
-        "TITLE": "Personal Information:",
-        "STEP_INDICATOR": "Step 2 - 3",
-        "NAME": {
-          "LABEL": "First Name: *",
-          "PLACEHOLDER": "First Name",
-          "REQUIRED": "First name is required"
-        },
-        "LAST_NAME": {
-          "LABEL": "Last Name: *",
-          "PLACEHOLDER": "Last Name",
-          "REQUIRED": "Last name is required"
-        },
-        "NIF": {
-          "LABEL": "NIF Number: *",
-          "PLACEHOLDER": "NIF Number",
-          "REQUIRED": "NIF number is required",
-          "INVALID": "NIF number format is invalid"
-        },
-        "PHONE": {
-          "LABEL": "Phone: *",
-          "PLACEHOLDER": "Phone",
-          "REQUIRED": "Phone number is required",
-          "INVALID": "Phone number format is invalid"
-        },
-        "BIRTH_DATE": {
-          "LABEL": "Date of Birth: *",
-          "REQUIRED": "Date of birth is required",
-          "MIN_AGE": "You must be at least 18 years old"
-        },
-        "GENDER": {
-          "LABEL": "Gender: *",
-          "REQUIRED": "Gender is required",
-          "OPTIONS": {
-            "MALE": "Male",
-            "FEMALE": "Female",
-            "OTHER": "Other"
-          }
-        }
+      "BUTTONS": {
+        "FINISH": "Finish",
+        "NEXT": "Next",
+        "PREVIOUS": "Previous"
       },
       "IMAGE_STEP": {
-        "TITLE": "Profile Picture:",
         "STEP_INDICATOR": "Step 3 - 3",
+        "TITLE": "Profile Picture:",
         "UPLOAD_LABEL": "Upload your profile picture:",
         "VALIDATION": {
           "SIZE_ERROR": "File size should not exceed 5MB",
           "TYPE_ERROR": "File must be an image"
         }
       },
-      "BUTTONS": {
-        "PREVIOUS": "Previous",
-        "NEXT": "Next",
-        "FINISH": "Finish"
-      },
       "NOTIFICATIONS": {
-        "VALIDATION_ERROR": {
-          "TITLE": "Validation Error",
-          "MESSAGE": "Please correctly fill in all required fields"
+        "ERROR": {
+          "MESSAGE": "Could not complete registration",
+          "TITLE": "Registration Error"
         },
         "REGISTER_SUCCESS": {
-          "TITLE": "Registration Complete",
-          "MESSAGE": "Your account has been successfully created"
+          "MESSAGE": "Your account has been successfully created",
+          "TITLE": "Registration Complete"
         },
-        "ERROR": {
-          "TITLE": "Registration Error",
-          "MESSAGE": "Could not complete registration"
+        "VALIDATION_ERROR": {
+          "MESSAGE": "Please correctly fill in all required fields",
+          "TITLE": "Validation Error"
         }
-      }
+      },
+      "PERSONAL_STEP": {
+        "BIRTH_DATE": {
+          "LABEL": "Date of Birth: *",
+          "MIN_AGE": "You must be at least 18 years old",
+          "REQUIRED": "Date of birth is required"
+        },
+        "GENDER": {
+          "LABEL": "Gender: *",
+          "OPTIONS": {
+            "FEMALE": "Female",
+            "MALE": "Male",
+            "OTHER": "Other"
+          },
+          "REQUIRED": "Gender is required"
+        },
+        "LAST_NAME": {
+          "LABEL": "Last Name: *",
+          "PLACEHOLDER": "Last Name",
+          "REQUIRED": "Last name is required"
+        },
+        "NAME": {
+          "LABEL": "First Name: *",
+          "PLACEHOLDER": "First Name",
+          "REQUIRED": "First name is required"
+        },
+        "NIF": {
+          "INVALID": "NIF number format is invalid",
+          "LABEL": "NIF Number: *",
+          "PLACEHOLDER": "NIF Number",
+          "REQUIRED": "NIF number is required"
+        },
+        "PHONE": {
+          "INVALID": "Phone number format is invalid",
+          "LABEL": "Phone: *",
+          "PLACEHOLDER": "Phone",
+          "REQUIRED": "Phone number is required"
+        },
+        "STEP_INDICATOR": "Step 2 - 3",
+        "TITLE": "Personal Information:"
+      },
+      "STEPS": {
+        "ACCOUNT": "Account",
+        "IMAGE": "Image",
+        "PERSONAL": "Personal"
+      },
+      "STEP_INDICATOR": "Step {{current}} - {{total}}",
+      "SUBTITLE": "Fill all form fields to go to next step",
+      "TITLE": "Sign Up Your User Account"
+    },
+    "SIDEBAR": {
+      "ACCOMMODATIONS": "Accommodations",
+      "FLIGHTS": "Flights",
+      "LANGUAGE": "Language",
+      "LOGIN": "Login",
+      "PANEL": {
+        "ACCOUNT": "Manage your account",
+        "ADMIN": "Administration",
+        "ADMIN_SUBTITLE": "Manage the administration",
+        "LOGOUT": "Log out",
+        "PROFILE": "Profile"
+      },
+      "REGISTER": "Register",
+      "WELCOME": "Welcome"
     }
-  }
+  },
+  "FORBIDDEN": {
+    "BUTTON": "Go back",
+    "SUBTITLE": "You do not have permission to view this page.",
+    "TITLE": "Access denied"
+  },
+  "HOME": {
+    "WELCOME": "Welcome to SkyStay"
+  },
+  "NOT_FOUND": {
+    "BUTTON": "Go back to the previous page",
+    "SUBTITLE": "Sorry, we couldn't find the page you're looking for.",
+    "TITLE": "Page not found"
+  },
+  "SHOW_IMAGE": "Show image",
+  "UNAUTHORIZED": {
+    "BUTTON": "Back to home",
+    "SUBTITLE": "You are not allowed to view this page. If you think it is an error, please contact the administrator.",
+    "TITLE": "Unauthorised access"
+  },
+  "UPLOAD_IMAGE": "Upload image"
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useDictionary } from "@context";
-import { AirlineRatingVO } from "@/types/admin/airlineRating";
+import { AirlineRatingVO } from "../types/rating";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 
 interface TableAirlaneRatingProps {
   data: AirlineRatingVO[];
@@ -14,23 +15,31 @@ export default function TableAirlineRating({ data }: TableAirlaneRatingProps) {
     <div>
       <section>
         <h3 className="my-4 text-2xl text-glacier-300">{dict.ADMINISTRATION.USERS.AIRLINE_RATING}:</h3>
-        <div className="overflow-auto">
-          <table className="table-auto w-full border-separate border-spacing-0 border border-gray-300 rounded-xl overflow-hidden text-sm">
-            <thead>
-              <tr className="text-bold text-justify text-base">
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600 w-1/2">{dict.ADMINISTRATION.USERS.DETAILS.AIRLANE_NAME}</th>
-                <th className="border border-gray-300 px-4 py-2 bg-glacier-600 w-1/2">{dict.ADMINISTRATION.USERS.DETAILS.RATING}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map(d => (
-                <tr key={d.airlineName}>
-                  <td className="border border-gray-300 px-4 py-2 w-1/2">{d.airlineName}</td>
-                  <td className="border border-gray-300 px-4 py-2 w-1/2">{d.rating}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-8 overflow-y-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{dict.ADMINISTRATION.USERS.DETAILS.AIRLANE_NAME}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.USERS.DETAILS.RATING}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={2} className="text-center">
+                    {dict.ADMINISTRATION.NO_DATA_AVAILABLE}
+                  </TableCell>
+                </TableRow>
+              ) : (
+                data.map((d, index) => (
+                  <TableRow key={d.airlineName} isOdd={index % 2 === 0}>
+                    <TableCell>{d.airlineName}</TableCell>
+                    <TableCell>{d.rating}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
       </section>
     </div>

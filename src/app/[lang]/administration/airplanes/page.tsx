@@ -3,11 +3,17 @@
 import { useEffect, useState } from "react";
 import { useDictionary } from "@context";
 import { AirplaneShowVO } from "./types/airplane";
-import { getAllAirplanes } from "@services/administration.user.service";
 import Loader from "@/app/components/ui/Loader";
 import TablePlanes from "./components/TableAirplanes";
 import Pagination from "@/app/components/ui/Pagination";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import AirplaneModalForm from "./components/AirplanesFormAdd";
+import AirplaneTypeModalForm from "./components/AirplaneTypeModalForm";
+import Button from "@/app/components/ui/Button";
+import { getAllAirplanes } from "./services/airplane.service";
+import { Notifications } from "@/app/interfaces/Notifications";
+import SeatConfigurationModalForm from "./components/SeatConfigurationModalForm";
+import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
+import { Title } from "../components/Title";
 
 export default function Page() {
   const { dict } = useDictionary();
@@ -18,7 +24,11 @@ export default function Page() {
   const [loading, setLoading] = useState<boolean>(true);
 
   const [isCreating, setIsCreating] = useState(false);
-  const [editingPlane, setEditingPlane] = useState<AirplaneShowVO | null>(null);
+  const [isCreatingAirplaneType, setIsCreatingAirplaneType] = useState(false);
+  const [isCreatingCabinDetails, setIsCreatingCabinDetails] = useState(false);
+
+  const [notification, setNotification] = useState<Notifications | null>(null);
+  const handleCloseNotification = () => setNotification(null);
 
   const fetchPlanes = async () => {
     setLoading(true);
@@ -28,7 +38,11 @@ export default function Page() {
       setHasNextPage(response.hasNextPage);
       setHasPreviousPage(response.hasPreviousPage);
     } catch (error) {
-      console.error("Error fetching airports:", error);
+      return (
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <h1 className="text-2xl">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
+        </div>
+      );
     } finally {
       setLoading(false);
     }
@@ -51,33 +65,40 @@ export default function Page() {
   }
 
   const handleCreate = () => setIsCreating(true);
-
-  const handleEdit = (plane: AirplaneShowVO) => setEditingPlane(plane);
+  const handleCreateAirplaneType = () => setIsCreatingAirplaneType(true);
+  const handleCreateCabinDetails = () => setIsCreatingCabinDetails(true);
 
   const handleModalClose = () => {
     setIsCreating(false);
-    setEditingPlane(null);
+    setIsCreatingAirplaneType(false);
+    setIsCreatingCabinDetails(false);
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = (notification: Notifications) => {
     fetchPlanes();
     handleModalClose();
+    setNotification(notification);
   };
 
   return (
-    <div>
-      <h1 className="text-2xl">{dict.ADMINISTRATION.AIRPLANES.TITLE}</h1>
-      <div className="bg-zinc-700 p-10 m-4 rounded-md">
-        <button onClick={handleCreate} className="text-5xl rounded-xl font-semibold transition-all duration-400 hover:scale-110 active:scale-90 text-glacier-400">
-          <IoIosAddCircleOutline />
-        </button>
+    <>
+      <Title title={dict.ADMINISTRATION.AIRPLANES.TITLE} />
+      <div className="p-1 m-4">
+        <div className="flex flex-row justify-start items-center mb-4 gap-4">
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE} onClick={() => handleCreate()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE} onClick={() => handleCreateAirplaneType()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.AIRPLANES.ADD_SEAT_CONFIGURATION} onClick={() => handleCreateCabinDetails()} color="admin" className="" />
+          <Button text={dict.ADMINISTRATION.RELOAD} onClick={() => fetchPlanes()} color="admin" className="" />
+        </div>
 
-        <TablePlanes planes={planes} onEdit={handleEdit} />
+        <TablePlanes planes={planes} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
 
-      {/* {isCreating && <PlanesCreateModal onClose={handleModalClose} onSuccess={handleSuccess} />}
-      {editingPlane && <PlanesEditModal onClose={handleModalClose} onSuccess={handleSuccess} planeToEdit={editingPlane} />} */}
-    </div>
+      {isCreating && <AirplaneModalForm onClose={handleModalClose} onSuccess={handleSuccess} notifications={notification} />}
+      {isCreatingAirplaneType && <AirplaneTypeModalForm onClose={handleModalClose} onSuccess={handleSuccess} notifications={notification} />}
+      {isCreatingCabinDetails && <SeatConfigurationModalForm onClose={handleModalClose} onSuccess={handleSuccess} />}
+      {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
+    </>
   );
 }
