@@ -542,7 +542,8 @@
           "INVALID": "NIF number format is invalid",
           "LABEL": "NIF Number: *",
           "PLACEHOLDER": "NIF Number",
-          "REQUIRED": "NIF number is required"
+          "REQUIRED": "NIF number is required",
+          "INVALID_DATA": "NIF number or letter is invalid"
         },
         "PHONE": {
           "INVALID": "Phone number format is invalid",
@@ -576,6 +577,60 @@
       },
       "REGISTER": "Register",
       "WELCOME": "Welcome"
+    },
+    "CODE_VALIDATION": {
+      "TITLE": "Verification Code",
+      "SUBTITLE": "Enter the 6-digit code sent to your email:",
+      "BUTTONS": {
+        "VERIFY": "Verify Code",
+        "LOADING": "Verifying...",
+        "RESEND": "Resend Code"
+      },
+      "NOTIFICATIONS": {
+        "VALIDATION_ERROR": {
+          "TITLE": "Validation Error",
+          "MESSAGE": "Please enter the complete 6-digit code"
+        },
+        "SUCCESS": {
+          "TITLE": "Verification Successful",
+          "MESSAGE": "Your email has been successfully verified"
+        },
+        "ERROR": {
+          "TITLE": "Verification Error",
+          "MESSAGE": "Invalid verification code. Please try again"
+        },
+        "SEND_SUCCESS": {
+          "TITLE": "Code Sent",
+          "MESSAGE": "A verification code has been sent to your email"
+        },
+        "SEND_ERROR": {
+          "TITLE": "Send Error",
+          "MESSAGE": "Could not send a new code. Please try again later"
+        },
+        "RESEND_SUCCESS": {
+          "TITLE": "Code Resent",
+          "MESSAGE": "A new verification code has been sent to your email"
+        },
+        "RESEND_ERROR": {
+          "TITLE": "Resend Error",
+          "MESSAGE": "Could not send a new code. Please try again later"
+        },
+        "PASSWORD_CHANGED": {
+          "TITLE": "Password changed",
+          "MESSAGE": "Your password has been change successfully"
+        },
+        "PASSWORD_CHANGED_ERROR": {
+          "TITLE": "Password changed Error",
+          "MESSAGE": "There was a problem changing your password"
+        }
+      },
+      "RESEND_MODAL": {
+        "TITLE": "Resend Verification Code",
+        "SUBTITLE": "Enter your email address to receive a new verification code",
+        "EMAIL_PLACEHOLDER": "Enter your email",
+        "SEND": "Send Code",
+        "CANCEL": "Cancel"
+      }
     }
   },
   "FORBIDDEN": {

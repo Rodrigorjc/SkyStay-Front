@@ -9,6 +9,7 @@ import { MdError } from "react-icons/md";
 import axiosClient from "@/lib/axiosClient";
 import {usePathname} from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Cookies from 'js-cookie';
 
 
 const getSteps = (dict: any) => [
@@ -477,13 +478,22 @@ const MultiStepForm: React.FC = () => {
                 }
                 break;
             case "nif":
+                const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
                 const nifRegex = /^[0-9]{8}[A-Z]$/;
                 if (!value) {
                     newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.REQUIRED;
                 } else if (!nifRegex.test(value)) {
                     newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.INVALID;
                 } else {
-                    delete newErrors.nif;
+                    const number = parseInt(value.substring(0, 8));
+                    const providedLetter = value.charAt(8);
+                    const correctLetter = letters.charAt(number % 23);
+
+                    if (providedLetter !== correctLetter) {
+                        newErrors.nif = dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.INVALID_DATA;
+                    } else {
+                        delete newErrors.nif;
+                    }
                 }
                 break;
             case "phone":
@@ -500,7 +510,18 @@ const MultiStepForm: React.FC = () => {
                 if (!value) {
                     newErrors.birthDate = dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.REQUIRED;
                 } else {
-                    delete newErrors.birthDate;
+                    const birthDate = new Date(value);
+                    const today = new Date();
+                    const eighteenYearsAgo = new Date(
+                        today.getFullYear() - 18,
+                        today.getMonth(),
+                        today.getDate()
+                    );
+                    if (birthDate > eighteenYearsAgo) {
+                        newErrors.birthDate = dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.MIN_AGE;
+                    } else {
+                        delete newErrors.birthDate;
+                    }
                 }
                 break;
             case "gender":
@@ -717,6 +738,12 @@ const MultiStepForm: React.FC = () => {
 
                 console.log("Respuesta del servidor:", response.data);
 
+                Cookies.set('registrationEmail', accountData.email, {
+                    expires: 1/24, // 1 hora en días
+                    secure: true, // Solo HTTPS
+                    sameSite: 'strict' // Protección contra CSRF
+                });
+
                 setNotification({
                     titulo: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.TITLE,
                     mensaje: dict.CLIENT.REGISTER.NOTIFICATIONS.REGISTER_SUCCESS.MESSAGE,
@@ -726,7 +753,7 @@ const MultiStepForm: React.FC = () => {
 
                 const lang = pathname.split("/")[1] || "en";
                 setTimeout(() => {
-                    window.location.href = `/${lang}/login`;
+                    window.location.href = `/${lang}/code_validation`;
                 }, 1000);
 
             } catch (error: any) {
@@ -779,7 +806,7 @@ const MultiStepForm: React.FC = () => {
                         {step > 0 && (
                             <button
                                 onClick={prevStep}
-                                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700
+                                className="bg-gray-600 text-white px-4 py-2 hover:bg-gray-700
                                 transition-all duration-400 hover:scale-105
                                 active:scale-95 active:bg-gray-800 rounded-full"
                             >
@@ -789,7 +816,7 @@ const MultiStepForm: React.FC = () => {
                         {step < steps.length - 1 ? (
                             <button
                                 onClick={nextStep}
-                                className="bg-(--color-glacier-500) text-white px-4 py-2 rounded
+                                className="bg-(--color-glacier-500) text-white px-4 py-2
                                 hover:bg-(--color-glacier-600) ml-auto transition-all duration-400 hover:scale-105
                                 active:scale-95 active:bg-(--color-glacier-700) rounded-full"
                             >
@@ -798,7 +825,7 @@ const MultiStepForm: React.FC = () => {
                         ) : step === steps.length - 1 ? (
                             <button
                                 onClick={submitForm}
-                                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-auto ml-auto
+                                className="bg-green-600 text-white px-4 py-2 hover:bg-green-700 ml-auto
                                 transition-all duration-400 hover:scale-105
                                 active:scale-95 active:bg-green-900 rounded-full"
                             >
