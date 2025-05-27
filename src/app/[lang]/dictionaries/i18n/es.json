@@ -577,6 +577,7 @@
       "WELCOME": "Bienvenido"
     }
   },
+  "ENGLISH": "Ingles",
   "FORBIDDEN": {
     "BUTTON": "Volver",
     "SUBTITLE": "No tienes permiso para ver esta página.",
@@ -591,6 +592,7 @@
     "TITLE": "Página no encontrada"
   },
   "SHOW_IMAGE": "Mostrar imágen",
+  "SPANISH": "Español",
   "UNAUTHORIZED": {
     "BUTTON": "Volver al inicio",
     "SUBTITLE": "No tienes permisos para ver esta página. Si crees que es un error, contacta al administrador.",

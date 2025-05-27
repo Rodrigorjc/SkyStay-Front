@@ -578,6 +578,7 @@
       "WELCOME": "Welcome"
     }
   },
+  "ENGLISH": "English ",
   "FORBIDDEN": {
     "BUTTON": "Go back",
     "SUBTITLE": "You do not have permission to view this page.",
@@ -592,6 +593,7 @@
     "TITLE": "Page not found"
   },
   "SHOW_IMAGE": "Show image",
+  "SPANISH": "Spanish",
   "UNAUTHORIZED": {
     "BUTTON": "Back to home",
     "SUBTITLE": "You are not allowed to view this page. If you think it is an error, please contact the administrator.",
