@@ -77,15 +77,15 @@ export default function Navbar({ dict }: NavbarProps) {
   return (
     <nav className="pt-3 sticky top-0 z-50">
       <motion.div
-        className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-3/4 rounded-full bg-glacier-500/50 backdrop-blur-md border border-white/20 text-white"
+        className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-3/4 rounded-full bg-glacier-500/50 backdrop-blur-md border border-white/20 text-white "
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4 }}>
         <div className="relative flex h-16 items-center">
           <div className="max-sm:pl-3 pr-3">
-            <span className=" text-glacier-50 cursor-pointer logo " onClick={() => router.push(`/${lang}`)}>
+            <Link className=" text-glacier-50 cursor-pointer logo " href={`/${lang}`}>
               <Image src="/favicon-white.png" alt="Logo SkyStay" width={150} height={40} className="w-auto h-auto max-sm:w-24 sm:w-28 lg:w-36" />
-            </span>
+            </Link>
           </div>
           <div className="absolute inset-y-0 right-2 flex items-center lg:hidden">
             {/* Mobile menu button */}
@@ -246,7 +246,7 @@ export default function Navbar({ dict }: NavbarProps) {
 
           {/* Mobile Language Switcher */}
           <div className="px-4 py-3">
-            <p className="text-sm text-white/60 mb-2">{dict.CLIENT.SIDEBAR.LANGUAGE || "Language"}</p>
+            <p className="text-sm text-white/90 mb-2">{dict.CLIENT.SIDEBAR.LANGUAGE}</p>
             <div className="flex space-x-2">
               <button
                 onClick={() => changeLanguage("en")}
