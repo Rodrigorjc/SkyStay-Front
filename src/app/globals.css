@@ -95,3 +95,55 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   filter: invert(48%) sepia(67%) saturate(747%) hue-rotate(150deg) brightness(95%) contrast(92%);
 }
+
+
+/* Añade estos estilos en un archivo CSS global o mediante styled-components */
+.react-datepicker {
+  font-family: 'Cormorant Garamond', sans-serif;
+  border-radius: 8px;
+  border: 1px solid var(--color-glacier-200);
+  box-shadow: 0 4px 6px rgba(26, 39, 50, 0.2);
+  background-color: var(--color-glacier-50);
+}
+
+.react-datepicker__header {
+  background-color: var(--color-glacier-100);
+  border-bottom: 1px solid var(--color-glacier-200);
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range {
+  background-color: var(--color-glacier-400) !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end {
+  background-color: var(--color-glacier-600) !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+.react-datepicker__day:hover {
+  background-color: var(--color-glacier-200) !important;
+  border-radius: 50%;
+}
+
+.react-datepicker__day--disabled {
+  color: var(--color-glacier-300) !important;
+  opacity: 0.5;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  color: var(--color-glacier-800);
+}
+
+.react-datepicker__navigation:hover *::before {
+  border-color: var(--color-glacier-600);
+}
