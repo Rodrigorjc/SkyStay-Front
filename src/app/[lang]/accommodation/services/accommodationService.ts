@@ -1,5 +1,6 @@
 import axiosClient from "@/lib/axiosClient";
 import { Accommodation } from "../types/Accommodation";
+import { Destination } from "../types/Destination";
 
 export async function fetchAccommodations(params: Record<string, string>): Promise<Accommodation[]> {
     try {
@@ -38,3 +39,25 @@ export async function fetchCities(): Promise<string[]> {
         throw error;
     }
 }
+
+export const getDestinations = async (): Promise<Destination[]> => {
+    try {
+        const response = await axiosClient.get('/accommodations/destinations');
+
+        const data = response.data;
+
+        if (Array.isArray(data)) {
+            return data.map((destination: any) => ({
+                id: destination.id,
+                name: destination.name,
+                image: destination.image || "https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg", // Imagen por defecto si es null
+            }));
+        } else {
+            console.warn("La respuesta del backend no es un array válido.");
+            return [];
+        }
+    } catch (error) {
+        console.error("Error al obtener los destinos:", error);
+        return [];
+    }
+};
