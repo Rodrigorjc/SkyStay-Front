@@ -13,10 +13,15 @@ import { FaChevronDown } from "react-icons/fa";
 interface NavbarProps {
   dict?: any;
 }
-const getNavigation = (dict: any) => [
-  { name: dict.CLIENT.SIDEBAR.FLIGHTS, href: "/flights", current: false },
-  { name: dict.CLIENT.SIDEBAR.ACCOMMODATIONS, href: "/accomodations", current: false },
-];
+const getNavigation = (dict: any) => {
+  if (!dict || !dict.CLIENT || !dict.CLIENT.SIDEBAR) {
+    return [];
+  }
+  return [
+    { name: dict.CLIENT.SIDEBAR.FLIGHTS, href: "/flights", current: false },
+    { name: dict.CLIENT.SIDEBAR.ACCOMMODATIONS, href: "/accomodations", current: false },
+  ];
+};
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
