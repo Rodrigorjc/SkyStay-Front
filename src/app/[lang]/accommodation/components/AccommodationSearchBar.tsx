@@ -290,11 +290,11 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
             )}
 
             {/* Barra de búsqueda para escritorio */}
-            <div className="hidden md:block max-w-5xl bg-glacier-100 border-4 border-glacier-800 text-glacier-950 rounded-xl shadow-2xl">
+            <div className="hidden md:block max-w-5xl bg-glacier-100 border-4 border-glacier-800 text-glacier-950 rounded-full shadow-2xl px-4 ">
                 <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3 p-2">
                     {/* Destino */}
                     <div className="relative">
-                        <div className="flex items-center border rounded-md p-2">
+                        <div className="flex items-center border rounded-full p-2">
                             <FaBed className="text-gray-600 mr-2" />
                             <input
                                 type="text"
@@ -354,7 +354,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
                     <div className="relative flex items-center">
                         <button
                             onClick={() => setShowGuestOptions(!showGuestOptions)}
-                            className="flex items-center px-3 py-2 border rounded-md hover:bg-gray-100 w-full lg:w-auto"
+                            className="flex items-center px-3 py-2 border rounded-full hover:bg-gray-100 w-full lg:w-auto"
                         >
                             <FaUser className="mr-2" />
                             <span className="truncate">{guestSummary}</span>
@@ -391,7 +391,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
                                 ))}
                                 <button
                                     onClick={() => setShowGuestOptions(false)}
-                                    className="w-full bg-glacier-600 text-white py-1 rounded hover:bg-glacier-700"
+                                    className="w-full bg-glacier-600 text-white py-1 rounded-full hover:bg-glacier-700"
                                 >
                                     Listo
                                 </button>
@@ -401,7 +401,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
 
                     {/* Botón Buscar */}
                     <button
-                        className="px-4 py-3 bg-glacier-600 text-white rounded-md hover:bg-glacier-700"
+                        className="px-4 py-3 bg-glacier-600 text-white rounded-full hover:bg-glacier-700"
                         onClick={handleSearch}
                     >
                         Buscar
