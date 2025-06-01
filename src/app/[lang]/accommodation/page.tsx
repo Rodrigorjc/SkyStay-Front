@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import Navbar from "@components/Navbar";
 import {useDictionary} from "@context";
+import AccommodationCollage from "@/app/[lang]/accommodation/components/AccommodationCollage";
 
 
 const AccommodationPage = () => {
@@ -21,6 +22,7 @@ const AccommodationPage = () => {
                 <Navbar dict={dict}></Navbar>
             </div>
             <AccommodationSearchBar onSearch={() => {}} />
+            <AccommodationCollage></AccommodationCollage>
         </div>
     );
 };
