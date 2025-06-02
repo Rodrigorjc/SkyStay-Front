@@ -77,7 +77,7 @@ export default function Navbar({ dict }: NavbarProps) {
   return (
     <nav className="pt-3 sticky top-0 z-50">
       <motion.div
-        className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-3/4 rounded-full bg-glacier-500/50 backdrop-blur-md border border-white/20 text-white "
+        className="mx-auto max-w-[1900px] px-2 sm:px-6 lg:px-8 w-3/4 rounded-full bg-glacier-500/50 backdrop-blur-md border border-white/20 text-white "
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4 }}>

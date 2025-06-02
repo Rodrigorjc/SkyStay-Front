@@ -50,7 +50,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="w-full max-w-5xl mx-auto px-4 py-10 ">
+    <section className="w-full max-w-5xl mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold text-white mb-8 text-center ">{dict.FAQ.TITLE}</h2>
       <div className="space-y-4">
         {faqData.map((item, index) => {
