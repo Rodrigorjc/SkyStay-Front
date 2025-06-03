@@ -578,6 +578,22 @@
       "REGISTER": "Register",
       "WELCOME": "Welcome"
     },
+    "FOOTER": {
+      "ABOUT": "About us",
+      "CONTACT": "Contact",
+      "EMAIL": "Email",
+      "FOLLOW_US": "Follow us on",
+      "PRIVACY_POLICY": "Privacy policy",
+      "COOKIES_POLICY": "Cookie policy",
+      "LEGAL_NOTICE": "Legal notice",
+      "TERMS_OF_SERVICE": "Terms of Service",
+      "EXPLORE": "Explore",
+      "FLIGHTS": "Flights",
+      "ACCOMMODATION": "Accommodation",
+      "TITLE": "All rights reserved.",
+      "LEGAL": "Legal"
+      }
+    },
     "CODE_VALIDATION": {
       "TITLE": "Verification Code",
       "SUBTITLE": "Enter the 6-digit code sent to your email:",
@@ -633,13 +649,68 @@
       }
     }
   },
+  "ENGLISH": "English ",
+  "FAQ": {
+    "ANSWER_1": "First, you need to be registered. Then, select your flight, choose your seat, complete the check-in process, and finalize the flight order with your payment details.",
+    "ANSWER_2": "You can leave a review after you’ve completed your flight or finished your stay at the hotel or apartment. Reviews help other users make better decisions.",
+    "ANSWER_3": "Yes, check-in is mandatory before your flight. You need to complete it to confirm your attendance, select or confirm your seat, and get your boarding pass.",
+    "ANSWER_4": "Yes, you can manage your reservations from your profile. Change or cancellation policies depend on the provider (airline, hotel, or apartment).",
+    "QUESTION_1": "How can I book a flight?",
+    "QUESTION_2": "When can I leave a review?",
+    "QUESTION_3": "Is check-in necessary?",
+    "QUESTION_4": "Can I change or cancel a reservation?",
+    "QUESTION_5": "What documents do I need to travel?",
+    "ANSWER_5": "Depending on your destination, you will need a passport or national ID card. Always check the specific requirements of the country.",
+    "QUESTION_6": "How can I recover my password if I forget it?",
+    "ANSWER_6": "You can use the 'Forgot Password' option on the login page to receive a recovery link via email.",
+    "QUESTION_7": "Can I book flights or accommodations for other people?",
+    "ANSWER_7": "Yes, you can book for others, just make sure to enter the correct details of the person who will travel or stay.",
+    "TITLE": "Frequently asked questions"
+  },
   "FORBIDDEN": {
     "BUTTON": "Go back",
     "SUBTITLE": "You do not have permission to view this page.",
     "TITLE": "Access denied"
   },
   "HOME": {
-    "WELCOME": "Welcome to SkyStay"
+    "WELCOME": "Welcome to SkyStay",
+    "SEARCH_BAR": {
+      "IDEAL_FLIGHT": "Find your ideal flight",
+      "PERFECT_ACCOMMODATION": "Find your perfect accommodation",
+      "FLIGHTS": "Flights",
+      "ACCOMMODATION": "Accommodation",
+      "ORIGIN": "Origin",
+      "CITY_HOTEL_OR_APPARTMENT": "City, hotel or flat",
+      "DESTINATION": "Destination",
+      "DATE_OF_ARRIVAL": "Date of arrival",
+      "SEARCH_FLIGHTS": "Search for flights",
+      "SEARCH_ACCOMMODATION": "Search for accommodation"
+    },
+    "BENEFITS": {
+      "TITLE": "Why choose our platform?",
+      "DESCRIPTION": "We help you plan your ideal trip with smart, secure and fast tools.",
+      "FIRST": {
+        "TITLE": "Best prices",
+        "DESCRIPTION": "Compare between different airlines and accommodations to find the best deal."
+      },
+      "SECOND": {
+        "TITLE": "Accommodation for everyone",
+        "DESCRIPTION": "From hotels to flats, with real reviews and affordable prices."
+      },
+      "THIRD": {
+        "TITLE": "Secure payments",
+        "DESCRIPTION": "We protect your data with encryption and trusted payment methods."
+      },
+      "FOURTH": {
+        "TITLE": "Smooth experience",
+        "DESCRIPTION": "Fast and clear interface to make booking simple and hassle-free."
+      }
+    },
+    "CALL_TO_ACTION": {
+      "TITLE": "Explore the world with us",
+      "SUBTITLE": "Plan your ideal trip from a single platform. Find flights, accommodation and personalised recommendations. Easy, fast and reliable.",
+      "MOST_VISITED_DESTINATIONS": "Some of the most visited destinations by our travellers:"
+    }
   },
   "NOT_FOUND": {
     "BUTTON": "Go back to the previous page",
@@ -647,6 +718,7 @@
     "TITLE": "Page not found"
   },
   "SHOW_IMAGE": "Show image",
+  "SPANISH": "Spanish",
   "UNAUTHORIZED": {
     "BUTTON": "Back to home",
     "SUBTITLE": "You are not allowed to view this page. If you think it is an error, please contact the administrator.",

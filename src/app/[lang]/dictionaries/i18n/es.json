@@ -577,6 +577,22 @@
       "REGISTER": "Registro",
       "WELCOME": "Bienvenido"
     },
+    "FOOTER": {
+      "ABOUT": "Sobre nosotros",
+      "CONTACT": "Contacto",
+      "EMAIL": "Correo electrónico",
+      "FOLLOW_US": "Síguenos en",
+      "PRIVACY_POLICY": "Política de privacidad",
+      "COOKIES_POLICY": "Política de cookies",
+      "LEGAL_NOTICE": "Aviso legal",
+      "TERMS_OF_SERVICE": "Términos de servicio",
+      "EXPLORE": "Explorar",
+      "FLIGHTS": "Vuelos",
+      "ACCOMMODATION": "Alojamiento",
+      "TITLE": "Todos los derechos reservados.",
+      "LEGAL": "Legales"
+      }
+    },
     "CODE_VALIDATION": {
       "TITLE": "Código de Verificación",
       "SUBTITLE": "Introduce el código de 6 dígitos enviado a tu correo:",
@@ -632,13 +648,68 @@
       }
     }
   },
+  "ENGLISH": "Ingles",
+  "FAQ": {
+    "ANSWER_1": "Primero debes estar registrado. Luego seleccionas el vuelo, eliges tu asiento, haces el check-in y completas la orden de vuelo con tus datos de pago.",
+    "ANSWER_2": "Puedes dejar una reseña una vez que hayas completado tu vuelo o finalizado tu estancia en el hotel o apartamento. Las valoraciones ayudan a otros usuarios a tomar mejores decisiones.",
+    "ANSWER_3": "Sí, el check-in es obligatorio antes de tu vuelo. Debes completarlo para confirmar tu asistencia, seleccionar o confirmar tu asiento y obtener tu tarjeta de embarque.",
+    "ANSWER_4": "Sí, desde tu perfil puedes gestionar tus reservas. Las políticas de cambio o cancelación dependerán del proveedor (aerolínea, hotel o apartamento).",
+    "QUESTION_1": "¿Cómo puedo reservar un vuelo?",
+    "QUESTION_2": "¿Cuándo puedo dejar una reseña?",
+    "QUESTION_3": "¿Es necesario hacer el check-in?",
+    "QUESTION_4": "¿Puedo cambiar o cancelar una reserva?",
+    "QUESTION_5": "¿Qué documentos necesito para viajar?",
+    "ANSWER_5": "Dependiendo del destino, necesitarás pasaporte o documento nacional de identidad. Verifica siempre los requisitos específicos del país.",
+    "QUESTION_6": "¿Cómo puedo recuperar mi contraseña si la olvido?",
+    "ANSWER_6": "Puedes usar la opción de 'Olvidé mi contraseña' en la página de inicio de sesión para recibir un enlace de recuperación en tu correo.",
+    "QUESTION_7": "¿Puedo reservar vuelos o alojamientos para otras personas?",
+    "ANSWER_7": "Sí, puedes reservar para terceros, solo necesitas ingresar los datos correctos de la persona que viajará o se alojará.",
+    "TITLE": "Preguntas frecuentes"
+  },
   "FORBIDDEN": {
     "BUTTON": "Volver",
     "SUBTITLE": "No tienes permiso para ver esta página.",
     "TITLE": "Acceso denegado"
   },
   "HOME": {
-    "WELCOME": "Bienvenido a SkyStay"
+    "WELCOME": "Bienvenido a SkyStay",
+    "SEARCH_BAR": {
+      "IDEAL_FLIGHT": "Encuentra tu vuelo ideal",
+      "PERFECT_ACCOMMODATION": "Busca tu hospedaje perfecto",
+      "FLIGHTS": "Vuelos",
+      "ACCOMMODATION": "Hospedaje",
+      "ORIGIN": "Origen",
+      "CITY_HOTEL_OR_APPARTMENT": "Ciudad, hotel o apartamento",
+      "DESTINATION": "Destino",
+      "DATE_OF_ARRIVAL": "Fecha de entrada",
+      "SEARCH_FLIGHTS": "Buscar vuelos",
+      "SEARCH_ACCOMMODATION": "Buscar hospedaje"
+    },
+    "BENEFITS": {
+      "TITLE": "¿Por qué elegir nuestra plataforma?",
+      "DESCRIPTION": "Te ayudamos a planear tu viaje ideal con herramientas inteligentes, seguras y rápidas.",
+      "FIRST": {
+        "TITLE": "Mejores precios",
+        "DESCRIPTION": "Compara entre diferentes aerolíneas y hospedajes para encontrar la mejor oferta."
+      },
+      "SECOND": {
+        "TITLE": "Hospedajes para todos",
+        "DESCRIPTION": "Desde hoteles hasta apartamentos, con reseñas reales y precios accesibles."
+      },
+      "THIRD": {
+        "TITLE": "Pagos seguros",
+        "DESCRIPTION": "Protegemos tus datos con cifrado y métodos de pago de confianza."
+      },
+      "FOURTH": {
+        "TITLE": "Experiencia fluida",
+        "DESCRIPTION": "Interfaz rápida y clara para que reservar sea simple y sin complicaciones."
+      }
+    },
+    "CALL_TO_ACTION": {
+      "TITLE": "Explora el mundo con nosotros",
+      "SUBTITLE": "Planifica tu viaje ideal desde una sola plataforma. Encuentra vuelos, hospedajes y recomendaciones personalizadas. Fácil, rápido y confiable.",
+      "MOST_VISITED_DESTINATIONS": "Algunos de los destinos más visitados por nuestros viajeros:"
+    }
   },
   "NOT_FOUND": {
     "BUTTON": "Volver a la página anterior.",
@@ -646,6 +717,7 @@
     "TITLE": "Página no encontrada"
   },
   "SHOW_IMAGE": "Mostrar imágen",
+  "SPANISH": "Español",
   "UNAUTHORIZED": {
     "BUTTON": "Volver al inicio",
     "SUBTITLE": "No tienes permisos para ver esta página. Si crees que es un error, contacta al administrador.",
