@@ -5,7 +5,8 @@ export interface Accommodation {
     price: number;
     currency: string;
     rating: number;
-    images: string[];
+    image: string;
     amenities: string[];
     description: string;
+    type: string;
 }
