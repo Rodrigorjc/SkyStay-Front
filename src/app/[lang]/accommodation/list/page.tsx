@@ -64,6 +64,7 @@ export default function Results() {
                                 key={accommodation.id}
                                 accommodation={accommodation}
                                 lang={lang}
+                                searchParams={params}
                             />
                         ))}
                     </div>
