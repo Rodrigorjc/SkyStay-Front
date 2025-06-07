@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "@components/Navbar";
 import {useDictionary} from "@context";
 import AccommodationCollage from "@/app/[lang]/accommodation/components/AccommodationCollage";
+import TopRatedAccommodations from "@/app/[lang]/accommodation/components/TopRatedAccomodations";
 
 
 const AccommodationPage = () => {
@@ -23,6 +24,7 @@ const AccommodationPage = () => {
             </div>
             <AccommodationSearchBar onSearch={() => {}} />
             <AccommodationCollage></AccommodationCollage>
+            <TopRatedAccommodations></TopRatedAccommodations>
         </div>
     );
 };
