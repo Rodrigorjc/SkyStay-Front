@@ -97,7 +97,6 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 
-/* Añade estos estilos en un archivo CSS global o mediante styled-components */
 .react-datepicker {
   font-family: 'Cormorant Garamond', sans-serif;
   border-radius: 8px;
