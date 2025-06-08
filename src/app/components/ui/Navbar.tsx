@@ -58,7 +58,6 @@ export default function Navbar({ dict }: NavbarProps) {
     if (tokenFromCookies) {
       try {
         const tokenDescodificado = jwtDecode<{ sub: string; rol: string }>(tokenFromCookies);
-        console.info(tokenDescodificado);
         setUser(tokenDescodificado);
       } catch (error) {
         console.error("Error decoding token:", error);

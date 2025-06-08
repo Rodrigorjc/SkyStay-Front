@@ -3,11 +3,11 @@ import { CiCircleInfo } from "react-icons/ci";
 import { ChangeEvent, KeyboardEvent } from "react";
 
 interface SearchBarProps {
-  id: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => void;
+  id?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSearch?: () => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
