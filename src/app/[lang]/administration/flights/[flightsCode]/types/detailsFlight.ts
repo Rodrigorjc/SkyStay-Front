@@ -1,4 +1,5 @@
 import { CityVO } from "@/types/admin/city";
+import { CabinsInfoVO } from "../../types/flight";
 
 // PAGINA DE DETALLES DE VUELO
 export interface FlightsDetailsVO {

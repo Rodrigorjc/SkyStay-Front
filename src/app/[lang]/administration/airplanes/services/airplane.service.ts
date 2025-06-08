@@ -12,6 +12,7 @@ import {
 } from "../types/airplane";
 import { ResponseVO } from "@/types/common/response";
 import { AddImageVO } from "@/types/common/image";
+import { AirlineReducedVO } from "../../flights/types/common";
 
 export async function getAllAirplanes(limit: number, page: number): Promise<ResponsePaginatedVO<AirplaneShowVO>> {
   try {
@@ -61,6 +62,15 @@ export async function getAllAirplanesTypes(): Promise<ResponseVO<[AirplanesTypes
 export async function getAllSeatConfigurations(): Promise<ResponseVO<[SeatConfigurationVO]>> {
   try {
     const response = await axiosClient.get(`/admin/airplanes/seat-configurations/all`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllAirlines(): Promise<ResponseVO<[AirlineReducedVO]>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/airlines/all`);
     return response.data;
   } catch (error) {
     throw error;

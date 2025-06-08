@@ -4,8 +4,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "@/app/components/ui/Loader";
 import { FlightsDetailsVO } from "./types/detailsFlight";
-import { getFlightByCode } from "../services/flight.service";
+import { getCabinsByCode, getFlightByCode } from "../services/flight.service";
 import { InfoCardFlight } from "@/app/components/ui/admin/InfoCard";
+import { CabinsInfoVO } from "../types/flight";
 
 export default function FlightsDetails() {
   const { dict } = useDictionary();
@@ -13,17 +14,22 @@ export default function FlightsDetails() {
   const { lang } = useParams();
   const router = useRouter();
   const [flight, setFlight] = useState<FlightsDetailsVO>();
+  const [cabins, setCabins] = useState<CabinsInfoVO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchFlightDetails = async () => {
     try {
-      console.log("Flight code:", flightsCode);
       const response = await getFlightByCode(flightsCode as string);
+      const responseCabins = await getCabinsByCode(flightsCode as string);
       setFlight(response.response.objects);
-      console.log("Response flights:", response);
+      setCabins(responseCabins.response.objects);
     } catch (error) {
-      console.error("Error fetching hotel:", error);
+      return (
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-red-500">{dict.ADMINISTRATION.ERROR_LOAD_FLIGHT}</p>
+        </div>
+      );
     } finally {
       setLoading(false);
     }
@@ -106,7 +112,7 @@ export default function FlightsDetails() {
           <h2 className="text-xl font-semibold text-glacier-400 font-mono uppercase">{dict.ADMINISTRATION.FLIGHT_DETAILS.AIRPORT}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-4">
             <div>
-              <h3 className="text-zinc-300 font-semibold text-lg mb-2">{dict.ADMINISTRATION.FLIGHT_DETAILS.DEPARTURE}</h3>
+              <h3 className="text-zinc-300 font-semibold text-lg mb-2">{dict.ADMINISTRATION.FLIGHT_DETAILS.DEPARTURE_AIRPORT}</h3>
               <div className="flex flex-col gap-4">
                 <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.AIRPORT_NAME} value={flight.departureAirport.name} />
                 <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.TERMINAL} value={flight.departureAirport.terminal} />
@@ -115,7 +121,7 @@ export default function FlightsDetails() {
               </div>
             </div>
             <div>
-              <h3 className="text-zinc-300 font-semibold text-lg mb-2">{dict.ADMINISTRATION.FLIGHT_DETAILS.ARRIVAL}</h3>
+              <h3 className="text-zinc-300 font-semibold text-lg mb-2">{dict.ADMINISTRATION.FLIGHT_DETAILS.ARRIVAL_AIRPORT}</h3>
               <div className="flex flex-col gap-4">
                 <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.AIRPORT_NAME} value={flight.arrivalAirport.name} />
                 <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.TERMINAL} value={flight.arrivalAirport.terminal} />
@@ -136,6 +142,21 @@ export default function FlightsDetails() {
             <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.CAPACITY} value={flight.airplane.airplaneType.capacity} />
             <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.STATUS} value={flight.airplane.status} />
             <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.REGISTRATION} value={flight.airplane.registrationNumber} />
+          </div>
+        </section>
+
+        {/* Cabinas */}
+        <section>
+          <h2 className="text-xl font-semibold text-glacier-400 font-mono uppercase mb-6">{dict.ADMINISTRATION.FLIGHT_DETAILS.CABINS}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cabins.map(cabin => (
+              <div key={cabin.id} className="flex flex-col gap-4 ">
+                <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.CABIN_SEAT_CLASS} value={cabin.seatClass} />
+                <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.CABIN_PRICE} value={`$${cabin.price.toFixed(2)}`} />
+                <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.CABIN_TOTAL_SEATS} value={cabin.totalSeats} />
+                <InfoCardFlight label={dict.ADMINISTRATION.FLIGHT_DETAILS.CABIN_AVAILABLE_SEATS} value={cabin.availableSeats} />
+              </div>
+            ))}
           </div>
         </section>
       </div>
