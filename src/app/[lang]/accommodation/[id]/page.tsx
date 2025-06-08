@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {JSX, useEffect, useState} from "react";
 import {useParams, usePathname, useSearchParams} from "next/navigation";
 import { getAccommodationDetails } from "@/app/[lang]/accommodation/services/accommodationService";
 import Image from "next/image";
