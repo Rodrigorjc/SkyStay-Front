@@ -6,6 +6,7 @@ import Navbar from "@components/Navbar";
 import {useDictionary} from "@context";
 import AccommodationCollage from "@/app/[lang]/accommodation/components/AccommodationCollage";
 import TopRatedAccommodations from "@/app/[lang]/accommodation/components/TopRatedAccomodations";
+import Benefits from "@/app/[lang]/accommodation/components/Benefits";
 
 
 const AccommodationPage = () => {
@@ -18,10 +19,11 @@ const AccommodationPage = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col space-y-10">
             <AccommodationSearchBar onSearch={() => {}} />
             <AccommodationCollage></AccommodationCollage>
             <TopRatedAccommodations></TopRatedAccommodations>
+            <Benefits></Benefits>
         </div>
     );
 };
