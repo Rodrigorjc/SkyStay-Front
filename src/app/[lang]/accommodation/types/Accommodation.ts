@@ -10,4 +10,5 @@ export interface Accommodation {
     description: string;
     type: string;
     averageRating?: number;
+    isFavorite?: boolean;
 }
