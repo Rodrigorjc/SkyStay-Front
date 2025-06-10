@@ -174,6 +174,14 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
 
     const guestSummary = `${guests.adults} adultos · ${guests.children} niños · ${guests.rooms} habitación`;
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Tab' && showSuggestions && filteredCities.length > 0) {
+            e.preventDefault();
+            setDestination(filteredCities[0]);
+            setShowSuggestions(false);
+        }
+    };
+
     return (
         <div className="flex justify-center py-8">
             {/* Botón de búsqueda móvil */}
@@ -194,41 +202,70 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
 
             {/* Panel de búsqueda móvil */}
             {showMobileSearch && (
-                <div className="md:hidden fixed inset-0 bg-white z-50 p-4 overflow-y-auto">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-lg font-semibold">Buscar alojamiento</h2>
+                <div className="md:hidden fixed inset-0 bg-gradient-to-b from-glacier-800 to-glacier-950 z-50 p-4 overflow-y-auto">
+                    <div className="flex justify-between items-center mb-4 border-b border-glacier-700 pb-3">
+                        <h2 className="text-lg font-semibold text-white">Buscar alojamiento</h2>
                         <button
                             onClick={() => setShowMobileSearch(false)}
-                            className="p-2 text-gray-500"
+                            className="p-2 text-glacier-200 hover:text-white bg-glacier-700/50 rounded-full"
                         >
                             <FaTimes />
                         </button>
                     </div>
 
-                    {/* Destino */}
+                    {/* Destino en móvil */}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Destino</label>
-                        <div className="flex items-center border rounded-md p-2">
-                            <FaBed className="text-gray-600 mr-2" />
-                            <input
-                                type="text"
-                                value={destination}
-                                placeholder="Destino"
-                                onChange={(e) => setDestination(e.target.value)}
-                                className="w-full outline-none"
-                            />
-                            {destination && (
-                                <button onClick={() => setDestination("")}>
-                                    <FaTimes className="ml-2 text-gray-400 hover:text-black" />
-                                </button>
+                        <label className="block text-sm font-medium mb-1 text-glacier-100">Destino</label>
+                        <div className="relative">
+                            <div className="flex items-center border-2 border-glacier-600 bg-glacier-100/90 rounded-xl p-2.5">
+                                <FaBed className="text-glacier-700 mr-2" />
+                                <div className="relative w-full">
+                                    <input
+                                        type="text"
+                                        value={destination}
+                                        placeholder="Destino"
+                                        onChange={e => handleDestinationChange(e.target.value)}
+                                        onFocus={handleFocus}
+                                        onBlur={handleBlur}
+                                        onKeyDown={handleKeyDown}
+                                        className="w-full outline-none bg-transparent text-glacier-950"
+                                        autoComplete="off"
+                                    />
+                                    {showSuggestions && filteredCities.length > 0 && destination && (
+                                        <div className="absolute inset-0 pointer-events-none">
+                                            <div className="flex">
+                                                <span className="invisible">{destination}</span>
+                                                <span className="text-glacier-600">{filteredCities[0].slice(destination.length)}</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                {destination && (
+                                    <button onClick={() => setDestination("")}>
+                                        <FaTimes className="ml-2 text-glacier-600 hover:text-glacier-800" />
+                                    </button>
+                                )}
+                            </div>
+                            {showSuggestions && (
+                                <ul className="absolute bg-glacier-100 border-2 border-glacier-600 rounded-xl shadow-xl mt-2 w-full max-h-40 overflow-y-auto z-50">
+                                    {filteredCities.map(city => (
+                                        <li
+                                            key={city}
+                                            className="p-2.5 hover:bg-glacier-200 cursor-pointer text-glacier-800 border-b border-glacier-200 last:border-0"
+                                            onMouseDown={() => handleSuggestionClick(city)}
+                                        >
+                                            {city}
+                                        </li>
+                                    ))}
+                                </ul>
                             )}
                         </div>
                     </div>
 
                     {/* Fechas */}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Fechas</label>
-                        <div className="border rounded-md p-4">
+                        <label className="block text-sm font-medium mb-1 text-glacier-100">Fechas</label>
+                        <div className="border-2 border-glacier-600 bg-glacier-100/90 rounded-xl p-4 flex justify-center">
                             <DatePicker
                                 selectsRange={true}
                                 startDate={dateRange[0]}
@@ -240,7 +277,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
                                 inline
                                 className="w-full"
                                 placeholderText="Selecciona fechas"
-                                calendarClassName="custom-calendar"
+                                calendarClassName="custom-calendar bg-glacier-100 border-glacier-600 rounded-xl shadow-xl"
                                 locale="es"
                             />
                         </div>
@@ -248,29 +285,29 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
 
                     {/* Huéspedes */}
                     <div className="mb-6">
-                        <label className="block text-sm font-medium mb-1">Huéspedes</label>
-                        <div className="border rounded-md p-4">
+                        <label className="block text-sm font-medium mb-1 text-glacier-100">Huéspedes</label>
+                        <div className="border-2 border-glacier-600 bg-glacier-100/90 rounded-xl p-4">
                             {["adults", "children", "rooms"].map((type) => (
-                                <div key={type} className="flex justify-between items-center mb-3">
-                                    <span className="capitalize">
-                                        {type === "adults"
-                                            ? "Adultos"
-                                            : type === "children"
-                                                ? "Niños"
-                                                : "Habitaciones"}
-                                    </span>
-                                    <div className="flex items-center gap-2">
+                                <div key={type} className="flex justify-between items-center mb-3 last:mb-0">
+                        <span className="capitalize text-glacier-900 font-medium">
+                            {type === "adults"
+                                ? "Adultos"
+                                : type === "children"
+                                    ? "Niños"
+                                    : "Habitaciones"}
+                        </span>
+                                    <div className="flex items-center gap-3">
                                         <button
                                             onClick={() => handleCountChange(type as 'adults' | 'children' | 'rooms', "dec")}
                                             disabled={guests[type as keyof typeof guests] <= (type === "adults" ? 1 : 0)}
-                                            className="px-2 py-1 border rounded disabled:opacity-50"
+                                            className="w-8 h-8 flex items-center justify-center bg-glacier-200 border border-glacier-600 rounded-full disabled:opacity-50 text-glacier-800"
                                         >
                                             -
                                         </button>
-                                        <span>{guests[type as keyof typeof guests]}</span>
+                                        <span className="w-6 text-center font-medium text-glacier-900">{guests[type as keyof typeof guests]}</span>
                                         <button
                                             onClick={() => handleCountChange(type as 'adults' | 'children' | 'rooms', "inc")}
-                                            className="px-2 py-1 border rounded"
+                                            className="w-8 h-8 flex items-center justify-center bg-glacier-200 border border-glacier-600 rounded-full text-glacier-800"
                                         >
                                             +
                                         </button>
@@ -281,7 +318,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
                     </div>
 
                     <button
-                        className="w-full px-4 py-3 bg-glacier-600 text-white rounded-md hover:bg-glacier-700"
+                        className="w-full px-4 py-3.5 bg-glacier-600 text-white rounded-xl hover:bg-glacier-700 font-medium shadow-lg transform hover:scale-[1.02] transition-transform"
                         onClick={handleSearch}
                     >
                         Buscar
@@ -296,15 +333,27 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
                     <div className="relative">
                         <div className="flex items-center border rounded-full p-2">
                             <FaBed className="text-gray-600 mr-2" />
-                            <input
-                                type="text"
-                                value={destination}
-                                placeholder="Destino"
-                                onChange={e => handleDestinationChange(e.target.value)}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                className="w-full outline-none"
-                            />
+                            <div className="relative w-full">
+                                <input
+                                    type="text"
+                                    value={destination}
+                                    placeholder="Destino"
+                                    onChange={e => handleDestinationChange(e.target.value)}
+                                    onFocus={handleFocus}
+                                    onBlur={handleBlur}
+                                    className="w-full outline-none"
+                                    autoComplete="off"
+                                    onKeyDown={handleKeyDown}
+                                />
+                                {showSuggestions && filteredCities.length > 0 && destination && (
+                                    <div className="absolute inset-0 pointer-events-none">
+                                        <div className="flex">
+                                            <span className="invisible">{destination}</span>
+                                            <span className="text-gray-400">{filteredCities[0].slice(destination.length)}</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                             {destination && (
                                 <button onClick={() => setDestination("")}>
                                     <FaTimes className="ml-2 text-gray-400 hover:text-black" />
@@ -312,7 +361,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
                             )}
                         </div>
                         {showSuggestions && (
-                            <ul className="absolute bg-glacier-100 border border-glacier-600 rounded-lg shadow-md mt-2 w-full max-h-40 overflow-hidden z-50">
+                            <ul className="absolute bg-glacier-100 border border-glacier-600 rounded-lg shadow-md mt-2 w-full max-h-40 overflow-y-hidden z-50">
                                 {filteredCities.map(city => (
                                     <li
                                         key={city}
