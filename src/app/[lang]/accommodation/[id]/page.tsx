@@ -27,6 +27,7 @@ interface AccommodationDetails {
     website: string;
     availableRooms: Room[];
     amenities: string;
+    typeAccomodation: string;
 }
 const getAmenityIcon = (amenity: string) => {
     const amenityMap: { [key: string]: JSX.Element } = {
@@ -69,8 +70,8 @@ export default function AccommodationPage() {
 
                 console.log("Parámetros extraídos de la URL:", params);
 
-                // Llamar a getAccommodationDetails con los parámetros
-                const data = await getAccommodationDetails(id, params);
+                const typeAccomodation = searchParams.get('typeAccomodation');
+                const data = await getAccommodationDetails(id, typeAccomodation,params);
                 setDetails(data.response.objects);
             } catch (err) {
                 if (err instanceof Error) {
