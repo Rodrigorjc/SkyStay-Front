@@ -6,27 +6,27 @@ import 'swiper/css';
 const TopRatedAccommodations: React.FC = () => {
     const accommodations = [
         {
-            id: 1,
+            code: 1,
             name: 'Hotel Alfonso XIII',
             image: 'https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg',
         },
         {
-            id: 2,
+            code: 2,
             name: 'Apartamento Buenavista',
             image: 'https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg',
         },
         {
-            id: 3,
+            code: 3,
             name: 'Madrid Centro Lujo',
             image: 'https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg',
         },
         {
-            id: 4,
+            code: 4,
             name: 'Loft Sevilla Antiguo',
             image: 'https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg',
         },
         {
-            id: 5,
+            code: 5,
             name: 'Apartamento El Rastro',
             image: 'https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg',
         },
@@ -60,7 +60,7 @@ const TopRatedAccommodations: React.FC = () => {
                 onMouseLeave={() => swiperRef?.autoplay.start()}
             >
                 {accommodations.map((accommodation) => (
-                    <SwiperSlide key={accommodation.id}>
+                    <SwiperSlide key={accommodation.code}>
                         <div className="relative rounded-xl overflow-hidden shadow-lg group transition-transform duration-300 hover:scale-105">
                             <img
                                 src={accommodation.image}
