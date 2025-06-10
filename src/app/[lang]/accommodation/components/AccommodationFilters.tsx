@@ -31,16 +31,21 @@ const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [starsFilter, setStarsFilter] = useState<number | null>(null);
 
-    // Inicializar con valores predeterminados
     useEffect(() => {
-        // Valores iniciales
-        setPriceRange([0, 500]);
-        setSelectedAmenities([]);
-        setSelectedTypes([]);
-        setStarsFilter(null);
-    }, []);
+        const timeoutId = setTimeout(() => {
+            if (onFilterChange) {
+                onFilterChange({
+                    priceRange: priceRange,
+                    amenities: selectedAmenities,
+                    accommodationTypes: selectedTypes,
+                    stars: starsFilter
+                });
+            }
+        });
 
-    // Manejadores para los cambios de precio
+        return () => clearTimeout(timeoutId);
+    }, [priceRange, selectedAmenities, selectedTypes, starsFilter, onFilterChange]);
+
     const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value === "" ? 0 : parseInt(e.target.value);
         if (!isNaN(value)) {
@@ -59,19 +64,6 @@ const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
         const value = parseInt(e.target.value);
         if (!isNaN(value)) {
             setPriceRange([priceRange[0], value]);
-        }
-    };
-
-    // Aplicar filtros sin modificar la URL
-    const applyFilters = () => {
-        // Llamar al callback con los filtros actuales
-        if (onFilterChange) {
-            onFilterChange({
-                priceRange: priceRange,
-                amenities: selectedAmenities,
-                accommodationTypes: selectedTypes,
-                stars: starsFilter
-            });
         }
     };
 
@@ -198,14 +190,6 @@ const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
                     ))}
                 </div>
             </div>
-
-            {/* Botón para aplicar filtros */}
-            <button
-                onClick={applyFilters}
-                className="w-full py-2 px-4 bg-glacier-600 hover:bg-glacier-700 text-white font-medium rounded transition-colors"
-            >
-                Aplicar filtros
-            </button>
         </div>
     );
 };
