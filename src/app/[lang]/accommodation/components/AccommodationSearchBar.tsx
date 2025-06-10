@@ -175,7 +175,7 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
     const guestSummary = `${guests.adults} adultos · ${guests.children} niños · ${guests.rooms} habitación`;
 
     return (
-        <div className="flex justify-center py-8 bg-gradient-to-b from-glacier-300 to-[#27272a]">
+        <div className="flex justify-center py-8">
             {/* Botón de búsqueda móvil */}
             <div className="md:hidden w-[90%] bg-white border-4 border-glacier-950 rounded-xl shadow-2xl z-10">
                 <button
