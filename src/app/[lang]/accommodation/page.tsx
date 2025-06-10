@@ -19,9 +19,6 @@ const AccommodationPage = () => {
 
     return (
         <div>
-            <div className="bg-glacier-300 py-0.5">
-                <Navbar dict={dict}></Navbar>
-            </div>
             <AccommodationSearchBar onSearch={() => {}} />
             <AccommodationCollage></AccommodationCollage>
             <TopRatedAccommodations></TopRatedAccommodations>
