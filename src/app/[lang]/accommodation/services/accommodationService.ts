@@ -20,16 +20,17 @@ export async function fetchAccommodations(params: Record<string, string>): Promi
             }
 
             return {
-                id: obj.id.toString(),
+                code: obj.code,
                 name: obj.name,
                 location: obj.cityName,
                 price: lowestPrice,
-                currency: "EUR",
+                currency: "€",
                 rating: obj.stars,
                 image: obj.img,
                 amenities: obj.amenities,
                 description: obj.description,
                 type: obj.accommodationType,
+                averageRating: obj.averageRating,
             };
         });
 
@@ -57,7 +58,7 @@ export const getDestinations = async (): Promise<Destination[]> => {
 
         if (Array.isArray(data)) {
             return data.map((destination: any) => ({
-                id: destination.id,
+                code: destination.code,
                 name: destination.name,
                 image: destination.image || "https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg",
             }));
@@ -73,7 +74,7 @@ export const getDestinations = async (): Promise<Destination[]> => {
 
 // Actualización de la función getAccommodationDetails en accommodationService.ts
 export async function getAccommodationDetails(
-    id: string,
+    code: string,
     typeAccomodation: string,
     params?: {
         checkIn?: string,
@@ -84,7 +85,7 @@ export async function getAccommodationDetails(
     }
 ) {
     try {
-        let url = `/accommodations/${id}`;
+        let url = `/accommodations/${code}`;
 
         if (params) {
             const queryParams = new URLSearchParams();
