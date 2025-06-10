@@ -8,10 +8,10 @@ export async function fetchAccommodations(params: Record<string, string>): Promi
         const response = await axiosClient.get(`/accommodations?${queryString}`);
 
         const data = response.data;
-
         const objects = Array.isArray(data.response?.objects) ? data.response.objects : [];
-        console.log(objects);
-        return objects.map((obj: any) => {
+
+        // Obtener los alojamientos
+        const accommodations = objects.map((obj: any) => {
             let lowestPrice = 0;
             if (Array.isArray(obj.availableRooms) && obj.availableRooms.length > 0) {
                 lowestPrice = obj.availableRooms.reduce((min: number, room: any) => {
@@ -31,9 +31,31 @@ export async function fetchAccommodations(params: Record<string, string>): Promi
                 description: obj.description,
                 type: obj.accommodationType,
                 averageRating: obj.averageRating,
+                isFavorite: false
             };
         });
+        // Modificación en la función fetchAccommodations
+        const accommodationsWithFavorites = await Promise.all(
+            accommodations.map(async (accommodation) => {
+                try {
+                    // Asegurarnos que tenemos valores válidos para code y type
+                    const code = accommodation.code;
+                    const type = accommodation.type || "HOTEL"; // Proporciona un valor por defecto si no existe
 
+                    if (code) {
+                        // Solo verificamos si tenemos al menos el código
+                        const { isFavorite } = await checkIsFavorite(code, type);
+                        return { ...accommodation, isFavorite };
+                    }
+                    return { ...accommodation, isFavorite: false };
+                } catch (error) {
+                    console.error(`Error al verificar favorito:`, error);
+                    return { ...accommodation, isFavorite: false };
+                }
+            })
+        );
+        console.log(accommodationsWithFavorites);
+        return accommodationsWithFavorites;
     } catch (error) {
         console.error("Error fetching accommodations:", error);
         throw error;
@@ -124,3 +146,45 @@ export async function getMostRatedDestinations() {
         return [];
     }
 }
+
+
+export const toggleFavoriteAccommodation = async (accommodationId: string, type: string, isFavorite: boolean) => {
+    try {
+        const endpoint = isFavorite ? '/accommodations/favorites/remove' : '/accommodations/favorites/add';
+
+        // Añadir type al payload según la estructura esperada por el backend
+        const response = await axiosClient.post(endpoint, {
+            accommodationId,
+            type
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error en favorito:', error);
+        throw error;
+    }
+};
+
+export const checkIsFavorite = async (accommodationCode: string, type: string) => {
+    try {
+        // Garantiza que type tenga un valor
+        const accommodationType = type || "HOTEL";
+
+        const response = await axiosClient.get(
+            `/accommodations/favorites/check?code=${encodeURIComponent(accommodationCode)}&type=${encodeURIComponent(accommodationType)}`
+        );
+
+        // Verifica si la respuesta contiene datos
+        if (!response.data) {
+            return { isFavorite: false };
+        }
+
+        // La respuesta del backend tiene la propiedad isFavorite
+        const isFavorite = response.data.favorite === true;
+
+        return { isFavorite };
+    } catch (error) {
+        console.error('Error al verificar favorito:', error);
+        return { isFavorite: false };
+    }
+};
