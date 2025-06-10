@@ -19,9 +19,9 @@ interface AccommodationCardProps {
 }
 
 export default function AccommodationCard({ accommodation, lang, searchParams }: AccommodationCardProps) {
-    console.log("SearchParams en AccommodationCard:", searchParams);
-
     var href = `/${lang}/accommodation/${accommodation.id}`;
+    const queryParams = new URLSearchParams();
+
     if (searchParams) {
         const queryParams = new URLSearchParams();
 
@@ -35,9 +35,11 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
         if (searchParams.rooms !== undefined && searchParams.rooms !== null)
             queryParams.append('rooms', searchParams.rooms.toString());
 
-        const queryString = queryParams.toString();
-        console.log("Query string generado:", queryString);
+        if (accommodation.type) {
+            queryParams.append('typeAccomodation', accommodation.type);
+        }
 
+        const queryString = queryParams.toString();
         if (queryString) {
             href += `?${queryString}`;
         }
