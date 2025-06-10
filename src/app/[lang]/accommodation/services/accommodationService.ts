@@ -114,3 +114,13 @@ export async function getAccommodationDetails(
         throw new Error("Error al obtener los detalles del alojamiento");
     }
 }
+
+export async function getMostRatedDestinations() {
+    try {
+        const response = await axiosClient.get('/accommodations/destinations/most-rated');
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener destinos mejor calificados:", error);
+        return [];
+    }
+}
