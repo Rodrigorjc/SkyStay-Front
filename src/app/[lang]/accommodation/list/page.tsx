@@ -2,12 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
-import AccommodationSearchBar from "../components/AccommodationSearchBar";
 import AccommodationCard from "../components/AccommodationCard";
 import AccommodationFilters from "../components/AccommodationFilters";
 import { fetchAccommodations } from "../services/accommodationService";
 import { Accommodation } from "../types/Accommodation";
 import { FaSpinner, FaFilter } from "react-icons/fa";
+
+interface Filters {
+    priceRange: [number, number];
+    accommodationTypes: string[];
+    stars: number[];
+    amenities: string[];
+}
 
 export default function Results() {
     const searchParams = useSearchParams();
@@ -44,7 +50,7 @@ export default function Results() {
         loadAccommodations();
     }, [searchParams]);
 
-    const handleFilterChange = (filters) => {
+    const handleFilterChange = (filters: Filters) => {
         const filtered = accommodations.filter(accommodation => {
             // Filtro de precio
             if (accommodation.price < filters.priceRange[0] ||
@@ -58,15 +64,10 @@ export default function Results() {
                 return false;
             }
 
-            // Filtro de estrellas (versión simplificada)
-            if (filters.stars !== null) {
-                // Asegurar que el rating es un número para comparación
-                const rating = typeof accommodation.rating === 'string'
-                    ? parseFloat(accommodation.rating)
-                    : accommodation.rating;
 
-                // Si no hay rating o no coincide con el filtro, excluir
-                if (rating === undefined || rating === null || rating !== filters.stars) {
+            if (filters.stars && filters.stars.length > 0) {
+                // Si el alojamiento no tiene rating o no está en el array de estrellas seleccionadas
+                if (!accommodation.rating || !filters.stars.includes(accommodation.rating)) {
                     return false;
                 }
             }
@@ -105,7 +106,7 @@ export default function Results() {
 
     return (
         <div>
-            <AccommodationSearchBar onSearch={() => {}} />
+
             <div className="container mx-auto py-6 px-4">
                 <h2 className="text-xl font-semibold text-glacier-50 mb-6">
                     Resultados para {params?.destination || "todos los destinos"}
@@ -150,7 +151,7 @@ export default function Results() {
                             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                                 {displayAccommodations.map((accommodation) => (
                                     <AccommodationCard
-                                        key={accommodation.id}
+                                        key={accommodation.code}
                                         accommodation={accommodation}
                                         lang={lang}
                                         searchParams={params}
