@@ -20,7 +20,6 @@ interface AccommodationCardProps {
 
 export default function AccommodationCard({ accommodation, lang, searchParams }: AccommodationCardProps) {
     var href = `/${lang}/accommodation/${accommodation.id}`;
-    const queryParams = new URLSearchParams();
 
     if (searchParams) {
         const queryParams = new URLSearchParams();
@@ -45,7 +44,6 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
         }
     }
 
-    console.log("URL final:", href);
     return (
         <Link href={href}>
             <div className="bg-glacier-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
