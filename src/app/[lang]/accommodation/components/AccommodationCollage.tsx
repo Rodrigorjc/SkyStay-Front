@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { getDestinations } from "@/app/[lang]/accommodation/services/accommodationService";
 
 interface Destination {
-    id: number;
+    code: string;
     name: string;
     image: string | null;
 }
@@ -12,22 +14,15 @@ interface Destination {
 const AccommodationCollage = () => {
     const [destinations, setDestinations] = useState<Destination[]>([]);
     const [loading, setLoading] = useState(true);
+    const { lang } = useParams();
+
 
     useEffect(() => {
         const fetchDestinations = async () => {
             try {
                 const data = await getDestinations();
                 if (Array.isArray(data)) {
-                    setDestinations(
-                        data.map(d => {
-                            const image = d.image ?? "https://www.disfrutamadrid.com/f/espana/madrid/guia/que-ver-m.jpg"; // Imagen de ejemplo si es null
-                            console.log(`Destino: ${d.name}, Imagen: ${image}`); // Log para verificar la imagen
-                            return {
-                                ...d,
-                                image,
-                            };
-                        })
-                    );
+                    setDestinations(data);
                 } else {
                     setDestinations([]);
                 }
@@ -60,8 +55,9 @@ const AccommodationCollage = () => {
                     ];
 
                     return (
-                        <div
-                            key={dest.id}
+                        <Link
+                            href={`/${lang}/accommodation/${dest.code}`}
+                            key={dest.code || `unknown-${idx}`}
                             className={`relative overflow-hidden rounded-2xl shadow-md group ${layout[idx % layout.length]}`}
                         >
                             <img
@@ -72,7 +68,7 @@ const AccommodationCollage = () => {
                             <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/60 to-transparent p-3 text-white text-sm font-medium">
                                 {dest.name || "Destino sin nombre"}
                             </div>
-                        </div>
+                        </Link>
                     );
                 })}
             </div>
