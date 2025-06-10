@@ -74,6 +74,7 @@ export const getDestinations = async (): Promise<Destination[]> => {
 // Actualización de la función getAccommodationDetails en accommodationService.ts
 export async function getAccommodationDetails(
     id: string,
+    typeAccomodation: string,
     params?: {
         checkIn?: string,
         checkOut?: string,
@@ -95,10 +96,9 @@ export async function getAccommodationDetails(
             if (params.children !== undefined && params.children !== null) queryParams.append('children', String(params.children));
             if (params.rooms !== undefined && params.rooms !== null) queryParams.append('rooms', String(params.rooms));
 
-            // Añade logs para depuración
-            console.log("Parámetros recibidos:", params);
-            console.log("Query params generados:", queryParams.toString());
-
+            if (typeAccomodation) {
+                queryParams.append('typeAccomodation', typeAccomodation);
+            }
             const queryString = queryParams.toString();
             if (queryString) {
                 url += `?${queryString}`;
