@@ -1,6 +1,7 @@
 import axiosClient from "@/lib/axiosClient";
 import { Accommodation } from "../types/Accommodation";
 import { Destination } from "../types/Destination";
+import Cookies from "js-cookie";
 
 export async function fetchAccommodations(params: Record<string, string>): Promise<Accommodation[]> {
     try {
@@ -34,10 +35,17 @@ export async function fetchAccommodations(params: Record<string, string>): Promi
                 isFavorite: false
             };
         });
-        // Modificación en la función fetchAccommodations
         const accommodationsWithFavorites = await Promise.all(
-            accommodations.map(async (accommodation) => {
+            accommodations.map(async (accommodation: { code: any; type: string; }) => {
                 try {
+                    // Verificar si hay token en las cookies
+                    const token = Cookies.get('token');
+
+                    // Si no hay token, retornar el alojamiento sin verificar favoritos
+                    if (!token) {
+                        return { ...accommodation, isFavorite: false };
+                    }
+
                     // Asegurarnos que tenemos valores válidos para code y type
                     const code = accommodation.code;
                     const type = accommodation.type || "HOTEL"; // Proporciona un valor por defecto si no existe
@@ -54,7 +62,6 @@ export async function fetchAccommodations(params: Record<string, string>): Promi
                 }
             })
         );
-        console.log(accommodationsWithFavorites);
         return accommodationsWithFavorites;
     } catch (error) {
         console.error("Error fetching accommodations:", error);
@@ -94,7 +101,6 @@ export const getDestinations = async (): Promise<Destination[]> => {
     }
 };
 
-// Actualización de la función getAccommodationDetails en accommodationService.ts
 export async function getAccommodationDetails(
     code: string,
     typeAccomodation: string,
@@ -112,7 +118,6 @@ export async function getAccommodationDetails(
         if (params) {
             const queryParams = new URLSearchParams();
 
-            // Verifica y convierte los valores antes de añadirlos
             if (params.checkIn) queryParams.append('checkIn', String(params.checkIn));
             if (params.checkOut) queryParams.append('checkOut', String(params.checkOut));
             if (params.adults !== undefined && params.adults !== null) queryParams.append('adults', String(params.adults));
@@ -127,10 +132,34 @@ export async function getAccommodationDetails(
                 url += `?${queryString}`;
             }
         }
-        console.log(url);
+
         const response = await axiosClient.get(url);
-        console.log(response.data);
-        return response.data;
+        const accommodationData = response.data;
+
+        const token = Cookies.get('token');
+
+        let isFavoriteStatus = false;
+
+        if (token && code) {
+            try {
+                const accommodationType = accommodationData.accommodationType || typeAccomodation;
+                const favoriteResponse = await checkIsFavorite(code, accommodationType);
+                console.log("Respuesta de favorito:", favoriteResponse);
+                isFavoriteStatus = favoriteResponse.isFavorite === true;
+            } catch (error) {
+                console.error("Error al verificar favorito:", error);
+                isFavoriteStatus = false;
+            }
+        }
+
+        return {
+            response: {
+                objects: {
+                    ...accommodationData.response.objects,
+                    isFavorite: isFavoriteStatus
+                }
+            }
+        };
     } catch (error) {
         console.error("Error al obtener los detalles del alojamiento:", error);
         throw new Error("Error al obtener los detalles del alojamiento");
@@ -188,3 +217,33 @@ export const checkIsFavorite = async (accommodationCode: string, type: string) =
         return { isFavorite: false };
     }
 };
+
+export async function getAvailabilityForRooms(
+    accommodationCode: string,
+    type: string,
+    roomIds: string[],
+    checkIn?: string,
+    checkOut?: string
+) {
+    try {
+        // Construir la URL con los parámetros necesarios
+        const params = new URLSearchParams();
+        params.append('code', accommodationCode);
+        params.append('type', type);
+
+        // Añadir cada ID de habitación como parámetro
+        roomIds.forEach(id => params.append('roomId', id));
+
+        if (checkIn) params.append('checkIn', checkIn);
+        if (checkOut) params.append('checkOut', checkOut);
+
+        // Llamada a tu API con axios
+        const response = await axiosClient.get(`/accommodations/availability?${params.toString()}`);
+
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener disponibilidad:", error);
+        throw new Error('Error al obtener disponibilidad');
+    }
+}
