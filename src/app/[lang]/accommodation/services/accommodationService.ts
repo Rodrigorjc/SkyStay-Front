@@ -3,6 +3,7 @@ import {Accommodation} from "../types/Accommodation";
 import {Destination} from "../types/Destination";
 import Cookies from "js-cookie";
 import {AvailabilityResponse} from "../types/AvailabilityResponse";
+import {AxiosResponse} from "axios";
 
 export async function fetchAccommodations(params: Record<string, string>): Promise<Accommodation[]> {
     try {
@@ -224,7 +225,7 @@ export const getAvailabilityForRooms = async (params: {
     roomConfigIds: string;
     accommodationType: string;
     code: string;
-}): Promise<AvailabilityResponse> => {
+}): Promise<AxiosResponse<any>> => {
     try {
         const queryParams = new URLSearchParams();
 
