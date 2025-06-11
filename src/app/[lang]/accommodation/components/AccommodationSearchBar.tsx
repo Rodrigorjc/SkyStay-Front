@@ -117,14 +117,22 @@ export default function AccommodationSearchBar({ onSearch }: { onSearch: (filter
         const today = getTodayDate();
 
         // Si hay fecha de entrada, verificar que no sea anterior a hoy
-        if (dateRange[0] && formatDateToString(dateRange[0]) < today) {
-            setNotification({
-                titulo: "Fecha inválida",
-                mensaje: "La fecha de entrada no puede ser anterior a hoy",
-                tipo: "error",
-                code: 402
-            });
-            return;
+        if (dateRange[0]) {
+            const checkInDate = new Date(dateRange[0]);
+            checkInDate.setHours(0, 0, 0, 0);
+
+            const todayDate = new Date();
+            todayDate.setHours(0, 0, 0, 0);
+
+            if (checkInDate < todayDate) {
+                setNotification({
+                    titulo: "Fecha inválida",
+                    mensaje: "La fecha de entrada no puede ser anterior a hoy",
+                    tipo: "error",
+                    code: 402
+                });
+                return;
+            }
         }
 
         // Si hay ambas fechas, verificar que check-out sea posterior a check-in
