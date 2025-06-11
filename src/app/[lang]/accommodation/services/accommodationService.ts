@@ -1,7 +1,8 @@
 import axiosClient from "@/lib/axiosClient";
-import { Accommodation } from "../types/Accommodation";
-import { Destination } from "../types/Destination";
+import {Accommodation} from "../types/Accommodation";
+import {Destination} from "../types/Destination";
 import Cookies from "js-cookie";
+import {AvailabilityResponse} from "../types/AvailabilityResponse";
 
 export async function fetchAccommodations(params: Record<string, string>): Promise<Accommodation[]> {
     try {
@@ -218,32 +219,24 @@ export const checkIsFavorite = async (accommodationCode: string, type: string) =
     }
 };
 
-export async function getAvailabilityForRooms(
-    accommodationCode: string,
-    type: string,
-    roomIds: string[],
-    checkIn?: string,
-    checkOut?: string
-) {
+
+export const getAvailabilityForRooms = async (params: {
+    roomConfigIds: string;
+    accommodationType: string;
+    code: string;
+}): Promise<AvailabilityResponse> => {
     try {
-        // Construir la URL con los parámetros necesarios
-        const params = new URLSearchParams();
-        params.append('code', accommodationCode);
-        params.append('type', type);
+        const queryParams = new URLSearchParams();
 
-        // Añadir cada ID de habitación como parámetro
-        roomIds.forEach(id => params.append('roomId', id));
+        if (params.roomConfigIds) queryParams.append('roomConfigIds', params.roomConfigIds);
+        if (params.accommodationType) queryParams.append('accommodationType', params.accommodationType);
+        if (params.code) queryParams.append('code', params.code);
 
-        if (checkIn) params.append('checkIn', checkIn);
-        if (checkOut) params.append('checkOut', checkOut);
-
-        // Llamada a tu API con axios
-        const response = await axiosClient.get(`/accommodations/availability?${params.toString()}`);
-
-        console.log(response.data);
-        return response.data;
+        const response = await axiosClient.get(`/accommodations/availability?${queryParams.toString()}`);
+        console.log(response);
+        return response;
     } catch (error) {
         console.error("Error al obtener disponibilidad:", error);
-        throw new Error('Error al obtener disponibilidad');
+        throw error;
     }
-}
+};
