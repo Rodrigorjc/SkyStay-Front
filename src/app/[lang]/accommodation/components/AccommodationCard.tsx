@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaStar, FaMapMarkerAlt, FaHotel, FaTrophy, FaHeart, FaRegHeart } from "react-icons/fa";
 import { PiBuildingApartmentFill } from "react-icons/pi";
-
+import Cookies from "js-cookie";
 import { Accommodation } from "../types/Accommodation";
-import { toggleFavoriteAccommodation, checkIsFavorite } from "../services/accommodationService";
+import { toggleFavoriteAccommodation } from "../services/accommodationService";
+import NotificationComponent from "@components/Notification";
+import {Notifications} from "@/app/interfaces/Notifications";
 
 interface AccommodationCardProps {
     accommodation: Accommodation;
@@ -24,6 +26,8 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
     const [isAnimating, setIsAnimating] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [currentAnimation, setCurrentAnimation] = useState("");
+    const [notification, setNotification] = useState<Notifications>();
+
 
     useEffect(() => {
         if (accommodation.isFavorite !== undefined) {
@@ -49,11 +53,27 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
         e.preventDefault();
         e.stopPropagation();
 
+        const token = Cookies.get('token');
+
+        if (!token) {
+            const notificacion: Notifications = {
+                titulo: "Inicio de sesión requerido",
+                mensaje: "Debes iniciar sesión para guardar alojamientos en favoritos",
+                code: 401,
+                tipo: "warning"
+            };
+
+            setNotification(notificacion);
+            setTimeout(() => {
+                setNotification(undefined);
+            }, 2000);
+            return;
+        }
+
         if (isLoading) return;
 
         setIsLoading(true);
 
-        // Generamos una animación aleatoria
         const randomAnimation = getRandomAnimation();
         setCurrentAnimation(randomAnimation);
         setIsAnimating(true);
@@ -64,10 +84,18 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
 
             setTimeout(() => {
                 setIsAnimating(false);
-            }, 1000); // Duración suficiente para cualquiera de las animaciones
+            }, 1000);
         } catch (error) {
             console.error('Error al actualizar favorito:', error);
             setIsAnimating(false);
+
+            const notificacionError: Notifications = {
+                titulo: "Error",
+                mensaje: "No se pudo actualizar el favorito",
+                code: 500,
+                tipo: "error"
+            };
+            setNotification(notificacionError);
         } finally {
             setIsLoading(false);
         }
@@ -78,7 +106,6 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
     if (searchParams) {
         const queryParams = new URLSearchParams();
 
-        // Asegúrate de que los valores existen y son válidos antes de añadirlos
         if (searchParams.checkIn) queryParams.append('checkIn', searchParams.checkIn);
         if (searchParams.checkOut) queryParams.append('checkOut', searchParams.checkOut);
         if (searchParams.adults !== undefined && searchParams.adults !== null)
@@ -169,6 +196,13 @@ export default function AccommodationCard({ accommodation, lang, searchParams }:
                     )}
                 </div>
             </button>
+
+            {notification && (
+                <NotificationComponent
+                    Notifications={notification}
+                    onClose={() => setNotification(undefined)}
+                />
+            )}
         </div>
     );
 }
