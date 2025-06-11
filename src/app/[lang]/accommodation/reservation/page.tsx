@@ -138,14 +138,12 @@ export default function ReservationPage() {
 
                 // Llamada al servicio
                 const availabilityData = await getAvailabilityForRooms(params);
-                // El backend devuelve la data en availabilityData.data.response.objects
-                if (!isActive) return;
-
-                if (Array.isArray(availabilityData.response.objects) && availabilityData.response.objects.length > 0) {
-                    const dateRanges = convertDatesToRanges(availabilityData.response.objects);
+                // Usar directamente availabilityData.data como array de fechas
+                const fechasDisponibles: string[] = Array.isArray(availabilityData?.data) ? availabilityData.data : [];
+                if (fechasDisponibles.length > 0) {
+                    const dateRanges = convertDatesToRanges(fechasDisponibles);
                     setAvailableDates(dateRanges);
                 } else {
-                    console.warn('No se encontraron fechas disponibles');
                     setAvailableDates([]);
                 }
             } catch (err) {
@@ -515,29 +513,16 @@ export default function ReservationPage() {
                             </div>
 
                             {/* Información de disponibilidad */}
-                            {availability && availability.response && availability.response.objects && (
+                            {Array.isArray(availability?.data) && availability.data.length > 0 && (
                                 <div className="mb-4 bg-zinc-800 rounded-lg p-4">
                                     <h3 className="font-semibold mb-3 text-glacier-200">Disponibilidad</h3>
                                     <div className="space-y-2">
-                                        {availability.response.objects.map((room) => {
-                                            const roomType = room.roomType || "Estándar";
-
-                                            return (
-                                                <div key={room.roomId} className="p-3 border-b border-zinc-700 last:border-0">
-                                                    <div className="flex justify-between items-center">
-                                                        <span className="font-medium">{roomType}:</span>
-                                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${room.available ? "bg-green-800 text-green-200" : "bg-red-800 text-red-200"}`}>
-                                {room.available ? "Disponible" : "No disponible"}
-                            </span>
-                                                    </div>
-                                                    {room.available && (
-                                                        <p className="text-sm text-glacier-300 mt-1">
-                                                            Disponibles: {room.availableQuantity}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
+                                        <p className="text-glacier-300">Fechas disponibles:</p>
+                                        <ul className="text-sm text-glacier-100 flex flex-wrap gap-2">
+                                            {availability.data.map((fecha: string) => (
+                                                <li key={fecha} className="bg-glacier-700 px-2 py-1 rounded">{fecha}</li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
                             )}
