@@ -7,6 +7,7 @@ import AccommodationFilters from "../components/AccommodationFilters";
 import { fetchAccommodations } from "../services/accommodationService";
 import { Accommodation } from "../types/Accommodation";
 import { FaSpinner, FaFilter } from "react-icons/fa";
+import AccommodationSearchBar from "@/app/[lang]/accommodation/components/AccommodationSearchBar";
 
 interface Filters {
     priceRange: [number, number];
@@ -106,7 +107,7 @@ export default function Results() {
 
     return (
         <div>
-
+            <AccommodationSearchBar onSearch={() => {}} />
             <div className="container mx-auto py-6 px-4">
                 <h2 className="text-xl font-semibold text-glacier-50 mb-6">
                     Resultados para {params?.destination || "todos los destinos"}
