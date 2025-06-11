@@ -1,13 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { getAccommodationDetails, getAvailabilityForRooms } from "../services/accommodationService";
+import React, {useEffect, useState} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import {getAccommodationDetails, getAvailabilityForRooms} from "../services/accommodationService";
 import DatePicker from "react-datepicker";
-import { addDays, isWithinInterval, parse, format } from "date-fns";
-import { es } from "date-fns/locale";
+import {addDays, format, isWithinInterval, parse} from "date-fns";
+import {es} from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import NotificationComponent from "@components/Notification";
 import { Notifications } from "@/app/interfaces/Notifications";
+import { AvailabilityResponse } from "@/app/[lang]/accommodation/types/AvailabilityResponse";
+import FormularioPago from "../components/PaymentCard"; // Ajusta la ruta si es necesario
 
 enum Step {
     Seleccion = 1,
@@ -19,7 +21,21 @@ interface DateRange {
     startDate: string;
     endDate: string;
 }
+interface Accommodation {
+    name: string;
+    address: string;
+    stars: number;
+    cityName: string;
+    countryName: string;
+    availableRooms?: {
+        roomConfigId: string | number;
+        roomType: string;
+        capacity: number;
+        price: number;
+    }[];
+}
 
+// Ajuste de tipos para la respuesta de disponibilidad
 interface RoomAvailability {
     roomId: string;
     available: boolean;
@@ -45,16 +61,15 @@ export default function ReservationPage() {
             return { roomId, qty: Number(qty) };
         })
         .filter((r) => r.qty > 0);
-
+    const [accommodation, setAccommodation] = useState<Accommodation | null>(null);
     const [step, setStep] = useState<Step>(Step.Detalles);
     const [paymentLoading, setPaymentLoading] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-    // Estados para almacenar la información del alojamiento y disponibilidad
-    const [accommodation, setAccommodation] = useState(null);
-    const [availability, setAvailability] = useState(null);
+    const [availability, setAvailability] = useState<AvailabilityResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [mostrarFormularioPago, setMostrarFormularioPago] = useState(false);
 
     // Estados para manejar las fechas seleccionadas
     const [startDate, setStartDate] = useState<Date | null>(
@@ -96,92 +111,141 @@ export default function ReservationPage() {
         loadAccommodationDetails();
     }, [accommodationCode, accommodationType]);
 
-    // Modifica la función de carga de disponibilidad para manejar apartamentos
     useEffect(() => {
+        let isActive = true;
+
         const loadAvailability = async () => {
-            if (!accommodationCode) {
-                return;
-            }
+            if (!accommodationCode) return;
 
             try {
-                // Para apartamentos, verificar disponibilidad de todo el apartamento
-                if (isApartment && accommodation) { // Verifica que accommodation exista
-                    // Obtener los IDs de todas las habitaciones del apartamento
-                    const roomIds = accommodation?.availableRooms?.map(room => room.roomConfigId.toString()) || [];
+                setLoading(true);
 
-                    if (roomIds.length > 0) {
-                        const availabilityData = await getAvailabilityForRooms(
-                            accommodationCode,
-                            accommodationType,
-                            roomIds,
-                            checkIn,
-                            checkOut
-                        );
-                        setAvailability(availabilityData);
-                    }
+                let roomConfigIds = '';
+
+                if (isApartment && accommodation?.availableRooms) {
+                    roomConfigIds = accommodation.availableRooms
+                        .map(room => room.roomConfigId)
+                        .join(',');
+                } else if (selectedRooms && selectedRooms.length > 0) {
+                    roomConfigIds = selectedRooms.map(room => room.roomId).join(',');
                 }
-                // Para hoteles, verificar disponibilidad de habitaciones seleccionadas
-                else if (selectedRooms.length > 0) {
-                    const roomIds = selectedRooms.map(room => room.roomId);
-                    const availabilityData = await getAvailabilityForRooms(
-                        accommodationCode,
-                        accommodationType,
-                        roomIds,
-                        checkIn,
-                        checkOut
-                    );
-                    setAvailability(availabilityData);
+
+                const params = {
+                    roomConfigIds: roomConfigIds,
+                    accommodationType,
+                    code: accommodationCode,
+                };
+
+                // Llamada al servicio
+                const availabilityData = await getAvailabilityForRooms(params);
+                // El backend devuelve la data en availabilityData.data.response.objects
+                if (!isActive) return;
+
+                if (Array.isArray(availabilityData.response.objects) && availabilityData.response.objects.length > 0) {
+                    const dateRanges = convertDatesToRanges(availabilityData.response.objects);
+                    setAvailableDates(dateRanges);
+                } else {
+                    console.warn('No se encontraron fechas disponibles');
+                    setAvailableDates([]);
                 }
             } catch (err) {
                 console.error("Error al cargar disponibilidad:", err);
+                if (isActive) {
+                    setError("Error al verificar disponibilidad");
+                    setAvailableDates([]);
+                }
+            } finally {
+                if (isActive) {
+                    setLoading(false);
+                }
             }
         };
 
-        // Usamos un temporizador para evitar múltiples llamadas
-        const timer = setTimeout(() => {
+        const shouldLoadAvailability =
+            accommodationCode &&
+            ((isApartment && accommodation) ||
+                (!isApartment && selectedRooms && selectedRooms.length > 0));
+
+        if (shouldLoadAvailability) {
             loadAvailability();
-        }, 500);
-
-        // Limpiamos el temporizador en cada ciclo
-        return () => clearTimeout(timer);
-    }, [accommodationCode, accommodationType, selectedRooms, checkIn, checkOut, isApartment, accommodation]);
-
-    // Procesar los datos de disponibilidad para obtener los rangos de fechas disponibles
-    useEffect(() => {
-        if (availability && availability.response && availability.response.objects) {
-            const rooms: RoomAvailability[] = availability.response.objects;
-
-            // Extraer todos los rangos de fechas disponibles de todas las habitaciones
-            const allRanges: DateRange[] = [];
-            rooms.forEach(room => {
-                if (room.available && room.availableDateRanges) {
-                    room.availableDateRanges.forEach(range => {
-                        allRanges.push(range);
-                    });
-                }
-            });
-
-            setAvailableDates(allRanges);
         }
-    }, [availability]);
 
-    // Función para verificar si una fecha está disponible
+        return () => {
+            isActive = false;
+        };
+    }, [accommodationCode, isApartment, accommodation, JSON.stringify(selectedRooms)]);
+
+// Función para convertir array de fechas a rangos
+    const convertDatesToRanges = (dates: string[]): DateRange[] => {
+        if (!dates || dates.length === 0) return [];
+
+        // Ordenar fechas
+        const sortedDates = [...dates].sort();
+        const ranges: DateRange[] = [];
+
+        let startDate = sortedDates[0];
+        let endDate = startDate;
+
+        for (let i = 1; i < sortedDates.length; i++) {
+            const currentDate = new Date(sortedDates[i]);
+            const previousDate = new Date(endDate);
+            previousDate.setDate(previousDate.getDate() + 1);
+
+            // Si la fecha actual es consecutiva a la anterior, extender el rango
+            if (currentDate.getTime() === previousDate.getTime()) {
+                endDate = sortedDates[i];
+            } else {
+                // Si no es consecutiva, crear un nuevo rango
+                ranges.push({ startDate, endDate });
+                startDate = sortedDates[i];
+                endDate = startDate;
+            }
+        }
+
+        // Añadir el último rango
+        ranges.push({ startDate, endDate });
+
+        return ranges;
+    };
+
     const isDateAvailable = (date: Date): boolean => {
-        // Si ya hay una fecha de entrada seleccionada y estamos eligiendo la fecha de salida,
-        // la fecha de salida debe ser posterior a la fecha de entrada
-        if (startDate && !endDate && date <= startDate) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Verificar si la fecha es anterior a hoy
+        if (date < today) {
             return false;
         }
 
+        // Verificar si la fecha es anterior a la fecha de inicio seleccionada
+        if (startDate && date < startDate) {
+            return false;
+        }
+
+        // Verificar si hay fechas disponibles
+        if (!availableDates || availableDates.length === 0) {
+            return false;
+        }
+
+        // Formatear la fecha para comparar en logs
         const formattedDate = format(date, "yyyy-MM-dd");
+
+        // Verificar si la fecha está en algún rango disponible
         return availableDates.some(range => {
-            const start = parse(range.startDate, "yyyy-MM-dd", new Date());
-            const end = parse(range.endDate, "yyyy-MM-dd", new Date());
-            return isWithinInterval(date, { start, end });
+            try {
+                const rangeStartDate = parse(range.startDate, "yyyy-MM-dd", new Date());
+                const rangeEndDate = parse(range.endDate, "yyyy-MM-dd", new Date());
+
+                const result = date >= rangeStartDate && date <= rangeEndDate;
+
+                return result;
+            } catch (err) {
+                console.error(`Error al parsear fechas para ${formattedDate}:`, err, range);
+                return false;
+            }
         });
     };
 
-// Función que se ejecuta cuando cambian las fechas seleccionadas
     const handleDateChange = (dates: [Date | null, Date | null]) => {
         const [start, end] = dates;
 
@@ -215,18 +279,37 @@ export default function ReservationPage() {
 
     // Renderizar día personalizado en el calendario
     const renderDayContents = (day: number, date: Date) => {
-        const isAvailable = isDateAvailable(date);
+        const available = isDateAvailable(date);
         return (
             <div
                 className={`font-semibold ${
-                    isAvailable ? "text-green-500" : "text-red-500 line-through"
+                    available   ? "text-green-500" : "text-red-500 line-through"
                 }`}
             >
                 {day}
             </div>
         );
     };
+    const nights = startDate && endDate
+        ? Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
+        : 0;
 
+    let total = 0;
+
+    if (isApartment) {
+        const totalPricePerNight = accommodation?.availableRooms?.reduce(
+            (sum, room) => sum + (room.price || 0), 0
+        ) || 0;
+        total = totalPricePerNight * nights;
+    } else {
+        total = selectedRooms.reduce((sum, room) => {
+            const roomInfo = accommodation?.availableRooms?.find(
+                (r) => r.roomConfigId.toString() === room.roomId
+            );
+            const price = roomInfo?.price || 0;
+            return sum + (room.qty * price);
+        }, 0) * nights;
+    }
     // Función para manejar el pago
     const handlePayment = async () => {
         if (!startDate || !endDate) {
@@ -266,6 +349,21 @@ export default function ReservationPage() {
             </div>
         );
     }
+
+    const roomConfigIds: Array<string|number> = isApartment
+        ? (accommodation?.availableRooms?.map(r => r.roomConfigId) || [])
+        : selectedRooms.map(r => r.roomId);
+
+    // Construir el array de rooms con roomConfigId y qty
+    const rooms = isApartment
+        ? accommodation?.availableRooms?.map(room => ({
+            roomConfigId: room.roomConfigId,
+            qty: 1
+        })) || []
+        : selectedRooms.map(room => ({
+            roomConfigId: room.roomId,
+            qty: room.qty
+        }));
 
     return (
         <div className="max-w-6xl mx-auto py-4 px-4 md:py-8 md:px-8">
@@ -385,7 +483,7 @@ export default function ReservationPage() {
                                             {selectedRooms.map((room) => {
                                                 // Buscar información detallada de la habitación en availability
                                                 const roomDetails = availability?.response?.objects?.find(
-                                                    (r: RoomAvailability) => r.roomId === room.roomId
+                                                    (r) => r.roomId === room.roomId
                                                 );
 
                                                 // Buscar información de tipo de habitación en accommodation.availableRooms
@@ -421,20 +519,16 @@ export default function ReservationPage() {
                                 <div className="mb-4 bg-zinc-800 rounded-lg p-4">
                                     <h3 className="font-semibold mb-3 text-glacier-200">Disponibilidad</h3>
                                     <div className="space-y-2">
-                                        {availability.response.objects.map((room: RoomAvailability) => {
-                                            // Buscar información de tipo de habitación
-                                            const roomInfo = accommodation?.availableRooms?.find(
-                                                (r) => r.roomConfigId.toString() === room.roomId
-                                            );
-                                            const roomType = roomInfo?.roomType || "Estándar";
+                                        {availability.response.objects.map((room) => {
+                                            const roomType = room.roomType || "Estándar";
 
                                             return (
                                                 <div key={room.roomId} className="p-3 border-b border-zinc-700 last:border-0">
                                                     <div className="flex justify-between items-center">
                                                         <span className="font-medium">{roomType}:</span>
                                                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${room.available ? "bg-green-800 text-green-200" : "bg-red-800 text-red-200"}`}>
-                                                            {room.available ? "Disponible" : "No disponible"}
-                                                        </span>
+                                {room.available ? "Disponible" : "No disponible"}
+                            </span>
                                                     </div>
                                                     {room.available && (
                                                         <p className="text-sm text-glacier-300 mt-1">
@@ -460,9 +554,10 @@ export default function ReservationPage() {
                             onClick={() => {
                                 if (!startDate || !endDate) {
                                     setNotification({
-                                        title: "Error",
-                                        message: "Por favor, selecciona las fechas de entrada y salida antes de continuar.",
-                                        type: "error"
+                                        titulo: "Error",
+                                        mensaje: "Por favor, selecciona las fechas de entrada y salida antes de continuar.",
+                                        tipo: "error",
+                                        code: 403
                                     });
                                     return;
                                 }
@@ -504,7 +599,6 @@ export default function ReservationPage() {
                                     return;
                                 }
 
-                                // Si todo está bien, avanzar al siguiente paso
                                 setStep(Step.Pago);
                             }}
                             disabled={!startDate || !endDate || (startDate && endDate && startDate.getTime() === endDate.getTime())}
@@ -631,197 +725,34 @@ export default function ReservationPage() {
                         </div>
 
                         <div>
-                            {/* Formulario de pago */}
-                            <div className="mb-6 bg-zinc-800 rounded-lg p-4">
-                                <h3 className="font-semibold mb-3 text-glacier-200">Información de pago</h3>
+                            {step === Step.Pago && (
+                                <div className="bg-zinc-900 rounded-lg p-4 md:p-6 shadow-lg">
+                                    <h2 className="text-xl font-bold mb-4 border-b border-zinc-700 pb-2">
+                                        Completar pago
+                                    </h2>
+                                    <button
+                                        className="bg-glacier-500 hover:bg-glacier-600 text-white px-6 py-3 rounded-lg font-medium"
+                                        onClick={() => setMostrarFormularioPago(true)}
+                                    >
+                                        Ir a pago seguro
+                                    </button>
 
-                                <div className="space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1 text-glacier-300">Titular de la tarjeta</label>
-                                        <input
-                                            type="text"
-                                            className="w-full p-3 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-glacier-500"
-                                            placeholder="Nombre completo"
+                                    {mostrarFormularioPago && (
+                                        <FormularioPago
+                                            setMostrarFormularioPago={setMostrarFormularioPago}
+                                            total={total}
+                                            rooms={rooms}
+                                            accommodationCode={accommodationCode}
+                                            accommodationType={accommodationType}
                                         />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium mb-1 text-glacier-300">Número de tarjeta</label>
-                                        <input
-                                            type="text"
-                                            className="w-full p-3 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-glacier-500"
-                                            placeholder="1234 5678 9012 3456"
-                                        />
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1 text-glacier-300">Fecha expiración</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-3 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-glacier-500"
-                                                placeholder="MM/AA"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1 text-glacier-300">CVC</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-3 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-glacier-500"
-                                                placeholder="123"
-                                            />
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
-                            </div>
+                            )}
+
                         </div>
                     </div>
-
-                    <div className="mt-6 flex flex-col sm:flex-row justify-end gap-4">
-                        <button
-                            className="order-2 sm:order-1 bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-3 rounded-lg font-medium transition-colors"
-                            onClick={() => setStep(Step.Detalles)}
-                            disabled={paymentLoading}
-                        >
-                            Volver
-                        </button>
-
-                        <button
-                            className="order-1 sm:order-2 bg-glacier-500 hover:bg-glacier-600 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
-                            onClick={handlePayment}
-                            disabled={paymentLoading}
-                        >
-                            {paymentLoading ? (
-                                <span className="flex items-center justify-center">
-                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    Procesando...
-                                </span>
-                            ) : "Completar reserva"}
-                        </button>
-                    </div>
-
-                    {paymentSuccess && (
-                        <div className="mt-6 p-4 bg-green-800 text-green-100 rounded-lg">
-                            <div className="flex flex-col items-center text-center">
-                                <div className="w-16 h-16 bg-green-700 rounded-full flex items-center justify-center mb-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-xl font-bold mb-2">¡Reserva completada con éxito!</h3>
-                                <p className="mb-4">Recibirás un email con los detalles de tu reserva en breve.</p>
-                                <button
-                                    className="mt-2 bg-green-700 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-                                    onClick={() => router.push("/")}
-                                >
-                                    Volver al inicio
-                                </button>
-                            </div>
-                        </div>
-                    )}
                 </div>
             )}
-
-            {/* Estilos CSS para el DatePicker */}
-            <style jsx global>{`
-                .react-datepicker {
-                    font-family: inherit !important;
-                    border: none !important;
-                    border-radius: 0.5rem !important;
-                    background-color: #27272a !important; /* Zinc-800 */
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                    width: 100%;
-                    max-width: 320px;
-                    margin: 0 auto;
-                }
-
-                .react-datepicker__month-container {
-                    width: 100% !important;
-                    background-color: #27272a !important; /* Zinc-800 */
-                }
-
-                .react-datepicker__header {
-                    background-color: #18181b !important; /* Zinc-900 */
-                    border-bottom: 1px solid #3f3f46 !important; /* Zinc-700 */
-                    padding-top: 0.75rem !important;
-                    border-top-left-radius: 0.5rem !important;
-                    border-top-right-radius: 0.5rem !important;
-                }
-
-                .react-datepicker__current-month {
-                    color: #d4d4d8 !important; /* Zinc-300 */
-                    font-weight: 600 !important;
-                    font-size: 1rem !important;
-                    padding-bottom: 0.5rem !important;
-                }
-
-                .react-datepicker__day-name {
-                    color: #a1a1aa !important; /* Zinc-400 */
-                    margin: 0.4rem !important;
-                    width: 2rem !important;
-                    font-weight: 500 !important;
-                }
-
-                .react-datepicker__day {
-                    margin: 0.4rem !important;
-                    width: 2rem !important;
-                    height: 2rem !important;
-                    line-height: 2rem !important;
-                    border-radius: 9999px !important;
-                    color: #d4d4d8 !important; /* Zinc-300 */
-                }
-
-                .react-datepicker__day:hover {
-                    background-color: #3f3f46 !important; /* Zinc-700 */
-                }
-
-                .react-datepicker__day--selected,
-                .react-datepicker__day--in-selecting-range,
-                .react-datepicker__day--in-range {
-                    background-color: #2563eb !important; /* Blue-600 */
-                    color: white !important;
-                }
-
-                .react-datepicker__day--keyboard-selected {
-                    background-color: #3b82f6 !important; /* Blue-500 */
-                }
-
-                .react-datepicker__navigation {
-                    top: 0.75rem !important;
-                }
-
-                /* Botones de navegación */
-                .react-datepicker__navigation-icon::before {
-                    border-color: #a1a1aa !important; /* Zinc-400 */
-                }
-
-                .react-datepicker__navigation:hover *::before {
-                    border-color: #d4d4d8 !important; /* Zinc-300 */
-                }
-
-                /* Estilos para los días no disponibles */
-                .react-datepicker__day--disabled {
-                    color: #52525b !important; /* Zinc-600 */
-                    text-decoration: line-through;
-                }
-
-                @media (max-width: 640px) {
-                    .react-datepicker {
-                        max-width: 100%;
-                    }
-                    
-                    .react-datepicker__day-name,
-                    .react-datepicker__day {
-                        margin: 0.2rem !important;
-                        width: 1.7rem !important;
-                        height: 1.7rem !important;
-                        line-height: 1.7rem !important;
-                    }
-                }
-            `}</style>
         </div>
     );
 }
