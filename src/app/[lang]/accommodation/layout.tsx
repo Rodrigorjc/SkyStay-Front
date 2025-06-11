@@ -21,7 +21,7 @@ export default function AccommodationLayout({ children }: AccommodationLayoutPro
     }, []);
 
     return (
-        <div className="bg-gradient-to-t from-glacier-950 via-zinc-900 to-glacier-900 bg-blend-exclusion">
+        <div className="bg-gradient-to-t from-glacier-950 via-zinc-900 to-glacier-900 bg-blend-exclusion min-h-screen">
             {dictionary && <Navbar dict={dictionary}></Navbar>}
             {children}
         </div>
