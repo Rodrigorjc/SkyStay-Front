@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
-import {
-    FaFilter, FaHotel, FaBuilding
-} from "react-icons/fa";
+"use client";
+import React, { useState, useEffect } from "react";
+import { FaFilter, FaHotel, FaBuilding, FaStar, FaRegStar } from "react-icons/fa";
 import { amenitiesOptions } from "../utils/amenitiesMap";
-import { FaStar, FaRegStar } from "react-icons/fa";
+import { useDictionary } from "@context";
 
 const accommodationTypes = [
-    { id: "hotel", label: "Hotel", icon: <FaHotel className="mr-2" /> },
-    { id: "apartment", label: "Apartamento", icon: <FaBuilding className="mr-2" /> },
+    { id: "hotel", labelKey: "HOTEL", icon: <FaHotel className="mr-2" /> },
+    { id: "apartment", labelKey: "APARTMENT", icon: <FaBuilding className="mr-2" /> },
 ];
 
 interface AccommodationFiltersProps {
@@ -16,79 +15,62 @@ interface AccommodationFiltersProps {
         priceRange: [number, number];
         amenities: string[];
         accommodationTypes: string[];
-        stars: number[] | null;
+        stars: number[];
     }) => void;
 }
 
-const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
-                                                                       className,
-                                                                       onFilterChange
-                                                                   }) => {
-    // Estados para los filtros
+export default function AccommodationFilters({
+                                                 className = "",
+                                                 onFilterChange,
+                                             }: AccommodationFiltersProps) {
+    const { dict } = useDictionary();
     const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
     const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [starsFilter, setStarsFilter] = useState<number[]>([]);
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            if (onFilterChange) {
-                onFilterChange({
-                    priceRange: priceRange,
-                    amenities: selectedAmenities,
-                    accommodationTypes: selectedTypes,
-                    stars: starsFilter
-                });
-            }
-        });
-
-        return () => clearTimeout(timeoutId);
+        const timeout = setTimeout(() => {
+            onFilterChange?.({
+                priceRange,
+                amenities: selectedAmenities,
+                accommodationTypes: selectedTypes,
+                stars: starsFilter,
+            });
+        }, 300);
+        return () => clearTimeout(timeout);
     }, [priceRange, selectedAmenities, selectedTypes, starsFilter, onFilterChange]);
 
     const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value === "" ? 0 : parseInt(e.target.value);
-        if (!isNaN(value)) {
-            setPriceRange([value, priceRange[1]]);
-        }
+        const min = parseInt(e.target.value) || 0;
+        setPriceRange([min, priceRange[1]]);
+    };
+
+    const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const max = parseInt(e.target.value) || 500;
+        setPriceRange([priceRange[0], max]);
+    };
+
+    const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const max = parseInt(e.target.value) || 0;
+        setPriceRange([priceRange[0], max]);
+    };
+
+    const handleAmenityChange = (amenity: string) => {
+        setSelectedAmenities(prev =>
+            prev.includes(amenity) ? prev.filter(a => a !== amenity) : [...prev, amenity]
+        );
+    };
+
+    const handleTypeChange = (type: string) => {
+        setSelectedTypes(prev =>
+            prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+        );
     };
 
     const handleStarFilter = (star: number) => {
         setStarsFilter(prev =>
-            prev.includes(star)
-                ? prev.filter(s => s !== star)
-                : [...prev, star]
-        );
-    };
-
-    const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value === "" ? 500 : parseInt(e.target.value);
-        if (!isNaN(value)) {
-            setPriceRange([priceRange[0], value]);
-        }
-    };
-
-    const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(e.target.value);
-        if (!isNaN(value)) {
-            setPriceRange([priceRange[0], value]);
-        }
-    };
-
-    // Manejar cambios en amenities
-    const handleAmenityChange = (amenity: string) => {
-        setSelectedAmenities(prev =>
-            prev.includes(amenity)
-                ? prev.filter(a => a !== amenity)
-                : [...prev, amenity]
-        );
-    };
-
-    // Manejar cambios en tipos de alojamiento
-    const handleTypeChange = (type: string) => {
-        setSelectedTypes(prev =>
-            prev.includes(type)
-                ? prev.filter(t => t !== type)
-                : [...prev, type]
+            prev.includes(star) ? prev.filter(s => s !== star) : [...prev, star]
         );
     };
 
@@ -96,32 +78,30 @@ const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
         <div className={`bg-zinc-800/80 rounded-lg p-4 ${className}`}>
             <div className="max-h-[70vh] overflow-y-auto pr-6 custom-scrollbar">
                 <div className="flex items-center mb-4 border-b border-glacier-700 pb-2">
-                    <FaFilter className="text-glacier-400 mr-2"/>
-                    <h3 className="text-lg font-medium text-glacier-200">Filtros</h3>
+                    <FaFilter className="text-glacier-400 mr-2" />
+                    <h3 className="text-lg font-medium text-glacier-200">{dict.CLIENT.FILTERS.TITLE}</h3>
                 </div>
 
-
-                {/* Filtro de precio */}
+                {/* Price Range */}
                 <div className="mb-6">
-                    <h4 className="text-glacier-200 font-medium mb-3">Rango de precio</h4>
-                    <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-glacier-300">{priceRange[0]}€</span>
-                        <span className="text-sm text-glacier-300">{priceRange[1]}€</span>
+                    <h4 className="text-glacier-200 font-medium mb-3">{dict.CLIENT.FILTERS.PRICE_RANGE}</h4>
+                    <div className="flex justify-between mb-2 text-sm text-glacier-300">
+                        <span>{priceRange[0]}€</span>
+                        <span>{priceRange[1]}€</span>
                     </div>
                     <input
                         type="range"
-                        min="0"
-                        max="500"
-                        step="10"
+                        min={dict.CLIENT.FILTERS.PRICE_MIN}
+                        max={dict.CLIENT.FILTERS.PRICE_MAX}
+                        step={dict.CLIENT.FILTERS.PRICE_STEP}
                         value={priceRange[1]}
                         onChange={handleRangeChange}
-                        className="w-full h-2 bg-glacier-700 rounded-lg appearance-none cursor-pointer"
+                        className="w-full h-2 bg-glacier-700 rounded-lg"
                     />
-
                     <div className="flex gap-2 mt-2">
                         <input
                             type="number"
-                            min="0"
+                            min={dict.CLIENT.FILTERS.PRICE_MIN}
                             max={priceRange[1]}
                             value={priceRange[0]}
                             onChange={handleMinPriceChange}
@@ -130,7 +110,7 @@ const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
                         <input
                             type="number"
                             min={priceRange[0]}
-                            max="500"
+                            max={dict.CLIENT.FILTERS.PRICE_MAX}
                             value={priceRange[1]}
                             onChange={handleMaxPriceChange}
                             className="w-1/2 px-2 py-1 text-sm bg-zinc-700 text-glacier-200 rounded border border-glacier-600"
@@ -138,97 +118,78 @@ const AccommodationFilters: React.FC<AccommodationFiltersProps> = ({
                     </div>
                 </div>
 
-                {/* Filtro de tipo de alojamiento */}
+                {/* Accommodation Types */}
                 <div className="mb-6">
-                    <h4 className="text-glacier-200 font-medium mb-3">Tipo de alojamiento</h4>
+                    <h4 className="text-glacier-200 font-medium mb-3">{dict.CLIENT.FILTERS.TYPE_TITLE}</h4>
                     <div className="space-y-2">
                         {accommodationTypes.map(type => (
                             <div key={type.id} className="flex items-center">
                                 <input
                                     type="checkbox"
-                                    id={`type-${type.id}`}
                                     checked={selectedTypes.includes(type.id)}
                                     onChange={() => handleTypeChange(type.id)}
                                     className="mr-2 text-glacier-500 focus:ring-glacier-500 h-4 w-4 border-glacier-600 rounded"
                                 />
-                                <label htmlFor={`type-${type.id}`} className="flex items-center text-glacier-300">
-                                    {type.icon} {type.label}
+                                <label className="flex items-center text-glacier-300">
+                                    {type.icon} {dict.CLIENT.FILTERS.TYPE_OPTIONS[type.labelKey]}
                                 </label>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Filtro de estrellas - multiopción */}
+                {/* Stars */}
                 <div className="mb-6">
-                    <h4 className="text-glacier-200 font-medium mb-3">Calificación</h4>
+                    <h4 className="text-glacier-200 font-medium mb-3">{dict.CLIENT.FILTERS.STARS_TITLE}</h4>
                     <div className="space-y-2">
                         {[5, 4, 3, 2, 1].map(star => (
                             <div
                                 key={star}
                                 onClick={() => handleStarFilter(star)}
-                                className={`flex items-center p-2 rounded-md cursor-pointer transition-all ${
-                                    starsFilter.includes(star)
-                                        ? 'bg-glacier-600 border border-glacier-400'
-                                        : 'bg-zinc-700 border border-zinc-600 hover:bg-zinc-600'
-                                }`}
+                                className={`flex items-center p-2 rounded-md cursor-pointer transition-all \${
+                  starsFilter.includes(star)
+                    ? 'bg-glacier-600 border border-glacier-400'
+                    : 'bg-zinc-700 border border-zinc-600 hover:bg-zinc-600'
+                }`}
                             >
                                 <div className="flex text-yellow-400">
-                                    {Array.from({ length: 5 }).map((_, index) => (
-                                        <span key={index}>
-                                            {index < star ?
-                                                <FaStar className="mr-1" /> :
-                                                <FaRegStar className="mr-1 text-zinc-500" />
-                                            }
-                                        </span>
+                                    {Array.from({ length: 5 }).map((_, i) => (
+                                        i < star ? <FaStar key={i} className="mr-1" /> : <FaRegStar key={i} className="mr-1 text-zinc-500" />
                                     ))}
                                 </div>
-                                <span className={`ml-2 text-sm ${
-                                    starsFilter.includes(star) ? 'text-white font-medium' : 'text-glacier-300'
-                                    }`}>
-                                    {star} {star === 1 ? 'estrella' : 'estrellas'}
-                                </span>
+                                <span className={`ml-2 text-sm \${
+                  starsFilter.includes(star) ? 'text-white font-medium' : 'text-glacier-300'
+                }`}>{star} {star === 1 ? dict.CLIENT.FILTERS.STARS_SINGULAR : dict.CLIENT.FILTERS.STARS_PLURAL}</span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Filtro de amenities */}
+                {/* Amenities */}
                 <div className="mb-6">
-                    <h4 className="text-glacier-200 font-medium mb-3">Servicios disponibles</h4>
-                    <div className="pr-2 grid grid-cols-1 sm:grid-cols-1 gap-3">
+                    <h4 className="text-glacier-200 font-medium mb-3">{dict.CLIENT.FILTERS.AMENITIES_TITLE}</h4>
+                    <div className="grid grid-cols-1 gap-3">
                         {amenitiesOptions.map(amenity => (
-                            <div
+                            <label
                                 key={amenity}
-                                onClick={() => handleAmenityChange(amenity)}
-                                className={`flex items-center p-2 rounded-md cursor-pointer transition-colors duration-200 ${
-                                    selectedAmenities.includes(amenity)
-                                        ? 'bg-glacier-600 border border-glacier-400'
-                                        : 'bg-zinc-700 border border-zinc-600 hover:bg-zinc-600'
-                                }`}
+                                className={`flex items-center p-2 rounded-md cursor-pointer transition-colors \${
+                  selectedAmenities.includes(amenity)
+                    ? 'bg-glacier-600 border border-glacier-400 text-white'
+                    : 'bg-zinc-700 border border-zinc-600 text-glacier-300 hover:bg-zinc-600'
+                }`}
                             >
                                 <input
                                     type="checkbox"
-                                    id={`amenity-${amenity}`}
                                     checked={selectedAmenities.includes(amenity)}
-                                    onChange={() => {}} // Gestionado por el onClick del div
-                                    className="mr-2 text-glacier-500 focus:ring-glacier-500 h-4 w-4 border-glacier-600 rounded accent-glacier-500"
+                                    onChange={() => handleAmenityChange(amenity)}
+                                    className="mr-2 accent-glacier-500 h-4 w-4 rounded"
                                 />
-                                <label
-                                    htmlFor={`amenity-${amenity}`}
-                                    className={`text-sm cursor-pointer ${
-                                        selectedAmenities.includes(amenity) ? 'text-white font-medium' : 'text-glacier-300'
-                                    }`}
-                                >
-                                    {amenity}
-                                </label>
-                            </div>
+                                <span className="text-sm">{dict.CLIENT.FILTERS.AMENITIES_OPTIONS[amenity]}</span>
+                            </label>
                         ))}
                     </div>
                 </div>
             </div>
         </div>
     );
-};
-
-export default AccommodationFilters;
+}
