@@ -455,6 +455,249 @@
     "VIEW_IMAGE": "View image"
   },
   "CLIENT": {
+    "COLLAGE": {
+      "SECTION_TITLE": "Suggested Destinations",
+      "LOADING": "Loading destinations...",
+      "ERROR_FETCH": "Error fetching destinations",
+      "ITEM": {
+        "FALLBACK_NAME": "Unnamed destination",
+        "DISCOVER": "Discover this destination"
+      }
+    },
+    "TOP_RATED": {
+      "SECTION_TITLE": "Top Rated Accommodations",
+      "LOADING": "Loading accommodations...",
+      "NO_DATA": "No accommodations available at the moment",
+      "ERROR_FETCH": "Error fetching top rated destinations"
+    },
+    "AMENITIES": {
+      "SECTION_TITLE": "Services & Amenities",
+      "OPTIONS": {
+        "WiFi": "Wi-Fi",
+        "Piscina": "Swimming Pool",
+        "Gimnasio": "Gym",
+        "Desayuno incluido": "Breakfast Included",
+        "TV por cable": "Cable TV",
+        "Estacionamiento": "Parking",
+        "Spa": "Spa",
+        "Restaurante": "Restaurant",
+        "Aire acondicionado": "Air Conditioning",
+        "Bar": "Bar",
+        "Lavandería": "Laundry",
+        "Servicio a la habitación": "Room Service",
+        "Caja fuerte": "Safe",
+        "Terraza": "Terrace",
+        "Jacuzzi": "Jacuzzi",
+        "Accesibilidad": "Accessibility",
+        "Sala de conferencias": "Conference Room",
+        "Mascotas permitidas": "Pet Friendly",
+        "Servicio de limpieza": "Cleaning Service",
+        "Zona infantil": "Kids Area",
+        "Ascensor": "Elevator",
+        "Seguridad 24h": "24h Security",
+        "Sauna": "Sauna",
+        "Gimnasio 24h": "24/7 Gym",
+        "Transporte al aeropuerto": "Airport Shuttle"
+      }
+    },
+    "BENEFITS": {
+      "PAY_ON_SITE": {
+        "TITLE": "Book now, pay at the property",
+        "DESCRIPTION": "FREE cancellation on most rooms"
+      },
+      "WORLDWIDE": {
+        "TITLE": "Millions of properties worldwide",
+        "DESCRIPTION": "Hotels, hostels, apartments and more..."
+      },
+      "SUPPORT24": {
+        "TITLE": "24/7 Customer Support",
+        "DESCRIPTION": "We're here when you need us"
+      }
+    },
+    "SEARCHBAR": {
+      "LABEL": {
+        "DESTINATION": "Destination",
+        "DATES": "Dates",
+        "GUESTS": "Guests"
+      },
+      "PLACEHOLDER": {
+        "DESTINATION": "Where are you going?",
+        "DATES": "Select dates",
+        "ADULTS": "Adults",
+        "CHILDREN": "Children",
+        "ROOMS": "Rooms"
+      },
+      "ACTIONS": {
+        "SEARCH": "Search",
+        "SEARCH_MOBILE": "Search accommodations",
+        "DONE": "Done"
+      },
+      "NOTIF": {
+        "INVALID_DEST": {
+          "TITLE": "Invalid data",
+          "MESSAGE": "Please enter a destination"
+        },
+        "INVALID_DATE": {
+          "TITLE": "Invalid date",
+          "PAST": "Check-in cannot be before today",
+          "ORDER": "Check-out must be after check-in"
+        }
+      }
+    },
+
+    "FILTERS": {
+      "TITLE": "Filters",
+      "PRICE_RANGE": "Price Range",
+      "PRICE_MIN": 0,
+      "PRICE_MAX": 500,
+      "PRICE_STEP": 10,
+      "TYPE_TITLE": "Accommodation Type",
+      "TYPE_OPTIONS": {
+        "HOTEL": "Hotel",
+        "APARTMENT": "Apartment"
+      },
+      "STARS_TITLE": "Rating",
+      "STARS_SINGULAR": "star",
+      "STARS_PLURAL": "stars",
+      "AMENITIES_TITLE": "Amenities",
+      "AMENITIES_OPTIONS": {
+        "WiFi": "Wi-Fi",
+        "Piscina": "Swimming Pool",
+        "Gimnasio": "Gym",
+        "Desayuno incluido": "Breakfast Included",
+        "TV por cable": "Cable TV",
+        "Estacionamiento": "Parking",
+        "Spa": "Spa",
+        "Restaurante": "Restaurant",
+        "Aire acondicionado": "Air Conditioning",
+        "Bar": "Bar",
+        "Lavandería": "Laundry",
+        "Servicio a la habitación": "Room Service",
+        "Caja fuerte": "Safe",
+        "Terraza": "Terrace",
+        "Jacuzzi": "Jacuzzi",
+        "Accesibilidad": "Accessibility",
+        "Sala de conferencias": "Conference Room",
+        "Mascotas permitidas": "Pet Friendly",
+        "Servicio de limpieza": "Cleaning Service",
+        "Zona infantil": "Kids Area",
+        "Ascensor": "Elevator",
+        "Seguridad 24h": "24h Security",
+        "Sauna": "Sauna",
+        "Gimnasio 24h": "24/7 Gym",
+        "Transporte al aeropuerto": "Airport Shuttle"
+      }
+
+    },
+
+    "CARD": {
+      "TYPE_LABEL": "{{type}}",
+      "FROM_LABEL": "from",
+      "PER_NIGHT_LABEL": "per night",
+      "FAVORITE_LABEL": "Add to favorites",
+      "UNFAVORITE_LABEL": "Remove from favorites",
+      "NOTIF": {
+        "LOGIN_REQUIRED": {
+          "TITLE": "Login required",
+          "MESSAGE": "You must log in to save favorites"
+        },
+        "ERROR": {
+          "FAVORITE": {
+            "TITLE": "Error",
+            "MESSAGE": "Could not update favorite"
+          }
+        }
+      }
+    },
+    "PAYMENT": {
+      "TITLE": "Payment Method",
+      "ERROR": {
+        "TITLE": "Error",
+        "SUBMIT": "Error processing payment. Please try again."
+      },
+      "METHOD": {
+        "CARD": "Card",
+        "PAYPAL": "PayPal"
+      },
+      "CARD": {
+        "NUMBER_LABEL": "Card Number",
+        "PLACEHOLDER_NUMBER": "1234 5678 9012 3456",
+        "EXPIRY_LABEL": "Expiration",
+        "PLACEHOLDER_EXPIRY": "MM/YY",
+        "CVV_LABEL": "CVV",
+        "PLACEHOLDER_CVV": "123",
+        "HOLDER_LABEL": "Cardholder Name",
+        "PLACEHOLDER_HOLDER": "Name Surname",
+        "SECURE_NOTICE": "Secure card. Do not share your details.",
+        "FLIP_INSTRUCTION": "Click the card to flip",
+        "PAY_BUTTON": "Pay {{type}}"
+      },
+      "PAYPAL": {
+        "EMAIL_LABEL": "PayPal Email",
+        "PLACEHOLDER_EMAIL": "example@paypal.com",
+        "PASSWORD_LABEL": "PayPal Password",
+        "PLACEHOLDER_PASSWORD": "********",
+        "PAY_BUTTON": "Pay with PayPal"
+      }
+    },
+    "RESERVATION": {
+      "LOADING": "Loading accommodation details…",
+      "ERROR": {
+        "NO_CODE": "No accommodation code provided",
+        "NO_DETAILS": "No accommodation details found",
+        "LOAD": "Error loading accommodation details",
+        "AVAILABILITY": "Error checking availability",
+        "DATES": "Please select check-in and check-out dates before continuing",
+        "NO_AVAIL": "No availability for the selected date range",
+        "TITLE": "Error"
+      },
+      "BUTTON": {
+        "BACK": "Go Back",
+        "CONTINUE": "Continue to Payment",
+        "PAY": "Proceed to Secure Payment"
+      },
+      "TITLES": {
+        "DETAILS": "Reservation Details",
+        "PAY": "Complete Payment"
+      },
+      "LABELS": {
+        "DATES": "Stay Dates",
+        "CHECKIN": "Check-in",
+        "CHECKOUT": "Check-out",
+        "APARTMENT": "Entire Apartment",
+        "ROOMS": "Selected Rooms",
+        "AVAILABILITY": "Availability",
+        "SUMMARY": "Reservation Summary",
+        "ACCOMMODATION": "Accommodation",
+        "TYPE": "Type",
+        "TOTAL": "Total"
+      },
+      "MSG": {
+        "APARTMENT_FULL": "You will reserve the entire apartment for the selected dates.",
+        "ROOMS": "Individual rooms",
+        "CAPACITY": "Capacity: {{count}} {{count, plural, one {person} other {people}}}"
+      },
+      "DEFAULT": {
+        "ROOM_TYPE": "Standard"
+      },
+      "STEPS": {
+        "Seleccion": "Selection",
+        "Detalles": "Details",
+        "Pago": "Payment"
+      }
+    },
+    "RESULTS": {
+      "HEADING": "Results for {{destination}}",
+      "ALL_DESTINATIONS": "all destinations",
+      "FILTERS": {
+        "SHOW": "Show filters",
+        "HIDE": "Hide filters"
+      },
+      "ERROR": {
+        "LOAD": "We couldn't load accommodations. Please try again."
+      },
+      "NO_RESULTS": "We didn’t find any accommodations matching your search. Try different criteria."
+    },
     "NAVIGATION": {
       "FLIGHT": "Flight",
       "HOME": "Home"
