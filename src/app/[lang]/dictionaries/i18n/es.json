@@ -435,6 +435,203 @@
     "VIEW_IMAGE": "Ver imagen"
   },
   "CLIENT": {
+    "COLLAGE": {
+      "SECTION_TITLE": "Destinos sugeridos",
+      "LOADING": "Cargando destinos...",
+      "ERROR_FETCH": "Error al obtener los destinos",
+      "ITEM": {
+        "FALLBACK_NAME": "Destino sin nombre",
+        "DISCOVER": "Descubre este destino"
+      }
+    },
+    "TOP_RATED": {
+      "SECTION_TITLE": "Alojamientos Mejor Calificados",
+      "LOADING": "Cargando alojamientos...",
+      "NO_DATA": "No hay alojamientos disponibles actualmente",
+      "ERROR_FETCH": "Error al obtener destinos mejor calificados"
+    },
+    "AMENITIES": {
+      "SECTION_TITLE": "Servicios y Comodidades",
+      "OPTIONS": {
+        "WiFi": "WiFi",
+        "Piscina": "Piscina",
+        "Gimnasio": "Gimnasio",
+        "Desayuno incluido": "Desayuno incluido",
+        "TV por cable": "TV por cable",
+        "Estacionamiento": "Estacionamiento",
+        "Spa": "Spa",
+        "Restaurante": "Restaurante",
+        "Aire acondicionado": "Aire acondicionado",
+        "Bar": "Bar",
+        "Lavandería": "Lavandería",
+        "Servicio a la habitación": "Servicio a la habitación",
+        "Caja fuerte": "Caja fuerte",
+        "Terraza": "Terraza",
+        "Jacuzzi": "Jacuzzi",
+        "Accesibilidad": "Accesibilidad",
+        "Sala de conferencias": "Sala de conferencias",
+        "Mascotas permitidas": "Mascotas permitidas",
+        "Servicio de limpieza": "Servicio de limpieza",
+        "Zona infantil": "Zona infantil",
+        "Ascensor": "Ascensor",
+        "Seguridad 24h": "Seguridad 24h",
+        "Sauna": "Sauna",
+        "Gimnasio 24h": "Gimnasio 24h",
+        "Transporte al aeropuerto": "Transporte al aeropuerto"
+      }
+    },
+    "BENEFITS": {
+      "PAY_ON_SITE": {
+        "TITLE": "Reserva ahora, paga en el alojamiento",
+        "DESCRIPTION": "Cancelación GRATIS en la mayoría de las habitaciones"
+      },
+      "WORLDWIDE": {
+        "TITLE": "Millones de alojamientos en todo el mundo",
+        "DESCRIPTION": "Hoteles, hostales, apartamentos y mucho más..."
+      },
+      "SUPPORT24": {
+        "TITLE": "Atención al cliente 24/7",
+        "DESCRIPTION": "Te ayudamos cuando lo necesites"
+      }
+    },
+    "SEARCHBAR": {
+      "LABEL": {
+        "DESTINATION": "Destino",
+        "DATES": "Fechas",
+        "GUESTS": "Huéspedes"
+      },
+      "PLACEHOLDER": {
+        "DESTINATION": "¿A dónde vas?",
+        "DATES": "Selecciona fechas",
+        "ADULTS": "Adultos",
+        "CHILDREN": "Niños",
+        "ROOMS": "Habitaciones"
+      },
+      "ACTIONS": {
+        "SEARCH": "Buscar",
+        "SEARCH_MOBILE": "Buscar alojamiento",
+        "DONE": "Listo"
+      },
+      "NOTIF": {
+        "INVALID_DEST": {
+          "TITLE": "Datos inválidos",
+          "MESSAGE": "Por favor, introduce un destino"
+        },
+        "INVALID_DATE": {
+          "TITLE": "Fecha inválida",
+          "PAST": "La fecha de entrada no puede ser anterior a hoy",
+          "ORDER": "La fecha de salida debe ser posterior a la de entrada"
+        }
+      }
+    },
+    "FILTERS": {
+      "TITLE": "Filtros",
+      "PRICE_RANGE": "Rango de precio",
+      "PRICE_MIN": 0,
+      "PRICE_MAX": 500,
+      "PRICE_STEP": 10,
+      "TYPE_TITLE": "Tipo de alojamiento",
+      "TYPE_OPTIONS": {
+        "HOTEL": "Hotel",
+        "APARTMENT": "Apartamento"
+      },
+      "STARS_TITLE": "Calificación",
+      "STARS_SINGULAR": "estrella",
+      "STARS_PLURAL": "estrellas",
+      "AMENITIES_TITLE": "Servicios disponibles",
+      "AMENITIES_OPTIONS": {
+        "WiFi": "WiFi",
+        "Piscina": "Piscina",
+        "Gimnasio": "Gimnasio",
+        "Desayuno incluido": "Desayuno incluido",
+        "TV por cable": "TV por cable",
+        "Estacionamiento": "Estacionamiento",
+        "Spa": "Spa",
+        "Restaurante": "Restaurante",
+        "Aire acondicionado": "Aire acondicionado",
+        "Bar": "Bar",
+        "Lavandería": "Lavandería",
+        "Servicio a la habitación": "Servicio a la habitación",
+        "Caja fuerte": "Caja fuerte",
+        "Terraza": "Terraza",
+        "Jacuzzi": "Jacuzzi",
+        "Accesibilidad": "Accesibilidad",
+        "Sala de conferencias": "Sala de conferencias",
+        "Mascotas permitidas": "Mascotas permitidas",
+        "Servicio de limpieza": "Servicio de limpieza",
+        "Zona infantil": "Zona infantil",
+        "Ascensor": "Ascensor",
+        "Seguridad 24h": "Seguridad 24h",
+        "Sauna": "Sauna",
+        "Gimnasio 24h": "Gimnasio 24h",
+        "Transporte al aeropuerto": "Transporte al aeropuerto"
+      }
+
+    },
+
+    "CARD": {
+      "TYPE_LABEL": "{{type}}",
+      "FROM_LABEL": "desde",
+      "PER_NIGHT_LABEL": "/noche",
+      "FAVORITE_LABEL": "Añadir a favoritos",
+      "UNFAVORITE_LABEL": "Quitar de favoritos",
+      "NOTIF": {
+        "LOGIN_REQUIRED": {
+          "TITLE": "Inicio de sesión requerido",
+          "MESSAGE": "Debes iniciar sesión para guardar favoritos"
+        },
+        "ERROR": {
+          "FAVORITE": {
+            "TITLE": "Error",
+            "MESSAGE": "No se pudo actualizar favorito"
+          }
+        }
+      }
+    },
+
+    "PAYMENT": {
+      "TITLE": "Forma de Pago",
+      "ERROR": {
+        "TITLE": "Error",
+        "SUBMIT": "Error al procesar el pago. Por favor, inténtalo de nuevo."
+      },
+      "METHOD": {
+        "CARD": "Tarjeta",
+        "PAYPAL": "PayPal"
+      },
+      "CARD": {
+        "NUMBER_LABEL": "Número de Tarjeta",
+        "PLACEHOLDER_NUMBER": "1234 5678 9012 3456",
+        "EXPIRY_LABEL": "Expiración",
+        "PLACEHOLDER_EXPIRY": "MM/YY",
+        "CVV_LABEL": "CVV",
+        "PLACEHOLDER_CVV": "123",
+        "HOLDER_LABEL": "Titular",
+        "PLACEHOLDER_HOLDER": "Nombre Apellido",
+        "SECURE_NOTICE": "Tarjeta segura. No compartas tus datos.",
+        "FLIP_INSTRUCTION": "Haz click en la tarjeta para girar",
+        "PAY_BUTTON": "Pagar {{type}}"
+      },
+      "PAYPAL": {
+        "EMAIL_LABEL": "Correo PayPal",
+        "PLACEHOLDER_EMAIL": "example@paypal.com",
+        "PASSWORD_LABEL": "Contraseña PayPal",
+        "PLACEHOLDER_PASSWORD": "********",
+        "PAY_BUTTON": "Pagar con PayPal"
+      }
+    },
+    "RESULTS": {
+      "HEADING": "Resultados para {{destination}}",
+      "ALL_DESTINATIONS": "todos los destinos",
+      "FILTERS": {
+        "SHOW": "Mostrar filtros",
+        "HIDE": "Ocultar filtros"
+      },
+      "ERROR": {
+        "LOAD": "No pudimos cargar los alojamientos. Por favor, inténtalo de nuevo."
+      },
+      "NO_RESULTS": "No encontramos alojamientos que coincidan con tu búsqueda. Intenta con otros criterios."
+    },
     "LOGIN": {
       "CLICK_HERE": "Pincha aquí",
       "EMAIL": "Correo electrónico",
