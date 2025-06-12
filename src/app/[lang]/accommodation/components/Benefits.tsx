@@ -1,25 +1,32 @@
 "use client";
 
 import React from 'react';
+import { useDictionary } from '@context';
 
 const BenefitsSection: React.FC = () => {
+    const { dict } = useDictionary();
+
     const benefits = [
         {
             icon: '🧾',
-            title: 'Reserva ahora, paga en el alojamiento',
-            description: 'Cancelación GRATIS en la mayoría de las habitaciones',
+            title: dict.CLIENT.BENEFITS.PAY_ON_SITE.TITLE,
+            description: dict.CLIENT.BENEFITS.PAY_ON_SITE.DESCRIPTION,
         },
         {
             icon: '🌍',
-            title: 'Millones de alojamientos en todo el mundo',
-            description: 'Hoteles, hostales, apartamentos y mucho más...',
+            title: dict.CLIENT.BENEFITS.WORLDWIDE.TITLE,
+            description: dict.CLIENT.BENEFITS.WORLDWIDE.DESCRIPTION,
         },
         {
             icon: '🕐',
-            title: 'Atención al cliente 24/7',
-            description: 'Te ayudamos cuando lo necesites',
+            title: dict.CLIENT.BENEFITS.SUPPORT24.TITLE,
+            description: dict.CLIENT.BENEFITS.SUPPORT24.DESCRIPTION,
         },
     ];
+
+    if (!dict || !dict.CLIENT || !dict.CLIENT.BENEFITS) {
+        return null;
+    }
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
