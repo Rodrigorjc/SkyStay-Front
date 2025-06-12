@@ -6,7 +6,9 @@ import { useDictionary } from "@/app/context/DictionaryContext";
 
 const Footer: React.FC = () => {
   const { dict } = useDictionary();
-
+  if (!dict) {
+    return null;
+  }
   const socialLinks = [
     { icon: <FaXTwitter size={20} />, href: "https://x.com" },
     { icon: <FaInstagram size={20} />, href: "https://instagram.com" },

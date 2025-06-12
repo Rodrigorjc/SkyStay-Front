@@ -31,7 +31,7 @@ const BenefitsSection: React.FC = () => {
 
   return (
     <section className="w-full py-8 text-white px-6">
-      <div className="max-w-6xl mx-auto text-center">
+      <div className="max-w-[1500px] mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4">{dict.HOME.BENEFITS.TITLE}</h2>
         <p className="text-lg text-gray-300 mb-12">{dict.HOME.BENEFITS.DESCRIPTION}</p>
 
