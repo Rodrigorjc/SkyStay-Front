@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { getLast5Flights } from "./services/home.service";
 import { CityImageVO } from "@/types/home/city";
 import Footer from "../components/ui/Footer";
+import Navigation from "../components/ui/Navigation";
 
 export default function Home({}: { params: { lang: string } }) {
   const { dict } = useDictionary();
@@ -28,8 +29,9 @@ export default function Home({}: { params: { lang: string } }) {
 
   return (
     <div>
-      <Navbar dict={dict} />
-      <div className="flex flex-col gap-8 items-center justify-center w-full mt-8">
+      <Navbar />
+      <Navigation />
+      <div className="w-full max-w-[1850px] mx-auto px-4">
         <CallToAction destinations={cities} />
         <SearchBarHome />
         <BenefitsSection />
