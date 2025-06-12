@@ -193,8 +193,17 @@ export default function AccommodationSearchBar({
 
     const guestSummary = `${guests.adults} ${dict.CLIENT.SEARCHBAR.PLACEHOLDER.ADULTS} · ${guests.children} ${dict.CLIENT.SEARCHBAR.PLACEHOLDER.CHILDREN} · ${guests.rooms} ${dict.CLIENT.SEARCHBAR.PLACEHOLDER.ROOMS}`;
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Tab" && showSuggestions && filteredCities.length > 0) {
+            e.preventDefault();
+            const suggestion = filteredCities[0];
+            setDestination(suggestion);
+            setShowSuggestions(false);
+        }
+    };
+
     return (
-        <div className="flex justify-center py-4 relative text-glacier-950">
+        <div className="flex justify-center py-2 mt-6 relative text-glacier-950">
             {/* Mobile toggle */}
             <div className="md:hidden w-[90%] bg-white border-4 border-glacier-950 rounded-xl shadow-2xl z-10">
                 <button
@@ -236,9 +245,10 @@ export default function AccommodationSearchBar({
                                 type="text"
                                 value={destination}
                                 placeholder={dict.CLIENT.SEARCHBAR.PLACEHOLDER.DESTINATION}
-                                onChange={(e) => handleDestinationChange(e.target.value)}
+                                onChange={e => handleDestinationChange(e.target.value)}
                                 onFocus={() => filteredCities.length > 0 && setShowSuggestions(true)}
                                 onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+                                onKeyDown={handleKeyDown}                   // ← aquí
                                 className="w-full bg-transparent outline-none text-glacier-950"
                                 autoComplete="off"
                             />
@@ -326,30 +336,51 @@ export default function AccommodationSearchBar({
 
             {/* Desktop search bar */}
             <div className="hidden md:flex max-w-5xl bg-glacier-100 border-4 border-glacier-800 rounded-full shadow-2xl px-4 py-2 items-center gap-3">
-                {/* Destination */}
+                {/* DESTINO (escritorio) */}
                 <div className="relative flex-1">
-                    <div className="flex items-center border rounded-full px-3 py-2">
+                    <label className="sr-only">{dict.CLIENT.SEARCHBAR.LABEL.DESTINATION}</label>
+                    <div className="flex items-center border rounded-full px-3 py-2 bg-white">
                         <FaBed className="mr-2 text-gray-600" />
-                        <input
-                            type="text"
-                            value={destination}
-                            placeholder={dict.CLIENT.SEARCHBAR.PLACEHOLDER.DESTINATION}
-                            onChange={(e) => handleDestinationChange(e.target.value)}
-                            onFocus={() => filteredCities.length && setShowSuggestions(true)}
-                            onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-                            className="w-full bg-transparent outline-none"
-                            autoComplete="off"
-                        />
+
+                        {/* contenedor relativo para overlay + input */}
+                        <div className="relative w-full">
+                            <input
+                                type="text"
+                                value={destination}
+                                placeholder={dict.CLIENT.SEARCHBAR.PLACEHOLDER.DESTINATION}
+                                onChange={e => handleDestinationChange(e.target.value)}
+                                onFocus={() => filteredCities.length > 0 && setShowSuggestions(true)}
+                                onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+                                onKeyDown={handleKeyDown}
+                                autoComplete="off"
+                                className="relative z-10 w-full bg-transparent outline-none"
+                            />
+
+                            {/* overlay inline */}
+                            {showSuggestions && filteredCities.length > 0 && destination && (
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-0 pointer-events-none">
+                                    <span className="invisible">{destination}</span>
+                                    <span className="text-gray-400">
+            {filteredCities[0].slice(destination.length)}
+          </span>
+                                </div>
+                            )}
+                        </div>
+
                         {destination && (
-                            <button onClick={() => setDestination("")}> <FaTimes className="text-gray-400 hover:text-black" /></button>
+                            <button onClick={() => setDestination("")}>
+                                <FaTimes className="ml-2 text-gray-400 hover:text-black" />
+                            </button>
                         )}
                     </div>
-                    {showSuggestions && (
-                        <ul className="absolute bg-glacier-100 border border-glacier-600 rounded-lg shadow-md mt-2 w-full max-h-40 overflow-y-auto z-50">
-                            {filteredCities.map((city) => (
+
+                    {/* listado de sugerencias */}
+                    {showSuggestions && filteredCities.length > 0 && (
+                        <ul className="absolute bg-glacier-100 border border-glacier-800 rounded-lg shadow-md mt-1 w-full max-h-40 overflow-y-auto z-50 custom-scrollbar">
+                            {filteredCities.map(city => (
                                 <li
                                     key={city}
-                                    className="p-2 hover:bg-glacier-100 cursor-pointer"
+                                    className="p-2 hover:bg-gray-100 cursor-pointer text-gray-900"
                                     onMouseDown={() => handleSuggestionClick(city)}
                                 >
                                     {city}
@@ -358,6 +389,8 @@ export default function AccommodationSearchBar({
                         </ul>
                     )}
                 </div>
+
+
 
                 {/* Dates */}
                 <div className="flex items-center flex-1 border-l border-glacier-800 pl-4">

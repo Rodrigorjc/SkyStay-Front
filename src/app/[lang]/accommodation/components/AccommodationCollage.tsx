@@ -57,7 +57,7 @@ export default function AccommodationCollage() {
     }
 
     return (
-        <section className="mt-10 px-4 max-w-7xl mx-auto">
+        <section className="mt-2 px-4 max-w-7xl mx-auto">
             <h2 className="text-3xl font-semibold text-center mb-8 text-white">
                 {dict.CLIENT.COLLAGE.SECTION_TITLE}
             </h2>

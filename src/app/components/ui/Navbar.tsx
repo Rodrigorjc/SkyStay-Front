@@ -66,7 +66,7 @@ export default function Navbar() {
   if (!dict) return null;
   const navigation = [
     { name: dict.CLIENT.SIDEBAR.FLIGHTS, href: "flights", current: false },
-    { name: dict.CLIENT.SIDEBAR.ACCOMMODATIONS, href: "accomodations", current: false },
+    { name: dict.CLIENT.SIDEBAR.ACCOMMODATIONS, href: "accommodation", current: false },
   ];
 
   return (
