@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FlightClientVO } from "../types/flight";
 import { useDictionary } from "@/app/context/DictionaryContext";
+import { motion } from "framer-motion";
 
 export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights }) => {
   const { dict } = useDictionary();
@@ -23,14 +24,17 @@ export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights })
 
   return (
     <>
-      {flights.map(flight => {
+      {flights.map((flight, idx) => {
         const duration = getDuration(flight.departureTime, flight.dateTimeArrival);
         const lowSeats = flight.seatsLeft <= 5 && flight.seatsLeft > 0;
         const noSeats = flight.seatsLeft === 0;
 
         return (
-          <div
+          <motion.div
             key={flight.code}
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.2, duration: 0.5 }}
             className={`w-full rounded-2xl shadow-lg p-6 border backdrop-blur-xl transition flex flex-col justify-between
             ${noSeats ? "bg-zinc-700/50 border-zinc-600 text-glacier-400 opacity-60" : "bg-zinc-800/80 border-glacier-700/60 hover:ring-2 hover:ring-glacier-400/50 text-glacier-100"}`}>
             <div>
@@ -57,11 +61,27 @@ export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights })
               <div className="grid grid-cols-3 gap-5 text-sm">
                 <div>
                   <p className="font-medium text-glacier-300">{dict.CLIENT.FLIGHTS.DEPATURE}</p>
-                  <p>{new Date(flight.departureTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+                  <p>
+                    {new Date(flight.departureTime).toLocaleString([], {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
                 </div>
                 <div>
                   <p className="font-medium text-glacier-300">{dict.CLIENT.FLIGHTS.ARRIVAL}</p>
-                  <p>{new Date(flight.dateTimeArrival).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+                  <p>
+                    {new Date(flight.dateTimeArrival).toLocaleString([], {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
                 </div>
                 <div>
                   <p className="font-medium text-glacier-300">{dict.CLIENT.FLIGHTS.DURATION}</p>
@@ -86,7 +106,7 @@ export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights })
                 {dict.CLIENT.FLIGHTS.DETAILS}
               </Link>
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </>
