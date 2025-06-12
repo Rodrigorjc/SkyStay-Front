@@ -2,47 +2,42 @@
 
 import { useDictionary } from "@context";
 import Navbar from "../components/ui/Navbar";
-import { useState } from "react";
-import { Notifications } from "@/app/interfaces/Notifications";
-import NotificationComponent from "@components/Notification";
+import FAQ from "../components/ui/home/FAQ";
+import SearchBarHome from "../components/ui/home/Search";
+import BenefitsSection from "../components/ui/home/BenefitsSection";
+import CallToAction from "../components/ui/home/CallToAction";
+import { useEffect, useState } from "react";
+import { getLast5Flights } from "./services/home.service";
+import { CityImageVO } from "@/types/home/city";
+import Footer from "../components/ui/Footer";
+import Navigation from "../components/ui/Navigation";
 
 export default function Home({}: { params: { lang: string } }) {
   const { dict } = useDictionary();
-  const [notification, setNotification] = useState<Notifications>();
+
+  const [cities, setCities] = useState<CityImageVO[]>([]);
+
+  useEffect(() => {
+    async function fetchCities() {
+      const response = await getLast5Flights();
+      setCities(response.response.objects);
+    }
+    fetchCities();
+  }, []);
 
   if (!dict) return null;
 
-  const triggerNotification = (tipo: string) => {
-    setNotification({
-      titulo: `Notificación de tipo ${tipo}`,
-      mensaje: `Este es un mensaje de prueba para el tipo ${tipo}.`,
-      code: 200,
-      tipo: tipo,
-    });
-  };
-
   return (
     <div>
-      <Navbar dict={dict}></Navbar>
-      <div className="flex flex-col items-center justify-center w-full mt-10">
-        <h1 className="text-3xl my-4">{dict.HOME.WELCOME}</h1>
-
-        <div className="space-x-4 mt-4">
-          <button onClick={() => triggerNotification("error")} className="bg-red-500 text-white px-4 py-2 rounded">
-            Error
-          </button>
-          <button onClick={() => triggerNotification("warning")} className="bg-yellow-500 text-white px-4 py-2 rounded">
-            Warning
-          </button>
-          <button onClick={() => triggerNotification("advise")} className="bg-blue-300 text-white px-4 py-2 rounded">
-            Aviso
-          </button>
-          <button onClick={() => triggerNotification("success")} className="bg-green-500 text-white px-4 py-2 rounded">
-            Success
-          </button>
-        </div>
-        {notification && <NotificationComponent Notifications={notification} onClose={() => setNotification(undefined)} />}
+      <Navbar />
+      <Navigation />
+      <div className="w-full max-w-[1850px] mx-auto px-4">
+        <CallToAction destinations={cities} />
+        <SearchBarHome />
+        <BenefitsSection />
+        <FAQ />
       </div>
+      <Footer />
     </div>
   );
 }

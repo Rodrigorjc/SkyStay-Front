@@ -8,6 +8,8 @@ export interface AirplaneAllCodeVO {
   airplaneType_code: string;
   airplaneType_manufacturer: string;
   airplaneType_capacity: number;
+
+  airlineName: string;
 }
 
 export interface Seat {

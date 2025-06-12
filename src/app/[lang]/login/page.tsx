@@ -95,7 +95,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar dict={dict}></Navbar>
+      <Navbar />
       <div className="flex flex-grow items-center justify-center w-full px-4">
         <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md flex flex-col justify-center">
           <div className="text-2xl sm:text-3xl md:text-4xl flex justify-center mb-5 pb-10 text-center">

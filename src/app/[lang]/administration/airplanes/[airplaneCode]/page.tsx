@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useDictionary } from "@/app/context/DictionaryContext";
+import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
 import { use, useState, useEffect } from "react";
 import { AirplaneAllCodeVO, Cabin } from "./types/airplane.info";
 import Loader from "@/app/components/ui/Loader";
@@ -9,9 +9,13 @@ import { getBasicInfoByCode, getCabinsWithSeatsByAirplaneCode } from "./services
 import React from "react";
 import InfoCard from "./components/InfoCard";
 import AirplaneCabins from "./components/AirplaneCabins";
+import { Title } from "../../components/Title";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import Link from "next/link";
 
 export default function airplaneCodePage({ params }: { params: Promise<{ airplaneCode: string }> }) {
   const { dict } = useDictionary();
+  const lang = useLanguage();
   const { airplaneCode } = React.use(params);
 
   const [airplaneInfo, setAirplaneBasicInfo] = useState<AirplaneAllCodeVO>();
@@ -45,7 +49,16 @@ export default function airplaneCodePage({ params }: { params: Promise<{ airplan
         </div>
       ) : (
         <div className="max-md:p-0 p-6 space-y-6 text-zinc-100">
+          <div className="flex items-center justify-start flex-row gap-4">
+            <Link href={`/${lang}/administration/airplanes`} className="text-glacier-500 hover:text-glacier-400 transition-colors flex items-center">
+              <IoIosArrowRoundBack className="text-4xl text-glacier-500" />
+            </Link>
+            <Title title={dict.ADMINISTRATION.AIRPLANES.DETAILS_TITLE} />
+          </div>
           {airplaneInfo && <InfoCard airplaneInfo={airplaneInfo} />}
+
+          <Title title={dict.ADMINISTRATION.AIRPLANES.CABINS} />
+
           {!loading && cabinDetails.length > 0 && <AirplaneCabins cabins={cabinDetails} />}
         </div>
       )}

@@ -1,7 +1,7 @@
 import axiosClient from "@/lib/axiosClient";
 import { ResponsePaginatedVO } from "@/types/common/responsePaginated";
 import { ResponseVO } from "@/types/common/response";
-import { FlightFormVO, FlightsTableVO } from "../types/flight";
+import { CabinsInfoVO, CabinsVO, FlightFormVO, FlightsTableVO } from "../types/flight";
 import { FlightsDetailsVO } from "../[flightsCode]/types/detailsFlight";
 import { AirlineReducedVO, AirplaneReducedVO } from "../types/common";
 
@@ -63,6 +63,24 @@ export async function getAllAirplanesReduced(limit: number, page: number): Promi
     const response = await axiosClient.get(`/admin/airplanes/all/reduced`, {
       params: { limit, page },
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getCabinsInfo(airplaneId: number): Promise<ResponseVO<CabinsVO>> {
+  try {
+    const response = await axiosClient.get(`/admin/airplanes/cabin/info/${airplaneId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getCabinsByCode(code: string): Promise<ResponseVO<CabinsInfoVO[]>> {
+  try {
+    const response = await axiosClient.get(`/admin/flights/cabins/${code}`);
     return response.data;
   } catch (error) {
     throw error;
