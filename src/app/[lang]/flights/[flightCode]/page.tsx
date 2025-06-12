@@ -319,7 +319,7 @@ export default function FlightPage({ params }: { params: Promise<{ flightCode: s
                 className="w-full bg-glacier-400 hover:bg-glacier-300 text-glacier-950 font-bold py-3 rounded-xl text-lg transition"
                 onClick={() => {
                   if (!token) {
-                    router.push("/login");
+                    router.push(`/${lang}/login`);
                     return;
                   }
                   const seatCabinPairs = selectedSeats.map(seatId => {
