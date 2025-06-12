@@ -54,9 +54,12 @@
     },
     "AIRPLANES": {
       "ACTIVE": "Active",
-      "ADD_AIRPLANE": "Create airplane",
-      "ADD_AIRPLANE_TYPE": "Create airplane type",
-      "ADD_SEAT_CONFIGURATION": "Create seat configuration",
+      "AIRLINE_NAME": "Airline name",
+      "DETAILS_TITLE": "Detailed airplane information",
+      "CABINS": "Airplane cabins",
+      "ADD_AIRPLANE": "Add airplane",
+      "ADD_AIRPLANE_TYPE": "Add airplane type",
+      "ADD_SEAT_CONFIGURATION": "Add seat configuration",
       "AIRPLANE": "Airplane",
       "AIRPLANES_CODE": "Airplane code",
       "AIRPLANE_CABIN": "Airplane cabin",
@@ -70,7 +73,7 @@
       "DECOMMISSIONED": "Decommissioned",
       "ERRORS": {
         "AIRPLANE_TYPE": {
-          "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the airplane type. Please try again",
+          "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the airplane type. Please try again",
           "CREATION_FAILED_TITLE": "Error Adding Airplane Type",
           "UPDATE_FAILED_MESSAGE": "An error occurred while trying to update the airplane type. Please try again",
           "UPDATE_FAILED_TITLE": "Error Updating Airplane Type"
@@ -83,7 +86,7 @@
         "MISSING_SEAT_CLASS": "You must select a seat type for all cabins.",
         "MISSING_SEAT_CONFIGURATION": "You must select a seat configuration for all cabins.",
         "SEAT_CONFIGURATION": {
-          "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the seat configuration. Please try again",
+          "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the seat configuration. Please try again",
           "CREATION_FAILED_TITLE": "Error Adding Seat Configuration"
         },
         "YEAR_OF_MANUFACTURE_MESSAGE": "The year must be greater than or equal to 1900 and less than the current year",
@@ -99,6 +102,7 @@
       "MODEL": "Aircraft model",
       "NUMBER_OF_CABINS": "Numbers of cabins",
       "OCCUPIED": "Occupied",
+      "PASSANGERS": "Passengers",
       "PRIVATE_JET": "Private jet",
       "REGIONAL_JET": "Regional jet",
       "REGISTRATION_NUMBER": "Registration number",
@@ -176,6 +180,7 @@
       }
     },
     "BACK": "Back",
+    "CLASS": "Class",
     "CLEAR_ALL": "Clear all",
     "CODE": "Code",
     "CREATE_AIRPORTS": "Create airport",
@@ -222,6 +227,7 @@
       "ARRIVAL_AIRPORT": "Arrival airport",
       "ARRIVAL_AIRPORT_IATA_CODE": "Arrival airport IATA code",
       "ARRIVAL_AIRPORT_NAME": "Arrival airport name",
+      "CABIN_PRICES": "Prices per seating class",
       "CODE": "Code",
       "DATE_TIME": "Date time of departure",
       "DATE_TIME_ARRIVAL": "Date time of arrival",
@@ -247,8 +253,15 @@
         "REQUIRED_FIELDS_MESSAGE": "Please complete all required fields",
         "REQUIRED_FIELDS_TITLE": "Form error",
         "SAME_AIRPORTS_MESSAGE": "Departure and arrival airports cannot be the same",
-        "SAME_AIRPORTS_TITLE": "Same airports"
+        "SAME_AIRPORTS_TITLE": "Same airports",
+        "INVALID_CABIN_PRICES_TITLE": "Invalid cabin prices",
+        "INVALID_CABIN_PRICES_MESSAGE": "Cabin prices must be greater than 10€",
+        "MISSING_MEALS_TITLE": "Select meals",
+        "MISSING_MEALS_MESSAGE": "You must select at least one meal for the flight"
       },
+      "MEALS": "Meals",
+      "MEAL_NAME": "Meal name",
+      "SELECTED_MEALS": "Selected meals",
       "SELECT_AIRLINE": "Select an airline",
       "SELECT_AIRPLANE": "Select an airplane",
       "SELECT_AIRPORTS": "Select your departure and return airports",
@@ -267,12 +280,14 @@
       "AIRPORT": "Airports",
       "AIRPORT_NAME": "Airport name",
       "ARRIVAL": "Arrival date & time",
-      "ARRIVAL_AIRPORT": "Arrival",
+      "ARRIVAL_AIRPORT": "Arrival airport",
+      "CABINS": "Airplane cabins",
       "CAPACITY": "Capacity",
       "CITY": "City",
       "CODE": "Flight code",
       "DATE": "Departure date & time",
       "DEPARTURE": "Departure",
+      "DEPARTURE_AIRPORT": "Departure airport",
       "EMAIL": "Email",
       "GATE": "Gates",
       "MANUFACTURER": "Manufacturer",
@@ -284,7 +299,11 @@
       "TERMINAL": "Terminals",
       "TITLE": "Flight details",
       "TYPE": "Type",
-      "WEBSITE": "Website"
+      "WEBSITE": "Website",
+      "CABIN_SEAT_CLASS": "Seat class",
+      "CABIN_PRICE": "Seat class price",
+      "CABIN_TOTAL_SEATS": "Total seats in cabin",
+      "CABIN_AVAILABLE_SEATS": "Available seats in cabin"
     },
     "HOTELS": {
       "ADDRESS": "Address",
@@ -436,6 +455,10 @@
     "VIEW_IMAGE": "View image"
   },
   "CLIENT": {
+    "NAVIGATION": {
+      "FLIGHT": "Flight",
+      "HOME": "Home"
+    },
     "LOGIN": {
       "CLICK_HERE": "Click here",
       "EMAIL": "Email",
@@ -592,61 +615,167 @@
       "ACCOMMODATION": "Accommodation",
       "TITLE": "All rights reserved.",
       "LEGAL": "Legal"
-      }
     },
-    "CODE_VALIDATION": {
-      "TITLE": "Verification Code",
-      "SUBTITLE": "Enter the 6-digit code sent to your email:",
-      "BUTTONS": {
-        "VERIFY": "Verify Code",
-        "LOADING": "Verifying...",
-        "RESEND": "Resend Code"
-      },
-      "NOTIFICATIONS": {
-        "VALIDATION_ERROR": {
-          "TITLE": "Validation Error",
-          "MESSAGE": "Please enter the complete 6-digit code"
-        },
-        "SUCCESS": {
-          "TITLE": "Verification Successful",
-          "MESSAGE": "Your email has been successfully verified"
-        },
-        "ERROR": {
-          "TITLE": "Verification Error",
-          "MESSAGE": "Invalid verification code. Please try again"
-        },
-        "SEND_SUCCESS": {
-          "TITLE": "Code Sent",
-          "MESSAGE": "A verification code has been sent to your email"
-        },
-        "SEND_ERROR": {
-          "TITLE": "Send Error",
-          "MESSAGE": "Could not send a new code. Please try again later"
-        },
-        "RESEND_SUCCESS": {
-          "TITLE": "Code Resent",
-          "MESSAGE": "A new verification code has been sent to your email"
-        },
-        "RESEND_ERROR": {
-          "TITLE": "Resend Error",
-          "MESSAGE": "Could not send a new code. Please try again later"
-        },
-        "PASSWORD_CHANGED": {
-          "TITLE": "Password changed",
-          "MESSAGE": "Your password has been change successfully"
-        },
-        "PASSWORD_CHANGED_ERROR": {
-          "TITLE": "Password changed Error",
-          "MESSAGE": "There was a problem changing your password"
+    "FLIGHTS": {
+      "LOWEST_PRICE": "Cheapest seat prices",
+      "DEPATURE": "Time of departure",
+      "ARRIVAL": "Time of arrival",
+      "DEPATURE_CITY": "Departure city",
+      "ARRIVAL_CITY": "Arrival city",
+      "DURATION": "Duration",
+      "AIRLINE": "Airline",
+      "DETAILS": "See details",
+      "NO_SEATS": "No seats available",
+      "LAST_SEATS_1": "Last",
+      "LAST_SEATS_2": "seats!",
+      "AVAILABLE_SEATS": "available seats",
+      "NEXT_FLIGHT": "Find your next flight",
+      "SEARCH": "Search flights",
+      "RESET": "Reset search",
+      "FLIGHT_CODE": {
+        "STATUS": "Status",
+        "DETAILS": "Airplane details",
+        "TYPE": "Type",
+        "REGISTRATION": "Registration",
+        "CAPACITY": "Capacity",
+        "PASSENGERS": "passengers",
+        "YEAR": "Year",
+        "MANUFACTURER": "Manufacturer",
+        "MEALS_AVAILABLE": "Available meals",
+        "CABINS_AVAILABLE": "Available cabins",
+        "PRICE": "Price",
+        "SEATS_AVAILABLE": "Available seats",
+        "SELECT_YOUR_SEAT": "Select your seat",
+        "MAX_SEATS": "Maximum 10 seats. Click to select or deselect",
+        "SELECTED": "Selected",
+        "AVAILABLE": "Available",
+        "OCCUPIED": "Occupied",
+        "VIEW_SELECTION": "View selection",
+        "YOUR_SEATS": "Your seats",
+        "SEAT": "Seat",
+        "EMPTY_SELECTION": "Empty selection",
+        "CONTINUE": "Continue",
+        "CHECK_OUT": {
+          "TITLE": "Checkout",
+          "SEAT_SUMMARY_TITLE": "Seat Summary",
+          "PASSENGER_DETAILS": "Passenger details",
+          "NAME": "Name",
+          "SURNAME": "Surname",
+          "EMAIL": "Email",
+          "NIF": "NIF",
+          "PHONE": "Phone",
+          "NO_DATA": "No data",
+          "NEXT_PASSENGER": "Next passenger",
+          "GO_TO_PAYMENT": "Go to payment",
+          "LOCATION": "Location",
+          "ROW": "Row",
+          "COLUMN": "Column",
+          "SEAT_CLASS_AND_PRICE": "Seat class and price",
+          "NOT_AVAILABLE": "N/A",
+          "NO_PRICE": "No price",
+          "PROCEED_TO_PAYMENT": "Proceed to payment",
+          "CLOSE": "Close",
+          "PASSENGER": "Passenger",
+          "SELECTED_SEATS": "Selected seats",
+          "SEAT": "Seat"
         }
       },
-      "RESEND_MODAL": {
-        "TITLE": "Resend Verification Code",
-        "SUBTITLE": "Enter your email address to receive a new verification code",
-        "EMAIL_PLACEHOLDER": "Enter your email",
-        "SEND": "Send Code",
-        "CANCEL": "Cancel"
+      "ERRORS": {
+        "ERROR_LOADING": "An error occurred while trying to load the flights. Please try again",
+        "PURCHASE_TITLE_ERROR": "Ticket purchase error",
+        "PURCHASE_MESSAGE_ERROR": "The purchase could not be completed. Please check your details and try again.",
+        "ERROR_SELECT_SEATS_TITLE": "Error selecting seats",
+        "ERROR_SELECT_SEATS_MESSAGE": "You can only select up to 10 seats.",
+        "LOADIN_DATA_FLIGHT": "Error loading flight data. Please try again"
+      },
+      "SUCCESS": {
+        "PURCHASE_TITLE_SUCCESS": "Purchase successful",
+        "PURCHASE_MESSAGE_SUCCESS": "The tickets have been purchased successfully. Check your email for more details."
       }
+    },
+    "PAYMENT_GATEWAY": {
+      "CARD": "Card",
+      "PAYPAL": "PayPal",
+      "CARD_NUMBER": {
+        "LABEL": "Card Number",
+        "PLACEHOLDER": "1234 5678 9012 3456"
+      },
+      "EXPIRY_DATE": {
+        "LABEL": "Expiry Date",
+        "PLACEHOLDER": "MM/YY"
+      },
+      "CVV": {
+        "LABEL": "CVV",
+        "PLACEHOLDER": "123"
+      },
+      "CARD_HOLDER": {
+        "LABEL": "Card Holder Name",
+        "PLACEHOLDER": "Juan Ávila"
+      },
+      "PAYPAL_EMAIL": {
+        "LABEL": "PayPal Email",
+        "PLACEHOLDER": "example@paypal.com"
+      },
+      "PAYPAL_PASSWORD": {
+        "LABEL": "PayPal Password",
+        "PLACEHOLDER": "********"
+      },
+      "FLIP_CARD": "Click on the logo to switch cards",
+      "SECURE_CARD_MESSAGE": "This is a secure card. Do not share your details."
+    }
+  },
+  "CODE_VALIDATION": {
+    "TITLE": "Verification Code",
+    "SUBTITLE": "Enter the 6-digit code sent to your email:",
+    "BUTTONS": {
+      "VERIFY": "Verify Code",
+      "LOADING": "Verifying...",
+      "RESEND": "Resend Code"
+    },
+    "NOTIFICATIONS": {
+      "VALIDATION_ERROR": {
+        "TITLE": "Validation Error",
+        "MESSAGE": "Please enter the complete 6-digit code"
+      },
+      "SUCCESS": {
+        "TITLE": "Verification Successful",
+        "MESSAGE": "Your email has been successfully verified"
+      },
+      "ERROR": {
+        "TITLE": "Verification Error",
+        "MESSAGE": "Invalid verification code. Please try again"
+      },
+      "SEND_SUCCESS": {
+        "TITLE": "Code Sent",
+        "MESSAGE": "A verification code has been sent to your email"
+      },
+      "SEND_ERROR": {
+        "TITLE": "Send Error",
+        "MESSAGE": "Could not send a new code. Please try again later"
+      },
+      "RESEND_SUCCESS": {
+        "TITLE": "Code Resent",
+        "MESSAGE": "A new verification code has been sent to your email"
+      },
+      "RESEND_ERROR": {
+        "TITLE": "Resend Error",
+        "MESSAGE": "Could not send a new code. Please try again later"
+      },
+      "PASSWORD_CHANGED": {
+        "TITLE": "Password changed",
+        "MESSAGE": "Your password has been change successfully"
+      },
+      "PASSWORD_CHANGED_ERROR": {
+        "TITLE": "Password changed Error",
+        "MESSAGE": "There was a problem changing your password"
+      }
+    },
+    "RESEND_MODAL": {
+      "TITLE": "Resend Verification Code",
+      "SUBTITLE": "Enter your email address to receive a new verification code",
+      "EMAIL_PLACEHOLDER": "Enter your email",
+      "SEND": "Send Code",
+      "CANCEL": "Cancel"
     }
   },
   "ENGLISH": "English ",

@@ -6,6 +6,7 @@ import { useDictionary } from "@context";
 import {
   createAirplanePart1,
   createAirplanePart2,
+  getAllAirlines,
   getAllAirplanesSeatClases,
   getAllAirplanesStatus,
   getAllAirplanesTypes,
@@ -24,9 +25,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Button from "@/app/components/ui/Button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AdditonalBaggageFormValues } from "../../additional-baggage/components/ModalCreateAdditionalBaggage";
 import { useForm } from "react-hook-form";
 import { InputWithLabel, SelectWithLabel } from "@/app/components/ui/admin/Label";
+import { AirlineReducedVO } from "../../flights/types/common";
 
 interface Props {
   onClose: () => void;
@@ -36,6 +37,7 @@ interface Props {
 
 export const AirplaneFormSchema = z.object({
   airplane_type_id: z.number().min(0),
+  airline_id: z.number().min(0),
   model: z.string().min(1),
   registrationNumber: z.string().min(1),
   yearOfManufacture: z.number().min(1900).max(new Date().getFullYear()),
@@ -76,6 +78,7 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
   const [airplaneStatuses, setAirplaneStatuses] = useState<[string]>();
   const [airplaneTypes, setAirplaneTypes] = useState<[AirplanesTypesFormVO]>();
   const [seatConfiguration, setSeatConfiguration] = useState<[SeatConfigurationVO]>();
+  const [airlines, setAirlines] = useState<[AirlineReducedVO]>();
   const [idAirplane, setAirplaneId] = useState<number>(0);
   const [numberOfCabins, setNumberOfCabins] = useState<number>(1);
   const [cabinsData, setCabinsData] = useState<AirplaneForm2VO[]>([]);
@@ -85,11 +88,15 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
   const [capacity, setCapacity] = useState<number>(0);
   const [remainingSeats, setRemainingSeats] = useState<number>(0);
 
+  const [selectedAirline, setSelectedAirline] = useState<number | null>(null);
   useEffect(() => {
     if (selectedAirplaneType) setValue("airplane_type_id", selectedAirplaneType);
   }, [selectedAirplaneType, setValue]);
 
-  // Cargar datos iniciales traidos de la API; (tipos de aviones, estados de aviones, configuraciones de asientos)
+  useEffect(() => {
+    if (selectedAirline) setValue("airline_id", selectedAirline);
+  }, [selectedAirline, setValue]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -99,11 +106,13 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
         const statusesResponse = await getAllAirplanesStatus();
         const airplaneTypes = await getAllAirplanesTypes();
         const seatConfigurationResponse = await getAllSeatConfigurations();
+        const allAirlinesResponse = await getAllAirlines();
         setAirplaneSeatClasses(seatClassesResponse.response.objects);
         setAirplaneTypesEnum(typesResponse.response.objects);
         setAirplaneStatuses(statusesResponse.response.objects);
         setAirplaneTypes(airplaneTypes.response.objects);
         setSeatConfiguration(seatConfigurationResponse.response.objects);
+        setAirlines(allAirlinesResponse.response.objects);
 
         setCabinsData([
           {
@@ -202,7 +211,12 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     if (totalAssignedSeats <= capacity) {
       setCabinsData(updatedCabins);
     } else {
-      alert(dict.ADMINISTRATION.AIRPLANES.EXCEEDS_CAPACITY);
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.AIRPLANES.ERRORS.CREATION_FAILED_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.AIRPLANES.EXCEEDS_CAPACITY,
+      });
     }
   };
 
@@ -217,10 +231,9 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
 
   const handleSubmitStep1 = async (form: AirplaneForm1ValuesVO) => {
     try {
-      console.log(".......................");
       const data = await createAirplanePart1(form);
       setAirplaneId(data.response.objects);
-      setStep(3);
+      setStep(4);
     } catch (error) {
       setNotification({
         tipo: "error",
@@ -327,6 +340,60 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
         return (
           <>
             <CardContent>
+              <div className="max-h-96 overflow-y-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>{dict.ADMINISTRATION.AIRLINE.CODE}</TableHead>
+                      <TableHead>{dict.ADMINISTRATION.AIRLINE.NAME}</TableHead>
+                      <TableHead>{dict.ADMINISTRATION.SELECT}</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {airlines?.map(type => (
+                      <TableRow key={type.id}>
+                        <TableCell>{type.id}</TableCell>
+                        <TableCell>{type.name}</TableCell>
+                        <TableCell>
+                          <Button
+                            color={selectedAirline === type.id ? "default" : "light"}
+                            onClick={() => {
+                              setSelectedAirline(type.id);
+                              setValue("airline_id", type.id);
+                            }}
+                            text={selectedAirline === type.id ? dict.ADMINISTRATION.SELECTED : dict.ADMINISTRATION.SELECT}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="flex justify-end mt-8">
+                <Button
+                  onClick={() => {
+                    if (!selectedAirplaneType) {
+                      setNotification({
+                        tipo: "error",
+                        titulo: dict.ADMINISTRATION.FLIGHTS.ERRORS.MISSING_AIRLINE_TITLE,
+                        code: 400,
+                        mensaje: dict.ADMINISTRATION.FLIGHTS.ERRORS.MISSING_AIRLINE_MESSAGE,
+                      });
+                      return;
+                    }
+                    setStep(3);
+                  }}
+                  color="light"
+                  text={dict.ADMINISTRATION.NEXT}
+                />
+              </div>
+            </CardContent>
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <CardContent>
               {/* Modelo del avión (compañia) */}
               <div className="flex flex-col gap-4">
                 <InputWithLabel id="model" label={dict.ADMINISTRATION.AIRPLANES.MODEL} type="text" placeholder={dict.ADMINISTRATION.AIRPLANES.MODEL} {...register("model")} />
@@ -370,7 +437,7 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
                 </SelectWithLabel>
               </div>
               <div className="flex justify-between mt-8">
-                <Button onClick={() => setStep(1)} color="light" text={dict.ADMINISTRATION.BACK} />
+                <Button onClick={() => setStep(2)} color="light" text={dict.ADMINISTRATION.BACK} />
                 <Button
                   onClick={async () => {
                     console.log(getValues());
@@ -402,7 +469,7 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
             </CardContent>
           </>
         );
-      case 3:
+      case 4:
         return (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -559,25 +626,27 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
-        <Card>
-          {isLoading ? (
-            <div className="min-h-[60vh] flex items-center justify-center">
-              <Loader />
-            </div>
-          ) : (
-            <div>
-              <CardHeader color="glacier" className="pt-4">
-                {dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE}
-              </CardHeader>
+      {isLoading ? (
+        <div className="fixed inset-0 bg-glacier-900/70 backdrop-blur-sm flex items-center justify-center z-50 text-white">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+            <Card>
+              <div>
+                <CardHeader color="glacier" className="pt-4">
+                  {dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE}
+                </CardHeader>
 
-              <StepsForm step={step} totalSteps={3} />
-              {renderStepContent()}
-            </div>
-          )}
-        </Card>
-        {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
-      </Modal>
+                <StepsForm step={step} totalSteps={4} />
+                {renderStepContent()}
+              </div>
+            </Card>
+            {notification && <NotificationComponent Notifications={notification} onClose={handleCloseNotification} />}
+          </Modal>
+        </>
+      )}
     </>
   );
 }

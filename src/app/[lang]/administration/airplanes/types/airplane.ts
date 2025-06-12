@@ -8,6 +8,7 @@ export interface AirplaneShowVO {
   status: string;
   image: string;
   airplaneType: AirplaneTypeVO;
+  airlineName: string;
 }
 
 interface AirplaneTypeVO {

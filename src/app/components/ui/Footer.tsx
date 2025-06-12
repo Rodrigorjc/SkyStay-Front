@@ -6,7 +6,9 @@ import { useDictionary } from "@/app/context/DictionaryContext";
 
 const Footer: React.FC = () => {
   const { dict } = useDictionary();
-
+  if (!dict) {
+    return null;
+  }
   const socialLinks = [
     { icon: <FaXTwitter size={20} />, href: "https://x.com" },
     { icon: <FaInstagram size={20} />, href: "https://instagram.com" },
@@ -31,7 +33,7 @@ const Footer: React.FC = () => {
     <footer className="w-full bg-glacier-500/50 backdrop-blur-md border-t border-white/20 text-white mt-10 pt-10 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 text-center md:text-left md:gap-10">
         <div className="flex flex-col items-center md:items-start">
-          <Image src="/logo-footer.svg" alt="SkyStay Logo" width={160} height={50} className="mb-4" />
+          <Image src="/logo-footer.svg" alt="SkyStay Logo" width={100} height={50} className="mb-4 w-2/3" />
           <div className="flex gap-4 justify-center md:justify-start">
             {socialLinks.map((s, i) => (
               <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-black transition">

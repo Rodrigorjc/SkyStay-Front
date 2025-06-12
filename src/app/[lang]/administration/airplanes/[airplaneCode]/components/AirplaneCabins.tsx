@@ -25,23 +25,11 @@ const AirplaneCabins: React.FC<{ cabins: Cabin[] }> = ({ cabins }) => {
         return (
           <div
             key={cabin.cabinId}
-            className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-glacier-500/30 rounded-2xl p-8 shadow-2xl flex flex-col gap-6 min-w-[560px] sm:min-w-32 hover:border-glacier-400 transition-all duration-300">
-            {/* Título de la clase */}
-            <h2 className="text-xl font-semibold text-glacier-400 border-b border-glacier-700 pb-2 uppercase tracking-wide">Clase: {cabin.seatClass}</h2>
+            className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-glacier-500/30 rounded-2xl px-8 pb-8 shadow-2xl flex flex-col gap-6 min-w-[560px] sm:min-w-32 hover:border-glacier-400 transition-all duration-300 max-h-[600px] overflow-y-auto scroll">
+            <h2 className="pt-4 sticky top-0 z-10 -mx-8 px-8 text-xl font-semibold text-glacier-400 border-b border-glacier-700 pb-2 uppercase tracking-wide text-center bg-zinc-900 bg-clip-padding">
+              {dict.ADMINISTRATION.CLASS}: {cabin.seatClass}
+            </h2>
 
-            {/* Leyenda de asientos */}
-            <div className="flex items-center justify-between gap-4 mb-2 text-sm text-zinc-300">
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-5 bg-green-400 rounded shadow-inner" />
-                <span>{dict.ADMINISTRATION.AIRPLANES.FREE}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-5 bg-red-500 rounded shadow-inner" />
-                <span>{dict.ADMINISTRATION.AIRPLANES.OCCUPIED}</span>
-              </div>
-            </div>
-
-            {/* Representación de asientos */}
             <div className="flex flex-col gap-3 items-center justify-center">
               {Object.entries(rows)
                 .sort((a, b) => Number(a[0]) - Number(b[0]))
@@ -63,8 +51,7 @@ const AirplaneCabins: React.FC<{ cabins: Cabin[] }> = ({ cabins }) => {
                               return (
                                 <div
                                   key={column}
-                                  className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold font-mono transition-all duration-200
-                                    ${seat?.state ? "bg-green-400 text-black hover:brightness-110" : "bg-red-500 text-white hover:brightness-110"}`}>
+                                  className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold font-mono transition-all duration-200 hover:brightness-110 bg-glacier-400`}>
                                   {column}
                                 </div>
                               );

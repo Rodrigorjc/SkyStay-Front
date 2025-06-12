@@ -95,6 +95,7 @@ export default function TablePlanes({ planes }: Props) {
             <TableHead>{dict.ADMINISTRATION.STATUS}</TableHead>
             <TableHead>{dict.ADMINISTRATION.IMAGE}</TableHead>
             <TableHead>{dict.ADMINISTRATION.AIRPLANES.CAPACITY}</TableHead>
+            <TableHead>{dict.ADMINISTRATION.AIRPLANES.AIRLINE_NAME}</TableHead>
             <TableHead>{dict.ADMINISTRATION.DETAILED_INFORMATION}</TableHead>
           </TableRow>
         </TableHeader>
@@ -125,6 +126,7 @@ export default function TablePlanes({ planes }: Props) {
                 )}
               </TableCell>
               <TableCell>{plane.airplaneType.capacity}</TableCell>
+              <TableCell>{plane.airlineName}</TableCell>
               <TableCell>
                 <Button text={dict.ADMINISTRATION.SHOW} onClick={() => router.push(`/${lang}/administration/airplanes/${plane.code}`)} color="light" />
               </TableCell>

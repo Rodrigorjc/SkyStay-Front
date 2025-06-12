@@ -5,7 +5,7 @@ export interface ResponsePaginatedVO<T> {
   objects: [T];
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  currentPage: Number;
-  totalPages: Number;
+  currentPage: number;
+  totalPages: number;
   messages: MessageResponseVO;
 }

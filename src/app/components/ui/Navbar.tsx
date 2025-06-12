@@ -9,30 +9,27 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import { IoLanguage } from "react-icons/io5";
 import { FaChevronDown } from "react-icons/fa";
-import { useLanguage } from "@/app/context/DictionaryContext";
+import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
 import Button from "./Button";
 
-interface NavbarProps {
-  dict?: any;
-}
-const getNavigation = (dict: any) => [
-  { name: dict.CLIENT.SIDEBAR.FLIGHTS, href: "/flights", current: false },
-  { name: dict.CLIENT.SIDEBAR.ACCOMMODATIONS, href: "/accomodations", current: false },
-];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export default function Navbar({ dict }: NavbarProps) {
+export default function Navbar() {
+  const pathname = usePathname();
+  const lang = useLanguage();
+  const router = useRouter();
   const [usuario, setUser] = useState<{ sub: string; rol: string } | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigation = getNavigation(dict);
-  const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(prev => !prev);
+    setIsLangMenuOpen(false);
+  };
 
   const toggleLangMenu = () => {
     setIsLangMenuOpen(prev => !prev);
@@ -58,7 +55,6 @@ export default function Navbar({ dict }: NavbarProps) {
     if (tokenFromCookies) {
       try {
         const tokenDescodificado = jwtDecode<{ sub: string; rol: string }>(tokenFromCookies);
-        console.info(tokenDescodificado);
         setUser(tokenDescodificado);
       } catch (error) {
         console.error("Error decoding token:", error);
@@ -66,13 +62,12 @@ export default function Navbar({ dict }: NavbarProps) {
     }
   }, []);
 
-  const pathname = usePathname();
-  const lang = useLanguage();
-
-  const toggleUserMenu = () => {
-    setIsUserMenuOpen(prev => !prev);
-    setIsLangMenuOpen(false);
-  };
+  const { dict } = useDictionary();
+  if (!dict) return null;
+  const navigation = [
+    { name: dict.CLIENT.SIDEBAR.FLIGHTS, href: "flights", current: false },
+    { name: dict.CLIENT.SIDEBAR.ACCOMMODATIONS, href: "accomodations", current: false },
+  ];
 
   return (
     <nav className="pt-3 sticky top-0 z-50">
@@ -100,7 +95,7 @@ export default function Navbar({ dict }: NavbarProps) {
             {navigation.map(item => (
               <a
                 key={item.name}
-                href={`${lang}/${item.href}`}
+                href={`/${lang}/${item.href}`}
                 aria-current={pathname === item.href ? "page" : undefined}
                 className={classNames(pathname === item.href ? "underline text-[#0d515c]" : "text-glacier-50", "py-2 px-4 rounded-full text-xl font-medium")}>
                 {item.name}

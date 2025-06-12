@@ -1,5 +1,4 @@
 import { CityVO } from "@/types/admin/city";
-
 // Interfaces utilizadas en la tabla de la administración de los vuelos
 export interface FlightsTableVO {
   code: string;
@@ -12,6 +11,8 @@ export interface FlightsTableVO {
   departureAirport: AirportTableVO;
   arrivalAirport: AirportTableVO;
   airplane: AirplaneTableVO;
+
+  cabins: CabinsPriceVO[];
 }
 
 interface AirlineTableVO {
@@ -40,4 +41,30 @@ export interface FlightFormVO {
   departureAirportId: number;
   arrivalAirportId: number;
   airplaneId: number;
+  cabins: CabinsPriceVO[];
+  meals: MealVO[];
+}
+
+interface MealVO {
+  code: string;
+}
+
+export interface CabinsVO {
+  id: number;
+  seatClass: string;
+}
+
+export type CabinVO = CabinsVO[];
+
+export interface CabinsPriceVO {
+  id: number;
+  price: number;
+}
+
+export interface CabinsInfoVO {
+  id: number;
+  seatClass: string;
+  totalSeats: number;
+  availableSeats: number;
+  price: number;
 }

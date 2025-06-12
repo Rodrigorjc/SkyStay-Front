@@ -21,9 +21,9 @@ const CallToAction: React.FC<CallToActionProps> = ({ destinations }) => {
   const { dict } = useDictionary();
 
   return (
-    <section className="w-full py-8 px-4 text-white">
+    <section className="w-full py-8 text-white">
       <div className="mx-auto mb-6">
-        <div className="max-w-7xl mx-auto">
+        <div className=" mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 drop-shadow-lg">{dict.HOME.CALL_TO_ACTION.TITLE}</h1>
           <p className="text-lg md:text-xl text-white/90 mb-8">{dict.HOME.CALL_TO_ACTION.SUBTITLE}</p>
           <Button

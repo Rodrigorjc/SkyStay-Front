@@ -53,9 +53,12 @@
     },
     "AIRPLANES": {
       "ACTIVE": "Activo",
-      "ADD_AIRPLANE": "Crear avión",
-      "ADD_AIRPLANE_TYPE": "Crear tipo de avión",
-      "ADD_SEAT_CONFIGURATION": "Crear configuración de asientos",
+      "AIRLINE_NAME": "Nombre de la aerolínea",
+      "DETAILS_TITLE": "Información detallada del avión",
+      "CABINS": "Cabinas del avión",
+      "ADD_AIRPLANE": "Añadir avión",
+      "ADD_AIRPLANE_TYPE": "Añadir tipo de avión",
+      "ADD_SEAT_CONFIGURATION": "Añadir configuración de asientos",
       "AIRPLANE": "Avión",
       "AIRPLANES_CODE": "Código del avion",
       "AIRPLANE_CABIN": "Cabina de avión",
@@ -69,7 +72,7 @@
       "DECOMMISSIONED": "Desmantelado",
       "ERRORS": {
         "AIRPLANE_TYPE": {
-          "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el tipo de avión. Por favor, inténtelo de nuevo",
+          "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar añadir el tipo de avión. Por favor, inténtelo de nuevo",
           "CREATION_FAILED_TITLE": "Error al añadir tipo de avión",
           "UPDATE_FAILED_MESSAGE": "Se ha producido un error al intentar actualizar el tipo de avión. Por favor, inténtelo de nuevo",
           "UPDATE_FAILED_TITLE": "Error al actualizar tipo de avión"
@@ -82,7 +85,7 @@
         "MISSING_SEAT_CLASS": "Debes seleccionar un tipo de asiento para todas las cabinas.",
         "MISSING_SEAT_CONFIGURATION": "Debes seleccionar una configuración de asientos para todas las cabinas.",
         "SEAT_CONFIGURATION": {
-          "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear la configuración de asientos. Por favor, inténtelo de nuevo",
+          "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar añadir la configuración de asientos. Por favor, inténtelo de nuevo",
           "CREATION_FAILED_TITLE": "Error al añadir configuración de asientos"
         },
         "YEAR_OF_MANUFACTURE_MESSAGE": "El año debe ser mayor o igual a 1900 y menor  al año actual",
@@ -98,6 +101,7 @@
       "MODEL": "Modelo del avión",
       "NUMBER_OF_CABINS": "Número de cabinas",
       "OCCUPIED": "Ocupado",
+      "PASSANGERS": "Pasajeros",
       "PRIVATE_JET": "Jet privado",
       "REGIONAL_JET": "Jet regional",
       "REGISTRATION_NUMBER": "Número de registro",
@@ -175,6 +179,7 @@
       }
     },
     "BACK": "Atrás",
+    "CLASS": "Clase",
     "CLEAR_ALL": "Borrar todo",
     "CODE": "Código ",
     "CREATE_AIRPORTS": "Crear aeropuerto",
@@ -221,6 +226,7 @@
       "ARRIVAL_AIRPORT": "Aeropuerto de llegada",
       "ARRIVAL_AIRPORT_IATA_CODE": "Código IATA del aeropuerto de salida",
       "ARRIVAL_AIRPORT_NAME": "Nombre del aeropuerto de llegada",
+      "CABIN_PRICES": "Precios por clase de asiento",
       "CODE": "Código",
       "DATE_TIME": "Fecha y hora de salida",
       "DATE_TIME_ARRIVAL": "Fecha hora llegada",
@@ -246,11 +252,18 @@
         "REQUIRED_FIELDS_MESSAGE": "Por favor, completa todos los campos obligatorios",
         "REQUIRED_FIELDS_TITLE": "Error en el formulario",
         "SAME_AIRPORTS_MESSAGE": "El aeropuerto de salida y llegada no pueden ser el mismo",
-        "SAME_AIRPORTS_TITLE": "Aeropuertos iguales"
+        "SAME_AIRPORTS_TITLE": "Aeropuertos iguales",
+        "INVALID_CABIN_PRICES_TITLE": "Precios de cabina inválidos",
+        "INVALID_CABIN_PRICES_MESSAGE": "Los precios de cabina deben ser mayores a 10€",
+        "MISSING_MEALS_TITLE": "Selecciona las comidas",
+        "MISSING_MEALS_MESSAGE": "Debes seleccionar al menos una comida para el vuelo"
       },
+      "MEALS": "Comidas",
+      "MEAL_NAME": "Nombre de la comida",
       "SELECT_AIRLINE": "Selecciona una aerolinea",
       "SELECT_AIRPLANE": "Selecciona un avión",
       "SELECT_AIRPORTS": "Selecciona los aeropuertos de ida y vuelta",
+      "SELECTED_MEALS": "Platos seleccionados",
       "STATUS": "Estado",
       "SUCCESS": {
         "CREATION_SUCCESS_MESSAGE": "El vuelo se creó correctamente",
@@ -266,7 +279,9 @@
       "AIRPORT": "Aeropuertos",
       "AIRPORT_NAME": "Nombre del aeropuerto",
       "ARRIVAL": "Fecha y hora de llegada",
-      "ARRIVAL_AIRPORT": "Llegada",
+      "ARRIVAL_AIRPORT": "Aeropuerto de llegada",
+      "CABINS": "Cabinas del avión",
+      "DEPARTURE_AIRPORT": "Aeropuerto de salida",
       "CAPACITY": "Capacidad",
       "CITY": "Ciudad",
       "CODE": "Código del vuelo",
@@ -283,7 +298,11 @@
       "TERMINAL": "Terminales",
       "TITLE": "Detalles del vuelo",
       "TYPE": "Tipo",
-      "WEBSITE": "Sitio web"
+      "WEBSITE": "Sitio web",
+      "CABIN_SEAT_CLASS": "Clase de asiento",
+      "CABIN_PRICE": "Precio de la clase de asiento",
+      "CABIN_TOTAL_SEATS": "Total de asientos en la cabina",
+      "CABIN_AVAILABLE_SEATS": "Asientos disponibles en la cabina"
     },
     "HOTELS": {
       "ADDRESS": "Dirección",
@@ -435,6 +454,10 @@
     "VIEW_IMAGE": "Ver imagen"
   },
   "CLIENT": {
+    "NAVIGATION": {
+      "FLIGHT": "Vuelo",
+      "HOME": "Inicio"
+    },
     "LOGIN": {
       "CLICK_HERE": "Pincha aquí",
       "EMAIL": "Correo electrónico",
@@ -591,61 +614,167 @@
       "ACCOMMODATION": "Alojamiento",
       "TITLE": "Todos los derechos reservados.",
       "LEGAL": "Legales"
-      }
     },
-    "CODE_VALIDATION": {
-      "TITLE": "Código de Verificación",
-      "SUBTITLE": "Introduce el código de 6 dígitos enviado a tu correo:",
-      "BUTTONS": {
-        "VERIFY": "Verificar Código",
-        "LOADING": "Verificando...",
-        "RESEND": "Reenviar Código"
-      },
-      "NOTIFICATIONS": {
-        "VALIDATION_ERROR": {
-          "TITLE": "Error de Validación",
-          "MESSAGE": "Por favor introduce el código completo de 6 dígitos"
-        },
-        "SUCCESS": {
-          "TITLE": "Verificación Exitosa",
-          "MESSAGE": "Tu correo ha sido verificado correctamente"
-        },
-        "ERROR": {
-          "TITLE": "Error de Verificación",
-          "MESSAGE": "Código de verificación inválido. Por favor inténtalo de nuevo"
-        },
-        "SEND_SUCCESS": {
-          "TITLE": "Código Enviado",
-          "MESSAGE": "Un código de verificación ha sido enviado a tu correo"
-        },
-        "SEND_ERROR": {
-          "TITLE": "Error al Enviar",
-          "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
-        },
-        "RESEND_SUCCESS": {
-          "TITLE": "Código Reenviado",
-          "MESSAGE": "Un nuevo código de verificación ha sido enviado a tu correo"
-        },
-        "RESEND_ERROR": {
-          "TITLE": "Error al Reenviar",
-          "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
-        },
-        "PASSWORD_CHANGED": {
-          "TITLE": "Contraseña cambiada",
-          "MESSAGE": "Su contraseña ha sido actualizada con éxito"
-        },
-        "PASSWORD_CHANGED_ERROR": {
-          "TITLE": "Error en el cambio de contraseña",
-          "MESSAGE": "Ha habido un problema cambiando tu contraseña"
+    "FLIGHTS": {
+      "LOWEST_PRICE": "Precios de los asientos más baratos",
+      "DEPATURE": "Hora de salida",
+      "ARRIVAL": "Hora de llegada",
+      "DEPATURE_CITY": "Ciudad de salida",
+      "ARRIVAL_CITY": "Ciudad de llegada",
+      "AIRLINE": "Aerolínea",
+      "DURATION": "Duración",
+      "DETAILS": "Ver detalles",
+      "SEARCH": "Buscar vuelos",
+      "RESET": "Restablecer búsqueda",
+      "NO_SEATS": "Sin asientos disponibles",
+      "LAST_SEATS_1": "¡Últimos",
+      "LAST_SEATS_2": "asientos!",
+      "AVAILABLE_SEATS": "asientos disponibles",
+      "NEXT_FLIGHT": "Encuentra tu próximo vuelo",
+      "FLIGHT_CODE": {
+        "STATUS": "Estado",
+        "DETAILS": "Detalles del avión",
+        "TYPE": "Tipo",
+        "REGISTRATION": "Matrícula",
+        "CAPACITY": "Capacidad",
+        "PASSENGERS": "pasajeros",
+        "YEAR": "Año",
+        "MANUFACTURER": "Fabricante",
+        "MEALS_AVAILABLE": "Comidas disponibles",
+        "CABINS_AVAILABLE": "Cabinas disponibles",
+        "PRICE": "Precio",
+        "SEATS_AVAILABLE": "Asientos disponibles",
+        "SELECT_YOUR_SEAT": "Selecciona tu asiento",
+        "MAX_SEATS": "Máximo 10 asientos. Haz clic para seleccionar o deseleccionar",
+        "SELECTED": "Seleccionado",
+        "AVAILABLE": "Disponible",
+        "OCCUPIED": "Ocupado",
+        "VIEW_SELECTION": "Ver selección",
+        "YOUR_SEATS": "Tus asientos",
+        "SEAT": "Asiento",
+        "EMPTY_SELECTION": "Vaciar selección",
+        "CONTINUE": "Continuar",
+        "CHECK_OUT": {
+          "TITLE": "Revisa tu compra",
+          "SEAT_SUMMARY_TITLE": "Resumen de asientos",
+          "PASSENGER_DETAILS": "Datos del pasajero",
+          "NAME": "Nombre",
+          "SURNAME": "Apellidos",
+          "EMAIL": "Correo electrónico",
+          "NIF": "NIF",
+          "PHONE": "Teléfono",
+          "NO_DATA": "Sin datos",
+          "NEXT_PASSENGER": "Siguiente pasajero",
+          "GO_TO_PAYMENT": "Ir a pago",
+          "LOCATION": "Ubicación",
+          "ROW": "Fila",
+          "COLUMN": "Columna",
+          "SEAT_CLASS_AND_PRICE": "Clase del asiento y precio",
+          "NOT_AVAILABLE": "N/D",
+          "NO_PRICE": "Sin precio",
+          "PROCEED_TO_PAYMENT": "Proceder al pago",
+          "CLOSE": "Cerrar",
+          "PASSENGER": "Pasajero",
+          "SELECTED_SEATS": "Asientos seleccionados",
+          "SEAT": "Asiento"
         }
       },
-      "RESEND_MODAL": {
-        "TITLE": "Reenviar Código de Verificación",
-        "SUBTITLE": "Introduce tu dirección de correo para recibir un nuevo código de verificación",
-        "EMAIL_PLACEHOLDER": "Introduce tu correo",
-        "SEND": "Enviar Código",
-        "CANCEL": "Cancelar"
+      "ERRORS": {
+        "ERROR_LOADING": "Error al cargar los vuelos. Por favor, inténtalo de nuevo más tarde.",
+        "PURCHASE_TITLE_ERROR": "Error al comprar los billetes",
+        "PURCHASE_MESSAGE_ERROR": "No se pudo completar la compra. Por favor, verifica los datos e inténtalo de nuevo.",
+        "ERROR_SELECT_SEATS_TITLE": "Error al seleccionar asientos",
+        "ERROR_SELECT_SEATS_MESSAGE": "Solo puedes seleccionar hasta 10 asientos.",
+        "LOADIN_DATA_FLIGHT": "Error al cargar los datos del vuelo. Por favor, inténtelo de nuevo"
+      },
+      "SUCCESS": {
+        "PURCHASE_TITLE_SUCCESS": "Compra exitosa",
+        "PURCHASE_MESSAGE_SUCCESS": "Los billetes se han comprado correctamente. Revisa tu correo para más detalles."
       }
+    },
+    "PAYMENT_GATEWAY": {
+      "CARD": "Tarjeta",
+      "PAYPAL": "PayPal",
+      "CARD_NUMBER": {
+        "LABEL": "Número de tarjeta",
+        "PLACEHOLDER": "1234 5678 9012 3456"
+      },
+      "EXPIRY_DATE": {
+        "LABEL": "Fecha de expiración",
+        "PLACEHOLDER": "MM/YY"
+      },
+      "CVV": {
+        "LABEL": "CVV",
+        "PLACEHOLDER": "123"
+      },
+      "CARD_HOLDER": {
+        "LABEL": "Nombre del titular",
+        "PLACEHOLDER": "Juan Ávila"
+      },
+      "PAYPAL_EMAIL": {
+        "LABEL": "Correo Paypal",
+        "PLACEHOLDER": "example@paypal.com"
+      },
+      "PAYPAL_PASSWORD": {
+        "LABEL": "Contraseña PayPal",
+        "PLACEHOLDER": "********"
+      },
+      "FLIP_CARD": "Haga click en el logo para cambiar de tarjeta",
+      "SECURE_CARD_MESSAGE": "Esta es una tarjeta segura. No comparta sus datos."
+    }
+  },
+  "CODE_VALIDATION": {
+    "TITLE": "Código de Verificación",
+    "SUBTITLE": "Introduce el código de 6 dígitos enviado a tu correo:",
+    "BUTTONS": {
+      "VERIFY": "Verificar Código",
+      "LOADING": "Verificando...",
+      "RESEND": "Reenviar Código"
+    },
+    "NOTIFICATIONS": {
+      "VALIDATION_ERROR": {
+        "TITLE": "Error de Validación",
+        "MESSAGE": "Por favor introduce el código completo de 6 dígitos"
+      },
+      "SUCCESS": {
+        "TITLE": "Verificación Exitosa",
+        "MESSAGE": "Tu correo ha sido verificado correctamente"
+      },
+      "ERROR": {
+        "TITLE": "Error de Verificación",
+        "MESSAGE": "Código de verificación inválido. Por favor inténtalo de nuevo"
+      },
+      "SEND_SUCCESS": {
+        "TITLE": "Código Enviado",
+        "MESSAGE": "Un código de verificación ha sido enviado a tu correo"
+      },
+      "SEND_ERROR": {
+        "TITLE": "Error al Enviar",
+        "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+      },
+      "RESEND_SUCCESS": {
+        "TITLE": "Código Reenviado",
+        "MESSAGE": "Un nuevo código de verificación ha sido enviado a tu correo"
+      },
+      "RESEND_ERROR": {
+        "TITLE": "Error al Reenviar",
+        "MESSAGE": "No se pudo enviar un nuevo código. Por favor inténtalo más tarde"
+      },
+      "PASSWORD_CHANGED": {
+        "TITLE": "Contraseña cambiada",
+        "MESSAGE": "Su contraseña ha sido actualizada con éxito"
+      },
+      "PASSWORD_CHANGED_ERROR": {
+        "TITLE": "Error en el cambio de contraseña",
+        "MESSAGE": "Ha habido un problema cambiando tu contraseña"
+      }
+    },
+    "RESEND_MODAL": {
+      "TITLE": "Reenviar Código de Verificación",
+      "SUBTITLE": "Introduce tu dirección de correo para recibir un nuevo código de verificación",
+      "EMAIL_PLACEHOLDER": "Introduce tu correo",
+      "SEND": "Enviar Código",
+      "CANCEL": "Cancelar"
     }
   },
   "ENGLISH": "Ingles",
