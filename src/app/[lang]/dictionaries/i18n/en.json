@@ -455,6 +455,10 @@
     "VIEW_IMAGE": "View image"
   },
   "CLIENT": {
+    "NAVIGATION": {
+      "FLIGHT": "Flight",
+      "HOME": "Home"
+    },
     "LOGIN": {
       "CLICK_HERE": "Click here",
       "EMAIL": "Email",
@@ -614,8 +618,10 @@
     },
     "FLIGHTS": {
       "LOWEST_PRICE": "Cheapest seat prices",
-      "DEPATURE": "Departure city",
-      "ARRIVAL": "Arrival city",
+      "DEPATURE": "Time of departure",
+      "ARRIVAL": "Time of arrival",
+      "DEPATURE_CITY": "Departure city",
+      "ARRIVAL_CITY": "Arrival city",
       "DURATION": "Duration",
       "AIRLINE": "Airline",
       "DETAILS": "See details",
@@ -624,9 +630,98 @@
       "LAST_SEATS_2": "seats!",
       "AVAILABLE_SEATS": "available seats",
       "NEXT_FLIGHT": "Find your next flight",
+      "SEARCH": "Search flights",
+      "RESET": "Reset search",
+      "FLIGHT_CODE": {
+        "STATUS": "Status",
+        "DETAILS": "Airplane details",
+        "TYPE": "Type",
+        "REGISTRATION": "Registration",
+        "CAPACITY": "Capacity",
+        "PASSENGERS": "passengers",
+        "YEAR": "Year",
+        "MANUFACTURER": "Manufacturer",
+        "MEALS_AVAILABLE": "Available meals",
+        "CABINS_AVAILABLE": "Available cabins",
+        "PRICE": "Price",
+        "SEATS_AVAILABLE": "Available seats",
+        "SELECT_YOUR_SEAT": "Select your seat",
+        "MAX_SEATS": "Maximum 10 seats. Click to select or deselect",
+        "SELECTED": "Selected",
+        "AVAILABLE": "Available",
+        "OCCUPIED": "Occupied",
+        "VIEW_SELECTION": "View selection",
+        "YOUR_SEATS": "Your seats",
+        "SEAT": "Seat",
+        "EMPTY_SELECTION": "Empty selection",
+        "CONTINUE": "Continue",
+        "CHECK_OUT": {
+          "TITLE": "Checkout",
+          "SEAT_SUMMARY_TITLE": "Seat Summary",
+          "PASSENGER_DETAILS": "Passenger details",
+          "NAME": "Name",
+          "SURNAME": "Surname",
+          "EMAIL": "Email",
+          "NIF": "NIF",
+          "PHONE": "Phone",
+          "NO_DATA": "No data",
+          "NEXT_PASSENGER": "Next passenger",
+          "GO_TO_PAYMENT": "Go to payment",
+          "LOCATION": "Location",
+          "ROW": "Row",
+          "COLUMN": "Column",
+          "SEAT_CLASS_AND_PRICE": "Seat class and price",
+          "NOT_AVAILABLE": "N/A",
+          "NO_PRICE": "No price",
+          "PROCEED_TO_PAYMENT": "Proceed to payment",
+          "CLOSE": "Close",
+          "PASSENGER": "Passenger",
+          "SELECTED_SEATS": "Selected seats",
+          "SEAT": "Seat"
+        }
+      },
       "ERRORS": {
-        "ERROR_LOADING": "An error occurred while trying to load the flights. Please try again"
+        "ERROR_LOADING": "An error occurred while trying to load the flights. Please try again",
+        "PURCHASE_TITLE_ERROR": "Ticket purchase error",
+        "PURCHASE_MESSAGE_ERROR": "The purchase could not be completed. Please check your details and try again.",
+        "ERROR_SELECT_SEATS_TITLE": "Error selecting seats",
+        "ERROR_SELECT_SEATS_MESSAGE": "You can only select up to 10 seats.",
+        "LOADIN_DATA_FLIGHT": "Error loading flight data. Please try again"
+      },
+      "SUCCESS": {
+        "PURCHASE_TITLE_SUCCESS": "Purchase successful",
+        "PURCHASE_MESSAGE_SUCCESS": "The tickets have been purchased successfully. Check your email for more details."
       }
+    },
+    "PAYMENT_GATEWAY": {
+      "CARD": "Card",
+      "PAYPAL": "PayPal",
+      "CARD_NUMBER": {
+        "LABEL": "Card Number",
+        "PLACEHOLDER": "1234 5678 9012 3456"
+      },
+      "EXPIRY_DATE": {
+        "LABEL": "Expiry Date",
+        "PLACEHOLDER": "MM/YY"
+      },
+      "CVV": {
+        "LABEL": "CVV",
+        "PLACEHOLDER": "123"
+      },
+      "CARD_HOLDER": {
+        "LABEL": "Card Holder Name",
+        "PLACEHOLDER": "Juan Ávila"
+      },
+      "PAYPAL_EMAIL": {
+        "LABEL": "PayPal Email",
+        "PLACEHOLDER": "example@paypal.com"
+      },
+      "PAYPAL_PASSWORD": {
+        "LABEL": "PayPal Password",
+        "PLACEHOLDER": "********"
+      },
+      "FLIP_CARD": "Click on the logo to switch cards",
+      "SECURE_CARD_MESSAGE": "This is a secure card. Do not share your details."
     }
   },
   "CODE_VALIDATION": {

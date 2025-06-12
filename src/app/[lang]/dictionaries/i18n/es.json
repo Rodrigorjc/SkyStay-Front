@@ -454,6 +454,10 @@
     "VIEW_IMAGE": "Ver imagen"
   },
   "CLIENT": {
+    "NAVIGATION": {
+      "FLIGHT": "Vuelo",
+      "HOME": "Inicio"
+    },
     "LOGIN": {
       "CLICK_HERE": "Pincha aquí",
       "EMAIL": "Correo electrónico",
@@ -613,19 +617,110 @@
     },
     "FLIGHTS": {
       "LOWEST_PRICE": "Precios de los asientos más baratos",
-      "DEPATURE": "Ciudad de salida",
-      "ARRIVAL": "Ciudad de llegada",
+      "DEPATURE": "Hora de salida",
+      "ARRIVAL": "Hora de llegada",
+      "DEPATURE_CITY": "Ciudad de salida",
+      "ARRIVAL_CITY": "Ciudad de llegada",
       "AIRLINE": "Aerolínea",
       "DURATION": "Duración",
       "DETAILS": "Ver detalles",
+      "SEARCH": "Buscar vuelos",
+      "RESET": "Restablecer búsqueda",
       "NO_SEATS": "Sin asientos disponibles",
       "LAST_SEATS_1": "¡Últimos",
       "LAST_SEATS_2": "asientos!",
       "AVAILABLE_SEATS": "asientos disponibles",
       "NEXT_FLIGHT": "Encuentra tu próximo vuelo",
+      "FLIGHT_CODE": {
+        "STATUS": "Estado",
+        "DETAILS": "Detalles del avión",
+        "TYPE": "Tipo",
+        "REGISTRATION": "Matrícula",
+        "CAPACITY": "Capacidad",
+        "PASSENGERS": "pasajeros",
+        "YEAR": "Año",
+        "MANUFACTURER": "Fabricante",
+        "MEALS_AVAILABLE": "Comidas disponibles",
+        "CABINS_AVAILABLE": "Cabinas disponibles",
+        "PRICE": "Precio",
+        "SEATS_AVAILABLE": "Asientos disponibles",
+        "SELECT_YOUR_SEAT": "Selecciona tu asiento",
+        "MAX_SEATS": "Máximo 10 asientos. Haz clic para seleccionar o deseleccionar",
+        "SELECTED": "Seleccionado",
+        "AVAILABLE": "Disponible",
+        "OCCUPIED": "Ocupado",
+        "VIEW_SELECTION": "Ver selección",
+        "YOUR_SEATS": "Tus asientos",
+        "SEAT": "Asiento",
+        "EMPTY_SELECTION": "Vaciar selección",
+        "CONTINUE": "Continuar",
+        "CHECK_OUT": {
+          "TITLE": "Revisa tu compra",
+          "SEAT_SUMMARY_TITLE": "Resumen de asientos",
+          "PASSENGER_DETAILS": "Datos del pasajero",
+          "NAME": "Nombre",
+          "SURNAME": "Apellidos",
+          "EMAIL": "Correo electrónico",
+          "NIF": "NIF",
+          "PHONE": "Teléfono",
+          "NO_DATA": "Sin datos",
+          "NEXT_PASSENGER": "Siguiente pasajero",
+          "GO_TO_PAYMENT": "Ir a pago",
+          "LOCATION": "Ubicación",
+          "ROW": "Fila",
+          "COLUMN": "Columna",
+          "SEAT_CLASS_AND_PRICE": "Clase del asiento y precio",
+          "NOT_AVAILABLE": "N/D",
+          "NO_PRICE": "Sin precio",
+          "PROCEED_TO_PAYMENT": "Proceder al pago",
+          "CLOSE": "Cerrar",
+          "PASSENGER": "Pasajero",
+          "SELECTED_SEATS": "Asientos seleccionados",
+          "SEAT": "Asiento"
+        }
+      },
       "ERRORS": {
-        "ERROR_LOADING": "Error al cargar los vuelos. Por favor, inténtalo de nuevo más tarde."
+        "ERROR_LOADING": "Error al cargar los vuelos. Por favor, inténtalo de nuevo más tarde.",
+        "PURCHASE_TITLE_ERROR": "Error al comprar los billetes",
+        "PURCHASE_MESSAGE_ERROR": "No se pudo completar la compra. Por favor, verifica los datos e inténtalo de nuevo.",
+        "ERROR_SELECT_SEATS_TITLE": "Error al seleccionar asientos",
+        "ERROR_SELECT_SEATS_MESSAGE": "Solo puedes seleccionar hasta 10 asientos.",
+        "LOADIN_DATA_FLIGHT": "Error al cargar los datos del vuelo. Por favor, inténtelo de nuevo"
+      },
+      "SUCCESS": {
+        "PURCHASE_TITLE_SUCCESS": "Compra exitosa",
+        "PURCHASE_MESSAGE_SUCCESS": "Los billetes se han comprado correctamente. Revisa tu correo para más detalles."
       }
+    },
+    "PAYMENT_GATEWAY": {
+      "CARD": "Tarjeta",
+      "PAYPAL": "PayPal",
+      "CARD_NUMBER": {
+        "LABEL": "Número de tarjeta",
+        "PLACEHOLDER": "1234 5678 9012 3456"
+      },
+      "EXPIRY_DATE": {
+        "LABEL": "Fecha de expiración",
+        "PLACEHOLDER": "MM/YY"
+      },
+      "CVV": {
+        "LABEL": "CVV",
+        "PLACEHOLDER": "123"
+      },
+      "CARD_HOLDER": {
+        "LABEL": "Nombre del titular",
+        "PLACEHOLDER": "Juan Ávila"
+      },
+      "PAYPAL_EMAIL": {
+        "LABEL": "Correo Paypal",
+        "PLACEHOLDER": "example@paypal.com"
+      },
+      "PAYPAL_PASSWORD": {
+        "LABEL": "Contraseña PayPal",
+        "PLACEHOLDER": "********"
+      },
+      "FLIP_CARD": "Haga click en el logo para cambiar de tarjeta",
+      "SECURE_CARD_MESSAGE": "Esta es una tarjeta segura. No comparta sus datos."
     }
   },
   "CODE_VALIDATION": {
