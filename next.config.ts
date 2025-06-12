@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
+  images: {
+    domains: ["cache.marriott.com", "multimedia.andalucia.org", "wallpapers.com"], // Agrega los dominios permitidos
+  },
   async rewrites() {
     return [
       {
