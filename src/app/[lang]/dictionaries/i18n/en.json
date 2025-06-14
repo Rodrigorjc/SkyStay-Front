@@ -544,7 +544,6 @@
         }
       }
     },
-
     "FILTERS": {
       "TITLE": "Filters",
       "PRICE_RANGE": "Price Range",
@@ -589,7 +588,6 @@
       }
 
     },
-
     "CARD": {
       "TYPE_LABEL": "{{type}}",
       "FROM_LABEL": "from",
@@ -675,7 +673,7 @@
       "MSG": {
         "APARTMENT_FULL": "You will reserve the entire apartment for the selected dates.",
         "ROOMS": "Individual rooms",
-        "CAPACITY": "Capacity: {{count}} {{count, plural, one {person} other {people}}}"
+        "CAPACITY": "Capacity"
       },
       "DEFAULT": {
         "ROOM_TYPE": "Standard"

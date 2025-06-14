@@ -639,6 +639,52 @@
         "PAY_BUTTON": "Pagar con PayPal"
       }
     },
+    "RESERVATION": {
+      "LOADING": "Cargando detalles del alojamiento…",
+      "ERROR": {
+        "NO_CODE": "No se proporcionó código de alojamiento",
+        "NO_DETAILS": "No se encontraron detalles del alojamiento",
+        "LOAD": "Error al cargar los detalles del alojamiento",
+        "AVAILABILITY": "Error al verificar disponibilidad",
+        "DATES": "Por favor selecciona las fechas de entrada y salida antes de continuar",
+        "NO_AVAIL": "No hay disponibilidad para el rango de fechas seleccionado",
+        "TITLE": "Error"
+      },
+      "BUTTON": {
+        "BACK": "Volver",
+        "CONTINUE": "Continuar al Pago",
+        "PAY": "Proceder al Pago Seguro"
+      },
+      "TITLES": {
+        "DETAILS": "Detalles de la Reserva",
+        "PAY": "Completar Pago"
+      },
+      "LABELS": {
+        "DATES": "Fechas de Estancia",
+        "CHECKIN": "Entrada",
+        "CHECKOUT": "Salida",
+        "APARTMENT": "Apartamento Completo",
+        "ROOMS": "Habitaciones Seleccionadas",
+        "AVAILABILITY": "Disponibilidad",
+        "SUMMARY": "Resumen de Reserva",
+        "ACCOMMODATION": "Alojamiento",
+        "TYPE": "Tipo",
+        "TOTAL": "Total"
+      },
+      "MSG": {
+        "APARTMENT_FULL": "Reservarás todo el apartamento para las fechas seleccionadas.",
+        "ROOMS": "Habitaciones individuales",
+        "CAPACITY": "Capacidad:"
+      },
+      "DEFAULT": {
+        "ROOM_TYPE": "Estándar"
+      },
+      "STEPS": {
+        "Seleccion": "Selección",
+        "Detalles": "Detalles",
+        "Pago": "Pago"
+      }
+    },
     "RESULTS": {
       "HEADING": "Resultados para {{destination}}",
       "ALL_DESTINATIONS": "todos los destinos",
