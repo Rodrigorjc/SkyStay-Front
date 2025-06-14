@@ -11,6 +11,7 @@ import { Notifications } from "@/app/interfaces/Notifications";
 import { AvailabilityResponse } from "@/app/[lang]/accommodation/types/AvailabilityResponse";
 import FormularioPago from "../components/PaymentCard";
 import { useDictionary } from "@context";
+import Loader from "@/app/components/ui/Loader";
 
 enum Step {
     Seleccion = 1,
@@ -194,7 +195,7 @@ export default function ReservationPage() {
         return null;
     }
     if (loading)
-        return <div className="text-center py-8">{dict.CLIENT.RESERVATION.LOADING}</div>;
+        return <div className="text-center py-8"><Loader></Loader></div>;
 
     return (
         <div className="max-w-6xl mx-auto py-4 px-4">
@@ -311,14 +312,11 @@ export default function ReservationPage() {
                                                         className="flex justify-between items-center py-2 px-3 bg-zinc-700 rounded-md"
                                                     >
                                                         <div>
-                              <span className="font-medium text-white">
-                                {typeLabel}
-                              </span>
+                                                            <span className="font-medium text-white">
+                                                                {typeLabel}
+                                                            </span>
                                                             <div className="text-xs text-glacier-300 mt-1">
-                                                                {dict.CLIENT.RESERVATION.MSG.CAPACITY.replace(
-                                                                    "{{count}}",
-                                                                    cap.toString()
-                                                                )}
+                                                                {dict.CLIENT.RESERVATION.MSG.CAPACITY} {cap}
                                                             </div>
                                                         </div>
                                                         <div className="bg-glacier-600 text-white px-2 py-1 rounded-full text-sm">
@@ -334,7 +332,7 @@ export default function ReservationPage() {
 
                             {/* Disponibilidad */}
                             {availableDates.length > 0 && (
-                                <div className="mb-4 bg-zinc-800 rounded-lg p-4">
+                                <div className="mb-4 mt-6 bg-zinc-800 rounded-lg p-4">
                                     <h3 className="font-semibold mb-3 text-glacier-200">
                                         {dict.CLIENT.RESERVATION.LABELS.AVAILABILITY}
                                     </h3>
@@ -438,7 +436,10 @@ export default function ReservationPage() {
                             {showPaymentForm && (
                                 <FormularioPago
                                     total={total}
-                                    rooms={selectedRooms}
+                                    rooms={selectedRooms.map(room => ({
+                                        roomConfigId: room.roomId,
+                                        qty: room.qty
+                                    }))}
                                     accommodationCode={code}
                                     accommodationType={type}
                                     setMostrarFormularioPago={setShowPaymentForm}
