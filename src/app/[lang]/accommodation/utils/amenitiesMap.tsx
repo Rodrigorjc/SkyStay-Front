@@ -1,3 +1,5 @@
+import React from "react";
+import { ReactElement } from 'react';
 import {
     FaWifi, FaSwimmingPool, FaDumbbell, FaCoffee, FaTv, FaParking,
     FaSpa, FaUtensils, FaWind, FaCocktail, FaLock, FaUmbrella,
@@ -7,7 +9,7 @@ import {
 import { MdRoomService as FaConcierge, MdElevator as FaElevator, MdCleaningServices as FaBroom } from "react-icons/md";
 
 // Mapa completo de amenities con sus iconos correspondientes
-export const amenityIconMap: { [key: string]: JSX.Element } = {
+export const amenityIconMap: { [key: string]: ReactElement } = {
     "WiFi": <FaWifi className="text-glacier-300" />,
     "Piscina": <FaSwimmingPool className="text-glacier-300" />,
     "Gimnasio": <FaDumbbell className="text-glacier-300" />,
