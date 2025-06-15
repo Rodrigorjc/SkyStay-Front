@@ -1,29 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import AccommodationSearchBar from "@/app/[lang]/accommodation/components/AccommodationSearchBar";
+import Footer from "@/app/components/ui/Footer";
+import Navigation from "@/app/components/ui/Navigation";
 import Navbar from "@components/Navbar";
-import { fetchDictionary } from "@dictionary";
+import { useDictionary } from "@context";
 
-interface AccommodationLayoutProps {
+
+export default function AccommodationLayout({
+    children,
+}: {
     children: React.ReactNode;
-}
-
-export default function AccommodationLayout({ children }: AccommodationLayoutProps) {
-    const [dictionary, setDictionary] = useState(null);
-
-    useEffect(() => {
-        const loadDictionary = async () => {
-            const dict = await fetchDictionary();
-            setDictionary(dict);
-        };
-
-        loadDictionary();
-    }, []);
+}) {
+    const { dict } = useDictionary();
+    
+    if (!dict) return null;
 
     return (
-        <div className="bg-gradient-to-t from-glacier-950 via-zinc-900 to-glacier-900 bg-blend-exclusion min-h-screen">
-            {dictionary && <Navbar dict={dictionary}></Navbar>}
+        <>
+            <Navbar></Navbar>
+            <Navigation></Navigation>
             {children}
-        </div>
+            <Footer />
+        </>
     );
 }
