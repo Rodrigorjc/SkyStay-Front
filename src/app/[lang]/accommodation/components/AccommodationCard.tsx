@@ -21,19 +21,17 @@ import { useDictionary } from "@context";
 interface AccommodationCardProps {
     accommodation: Accommodation;
     lang: string;
-    searchParams?: {
-        checkIn?: string;
-        checkOut?: string;
-        adults?: number;
-        children?: number;
-        rooms?: number;
-    };
+    searchParams: any;
+    truncateDescription?: boolean;
+    maxDescriptionLength?: number;
 }
 
 export default function AccommodationCard({
                                               accommodation,
                                               lang,
                                               searchParams,
+                                              truncateDescription = false,
+                                              maxDescriptionLength = 120,
                                           }: AccommodationCardProps) {
     const { dict } = useDictionary();
     const [isFavorite, setIsFavorite] = useState(false);
@@ -117,11 +115,16 @@ export default function AccommodationCard({
         if (qs) href += `?${qs}`;
     }
 
+    const truncateText = (text: string, maxLength: number = 120) => {
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength).trim() + "...";
+    };
+
     return (
-        <div className="relative group">
-            <Link href={href}>
-                <div className="bg-zinc-800/80 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 border border-glacier-600">
-                    <div className="relative h-48">
+        <div className="relative group h-full">
+            <Link href={href} className="block h-full">
+                <div className="bg-zinc-800/80 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 border border-glacier-600 h-full flex flex-col">
+                    <div className="relative h-48 flex-shrink-0">
                         <Image
                             src={accommodation.image || "/placeholder.jpg"}
                             alt={accommodation.name}
@@ -138,13 +141,13 @@ export default function AccommodationCard({
                         )}
                     </div>
 
-                    <div className="p-4 text-glacier-200">
+                    <div className="p-4 text-glacier-200 flex flex-col flex-grow">
                         <div className="flex justify-between items-start mb-2">
-                            <h3 className="text-lg font-semibold truncate text-white">
+                            <h3 className="text-lg font-semibold text-white mr-2 flex-1">
                                 {accommodation.name}
                             </h3>
                             {accommodation.type === "hotel" && accommodation.rating && (
-                                <div className="flex items-center text-yellow-400">
+                                <div className="flex items-center text-yellow-400 flex-shrink-0">
                                     {Array.from({ length: accommodation.rating }).map((_, i) => (
                                         <FaStar key={i} className="w-3.5 h-3.5" />
                                     ))}
@@ -170,9 +173,14 @@ export default function AccommodationCard({
                             </div>
                         </div>
 
-                        <p className="text-sm text-glacier-200 mb-3 line-clamp-2">
-                            {accommodation.description}
-                        </p>
+                        <div className="flex-grow mr-2">
+                            <p className="text-glacier-600 text-sm leading-relaxed">
+                                {truncateDescription
+                                    ? truncateText(accommodation.description, maxDescriptionLength)
+                                    : accommodation.description
+                                }
+                            </p>
+                        </div>
 
                         <div className="flex justify-end mt-3">
                             <div className="flex items-baseline bg-glacier-900 px-3 py-1.5 rounded-lg border border-glacier-700">
