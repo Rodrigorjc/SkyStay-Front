@@ -34,7 +34,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ destinations }) => {
           <h2 className="text-lg md:text-xl text-left mx-auto my-8">{dict.HOME.CALL_TO_ACTION.MOST_VISITED_DESTINATIONS} </h2>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1500px] mx-auto">
         <Swiper
           spaceBetween={8}
           slidesPerView={1}
