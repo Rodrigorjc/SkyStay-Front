@@ -8,7 +8,7 @@ import NotificacionComponent from "@components/Notification";
 import { Notifications } from "@/app/interfaces/Notifications";
 import { useRouter } from "next/navigation";
 import { FiX } from "react-icons/fi";
-import { MdNfc } from "react-icons/md";
+import { TbNfc } from "react-icons/tb";
 import { useDictionary } from "@context";
 
 interface RoomSelection {
@@ -25,12 +25,12 @@ interface FormularioPagoProps {
 }
 
 export default function FormularioPago({
-                                           setMostrarFormularioPago,
-                                           total,
-                                           rooms,
-                                           accommodationCode,
-                                           accommodationType,
-                                       }: FormularioPagoProps) {
+    setMostrarFormularioPago,
+    total,
+    rooms,
+    accommodationCode,
+    accommodationType,
+}: FormularioPagoProps) {
     const { dict } = useDictionary();
     const router = useRouter();
 
@@ -52,21 +52,25 @@ export default function FormularioPago({
     const iconControls = useAnimation();
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const intervalId = setInterval(() => {
             controls.start({
-                rotate: [0, 10, -10, 10, -10, 0],
-                transition: { duration: 0.6 },
+                rotate: [0, 3, -3, 3, -3, 0],
+                transition: { duration: 1.2, ease: "easeInOut" },
             });
             iconControls.start({
-                scale: [1, 1.2, 1],
-                transition: { duration: 0.6 },
+                scale: [1, 1.08, 1],
+                transition: { duration: 1.2, ease: "easeInOut" },
             });
-        }, 3000);
-        return () => clearInterval(interval);
+        }, 15000);
+        return () => clearInterval(intervalId);
     }, [controls, iconControls]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const toggleCardType = () => {
+        setCardType((prevType) => (prevType === "visa" ? "mastercard" : "visa"));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -102,8 +106,11 @@ export default function FormularioPago({
     };
 
     const handleCardClick = () => {
-        setIsFlipped((prev) => !prev);
-        controls.start({ rotateY: isFlipped ? 0 : 180, transition: { duration: 0.6 } });
+        setIsFlipped(!isFlipped);
+        controls.start({
+            rotateY: isFlipped ? 0 : 180,
+            transition: { duration: 0.6 },
+        });
     };
 
     if (!dict || Object.keys(dict).length === 0) return null;
@@ -113,208 +120,283 @@ export default function FormularioPago({
             {isLoading ? (
                 <Loading />
             ) : (
-                <div className="relative w-full max-w-4xl bg-glacier-50 rounded-2xl shadow-2xl px-8 py-6">
+                <div className="relative w-full max-w-6xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl px-8 py-6 border border-glacier-700">
                     <button
                         onClick={() => setMostrarFormularioPago(false)}
-                        className="absolute top-4 right-4 text-glacier-700 hover:text-glacier-900"
+                        className="absolute top-4 right-4 text-glacier-300 hover:text-glacier-100 transition-colors"
                     >
                         <FiX size={24} />
                     </button>
 
-                    <h2 className="text-2xl font-semibold text-glacier-600 text-center mb-6">
+                    <h2 className="text-2xl font-semibold text-glacier-200 text-center mb-6">
                         {dict.CLIENT.PAYMENT.TITLE}
                     </h2>
 
-                    <div className="flex justify-center gap-4 mb-8">
-                        {(["card", "paypal"] as const).map((method) => (
+                    {/* Selector de método de pago mejorado */}
+                    <div className="flex w-full justify-center items-center mb-8">
+                        <div className="bg-zinc-800 rounded-xl p-1 flex gap-1 border border-glacier-700">
                             <button
-                                key={method}
-                                onClick={() => setPaymentMethod(method)}
-                                className={`px-4 py-2 rounded-full font-medium transition ${
-                                    paymentMethod === method
-                                        ? "bg-glacier-600 text-glacier-50"
-                                        : "bg-glacier-200 text-glacier-700 hover:bg-glacier-300"
+                                onClick={() => setPaymentMethod("card")}
+                                className={`px-8 py-3 text-sm font-semibold rounded-lg transition-all duration-300 ${
+                                    paymentMethod === "card"
+                                        ? "bg-glacier-600 text-white shadow-md"
+                                        : "text-glacier-300 hover:text-glacier-100"
                                 }`}
                             >
-                                {method === "card"
-                                    ? dict.CLIENT.PAYMENT.METHOD.CARD
-                                    : dict.CLIENT.PAYMENT.METHOD.PAYPAL}
+                                💳 {dict.CLIENT.PAYMENT.METHOD.CARD}
                             </button>
-                        ))}
+                            <button
+                                onClick={() => setPaymentMethod("paypal")}
+                                className={`px-8 py-3 text-sm font-semibold rounded-lg transition-all duration-300 ${
+                                    paymentMethod === "paypal"
+                                        ? "bg-glacier-600 text-white shadow-md"
+                                        : "text-glacier-300 hover:text-glacier-100"
+                                }`}
+                            >
+                                🏛️ {dict.CLIENT.PAYMENT.METHOD.PAYPAL}
+                            </button>
+                        </div>
                     </div>
 
                     {paymentMethod === "card" ? (
-                        <div className="flex flex-col lg:flex-row gap-8">
-                            {/* Tarjeta */}
-                            <motion.div
-                                className="w-full lg:w-1/2 cursor-pointer perspective"
-                                onClick={handleCardClick}
-                                initial={{ rotateY: 0 }}
-                                animate={controls}
-                                style={{ transformStyle: "preserve-3d" }}
-                            >
-                                <div className="relative w-full h-56 rounded-xl shadow-lg bg-gradient-to-br from-glacier-500 to-glacier-400 p-6 backface-hidden flex flex-col justify-between text-glacier-50">
+                        <div className="flex justify-center items-center w-full">
+                            {/* Tarjeta mejorada */}
+                            <div className="w-1/2 flex flex-col items-center justify-center">
+                                <motion.div
+                                    className={`relative w-96 h-56 rounded-lg shadow-lg cursor-pointer ${
+                                        cardType === "visa" ? "bg-[#214694]" : "bg-red-600"
+                                    }`}
+                                    initial={{ rotateY: 0 }}
+                                    animate={controls}
+                                    transition={{ duration: 0.6 }}
+                                    onClick={handleCardClick}
+                                    style={{ transformStyle: "preserve-3d" }}
+                                    title={dict.CLIENT.PAYMENT.CARD.FLIP_INSTRUCTION}
+                                >
                                     {!isFlipped ? (
-                                        <>
-                                            <div className="flex justify-between items-center">
+                                        <div
+                                            className="absolute inset-0 flex flex-col justify-between p-4 text-white rounded-lg"
+                                            style={{ backfaceVisibility: "hidden" }}
+                                        >
+                                            <div className="absolute bottom-2 right-4">
                                                 <Image
+                                                    width={40}
+                                                    height={80}
                                                     src={cardType === "visa" ? "/iconos/visa.svg" : "/iconos/mastercard.svg"}
-                                                    alt="logo"
-                                                    width={48}
-                                                    height={32}
+                                                    alt="Card Logo"
+                                                    className="mt-2 opacity-70"
                                                 />
-                                                <MdNfc size={32} />
                                             </div>
-                                            <div className="text-xl tracking-widest font-bold">
-                                                {formData.cardNumber || dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_NUMBER}
+                                            <div className="absolute top-4 right-4">
+                                                <TbNfc className="text-xl" />
                                             </div>
-                                            <div className="flex justify-between text-sm">
-                                                <span>{formData.expiryDate || dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_EXPIRY}</span>
-                                                <span>{formData.cardHolder || dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_HOLDER}</span>
+                                            <div className="text-2xl font-bold">
+                                                {cardType === "visa" ? "Visa" : "Mastercard"}
                                             </div>
-                                        </>
+                                            <div>
+                                                <Image
+                                                    src="/iconos/chip.png"
+                                                    alt="Logo chip card"
+                                                    width={50}
+                                                    height={20}
+                                                    style={{ mixBlendMode: "overlay" }}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="text-xl tracking-widest font-bold">
+                                                    {formData.cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ") || "**** **** **** ****"}
+                                                </div>
+                                                <div className="flex justify-between text-sm">
+                                                    <span>{formData.expiryDate || "MM/YY"}</span>
+                                                </div>
+                                                <div className="text-lg">
+                                                    {formData.cardHolder || "Nombre del titular"}
+                                                </div>
+                                            </div>
+                                        </div>
                                     ) : (
                                         <div
-                                            className="absolute inset-0 bg-glacier-800 rounded-xl p-6 backface-hidden flex flex-col justify-between"
-                                            style={{ transform: "rotateY(180deg)" }}
+                                            className="absolute inset-0 bg-gray-800 text-white rounded-lg p-4 flex flex-col justify-between"
+                                            style={{
+                                                transform: "rotateY(180deg)",
+                                                backfaceVisibility: "hidden",
+                                            }}
                                         >
-                                            <div className="h-8 bg-black rounded-md mb-4"></div>
-                                            <div className="bg-glacier-50 text-black rounded-md p-2 flex justify-between mb-2">
-                        <span className="font-semibold">
-                          {formData.cardHolder || dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_HOLDER}
-                        </span>
-                                                <span className="font-mono">{formData.cvv || "***"}</span>
+                                            <div className="w-full h-10 bg-black mt-2"></div>
+                                            <div className="mt-4 bg-white text-black p-2 rounded-lg flex justify-between items-center">
+                                                <span className="text-sm font-semibold">
+                                                    {formData.cardHolder || "Nombre del titular"}
+                                                </span>
+                                                <span className="text-lg">{formData.cvv || "***"}</span>
                                             </div>
-                                            <p className="text-xs text-glacier-300">{dict.CLIENT.PAYMENT.CARD.SECURE_NOTICE}</p>
+                                            <p className="text-xs mt-2 text-gray-300">
+                                                {dict.CLIENT.PAYMENT.CARD.SECURE_NOTICE}
+                                            </p>
                                         </div>
                                     )}
+                                </motion.div>
+                                <div className="flex justify-center w-full mt-2">
+                                    <p className="text-glacier-400 text-sm">
+                                        {dict.CLIENT.PAYMENT.CARD.FLIP_INSTRUCTION}
+                                    </p>
                                 </div>
-                                <p className="text-center text-sm text-glacier-500 mt-2">
-                                    {dict.CLIENT.PAYMENT.CARD.FLIP_INSTRUCTION}
-                                </p>
-                            </motion.div>
+                            </div>
 
-                            <form onSubmit={handleSubmit} className="w-full lg:w-1/2 flex flex-col gap-4">
-                                <div>
-                                    <label className="block mb-1 text-glacier-600">
-                                        {dict.CLIENT.PAYMENT.CARD.NUMBER_LABEL}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="cardNumber"
-                                        value={formData.cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ")}
-                                        onChange={handleChange}
-                                        placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_NUMBER}
-                                        maxLength={19}
-                                        pattern="\d{4}( \d{4}){3}"
-                                        required
-                                        className="w-full border-2 border-glacier-200 focus:border-glacier-600 rounded-lg p-2 pr-10"
-                                    />
-                                </div>
-                                <div className="flex gap-4">
-                                    <div className="flex-1">
-                                        <label className="block mb-1 text-glacier-600">
-                                            {dict.CLIENT.PAYMENT.CARD.EXPIRY_LABEL}
+                            {/* Formulario mejorado */}
+                            <div className="flex flex-col items-center justify-end w-1/2">
+                                <form onSubmit={handleSubmit} autoComplete="off" className="w-full max-w-md">
+                                    <div className="mb-4 relative">
+                                        <label className="block text-glacier-300 mb-1">
+                                            {dict.CLIENT.PAYMENT.CARD.NUMBER_LABEL}
                                         </label>
                                         <input
                                             type="text"
-                                            name="expiryDate"
-                                            value={formData.expiryDate}
+                                            name="cardNumber"
+                                            value={formData.cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ")}
                                             onChange={handleChange}
-                                            placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_EXPIRY}
-                                            maxLength={5}
-                                            pattern="(0[1-9]|1[0-2])\/\d{2}"
+                                            className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/10 text-white placeholder-glacier-400 w-full focus:outline-none"
+                                            placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_NUMBER}
+                                            maxLength={19}
+                                            pattern="\d{4} \d{4} \d{4} \d{4}"
                                             required
-                                            className="w-full border-2 border-glacier-200 focus:border-glacier-600 rounded-lg p-2"
+                                            autoComplete="off"
+                                        />
+                                        <motion.div className="absolute right-0 top-7 mr-2" animate={iconControls}>
+                                            <Image
+                                                width={20}
+                                                height={20}
+                                                src={cardType === "visa" ? "/iconos/visa.svg" : "/iconos/mastercard.svg"}
+                                                alt={cardType === "visa" ? "Visa" : "Mastercard"}
+                                                className="w-12 h-8 cursor-pointer"
+                                                onClick={toggleCardType}
+                                            />
+                                        </motion.div>
+                                    </div>
+
+                                    <div className="flex gap-4 mb-4">
+                                        <div className="w-1/2">
+                                            <label className="block text-glacier-300 mb-1">
+                                                {dict.CLIENT.PAYMENT.CARD.EXPIRY_LABEL}
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="expiryDate"
+                                                value={formData.expiryDate}
+                                                onChange={handleChange}
+                                                className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/10 text-white placeholder-glacier-400 w-full focus:outline-none"
+                                                placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_EXPIRY}
+                                                maxLength={5}
+                                                pattern="(0[1-9]|1[0-2])\/\d{2}"
+                                                required
+                                                autoComplete="off"
+                                            />
+                                        </div>
+                                        <div className="w-1/2">
+                                            <label className="block text-glacier-300 mb-1">
+                                                {dict.CLIENT.PAYMENT.CARD.CVV_LABEL}
+                                            </label>
+                                            <input
+                                                type="password"
+                                                name="cvv"
+                                                value={formData.cvv}
+                                                onChange={handleChange}
+                                                className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/10 text-white placeholder-glacier-400 w-full focus:outline-none"
+                                                placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_CVV}
+                                                maxLength={3}
+                                                required
+                                                autoComplete="off"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-6">
+                                        <label className="block text-glacier-300 mb-1">
+                                            {dict.CLIENT.PAYMENT.CARD.HOLDER_LABEL}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="cardHolder"
+                                            value={formData.cardHolder}
+                                            onChange={handleChange}
+                                            className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/10 text-white placeholder-glacier-400 w-full focus:outline-none"
+                                            placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_HOLDER}
+                                            required
+                                            autoComplete="off"
                                         />
                                     </div>
-                                    <div className="flex-1">
-                                        <label className="block mb-1 text-glacier-600">
-                                            {dict.CLIENT.PAYMENT.CARD.CVV_LABEL}
+
+                                    <button
+                                        type="submit"
+                                        className="w-full py-3 rounded-xl font-semibold bg-glacier-600 hover:bg-glacier-700 text-white transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                    >
+                                        {dict.CLIENT.PAYMENT.CARD.PAY_BUTTON.replace(
+                                            "{{type}}",
+                                            cardType.charAt(0).toUpperCase() + cardType.slice(1)
+                                        )}{" "}
+                                        • {total}€
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center w-full">
+                            <div className="flex items-center justify-center w-1/2">
+                                <Image
+                                    src="/iconos/paypal.svg"
+                                    alt="Paypal"
+                                    height={100}
+                                    width={80}
+                                    className="w-80"
+                                />
+                            </div>
+                            <div className="flex flex-col w-1/2">
+                                <form onSubmit={handleSubmit} className="w-full max-w-md" autoComplete="off">
+                                    <div className="mb-4">
+                                        <label className="block text-glacier-300 mb-1">
+                                            {dict.CLIENT.PAYMENT.PAYPAL.EMAIL_LABEL}
+                                        </label>
+                                        <input
+                                            type="email"
+                                            name="paypalEmail"
+                                            value={formData.paypalEmail}
+                                            onChange={handleChange}
+                                            className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/10 text-white placeholder-glacier-400 w-full focus:outline-none"
+                                            placeholder={dict.CLIENT.PAYMENT.PAYPAL.PLACEHOLDER_EMAIL}
+                                            required
+                                            autoComplete="off"
+                                        />
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="block text-glacier-300 mb-1">
+                                            {dict.CLIENT.PAYMENT.PAYPAL.PASSWORD_LABEL}
                                         </label>
                                         <input
                                             type="password"
-                                            name="cvv"
-                                            value={formData.cvv}
+                                            name="paypalPassword"
+                                            value={formData.paypalPassword}
                                             onChange={handleChange}
-                                            placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_CVV}
-                                            maxLength={3}
+                                            className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/10 text-white placeholder-glacier-400 w-full focus:outline-none"
+                                            placeholder={dict.CLIENT.PAYMENT.PAYPAL.PLACEHOLDER_PASSWORD}
                                             required
-                                            className="w-full border-2 border-glacier-200 focus:border-glacier-600 rounded-lg p-2"
+                                            autoComplete="off"
                                         />
                                     </div>
-                                </div>
-                                <div>
-                                    <label className="block mb-1 text-glacier-600">
-                                        {dict.CLIENT.PAYMENT.CARD.HOLDER_LABEL}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="cardHolder"
-                                        value={formData.cardHolder}
-                                        onChange={handleChange}
-                                        placeholder={dict.CLIENT.PAYMENT.CARD.PLACEHOLDER_HOLDER}
-                                        required
-                                        className="w-full border-2 border-glacier-200 focus:border-glacier-600 rounded-lg p-2"
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="mt-4 w-full py-3 rounded-lg font-semibold bg-glacier-600 hover:bg-glacier-700 text-glacier-50 transition-shadow shadow-lg"
-                                >
-                                    {dict.CLIENT.PAYMENT.CARD.PAY_BUTTON.replace(
-                                        "{{type}}",
-                                        cardType.charAt(0).toUpperCase() + cardType.slice(1)
-                                    )}
-                                </button>
-                            </form>
+                                    <button
+                                        type="submit"
+                                        className="w-full py-3 rounded-xl font-semibold bg-glacier-600 hover:bg-glacier-700 text-white transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                    >
+                                        {dict.CLIENT.PAYMENT.PAYPAL.PAY_BUTTON} • {total}€
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-8 items-center">
-                            <div className="flex-1 flex justify-center">
-                                <Image src="/iconos/paypal.svg" alt="Paypal" width={120} height={50} />
-                            </div>
-                            <div className="flex-1 flex flex-col gap-4">
-                                <div>
-                                    <label className="block mb-1 text-glacier-600">
-                                        {dict.CLIENT.PAYMENT.PAYPAL.EMAIL_LABEL}
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="paypalEmail"
-                                        value={formData.paypalEmail}
-                                        onChange={handleChange}
-                                        placeholder={dict.CLIENT.PAYMENT.PAYPAL.PLACEHOLDER_EMAIL}
-                                        required
-                                        className="w-full border-2 border-glacier-200 focus:border-glacier-600 rounded-lg p-2"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block mb-1 text-glacier-600">
-                                        {dict.CLIENT.PAYMENT.PAYPAL.PASSWORD_LABEL}
-                                    </label>
-                                    <input
-                                        type="password"
-                                        name="paypalPassword"
-                                        value={formData.paypalPassword}
-                                        onChange={handleChange}
-                                        placeholder={dict.CLIENT.PAYMENT.PAYPAL.PLACEHOLDER_PASSWORD}
-                                        required
-                                        className="w-full border-2 border-glacier-200 focus:border-glacier-600 rounded-lg p-2"
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="mt-4 w-full py-3 rounded-lg font-semibold bg-glacier-600 hover:bg-glacier-700 text-glacier-50 transition-shadow shadow-lg"
-                                >
-                                    {dict.CLIENT.PAYMENT.PAYPAL.PAY_BUTTON}
-                                </button>
-                            </div>
-                        </form>
                     )}
 
                     {notificacion && (
-                        <NotificacionComponent Notifications={notificacion} onClose={() => setNotificacion(undefined)} />
+                        <NotificacionComponent
+                            Notifications={notificacion}
+                            onClose={() => setNotificacion(undefined)}
+                        />
                     )}
                 </div>
             )}
