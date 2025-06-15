@@ -593,6 +593,10 @@
       }
     },
     "FILTERS": {
+      "MIN_PRICE": "Mínimo", 
+      "MAX_PRICE": "Máximo",
+      "STAR": "estrella",
+      "STARS": "estrellas",
       "TITLE": "Filtros",
       "PRICE_RANGE": "Rango de precio",
       "PRICE_MIN": 0,
@@ -737,14 +741,28 @@
     "RESULTS": {
       "HEADING": "Resultados para {{destination}}",
       "ALL_DESTINATIONS": "todos los destinos",
+      "RESULTS_FOUND": "resultados encontrados",
+      "LOADING": "Cargando alojamientos...",
+      "NO_RESULTS": "No se encontraron resultados",
+      "NO_RESULTS_DESC": "Intenta ajustar tus filtros o búsqueda",
+      "SHOWING": "Mostrando",
+      "RESULTS": "resultados",
+      "SORT": {
+        "RELEVANCE": "Relevancia",
+        "PRICE_LOW": "Precio: Menor a Mayor",
+        "PRICE_HIGH": "Precio: Mayor a Menor",
+        "RATING": "Mejor Valorados", 
+        "NAME": "Nombre A-Z"
+      },
       "FILTERS": {
         "SHOW": "Mostrar filtros",
-        "HIDE": "Ocultar filtros"
+        "HIDE": "Ocultar filtros",
+        "TITLE": "Filtros"
       },
       "ERROR": {
-        "LOAD": "No pudimos cargar los alojamientos. Por favor, inténtalo de nuevo."
-      },
-      "NO_RESULTS": "No encontramos alojamientos que coincidan con tu búsqueda. Intenta con otros criterios."
+        "LOAD": "No pudimos cargar los alojamientos. Por favor, inténtalo de nuevo.",
+        "TITLE": "Error"
+      }
     },
     "NAVIGATION": {
       "FLIGHT": "Vuelo",

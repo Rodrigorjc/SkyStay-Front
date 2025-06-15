@@ -594,6 +594,10 @@
       }
     },
     "FILTERS": {
+      "MIN_PRICE": "Minimum",
+      "MAX_PRICE": "Maximum",
+      "STAR": "star",
+      "STARS": "stars",
       "TITLE": "Filters",
       "PRICE_RANGE": "Price Range",
       "PRICE_MIN": 0,
@@ -736,14 +740,28 @@
     "RESULTS": {
       "HEADING": "Results for {{destination}}",
       "ALL_DESTINATIONS": "all destinations",
+      "RESULTS_FOUND": "results found",
+      "LOADING": "Loading accommodations...",
+      "NO_RESULTS": "No results found",
+      "NO_RESULTS_DESC": "Try adjusting your filters or search",
+      "SHOWING": "Showing",
+      "RESULTS": "results",
+      "SORT": {
+        "RELEVANCE": "Relevance",
+        "PRICE_LOW": "Price: Low to High",
+        "PRICE_HIGH": "Price: High to Low", 
+        "RATING": "Best Rated",
+        "NAME": "Name A-Z"
+      },
       "FILTERS": {
         "SHOW": "Show filters",
-        "HIDE": "Hide filters"
+        "HIDE": "Hide filters",
+        "TITLE": "Filters"
       },
       "ERROR": {
-        "LOAD": "We couldn't load accommodations. Please try again."
-      },
-      "NO_RESULTS": "We didn’t find any accommodations matching your search. Try different criteria."
+        "LOAD": "We couldn't load accommodations. Please try again.",
+        "TITLE": "Error"
+      }
     },
     "NAVIGATION": {
       "FLIGHT": "Flight",
