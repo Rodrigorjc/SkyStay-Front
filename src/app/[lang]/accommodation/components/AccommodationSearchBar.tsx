@@ -203,7 +203,7 @@ export default function AccommodationSearchBar({
     };
 
     return (
-        <div className="flex justify-center py-2 mt-6 relative text-glacier-950">
+        <div className="flex justify-center py-2 mt-2 relative text-glacier-950">
             {/* Mobile toggle */}
             <div className="md:hidden w-[90%] bg-white border-4 border-glacier-950 rounded-xl shadow-2xl z-10">
                 <button
