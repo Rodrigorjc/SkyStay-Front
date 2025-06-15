@@ -501,7 +501,9 @@
       "CAPACITY_LABEL": "Capacidad: {{capacity}} personas",
       "QUANTITY_LABEL": "Cantidad",
       "SWIPE_INFO": "Desliza horizontalmente para ver todas las opciones",
-      "SELECT_INFO": "Selecciona la cantidad y reserva"
+      "SELECT_INFO": "Selecciona la cantidad y reserva",
+      "GALLERY_TITLE": "Galería de imágenes", 
+      "GALLERY_NAVIGATION": "Usa las flechas o haz clic en las miniaturas para navegar"
     },
     "COLLAGE": {
       "SECTION_TITLE": "Destinos sugeridos",

@@ -502,7 +502,9 @@
       "CAPACITY_LABEL": "Capacity: {{capacity}} guests",
       "QUANTITY_LABEL": "Quantity",
       "SWIPE_INFO": "Swipe horizontally to see all options",
-      "SELECT_INFO": "Select quantity and reserve"
+      "SELECT_INFO": "Select quantity and reserve",
+      "GALLERY_TITLE": "Image Gallery",
+      "GALLERY_NAVIGATION": "Use arrows or click thumbnails to navigate"
     },
     "COLLAGE": {
       "SECTION_TITLE": "Suggested Destinations",
