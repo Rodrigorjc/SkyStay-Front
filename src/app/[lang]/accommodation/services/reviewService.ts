@@ -1,5 +1,6 @@
 import axiosClient from "@/lib/axiosClient";
 import { Review, ReviewsResponse, PagedResponse, ReviewSummary } from "@/app/[lang]/accommodation/types/Review";
+import Cookies from "js-cookie";
 
 export const getAccommodationReviews = async (
   accommodationCode: string,
@@ -93,11 +94,38 @@ const calculateReviewSummary = (reviews: Review[]): ReviewSummary => {
   return summary;
 };
 
-export const markReviewHelpful = async (reviewId: string): Promise<void> => {
+export const markReviewHelpful = async (reviewId: string, accommodationType?: string) => {
   try {
-    await axiosClient.post(`/reviews/${reviewId}/helpful`);
+    const token = Cookies.get("token");
+    
+    if (!token) {
+      throw new Error("Token de autenticación no encontrado");
+    }
+
+    // Crear el payload con el tipo de alojamiento
+    const payload: any = {
+      reviewId
+    };
+
+    // Agregar el tipo de alojamiento si está disponible
+    if (accommodationType) {
+      payload.accommodationType = accommodationType;
+    }
+
+    const response = await axiosClient.post("/reviews/helpful", payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Error marking review as helpful");
+    console.error("Error marking review as helpful:", error);
+    throw new Error(
+      error.response?.data?.message || 
+      "Error al marcar la reseña como útil"
+    );
   }
 };
 
