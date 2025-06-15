@@ -309,21 +309,17 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 .animate-heartBeat {
-  animation: heartBeat 0.8s ease-in-out;
+  animation: heartBeat 1s ease-in-out;
 }
 
 @keyframes ripple {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.3);
     transform: scale(1);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
-    transform: scale(1.1);
+    opacity: 1;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
-    transform: scale(1);
+    transform: scale(1.4);
+    opacity: 0;
   }
 }
 
