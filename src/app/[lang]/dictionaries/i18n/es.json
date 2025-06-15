@@ -631,6 +631,7 @@
       "LAST_SEATS_2": "asientos!",
       "AVAILABLE_SEATS": "asientos disponibles",
       "NEXT_FLIGHT": "Encuentra tu próximo vuelo",
+      "FILTER": "Filtros",
       "FLIGHT_CODE": {
         "STATUS": "Estado",
         "DETAILS": "Detalles del avión",
@@ -639,6 +640,10 @@
         "CAPACITY": "Capacidad",
         "PASSENGERS": "pasajeros",
         "YEAR": "Año",
+        "DEPATURE_DESTINATION": "Ciudad de salida",
+        "ARRIVAL_DESTINATION": "Ciudad de llegada",
+        "DEPATURE": "Hora de salida",
+        "ARRIVAL": "Hora de llegada",
         "MANUFACTURER": "Fabricante",
         "MEALS_AVAILABLE": "Comidas disponibles",
         "CABINS_AVAILABLE": "Cabinas disponibles",
