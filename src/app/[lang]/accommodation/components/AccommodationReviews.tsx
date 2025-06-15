@@ -84,7 +84,8 @@ export default function AccommodationReviews({
     }
 
     try {
-      await markReviewHelpful(reviewId);
+      // Pasar el tipo de alojamiento al servicio
+      await markReviewHelpful(reviewId, accommodationType);
       setHelpfulReviews(prev => new Set([...prev, reviewId]));
       
       setReviews(prev => prev.map(review => 
