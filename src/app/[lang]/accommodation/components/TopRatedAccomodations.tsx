@@ -56,9 +56,14 @@ export default function TopRatedAccommodations() {
 
     return (
         <div className="mt-10 px-4">
-            <h2 className="text-3xl font-bold text-white mb-6 text-center">
-                {dict.CLIENT.TOP_RATED.SECTION_TITLE}
-            </h2>
+            <div className="mx-auto mb-10 text-center">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-glacier-50">
+                    {dict.ACCOMMODATION?.TOP_RATED || "Alojamientos Mejor Valorados"}
+                </h2>
+                <p className="text-lg text-glacier-200 mb-8">
+                    {dict.ACCOMMODATION?.TOP_RATED_SUBTITLE || "Descubre los lugares con las mejores reseñas de nuestros huéspedes"}
+                </p>
+            </div>
 
             {destinations.length > 0 ? (
                 <div onMouseEnter={stopAutoplay} onMouseLeave={startAutoplay}>
@@ -72,7 +77,7 @@ export default function TopRatedAccommodations() {
                         breakpoints={{
                             0: { slidesPerView: 1 },
                             640: { slidesPerView: 2 },
-                            1024: { slidesPerView: 3 },
+                            1024: { slidesPerView: 4 },
                         }}
                         className="max-w-7xl mx-auto"
                     >
