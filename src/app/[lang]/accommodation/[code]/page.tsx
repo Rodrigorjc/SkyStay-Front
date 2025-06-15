@@ -30,6 +30,7 @@ import { useDictionary } from "@context";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import AccommodationReviews from "../components/AccommodationReviews";
 
 interface Room {
   availableCount: number;
@@ -788,6 +789,13 @@ export default function AccommodationPage() {
                   })}
             </div>
           </div>
+
+          {/* Reviews Section */}
+          <AccommodationReviews
+            accommodationCode={details.code}
+            accommodationType={details.accommodationType}
+            className="mt-4 sm:mt-8"
+          />
         </>
       )}
     </div>
