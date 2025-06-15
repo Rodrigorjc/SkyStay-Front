@@ -380,63 +380,144 @@ export default function AccommodationPage() {
               })}
           </div>
 
-          {/* Gallery Modal */}
+          {/* Gallery Modal mejorado */}
           {showGallery && (
             <div
-              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 sm:p-4"
+              className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center backdrop-blur-sm"
               onClick={() => setShowGallery(false)}
             >
-              <button
-                className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white text-xl sm:text-2xl z-10"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowGallery(false);
-                }}
-              >
-                <FaTimes />
-              </button>
+              {/* Header del modal */}
+              <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-zinc-900/90 to-transparent p-4 sm:p-6">
+                <div className="flex justify-between items-center max-w-7xl mx-auto">
+                  <div className="text-white">
+                    <h3 className="text-lg sm:text-xl font-semibold text-glacier-100">
+                      {details.name}
+                    </h3>
+                    <p className="text-sm text-glacier-300 mt-1">
+                      {dict.CLIENT.ACCOMMODATION.GALLERY_TITLE || "Galería de imágenes"}
+                    </p>
+                  </div>
+                  
+                  <button
+                    className="bg-zinc-800/80 hover:bg-zinc-700/80 text-glacier-200 hover:text-white p-3 rounded-full transition-all duration-200 backdrop-blur-sm border border-zinc-600 hover:border-zinc-500"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowGallery(false);
+                    }}
+                  >
+                    <FaTimes className="text-lg" />
+                  </button>
+                </div>
+              </div>
 
+              {/* Contenedor principal de la imagen */}
               <div
-                className="relative w-full max-w-5xl h-[70vh] sm:h-[80vh]"
+                className="relative w-full max-w-6xl mx-4 h-[70vh] sm:h-[80vh] mt-20 mb-16"
                 onClick={(e) => e.stopPropagation()}
               >
-                <Image
-                  src={details.images[activeImageIndex]}
-                  alt={`${details.name} - ${dict.CLIENT.ACCOMMODATION.IMAGE_ALT.replace(
-                    "{{index}}",
-                    String(activeImageIndex + 1)
-                  )}`}
-                  fill
-                  className="object-contain"
-                />
-
-                <div className="absolute bottom-2 sm:bottom-4 left-0 right-0 text-center text-white text-sm sm:text-base">
-                  <p>
-                    {activeImageIndex + 1} / {details.images.length}
-                  </p>
+                {/* Imagen principal */}
+                <div className="relative w-full h-full bg-zinc-900 rounded-xl overflow-hidden shadow-2xl border border-zinc-700">
+                  <Image
+                    src={details.images[activeImageIndex]}
+                    alt={`${details.name} - ${dict.CLIENT.ACCOMMODATION.IMAGE_ALT.replace(
+                      "{{index}}",
+                      String(activeImageIndex + 1)
+                    )}`}
+                    fill
+                    className="object-contain"
+                  />
+                  
+                  {/* Overlay sutil para mejorar la legibilidad */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/20 via-transparent to-zinc-900/20 pointer-events-none" />
                 </div>
 
+                {/* Botones de navegación mejorados */}
                 <button
-                  className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 bg-black/50 p-2 sm:p-3 rounded-full text-white"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-800/90 hover:bg-zinc-700/90 backdrop-blur-sm text-glacier-200 hover:text-white p-4 rounded-full transition-all duration-200 border border-zinc-600 hover:border-zinc-500 shadow-lg hover:shadow-xl"
                   onClick={(e) => {
                     e.stopPropagation();
                     setActiveImageIndex((prev) =>
                       prev === 0 ? details.images.length - 1 : prev - 1
                     );
                   }}
+                  disabled={details.images.length <= 1}
                 >
-                  <FaArrowLeft className="text-sm sm:text-base" />
+                  <FaArrowLeft className="text-lg" />
                 </button>
 
                 <button
-                  className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 bg-black/50 p-2 sm:p-3 rounded-full text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-zinc-800/90 hover:bg-zinc-700/90 backdrop-blur-sm text-glacier-200 hover:text-white p-4 rounded-full transition-all duration-200 border border-zinc-600 hover:border-zinc-500 shadow-lg hover:shadow-xl"
                   onClick={(e) => {
                     e.stopPropagation();
                     setActiveImageIndex((prev) => (prev + 1) % details.images.length);
                   }}
+                  disabled={details.images.length <= 1}
                 >
-                  <FaArrowRight className="text-sm sm:text-base" />
+                  <FaArrowRight className="text-lg" />
                 </button>
+              </div>
+
+              {/* Footer con información e indicadores */}
+              <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-zinc-900/90 to-transparent p-4 sm:p-6">
+                <div className="max-w-7xl mx-auto">
+                  {/* Indicadores de posición */}
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-zinc-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-zinc-600">
+                      <span className="text-glacier-100 font-medium">
+                        {activeImageIndex + 1} / {details.images.length}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Miniaturas navegables */}
+                  {details.images.length > 1 && (
+                    <div className="flex justify-center space-x-2 overflow-x-auto pb-2 max-w-full">
+                      {details.images.slice(0, 8).map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveImageIndex(idx);
+                          }}
+                          className={`relative flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 rounded-lg overflow-hidden transition-all duration-200 border-2 ${
+                            idx === activeImageIndex
+                              ? 'border-glacier-400 shadow-lg scale-105'
+                              : 'border-zinc-600 hover:border-zinc-500 opacity-70 hover:opacity-100'
+                          }`}
+                        >
+                          <Image
+                            src={img}
+                            alt={`Miniatura ${idx + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </button>
+                      ))}
+                      
+                      {details.images.length > 8 && (
+                        <div className="flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 bg-zinc-800/80 border-2 border-zinc-600 rounded-lg flex items-center justify-center">
+                          <span className="text-glacier-300 text-xs font-medium">
+                            +{details.images.length - 8}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Información adicional */}
+                  <div className="text-center mt-4">
+                    <p className="text-glacier-300 text-sm">
+                      {dict.CLIENT.ACCOMMODATION.GALLERY_NAVIGATION || "Usa las flechas o haz clic en las miniaturas para navegar"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Indicador de carga */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                <div className="bg-zinc-800/80 backdrop-blur-sm px-4 py-2 rounded-full opacity-0 transition-opacity duration-200">
+                  <span className="text-glacier-200 text-sm">Cargando...</span>
+                </div>
               </div>
             </div>
           )}
@@ -687,19 +768,24 @@ export default function AccommodationPage() {
                 details.amenities
                   .replace(/"/g, "")
                   .split(",")
-                  .map((amenity, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center space-x-2 p-1.5 sm:p-2 bg-zinc-600 rounded-md"
-                    >
-                      <div className="text-base sm:text-lg">
-                        {getAmenityIcon(amenity)}
+                  .map((amenity, index) => {
+                    const trimmedAmenity = amenity.trim();
+                    const translatedAmenity = dict.CLIENT.FILTERS.AMENITIES_OPTIONS[trimmedAmenity] || trimmedAmenity;
+                    
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center space-x-2 p-1.5 sm:p-2 bg-zinc-600 rounded-md"
+                      >
+                        <div className="text-base sm:text-lg">
+                          {getAmenityIcon(trimmedAmenity)}
+                        </div>
+                        <span className="text-xs sm:text-sm text-glacier-100">
+                          {translatedAmenity}
+                        </span>
                       </div>
-                      <span className="text-xs sm:text-sm text-glacier-100">
-                        {amenity}
-                      </span>
-                    </div>
-                  ))}
+                    );
+                  })}
             </div>
           </div>
         </>
