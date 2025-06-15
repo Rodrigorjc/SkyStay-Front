@@ -78,10 +78,10 @@ export default function PaymentGateway() {
         </div>
 
         {paymentMethod === "card" ? (
-          <div className="flex justify-center items-center w-full">
-            <div className="w-1/2 flex flex-col items-center justify-center">
+          <div className="flex flex-col md:flex-row justify-center items-center w-full gap-6">
+            <div className="w-full md:w-1/2 flex flex-col items-center justify-center mb-6 md:mb-0">
               <motion.div
-                className={`relative w-96 h-56 rounded-lg shadow-lg cursor-pointer items-center justify-center ${cardType === "visa" ? "bg-[#214694]" : "bg-red-600"}`}
+                className={`relative w-80 sm:w-96 h-56 rounded-lg shadow-lg cursor-pointer items-center justify-center ${cardType === "visa" ? "bg-[#214694]" : "bg-red-600"}`}
                 initial={{ rotateY: 0 }}
                 animate={controls}
                 transition={{ duration: 0.6 }}
@@ -126,7 +126,7 @@ export default function PaymentGateway() {
               </motion.div>
             </div>
 
-            <div className="flex flex-col items-center justify-end w-1/2">
+            <div className="flex flex-col items-center justify-end w-full">
               <form autoComplete="off">
                 <div className="mb-4 relative">
                   <div>
@@ -206,12 +206,12 @@ export default function PaymentGateway() {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center w-full">
-            <div className="flex items-center justify-center w-1/2">
+          <div className="flex flex-col md:flex-row items-center justify-center w-full gap-6">
+            <div className="flex items-center justify-center w-full md:w-1/2 mb-6 md:mb-0">
               <Image src={"/iconos/paypal.svg"} alt={"Paypal"} height={100} width={80} className="w-80" />
             </div>
-            <div className="flex flex-col w-1/2">
-              <form className="w-full" autoComplete="off">
+            <div className="flex flex-col w-full md:w-1/2">
+              <form className="w-full max-w-md" autoComplete="off">
                 <div className="mb-4">
                   <label className="block text-gray-700">{dict.CLIENT.PAYMENT_GATEWAY.PAYPAL_EMAIL.LABEL}</label>
                   <input

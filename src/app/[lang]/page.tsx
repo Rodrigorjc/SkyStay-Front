@@ -30,8 +30,7 @@ export default function Home({}: { params: { lang: string } }) {
   return (
     <div>
       <Navbar />
-      <Navigation />
-      <div className="w-full max-w-[1850px] mx-auto px-4">
+      <div className="w-full max-w-[1500px] mx-auto px-4 my-10 max-2xl:px-10">
         <CallToAction destinations={cities} />
         <SearchBarHome />
         <BenefitsSection />

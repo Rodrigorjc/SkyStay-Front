@@ -23,7 +23,7 @@ const itemVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
-const Navigation: React.FC = () => {
+const Navigation: React.FC<{ className?: string }> = ({ className }) => {
   const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
   const { dict } = useDictionary();
@@ -45,7 +45,11 @@ const Navigation: React.FC = () => {
     return null;
   }
   return (
-    <motion.nav className="w-full max-w-[1850px] mx-auto px-4 mt-12 text-xl font-normal tracking-tight flex items-center flex-wrap" initial="hidden" animate="visible" variants={containerVariants}>
+    <motion.nav
+      className={`${className || "w-full max-w-[1850px] mx-auto px-4 mt-12 text-xl font-normal tracking-tight flex items-center flex-wrap max-2xl:px-8"} flex-nowrap`}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}>
       <motion.span variants={itemVariants} className="inline-flex items-center">
         <Link href="/" className={`${pathname === "/" || pathname === "/es" ? "text-glacier-500 underline font-semibold" : "text-gray-200"}`}>
           {dict.CLIENT.NAVIGATION.HOME}
@@ -59,9 +63,16 @@ const Navigation: React.FC = () => {
         const isActive = pathname === href;
 
         return (
-          <motion.span key={index} variants={itemVariants} className="inline-flex items-center">
+          <motion.span key={index} variants={itemVariants} className="inline-flex items-center whitespace-nowrap">
             <FaCaretRight className="mx-2 text-gray-400 text-sm relative top-[1px]" />
-            <Link href={href} className={isActive ? "text-glacier-500 underline font-semibold" : "text-gray-200"}>
+            <Link
+              href={href}
+              onClick={e => {
+                if (isActive) {
+                  e.preventDefault();
+                }
+              }}
+              className={isActive ? "text-glacier-500 underline font-semibold cursor-crosshair" : "text-gray-200"}>
               {capitalizeFirstLetter(segment)}
             </Link>
           </motion.span>
