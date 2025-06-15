@@ -203,7 +203,7 @@ export default function AccommodationSearchBar({
     };
 
     return (
-        <div className="flex justify-center py-2 mt-6 relative text-glacier-950">
+        <div className="flex justify-center py-2 mt-2 relative text-glacier-950">
             {/* Mobile toggle */}
             <div className="md:hidden w-[90%] bg-white border-4 border-glacier-950 rounded-xl shadow-2xl z-10">
                 <button
@@ -335,12 +335,12 @@ export default function AccommodationSearchBar({
             )}
 
             {/* Desktop search bar */}
-            <div className="hidden md:flex max-w-5xl bg-glacier-100 border-4 border-glacier-800 rounded-full shadow-2xl px-4 py-2 items-center gap-3">
+            <div className="hidden md:flex max-w-5xl bg-zinc-800 border-4 border-glacier-600 rounded-full shadow-2xl px-4 py-2 items-center gap-3">
                 {/* DESTINO (escritorio) */}
                 <div className="relative flex-1">
                     <label className="sr-only">{dict.CLIENT.SEARCHBAR.LABEL.DESTINATION}</label>
-                    <div className="flex items-center border rounded-full px-3 py-2 bg-white">
-                        <FaBed className="mr-2 text-gray-600" />
+                    <div className="flex items-center border border-zinc-600 rounded-full px-3 py-2 bg-zinc-700 hover:bg-zinc-600 transition-colors">
+                        <FaBed className="mr-2 text-glacier-400" />
 
                         {/* contenedor relativo para overlay + input */}
                         <div className="relative w-full">
@@ -353,14 +353,14 @@ export default function AccommodationSearchBar({
                                 onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
                                 onKeyDown={handleKeyDown}
                                 autoComplete="off"
-                                className="relative z-10 w-full bg-transparent outline-none"
+                                className="relative z-10 w-full bg-transparent outline-none text-glacier-100 placeholder-glacier-400"
                             />
 
                             {/* overlay inline */}
                             {showSuggestions && filteredCities.length > 0 && destination && (
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-0 pointer-events-none">
                                     <span className="invisible">{destination}</span>
-                                    <span className="text-gray-400">
+                                    <span className="text-glacier-500">
             {filteredCities[0].slice(destination.length)}
           </span>
                                 </div>
@@ -369,18 +369,18 @@ export default function AccommodationSearchBar({
 
                         {destination && (
                             <button onClick={() => setDestination("")}>
-                                <FaTimes className="ml-2 text-gray-400 hover:text-black" />
+                                <FaTimes className="ml-2 text-glacier-500 hover:text-glacier-300 transition-colors" />
                             </button>
                         )}
                     </div>
 
                     {/* listado de sugerencias */}
                     {showSuggestions && filteredCities.length > 0 && (
-                        <ul className="absolute bg-glacier-100 border border-glacier-800 rounded-lg shadow-md mt-1 w-full max-h-40 overflow-y-auto z-50 custom-scrollbar">
+                        <ul className="absolute bg-zinc-800 border border-glacier-600 rounded-lg shadow-xl mt-1 w-full max-h-40 overflow-y-auto z-50 custom-scrollbar">
                             {filteredCities.map(city => (
                                 <li
                                     key={city}
-                                    className="p-2 hover:bg-gray-100 cursor-pointer text-gray-900"
+                                    className="p-2 hover:bg-zinc-700 cursor-pointer text-glacier-200 hover:text-glacier-100 transition-colors"
                                     onMouseDown={() => handleSuggestionClick(city)}
                                 >
                                     {city}
@@ -390,55 +390,81 @@ export default function AccommodationSearchBar({
                     )}
                 </div>
 
-
-
                 {/* Dates */}
-                <div className="flex items-center flex-1 border-l border-glacier-800 pl-4">
-                    <FaCalendarAlt className="mr-2 text-gray-600" />
-                    <DatePicker
-                        selectsRange
-                        startDate={dateRange[0]}
-                        endDate={dateRange[1]}
-                        onChange={setDateRange}
-                        minDate={new Date()}
-                        placeholderText={dict.CLIENT.SEARCHBAR.PLACEHOLDER.DATES}
-                        dateFormat="dd/MM/yyyy"
-                        locale="es"
-                        className="outline-none cursor-pointer"
-                        customInput={
-                            <input className="outline-none cursor-pointer" readOnly />
-                        }
-                    />
+                <div className="flex items-center flex-1 border-l border-glacier-600 pl-4">
+                    <FaCalendarAlt className="mr-2 text-glacier-400" />
+                    <div className="flex items-center border border-zinc-600 rounded-full px-3 py-2 bg-zinc-700 hover:bg-zinc-600 transition-colors">
+                        <DatePicker
+                            selectsRange
+                            startDate={dateRange[0]}
+                            endDate={dateRange[1]}
+                            onChange={setDateRange}
+                            minDate={new Date()}
+                            placeholderText={dict.CLIENT.SEARCHBAR.PLACEHOLDER.DATES}
+                            dateFormat="dd/MM/yyyy"
+                            locale="es"
+                            className="outline-none cursor-pointer bg-transparent text-glacier-100 placeholder-glacier-400"
+                            customInput={
+                                <input 
+                                    className="outline-none cursor-pointer bg-transparent text-glacier-100 placeholder-glacier-400" 
+                                    readOnly 
+                                />
+                            }
+                            calendarClassName="bg-zinc-800 border-glacier-600"
+                        />
+                    </div>
                 </div>
 
                 {/* Guests */}
                 <div className="relative">
                     <button
-                        className="flex items-center px-3 py-2 border rounded-full hover:bg-gray-100"
+                        className="flex items-center px-3 py-2 border border-zinc-600 rounded-full bg-zinc-700 hover:bg-zinc-600 text-glacier-200 transition-colors"
                         onClick={() => setShowGuestOptions(!showGuestOptions)}
                     >
-                        <FaUser className="mr-2" />
+                        <FaUser className="mr-2 text-glacier-400" />
                         <span className="truncate max-w-[150px]">{guestSummary}</span>
                     </button>
                     {showGuestOptions && (
-                        <div className="absolute top-full left-0 mt-2 bg-white border shadow-lg p-4 rounded-lg w-64 z-50">
+                        <div className="absolute top-full left-0 mt-2 bg-zinc-800 border border-glacier-600 shadow-2xl p-4 rounded-lg w-64 z-50">
                             {(Object.keys(guests) as Array<keyof typeof guests>).map((type) => (
                                 <div key={type} className="flex justify-between items-center mb-3">
-                                    <span> {dict.CLIENT.SEARCHBAR.PLACEHOLDER[type.toUpperCase() as "ADULTS" | "CHILDREN" | "ROOMS"]} </span>
+                                    <span className="text-glacier-200 font-medium">
+                                        {dict.CLIENT.SEARCHBAR.PLACEHOLDER[type.toUpperCase() as "ADULTS" | "CHILDREN" | "ROOMS"]}
+                                    </span>
                                     <div className="flex items-center gap-2">
-                                        <button onClick={() => handleCountChange(type, "dec")} disabled={guests[type] <= (type === "adults" ? 1 : 0)} className="px-2 py-1 border rounded disabled:opacity-50">-</button>
-                                        <span>{guests[type]}</span>
-                                        <button onClick={() => handleCountChange(type, "inc")} className="px-2 py-1 border rounded">+</button>
+                                        <button 
+                                            onClick={() => handleCountChange(type, "dec")} 
+                                            disabled={guests[type] <= (type === "adults" ? 1 : 0)} 
+                                            className="w-8 h-8 flex items-center justify-center bg-zinc-700 border border-glacier-600 rounded-full disabled:opacity-50 text-glacier-200 hover:bg-zinc-600 transition-colors"
+                                        >
+                                            -
+                                        </button>
+                                        <span className="w-6 text-center font-medium text-glacier-100">{guests[type]}</span>
+                                        <button 
+                                            onClick={() => handleCountChange(type, "inc")} 
+                                            className="w-8 h-8 flex items-center justify-center bg-zinc-700 border border-glacier-600 rounded-full text-glacier-200 hover:bg-zinc-600 transition-colors"
+                                        >
+                                            +
+                                        </button>
                                     </div>
                                 </div>
                             ))}
-                            <button onClick={() => setShowGuestOptions(false)} className="w-full bg-glacier-600 text-white py-1 rounded-full hover:bg-glacier-700">{dict.CLIENT.SEARCHBAR.ACTIONS.DONE}</button>
+                            <button 
+                                onClick={() => setShowGuestOptions(false)} 
+                                className="w-full bg-glacier-600 text-white py-2 rounded-full hover:bg-glacier-700 transition-colors font-medium"
+                            >
+                                {dict.CLIENT.SEARCHBAR.ACTIONS.DONE}
+                            </button>
                         </div>
                     )}
                 </div>
 
                 {/* Search button */}
-                <button onClick={handleSearch} className="px-4 py-3 bg-glacier-600 text-white rounded-full hover:bg-glacier-700">
+                <button 
+                    onClick={handleSearch} 
+                    className="px-6 py-3 bg-glacier-600 text-white rounded-full hover:bg-glacier-700 transition-all duration-200 transform hover:scale-105 shadow-lg font-medium"
+                >
+                    <FaSearch className="inline mr-2" />
                     {dict.CLIENT.SEARCHBAR.ACTIONS.SEARCH}
                 </button>
             </div>

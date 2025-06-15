@@ -5,7 +5,7 @@ import AccommodationCard from "../components/AccommodationCard";
 import AccommodationFilters from "../components/AccommodationFilters";
 import { fetchAccommodations } from "../services/accommodationService";
 import { Accommodation } from "../types/Accommodation";
-import { FaSpinner, FaFilter } from "react-icons/fa";
+import { FaSpinner, FaFilter, FaMapMarkerAlt, FaSort, FaTimes } from "react-icons/fa";
 import AccommodationSearchBar from "@/app/[lang]/accommodation/components/AccommodationSearchBar";
 import { useDictionary } from "@context";
 
@@ -27,6 +27,7 @@ export default function Results() {
     const [isFiltered, setIsFiltered] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [showFilters, setShowFilters] = useState(false);
+    const [sortBy, setSortBy] = useState<string>('relevance');
 
     const params = Object.fromEntries(searchParams as any);
 
@@ -39,6 +40,7 @@ export default function Results() {
                 setFilteredAccommodations(data);
                 setIsFiltered(false);
                 setError(null);
+                // NO resetear el sortBy aquí
             } catch (err) {
                 setError(dict?.CLIENT.RESULTS.ERROR.LOAD || "");
                 setAccommodations([]);
@@ -49,7 +51,44 @@ export default function Results() {
         };
 
         loadAccommodations();
-    }, [searchParams]);
+    }, [searchParams]); // NO incluir sortBy como dependencia
+
+    // Función de ordenación corregida
+    const handleSort = (sortType: string) => {
+        setSortBy(sortType);
+        
+        const dataToSort = isFiltered ? filteredAccommodations : accommodations;
+        const sorted = [...dataToSort].sort((a, b) => {
+            switch (sortType) {
+                case 'price-low':
+                    return a.price - b.price;
+                case 'price-high':
+                    return b.price - a.price;
+                case 'rating':
+                    // Mejorar la lógica de ordenación por rating
+                    const ratingA = a.rating || a.averageRating || 0;
+                    const ratingB = b.rating || b.averageRating || 0;
+                    return ratingB - ratingA; // Mayor rating primero
+                case 'name':
+                    return a.name.localeCompare(b.name);
+                default:
+                    return 0;
+            }
+        });
+        
+        if (isFiltered) {
+            setFilteredAccommodations(sorted);
+        } else {
+            setAccommodations(sorted);
+        }
+    };
+
+    // Aplicar ordenación automáticamente cuando cambian los datos
+    useEffect(() => {
+        if (sortBy !== 'relevance' && accommodations.length > 0) {
+            handleSort(sortBy);
+        }
+    }, [accommodations.length]); // Solo cuando se cargan nuevos datos
 
     const handleFilterChange = (filters: Filters) => {
         const filtered = accommodations.filter(accommodation => {
@@ -88,6 +127,27 @@ export default function Results() {
 
         setFilteredAccommodations(filtered);
         setIsFiltered(true);
+        
+        // Aplicar ordenación a los resultados filtrados si no es relevancia
+        if (sortBy !== 'relevance') {
+            const sorted = [...filtered].sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-low':
+                        return a.price - b.price;
+                    case 'price-high':
+                        return b.price - a.price;
+                    case 'rating':
+                        const ratingA = a.rating || a.averageRating || 0;
+                        const ratingB = b.rating || b.averageRating || 0;
+                        return ratingB - ratingA;
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    default:
+                        return 0;
+                }
+            });
+            setFilteredAccommodations(sorted);
+        }
     };
 
     const displayAccommodations = isFiltered ? filteredAccommodations : accommodations;
@@ -99,54 +159,158 @@ export default function Results() {
     }
 
     return (
-        <div>
+        <div className="min-h-screen ">
             <AccommodationSearchBar onSearch={() => {}} />
-            <div className="container mx-auto py-6 px-4">
-                <h2 className="text-xl font-semibold text-glacier-50 mb-6">
-                    {dict.CLIENT.RESULTS.HEADING.replace("{{destination}}", destination)}
-                </h2>
-                <div className="lg:flex gap-6">
-                    <div className="lg:hidden mb-4">
+            
+            <div className="container mx-auto py-8 px-4">
+                {/* Header Section con fondo oscuro */}
+                <div className="bg-zinc-800 rounded-xl shadow-xl p-6 mb-8 border border-zinc-700">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                        <div className="flex items-center space-x-3">
+                            <FaMapMarkerAlt className="text-glacier-400 text-xl" />
+                            <div>
+                                <h1 className="text-2xl lg:text-3xl font-bold text-glacier-100">
+                                    {dict.CLIENT.RESULTS.HEADING.replace("{{destination}}", destination)}
+                                </h1>
+                                <p className="text-glacier-300 mt-1">
+                                    {displayAccommodations.length} {dict.CLIENT.RESULTS.RESULTS_FOUND || "resultados encontrados"}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        {/* Sort Options */}
+                        <div className="flex items-center space-x-3">
+                            <FaSort className="text-glacier-400" />
+                            <select
+                                value={sortBy}
+                                onChange={(e) => handleSort(e.target.value)}
+                                className="px-4 py-2 bg-zinc-700 text-glacier-200 border border-zinc-600 rounded-lg focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-colors"
+                            >
+                                <option value="relevance">{dict.CLIENT.RESULTS.SORT.RELEVANCE || "Relevancia"}</option>
+                                <option value="price-low">{dict.CLIENT.RESULTS.SORT.PRICE_LOW || "Precio: Menor a Mayor"}</option>
+                                <option value="price-high">{dict.CLIENT.RESULTS.SORT.PRICE_HIGH || "Precio: Mayor a Menor"}</option>
+                                <option value="rating">{dict.CLIENT.RESULTS.SORT.RATING || "Mejor Valorados"}</option>
+                                <option value="name">{dict.CLIENT.RESULTS.SORT.NAME || "Nombre A-Z"}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="lg:flex gap-8">
+                    {/* Mobile Filter Button */}
+                    <div className="lg:hidden mb-6">
                         <button
                             onClick={() => setShowFilters(!showFilters)}
-                            className="w-full py-2 px-4 bg-zinc-700 hover:bg-zinc-600 text-glacier-200 rounded flex items-center justify-center"
+                            className={`w-full py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 ${
+                                showFilters 
+                                    ? 'bg-glacier-600 text-white shadow-lg' 
+                                    : 'bg-zinc-800 text-glacier-200 border border-zinc-700 hover:bg-zinc-700'
+                            }`}
                         >
-                            <FaFilter className="mr-2" />
-                            {showFilters
-                                ? dict.CLIENT.RESULTS.FILTERS.HIDE
-                                : dict.CLIENT.RESULTS.FILTERS.SHOW
-                            }
+                            {showFilters ? <FaTimes /> : <FaFilter />}
+                            <span className="font-medium">
+                                {showFilters
+                                    ? dict.CLIENT.RESULTS.FILTERS.HIDE
+                                    : dict.CLIENT.RESULTS.FILTERS.SHOW
+                                }
+                            </span>
                         </button>
+                        
+                        {/* Mobile Filters Overlay */}
                         {showFilters && (
-                            <AccommodationFilters onFilterChange={handleFilterChange} />
+                            <div className="fixed inset-0 z-50 lg:hidden">
+                                <div className="absolute inset-0 bg-black bg-opacity-70" onClick={() => setShowFilters(false)} />
+                                <div className="absolute right-0 top-0 h-full w-80 max-w-[90vw] bg-zinc-800 shadow-2xl overflow-y-auto">
+                                    <div className="p-4">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <h3 className="text-lg font-semibold text-glacier-200">
+                                                {dict.CLIENT.RESULTS.FILTERS.TITLE || "Filtros"}
+                                            </h3>
+                                            <button
+                                                onClick={() => setShowFilters(false)}
+                                                className="p-2 hover:bg-zinc-700 rounded-lg transition-colors"
+                                            >
+                                                <FaTimes className="text-glacier-400" />
+                                            </button>
+                                        </div>
+                                        <AccommodationFilters onFilterChange={handleFilterChange} />
+                                    </div>
+                                </div>
+                            </div>
                         )}
                     </div>
+
+                    {/* Desktop Filters */}
                     <div className="hidden lg:block lg:w-1/4 xl:w-1/5">
-                        <AccommodationFilters onFilterChange={handleFilterChange} />
+                        <div className="sticky top-4">
+                            <AccommodationFilters onFilterChange={handleFilterChange} />
+                        </div>
                     </div>
+
+                    {/* Results Section */}
                     <div className="lg:w-3/4 xl:w-4/5">
                         {loading ? (
-                            <div className="flex justify-center items-center py-20">
-                                <FaSpinner className="animate-spin text-4xl text-glacier-400" />
+                            <div className="flex flex-col items-center justify-center py-20 bg-zinc-800 rounded-xl shadow-xl">
+                                <FaSpinner className="animate-spin text-6xl text-glacier-400 mb-4" />
+                                <p className="text-glacier-300 text-lg">
+                                    {dict.CLIENT.RESULTS.LOADING || "Cargando alojamientos..."}
+                                </p>
                             </div>
                         ) : error ? (
-                            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                                <p>{error}</p>
+                            <div className="bg-red-900/30 border-l-4 border-red-400 p-6 rounded-xl shadow-xl">
+                                <div className="flex items-center">
+                                    <div className="flex-shrink-0">
+                                        <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                                            <span className="text-white text-sm font-bold">!</span>
+                                        </div>
+                                    </div>
+                                    <div className="ml-3">
+                                        <h3 className="text-red-300 font-medium">
+                                            {dict.CLIENT.RESULTS.ERROR.TITLE || "Error"}
+                                        </h3>
+                                        <p className="text-red-200 mt-1">{error}</p>
+                                    </div>
+                                </div>
                             </div>
                         ) : displayAccommodations.length === 0 ? (
-                            <div className="text-center py-10 text-glacier-300">
-                                {dict.CLIENT.RESULTS.NO_RESULTS}
+                            <div className="text-center py-16 bg-zinc-800 rounded-xl shadow-xl">
+                                <div className="w-24 h-24 bg-zinc-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <FaMapMarkerAlt className="text-glacier-400 text-3xl" />
+                                </div>
+                                <h3 className="text-xl font-semibold text-glacier-200 mb-2">
+                                    {dict.CLIENT.RESULTS.NO_RESULTS || "No se encontraron resultados"}
+                                </h3>
+                                <p className="text-glacier-400">
+                                    {dict.CLIENT.RESULTS.NO_RESULTS_DESC || "Intenta ajustar tus filtros o búsqueda"}
+                                </p>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {displayAccommodations.map((accommodation) => (
-                                    <AccommodationCard
-                                        key={accommodation.code}
-                                        accommodation={accommodation}
-                                        lang={lang}
-                                        searchParams={params}
-                                    />
-                                ))}
+                            <div className="space-y-6">
+                                {/* Grid con altura uniforme */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {displayAccommodations.map((accommodation) => (
+                                        <div key={accommodation.code} className="h-full">
+                                            <div className="h-full transform hover:scale-[1.02] transition-transform duration-200">
+                                                <AccommodationCard
+                                                    accommodation={accommodation}
+                                                    lang={lang}
+                                                    searchParams={params}
+                                                    truncateDescription={true}
+                                                    maxDescriptionLength={120}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                
+                                {/* Pagination placeholder */}
+                                <div className="flex justify-center mt-12">
+                                    <div className="bg-zinc-800 rounded-xl shadow-xl px-6 py-3 border border-zinc-700">
+                                        <p className="text-glacier-300">
+                                            {dict.CLIENT.RESULTS.SHOWING || "Mostrando"} {displayAccommodations.length} {dict.CLIENT.RESULTS.RESULTS || "resultados"}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>

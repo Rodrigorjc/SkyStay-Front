@@ -58,9 +58,14 @@ export default function AccommodationCollage() {
 
     return (
         <section className="mt-2 px-4 max-w-7xl mx-auto">
-            <h2 className="text-3xl font-semibold text-center mb-8 text-white">
-                {dict.CLIENT.COLLAGE.SECTION_TITLE}
-            </h2>
+            <div className="mx-auto mb-6 text-center">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-glacier-50">
+                    {dict.ACCOMMODATION?.FEATURED_PLACES || "Lugares Destacados"}
+                </h2>
+                <p className="text-lg text-glacier-200 mb-8">
+                    {dict.ACCOMMODATION?.FEATURED_SUBTITLE || "Experiencias únicas en destinos extraordinarios"}
+                </p>
+            </div>
 
             <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-2 sm:grid-cols-9 md:grid-cols-12 auto-rows-[180px] sm:auto-rows-[200px] md:auto-rows-[250px]">
                 {destinations.slice(0, 6).map((dest, idx) => (
