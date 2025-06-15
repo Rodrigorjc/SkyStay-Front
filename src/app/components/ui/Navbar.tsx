@@ -116,7 +116,7 @@ export default function Navbar() {
                   {isUserMenuOpen && (
                     <div className="absolute right-0 mt-4 w-64 rounded-2xl bg-[#3b5160]  border border-white/20 divide-y divide-white/20 shadow-lg text-white">
                       <div className="p-4">
-                        <Link href={`${lang}/profile`} className="block rounded-lg px-4 py-2 transition-colors hover:bg-white/10">
+                        <Link href={`/${lang}/profile`} className="block rounded-lg px-4 py-2 transition-colors hover:bg-white/10">
                           <p className="font-semibold">{dict.CLIENT.SIDEBAR.PANEL.PROFILE}</p>
                           <p className="text-white/70 text-sm">{dict.CLIENT.SIDEBAR.PANEL.ACCOUNT}</p>
                         </Link>
