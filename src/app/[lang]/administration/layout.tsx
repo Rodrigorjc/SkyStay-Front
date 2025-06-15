@@ -5,6 +5,7 @@ import { useDictionary } from "@context";
 import { decodeToken } from "@/lib/services/common.service";
 import { useParams, useRouter } from "next/navigation";
 import { DecodeToken } from "@/types/common/decodeToken";
+import Navigation from "@/app/components/ui/Navigation";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -43,6 +44,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     <div className="flex h-screen">
       <Sidebar dict={dict} user={user} />
       <div className="flex-1 p-4 bg-zinc-800 overflow-y-auto custom-scrollbar">
+        <Navigation className="w-full px-4 mt-12 text-xl font-normal tracking-tight flex items-center flex-wrap" />
         <main>{children}</main>
       </div>
     </div>

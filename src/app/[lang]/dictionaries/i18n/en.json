@@ -873,6 +873,7 @@
       "NEXT_FLIGHT": "Find your next flight",
       "SEARCH": "Search flights",
       "RESET": "Reset search",
+      "FILTER": "Filters",
       "FLIGHT_CODE": {
         "STATUS": "Status",
         "DETAILS": "Airplane details",
@@ -881,6 +882,10 @@
         "CAPACITY": "Capacity",
         "PASSENGERS": "passengers",
         "YEAR": "Year",
+        "DEPATURE_DESTINATION": "Departure city",
+        "ARRIVAL_DESTINATION": "Arrival city",
+        "DEPATURE": "Time of departure",
+        "ARRIVAL": "Time of arrival",
         "MANUFACTURER": "Manufacturer",
         "MEALS_AVAILABLE": "Available meals",
         "CABINS_AVAILABLE": "Available cabins",

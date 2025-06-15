@@ -104,7 +104,7 @@ export default function Home() {
         <h1 className="text-4xl font-extrabold text-gray-200 tracking-tight">{dict.CLIENT.FLIGHTS.NEXT_FLIGHT}</h1>
       </header>
       <motion.div className="w-full max-w-[1850px] mx-auto px-4" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7 }}>
-        <h3 className="text-lg font-semibold text-white/80 tracking-wide mb-3">Filtros</h3>
+        <h3 className="text-lg font-semibold text-white/80 tracking-wide mb-3">{dict.CLIENT.FLIGHTS.FILTER}</h3>
         <form className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 items-end mb-2" onSubmit={handleSubmit} onReset={handleReset}>
           {/* Origen */}
           <div className="flex flex-col space-y-2 relative">
@@ -202,7 +202,9 @@ export default function Home() {
           <p>{dict.CLIENT.FLIGHTS.ERRORS.ERROR_LOADING}</p>
         </div>
       )}
-      <div className="w-full max-w-[1850px] grid grid-cols-1 md:grid-cols-3 gap-6">{flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}</div>
+      <div className="w-full max-w-[1850px] grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3  gap-6">
+        {flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}
+      </div>
     </div>
   );
 }

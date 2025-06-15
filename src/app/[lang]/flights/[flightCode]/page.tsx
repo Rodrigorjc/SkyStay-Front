@@ -86,54 +86,75 @@ export default function FlightPage({ params }: { params: Promise<{ flightCode: s
     return <div className="text-white text-center py-20">{dict.CLIENT.FLIGHTS.ERRORS.LOADING_DATA_FLIGHT}</div>;
   }
 
+  const getSeatBadgeColor = (availableSeats: number) => {
+    if (availableSeats === 0) return "bg-red-800 text-white";
+    if (availableSeats <= 10) return "bg-yellow-500 text-black";
+    return "bg-emerald-800 text-white";
+  };
+
   const selectedCabinObject = cabins.find(c => c.id === selectedCabin);
   const handleCloseNotification = () => setNotification(null);
   return (
     <div className="text-white px-6 py-10 space-y-12 max-w-[1850px] mx-auto">
       {/* Información del vuelo */}
       <section className="bg-glacier-900/40 border border-glacier-700 rounded-xl p-6 shadow-md">
-        <h1 className="text-3xl font-bold text-glacier-200 mb-2">{flightDetails.airline.name}</h1>
-        <p className="text-lg mb-2 text-glacier-300">
-          {flightDetails.departureAirport.city.name} ({flightDetails.departureAirport.iataCode}) → {flightDetails.arrivalAirport.city.name} ({flightDetails.arrivalAirport.iataCode})
-        </p>
-        <p className="text-lg mb-4 text-glacier-300">
-          {flightDetails.departureAirport.name} → {flightDetails.arrivalAirport.name}
-        </p>
-        <div className="grid sm:grid-cols-3 gap-6 text-sm text-glacier-100">
+        <h1 className="text-2xl font-black mb-2">{flightDetails.airline.name}</h1>
+
+        <div className="grid grid-cols-2 max-xl:grid-cols-1 gap-6 text-lg text-glacier-100 my-4">
           <div>
-            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.DEPATURE}</p>
+            <p className="font-semibold ">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.DEPATURE_DESTINATION}:</p>
+            <p>
+              {flightDetails.departureAirport.city.name} ({flightDetails.departureAirport.iataCode}) – {flightDetails.departureAirport.name}
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold ">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.ARRIVAL_DESTINATION}:</p>
+            <p>
+              {flightDetails.arrivalAirport.city.name} ({flightDetails.arrivalAirport.iataCode}) – {flightDetails.arrivalAirport.name}
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 max-xl:grid-cols-2 gap-6 text-lg text-glacier-100 my-4">
+          <div>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.DEPATURE}: </p>
             <p>{new Date(flightDetails.dateTime).toLocaleString()}</p>
           </div>
           <div>
-            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.ARRIVAL}</p>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.ARRIVAL}: </p>
             <p>{new Date(flightDetails.dateTimeArrival).toLocaleString()}</p>
           </div>
           <div>
-            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.STATUS}</p>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.STATUS}: </p>
             <p>{flightDetails.flightStatus}</p>
           </div>
         </div>
+
         <div className="border-t border-glacier-700 my-6"></div>
         <p className="text-xl font-semibold text-glacier-200 mb-4">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.DETAILS}</p>
-        <div className="grid sm:grid-cols-2 gap-6 text-sm text-glacier-200">
+        <div className="grid grid-cols-3 max-xl:grid-cols-2 gap-6 text-lg text-glacier-100 my-4">
           <div>
-            <ul className="space-y-1">
-              <li>
-                {dict.CLIENT.FLIGHTS.FLIGHT_CODE.TYPE}: {flightDetails.airplane.airplaneTypeName} ({flightDetails.airplane.model})
-              </li>
-              <li>
-                {dict.CLIENT.FLIGHTS.FLIGHT_CODE.REGISTRATION}: {flightDetails.airplane.registrationNumber}
-              </li>
-              <li>
-                {dict.CLIENT.FLIGHTS.FLIGHT_CODE.CAPACITY}: {flightDetails.airplane.capacity} {dict.CLIENT.FLIGHTS.FLIGHT_CODE.PASSENGERS}
-              </li>
-              <li>
-                {dict.CLIENT.FLIGHTS.FLIGHT_CODE.YEAR}: {flightDetails.airplane.yearOfManufacture}
-              </li>
-            </ul>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.TYPE}:</p>
+            <p>
+              {flightDetails.airplane.airplaneTypeName} ({flightDetails.airplane.model})
+            </p>
           </div>
           <div>
-            <p className="font-semibold mb-1">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.MANUFACTURER}</p>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.REGISTRATION}:</p>
+            <p>{flightDetails.airplane.registrationNumber}</p>
+          </div>
+          <div>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.CAPACITY}:</p>
+            <p>
+              {flightDetails.airplane.capacity} {dict.CLIENT.FLIGHTS.FLIGHT_CODE.PASSENGERS}
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.YEAR}:</p>
+            <p>{flightDetails.airplane.yearOfManufacture}</p>
+          </div>
+          <div>
+            <p className="font-semibold">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.MANUFACTURER}:</p>
             <p>{flightDetails.airplane.manufacturer}</p>
           </div>
         </div>
@@ -155,7 +176,7 @@ export default function FlightPage({ params }: { params: Promise<{ flightCode: s
 
       {/* Selección de cabina */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-semibold text-glacier-100">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.CABINS_AVAILABLE}</h2>
+        <h2 className="text-xl font-semibold text-glacier-100">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.CABINS_AVAILABLE}</h2>
         <div className="grid sm:grid-cols-2 gap-6">
           {cabins.map(cabin => (
             <div
@@ -166,8 +187,8 @@ export default function FlightPage({ params }: { params: Promise<{ flightCode: s
               <p>
                 {dict.CLIENT.FLIGHTS.FLIGHT_CODE.PRICE}: <span className="font-semibold">{cabin.price} €</span>
               </p>
-              <p>
-                {dict.CLIENT.FLIGHTS.FLIGHT_CODE.SEATS_AVAILABLE}: {cabin.availableSeats}
+              <p className="flex items-center gap-2">
+                {dict.CLIENT.FLIGHTS.FLIGHT_CODE.SEATS_AVAILABLE}:<span className={`px-2 py-0.5 rounded font-bold text-sm ${getSeatBadgeColor(cabin.availableSeats)}`}>{cabin.availableSeats}</span>
               </p>
             </div>
           ))}
@@ -335,9 +356,7 @@ export default function FlightPage({ params }: { params: Promise<{ flightCode: s
                     };
                   });
 
-                  const totalPrice = seatCabinPairs.reduce((sum, pair) => sum + (pair.price || 0), 0);
                   const seatCabinParam = encodeURIComponent(JSON.stringify(seatCabinPairs));
-                  console.log(`Total Price: ${totalPrice.toFixed(2)} €`);
                   router.push(`/${lang}/flights/${flightCode}/checkout?seats=${seatCabinParam}`);
                 }}>
                 {dict.CLIENT.FLIGHTS.FLIGHT_CODE.CONTINUE}

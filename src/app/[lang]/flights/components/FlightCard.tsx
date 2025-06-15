@@ -26,7 +26,7 @@ export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights })
     <>
       {flights.map((flight, idx) => {
         const duration = getDuration(flight.departureTime, flight.dateTimeArrival);
-        const lowSeats = flight.seatsLeft <= 5 && flight.seatsLeft > 0;
+        const lowSeats = flight.seatsLeft <= 10 && flight.seatsLeft > 0;
         const noSeats = flight.seatsLeft === 0;
 
         return (

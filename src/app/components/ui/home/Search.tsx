@@ -18,7 +18,7 @@ const SearchBarHome: React.FC = () => {
   return (
     <section className="w-full max-w-[1500px] mx-auto mb-8 px-8 py-8 rounded-2xl bg-glacier-700/40 backdrop-blur-md border border-white/20 text-white shadow-md">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-        <h2 className="text-xl font-bold text-center sm:text-left pl-0.5">{isFlights ? dict.HOME.SEARCH_BAR.IDEAL_FLIGHT : dict.HOME.SEARCH_BAR.PERFECT_ACCOMMODATION}</h2>
+        <h2 className="text-xl font-bold text-center sm:text-left pl-0.5 max-sm:text-2xl">{isFlights ? dict.HOME.SEARCH_BAR.IDEAL_FLIGHT : dict.HOME.SEARCH_BAR.PERFECT_ACCOMMODATION}</h2>
         <div className="flex gap-4 justify-center">
           <button
             className={`px-5 py-2 rounded-full font-semibold border transition-all text-sm sm:text-base ${
