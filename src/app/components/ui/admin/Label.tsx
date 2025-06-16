@@ -8,6 +8,7 @@ export const InputWithLabel = React.forwardRef<HTMLInputElement, React.InputHTML
     <input ref={ref} id={id} {...props} autoComplete="off" className="border border-glacier-500 p-3 rounded-xl transition text-white bg-zinc-800 focus:ring-0 focus:outline-none min-h-[50px]" />
   </div>
 ));
+InputWithLabel.displayName = "InputWithLabel";
 
 export const SelectWithLabel = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement> & { label: string }>(({ label, id, children, ...props }, ref) => (
   <div className="flex flex-col gap-1">
@@ -19,6 +20,8 @@ export const SelectWithLabel = React.forwardRef<HTMLSelectElement, React.SelectH
     </select>
   </div>
 ));
+SelectWithLabel.displayName = "SelectWithLabel";
+
 export const InputWithLabelAndSymbol = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & { label: string; symbol?: string }>(({ label, id, symbol, ...props }, ref) => (
   <div className="flex flex-col gap-1">
     <label htmlFor={id} className="text-sm font-medium mb-2 ml-0.5">
@@ -30,6 +33,7 @@ export const InputWithLabelAndSymbol = React.forwardRef<HTMLInputElement, React.
     </div>
   </div>
 ));
+InputWithLabelAndSymbol.displayName = "InputWithLabelAndSymbol";
 
 export const TextareaWithLabel = React.forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HTMLTextAreaElement> & { label: string }>(({ label, id, ...props }, ref) => (
   <div className="flex flex-col gap-1">
@@ -45,15 +49,18 @@ export const TextareaWithLabel = React.forwardRef<HTMLTextAreaElement, React.Tex
     />
   </div>
 ));
+TextareaWithLabel.displayName = "TextareaWithLabel";
 
 export const Label = ({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) => (
   <label htmlFor={htmlFor} className="text-sm font-medium text-white">
     {children}
   </label>
 );
+Label.displayName = "Label";
 
 export const Select = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement>>(({ id, children, ...props }, ref) => (
   <select ref={ref} id={id} {...props} className="border border-glacier-500 focus:border-glacier-500 focus:ring-0 focus:outline-none p-3 rounded-xl transition text-white bg-zinc-800">
     {children}
   </select>
 ));
+Select.displayName = "Select";

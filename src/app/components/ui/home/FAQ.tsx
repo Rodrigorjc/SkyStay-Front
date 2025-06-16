@@ -1,7 +1,7 @@
 "use client";
 
 import { useDictionary } from "@/app/context/DictionaryContext";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 type FAQItem = {

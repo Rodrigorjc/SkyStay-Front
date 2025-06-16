@@ -12,7 +12,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ text, onClick, color = "default", className = "", disabled }) => {
   const baseStyles = "px-4 py-2 rounded-2xl font-medium transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-sm cursor-pointer";
-  const colors: { [key in "default" | "dark" | "light" | "admin"]: string } = {
+  const colors = {
     default: "bg-glacier-500 text-white hover:bg-glacier-400 active:bg-glacier-600",
     dark: "bg-glacier-700 text-white hover:bg-glacier-600 active:bg-glacier-800",
     light: "bg-glacier-200 text-black hover:bg-glacier-100 active:bg-glacier-300",

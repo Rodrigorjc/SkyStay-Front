@@ -12,16 +12,10 @@ interface UploadImageProps {
   buttonClassName?: string;
   onWidgetOpen?: () => void;
   onWidgetClose?: () => void;
-  color?: "default" | "admin"; // Nueva propiedad para estilos
+  color?: "default" | "admin";
 }
 
-const UploadImage: React.FC<UploadImageProps> = ({
-  onUpload,
-  buttonClassName = "",
-  onWidgetOpen,
-  onWidgetClose,
-  color = "default", // Valor predeterminado
-}) => {
+const UploadImage: React.FC<UploadImageProps> = ({ onUpload, buttonClassName = "", onWidgetOpen, onWidgetClose, color = "default" }) => {
   const { dict } = useDictionary();
 
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -54,7 +48,7 @@ const UploadImage: React.FC<UploadImageProps> = ({
         }
       );
     }
-  }, [imageUrls, onUpload]);
+  }, [imageUrls, onUpload, onWidgetClose]);
 
   return (
     <div>

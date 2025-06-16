@@ -3,7 +3,7 @@ import { FaExclamationTriangle, FaInfoCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdOutlineError } from "react-icons/md";
 import { motion } from "framer-motion";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useCallback, useEffect, useState } from "react";
 import { Notifications } from "@/app/interfaces/Notifications";
 
 interface NotificationProps {
@@ -20,19 +20,16 @@ const iconMap: Record<NotificationType, JSX.Element> = {
   success: <FaCircleCheck className="h-6 w-6 text-green-500" />,
 };
 
-const textColorMap: Record<NotificationType, string> = {
-  error: "text-red-500",
-  warning: "text-yellow-500",
-  advise: "text-blue-400",
-  success: "text-green-500",
-};
-
 export default function NotificationComponent({ Notifications, onClose }: NotificationProps) {
   const [visible, setVisible] = useState(true);
 
   const tipo = (Notifications.tipo || "success") as NotificationType;
   const icon = iconMap[tipo];
-  const codeColor = textColorMap[tipo];
+
+  const handleClose = useCallback(() => {
+    setVisible(false);
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -48,12 +45,7 @@ export default function NotificationComponent({ Notifications, onClose }: Notifi
       clearTimeout(timer);
       window.removeEventListener("keydown", handleEsc);
     };
-  }, []);
-
-  const handleClose = () => {
-    setVisible(false);
-    onClose();
-  };
+  }, [handleClose]);
 
   if (!visible) return null;
 

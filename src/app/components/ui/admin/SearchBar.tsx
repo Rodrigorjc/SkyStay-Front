@@ -1,14 +1,12 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { CiCircleInfo } from "react-icons/ci";
-import { ChangeEvent, KeyboardEvent } from "react";
 
 interface SearchBarProps {
   id?: string;
   placeholder?: string;
   value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSearch?: () => void;
-  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export function SearchBar({ id, placeholder, value, onChange, onSearch, onKeyDown }: SearchBarProps) {
