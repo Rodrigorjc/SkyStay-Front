@@ -1,4 +1,5 @@
 import { useDictionary } from "@/app/context/DictionaryContext";
+import Image from "next/image";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
@@ -20,7 +21,7 @@ export default function ImageModal({ imageUrl, onClose }: Props) {
           {imgError ? (
             <span className="text-red-600">{dict.ADMINISTRATION.ERRORS.IMAGE_LOAD}</span>
           ) : (
-            <img src={imageUrl} className="max-w-full max-h-[70vh] rounded-lg" onError={() => setImgError(true)} alt="Vista previa" />
+            <Image src={imageUrl} width={800} height={600} className="max-w-full max-h-[70vh] rounded-lg" onError={() => setImgError(true)} alt="Vista previa" />
           )}
         </div>
       </div>
