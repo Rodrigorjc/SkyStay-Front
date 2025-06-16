@@ -67,7 +67,7 @@ const EditApartmentModal: React.FC<EditHotelModalProps> = ({ isOpen, onClose, ho
   if (!isOpen) return null;
 
   return (
-    <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+    <Modal onClose={onClose}>
       <Card>
         <CardHeader color="glacier">{dict.ADMINISTRATION.HOTEL_DETAILS.EDIT_HOTEL}</CardHeader>
         <CardContent>
