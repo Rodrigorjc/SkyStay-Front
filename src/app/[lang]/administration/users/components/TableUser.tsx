@@ -4,7 +4,7 @@ import Button from "@/app/components/ui/Button";
 import { useDictionary, useLanguage } from "@context";
 import { UserAdminVO } from "@/types/admin/user";
 import { useRouter } from "next/navigation";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 import { useEffect, useState } from "react";
 import { SearchBar } from "@/app/components/ui/admin/SearchBar";
