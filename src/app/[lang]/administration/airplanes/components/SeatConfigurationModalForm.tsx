@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
+import React, { useState } from "react";
 import { useDictionary } from "@context";
-import { CreateSeatConfigurationVO } from "../types/airplane";
-import { createSeatConfiguration, getAllAirplanesSeatClases } from "../services/airplane.service";
-import { IoInformationCircleOutline } from "react-icons/io5";
+import { createSeatConfiguration } from "../services/airplane.service";
 import { Notifications } from "@/app/interfaces/Notifications";
 import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
 import { useForm } from "react-hook-form";
@@ -62,7 +59,7 @@ export default function SeatConfigurationModalForm({ onClose, onSuccess }: Props
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.AIRLINE.ADD_AIRLINE}

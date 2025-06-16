@@ -2,9 +2,9 @@ import { InfoCard } from "@/app/components/ui/admin/InfoCard";
 import { useDictionary } from "@/app/context/DictionaryContext";
 
 const AirplaneDetails = ({ airplaneInfo }: { airplaneInfo: any }) => {
-  if (!airplaneInfo) return null;
-
   const { dict } = useDictionary();
+  if (!airplaneInfo) return null;
+  if (!dict) return null;
 
   return (
     <section className="px-4 py-6">

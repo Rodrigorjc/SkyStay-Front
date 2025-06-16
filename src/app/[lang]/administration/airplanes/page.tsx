@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDictionary } from "@context";
 import { AirplaneShowVO } from "./types/airplane";
 import Loader from "@/app/components/ui/Loader";
@@ -30,7 +30,7 @@ export default function Page() {
   const [notification, setNotification] = useState<Notifications | null>(null);
   const handleCloseNotification = () => setNotification(null);
 
-  const fetchPlanes = async () => {
+  const fetchPlanes = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllAirplanes(20, page);
@@ -46,11 +46,11 @@ export default function Page() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, page]);
 
   useEffect(() => {
     fetchPlanes();
-  }, []);
+  }, [fetchPlanes, page]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
