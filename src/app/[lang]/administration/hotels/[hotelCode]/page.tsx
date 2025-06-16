@@ -2,7 +2,7 @@
 import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
 import { useParams } from "next/navigation";
 import { ShowHotelDetails } from "../types/hotel";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { addRoomImage, getHotelByCode } from "../services/hotel.service";
 import Loader from "@/app/components/ui/Loader";
 import { InfoCardHotel } from "@components/admin/InfoCard";
@@ -11,6 +11,7 @@ import EditHotelModal from "./components/EditHotelModal";
 import Button from "@/app/components/ui/Button";
 import { Notifications } from "@/app/interfaces/Notifications";
 import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
+import Image from "next/image";
 
 export default function HotelsDetails() {
   const { dict } = useDictionary();
@@ -23,7 +24,7 @@ export default function HotelsDetails() {
   const handleCloseNotification = () => setNotification(null);
   const handleOpenModal = () => setIsModalOpen(true);
 
-  const fetchHotel = async () => {
+  const fetchHotel = useCallback(async () => {
     try {
       const response = await getHotelByCode(hotelCode as string);
       setHotel(response.response.objects);
@@ -37,7 +38,7 @@ export default function HotelsDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE, hotelCode]);
 
   const handleCreateRoomImage = async (url: string, hotelCode: string, roomType: string) => {
     const parsedHotelCode = Array.isArray(hotelCode) ? hotelCode[0] : hotelCode;
@@ -60,7 +61,7 @@ export default function HotelsDetails() {
   };
   useEffect(() => {
     fetchHotel();
-  }, [hotelCode]);
+  }, [hotelCode, fetchHotel]);
 
   if (loading) {
     return (
@@ -112,7 +113,7 @@ export default function HotelsDetails() {
         {hotel.image && (
           <section>
             <h2 className="text-xl font-semibold text-glacier-400 font-mono uppercase mb-4">{dict.ADMINISTRATION.HOTEL_DETAILS.IMAGE}</h2>
-            <img src={hotel.image} alt={hotel.name} className="w-full h-72 object-cover rounded-xl shadow-md border border-zinc-700" />
+            <Image src={hotel.image} alt={hotel.name} width={288} height={288} className="w-full h-72 object-cover rounded-xl shadow-md border border-zinc-700" />
           </section>
         )}
 
@@ -156,7 +157,7 @@ export default function HotelsDetails() {
                   ) : (
                     <section className="w-full mb-2">
                       <h2 className="text-xl font-semibold text-glacier-400 font-mono uppercase mb-4">{dict.ADMINISTRATION.HOTEL_DETAILS.IMAGE}</h2>
-                      <img src={roomType.image} alt={`${roomType.roomType} image`} className="w-full h-72 object-cover rounded-xl shadow-md border border-zinc-700" />
+                      <Image width={288} height={288} src={roomType.image} alt={`${roomType.roomType} image`} className="w-full h-72 object-cover rounded-xl shadow-md border border-zinc-700" />
                     </section>
                   )}
                 </div>
