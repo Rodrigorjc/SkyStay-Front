@@ -10,6 +10,7 @@ import axiosClient from "@/lib/axiosClient";
 import { usePathname } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Cookies from "js-cookie";
+import Image from "next/image";
 
 const getSteps = (dict: any) => [dict.CLIENT.REGISTER.STEPS.ACCOUNT, dict.CLIENT.REGISTER.STEPS.PERSONAL, dict.CLIENT.REGISTER.STEPS.IMAGE];
 
@@ -313,7 +314,7 @@ const ImageStep: React.FC<{
         )}
         {data.img && (
           <div className="mt-2">
-            <img src={URL.createObjectURL(data.img)} alt="Foto de perfil" className="w-24 h-24 object-cover rounded-md" />
+            <Image src={URL.createObjectURL(data.img)} alt="Foto de perfil" width={96} height={96} className="w-24 h-24 object-cover rounded-md" />
           </div>
         )}
       </div>
