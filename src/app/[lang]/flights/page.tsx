@@ -1,6 +1,6 @@
 "use client";
 import { useDictionary } from "@/app/context/DictionaryContext";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, Suspense } from "react";
 import { FlightClientVO } from "./types/flight";
 import { FlightCard } from "./components/FlightCard";
 import { motion } from "framer-motion";
@@ -8,8 +8,10 @@ import { RiMoneyEuroCircleFill } from "react-icons/ri";
 import { FaCity, FaPlaneUp } from "react-icons/fa6";
 import { getAllFlights } from "./services/client.flights.service";
 import { useSearchParams } from "next/navigation";
+import Loader from "@/app/components/ui/Loader";
 
-export default function Home() {
+// Componente separado para usar useSearchParams dentro de Suspense
+function FlightsPageContent() {
   const { dict } = useDictionary();
   const searchParams = useSearchParams();
   const origin = searchParams.get("origin") || null;
@@ -97,7 +99,8 @@ export default function Home() {
       }));
       fetchFlights({ filters: { ...filters, origin, destination }, reset: true });
     }
-  }, [origin, destination, fetchFlights, filters]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [origin, destination]);
 
   if (!dict) return null;
 
@@ -209,5 +212,13 @@ export default function Home() {
         {flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <FlightsPageContent />
+    </Suspense>
   );
 }

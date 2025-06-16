@@ -11,7 +11,7 @@ import { getLast5Flights } from "./services/home.service";
 import { CityImageVO } from "@/types/home/city";
 import Footer from "../components/ui/Footer";
 
-export default function Home({}: { params: { lang: string } }) {
+export default function Home() {
   const { dict } = useDictionary();
 
   const [cities, setCities] = useState<CityImageVO[]>([]);

@@ -28,7 +28,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ destinations }) => {
           <p className="text-lg md:text-xl text-white/90 mb-8">{dict.HOME.CALL_TO_ACTION.SUBTITLE}</p>
           <Button
             onClick={() => router.push(`${lang}/register`)}
-            text="Únete gratis"
+            text={dict.HOME.CALL_TO_ACTION.BUTTON}
             className="bg-glacier-500/70 hover:bg-glacier-500 text-white px-6 py-3 rounded-full border border-white/10 shadow-lg"
           />
           <h2 className="text-lg md:text-xl text-left mx-auto my-8">{dict.HOME.CALL_TO_ACTION.MOST_VISITED_DESTINATIONS} </h2>

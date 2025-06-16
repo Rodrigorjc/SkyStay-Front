@@ -1,31 +1,24 @@
-import "../globals.css";
 import { notFound } from "next/navigation";
-import { DictionaryProvider } from "@context";
-import Script from "next/script";
+import { DictionaryProvider } from "@/app/context/DictionaryContext";
+import { ReactNode } from "react";
 
-const SUPPORTED_LANGUAGES = ["en", "es"];
-
-export async function generateStaticParams() {
+export function generateStaticParams({ params }: { params: { lang: string } }) {
   return SUPPORTED_LANGUAGES.map(lang => ({ lang }));
 }
 
-export default function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
-  const lang = params.lang;
+const SUPPORTED_LANGUAGES = ["en", "es"];
 
-  if (!SUPPORTED_LANGUAGES.includes(lang)) {
+type LayoutProps = {
+  children: ReactNode;
+  params?: Promise<{ lang: "en" | "es" } | undefined>;
+};
+
+export default async function LangLayout({ children, params }: LayoutProps) {
+  const resolvedParams = params ? await params : { lang: "es" };
+
+  if (!resolvedParams || !SUPPORTED_LANGUAGES.includes(resolvedParams.lang)) {
     notFound();
   }
 
-  return (
-    <html lang={lang}>
-      <head>
-        <link rel="icon" href="/favicon.png" />
-        <Script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></Script>
-        <title>SkyStay</title>
-      </head>
-      <body className="bg-zinc-800">
-        <DictionaryProvider lang={lang as "en" | "es"}>{children}</DictionaryProvider>
-      </body>
-    </html>
-  );
+  return <DictionaryProvider lang={resolvedParams.lang as "en" | "es"}>{children}</DictionaryProvider>;
 }
