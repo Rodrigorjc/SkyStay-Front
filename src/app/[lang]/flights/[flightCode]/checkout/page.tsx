@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,6 +15,7 @@ import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
 import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
 import PaymentGateway from "@/app/components/ui/PaymentGateway";
 import { IoMdClose } from "react-icons/io";
+import Image from "next/image";
 
 const EUROPE_COUNTRIES = [
   { code: "+355", flag: "al" },
@@ -524,10 +525,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ flightCode:
                       <label className="block mb-2">{dict.CLIENT.FLIGHTS.FLIGHT_CODE.CHECK_OUT.PHONE}</label>
                       <div className="flex items-center bg-white/5 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-glacier-400 transition border border-white/5 gap-2">
                         <div className="flex items-center bg-white/10 px-3 py-2 rounded-lg gap-2 min-w-[120px]">
-                          <img
+                          <Image
                             src={`https://flagcdn.com/28x21/${EUROPE_COUNTRIES.find(opt => opt.code === passengerValues[modalStep]?.phonePrefix)?.flag}.png`}
-                            width="28"
-                            height="21"
+                            width={28}
+                            height={21}
                             alt="flag"
                             className="rounded cursor-pointer"
                           />

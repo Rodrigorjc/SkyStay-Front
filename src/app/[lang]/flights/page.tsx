@@ -1,6 +1,6 @@
 "use client";
 import { useDictionary } from "@/app/context/DictionaryContext";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlightClientVO } from "./types/flight";
 import { FlightCard } from "./components/FlightCard";
 import { motion } from "framer-motion";
@@ -49,26 +49,29 @@ export default function Home() {
     fetchFlights({ filters, reset: true });
   };
 
-  const fetchFlights = async ({ filters: customFilters = filters, reset = false } = {}) => {
-    if (!hasMore && !reset) return;
-    setLoading(true);
-    try {
-      const response = await getAllFlights(50, reset ? 1 : page, {
-        origin: customFilters.origin || undefined,
-        destination: customFilters.destination || undefined,
-        airline: customFilters.airline || undefined,
-        price: customFilters.price ? Number(customFilters.price) : undefined,
-      });
-      setFlights(prev => (reset ? response.objects : [...prev, ...response.objects]));
-      setHasMore(response.hasNextPage);
-      setPage(response.currentPage + 1);
-    } catch (error) {
-      console.error("Error fetching flights:", error);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const fetchFlights = useCallback(
+    async ({ filters: customFilters = filters, reset = false } = {}) => {
+      if (!hasMore && !reset) return;
+      setLoading(true);
+      try {
+        const response = await getAllFlights(50, reset ? 1 : page, {
+          origin: customFilters.origin || undefined,
+          destination: customFilters.destination || undefined,
+          airline: customFilters.airline || undefined,
+          price: customFilters.price ? Number(customFilters.price) : undefined,
+        });
+        setFlights(prev => (reset ? response.objects : [...prev, ...response.objects]));
+        setHasMore(response.hasNextPage);
+        setPage(response.currentPage + 1);
+      } catch (error) {
+        console.error("Error fetching flights:", error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [filters, page, hasMore]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,11 +82,11 @@ export default function Home() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore]);
+  }, [loading, hasMore, fetchFlights]);
 
   useEffect(() => {
     fetchFlights({ reset: true });
-  }, []);
+  }, [fetchFlights]);
 
   useEffect(() => {
     if (origin && destination) {
@@ -94,7 +97,7 @@ export default function Home() {
       }));
       fetchFlights({ filters: { ...filters, origin, destination }, reset: true });
     }
-  }, [origin, destination]);
+  }, [origin, destination, fetchFlights, filters]);
 
   if (!dict) return null;
 
