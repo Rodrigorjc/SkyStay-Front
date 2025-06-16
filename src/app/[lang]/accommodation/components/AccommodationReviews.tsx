@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { FaTrophy, FaThumbsUp, FaUser, FaCalendarAlt, FaCheckCircle, FaSort, FaInfoCircle, FaUserCircle } from "react-icons/fa";
 import { Review, ReviewSummary } from "@/app/[lang]/accommodation/types/Review";
@@ -8,6 +8,7 @@ import { useDictionary } from "@context";
 import Cookies from "js-cookie";
 import NotificationComponent from "@components/Notification";
 import { Notifications } from "@/app/interfaces/Notifications";
+import Image from "next/image";
 
 interface AccommodationReviewsProps {
   accommodationCode: string;
@@ -15,11 +16,7 @@ interface AccommodationReviewsProps {
   className?: string;
 }
 
-export default function AccommodationReviews({
-  accommodationCode,
-  accommodationType,
-  className = ""
-}: AccommodationReviewsProps) {
+export default function AccommodationReviews({ accommodationCode, accommodationType, className = "" }: AccommodationReviewsProps) {
   const { dict } = useDictionary();
   const router = useRouter();
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -27,27 +24,15 @@ export default function AccommodationReviews({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'rating_high' | 'rating_low' | 'helpful'>('newest');
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "rating_high" | "rating_low" | "helpful">("newest");
   const [helpfulReviews, setHelpfulReviews] = useState<Set<string>>(new Set());
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [notification, setNotification] = useState<Notifications>();
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    setIsLoggedIn(!!token);
-    loadReviews();
-  }, [accommodationCode, accommodationType, sortBy]);
-
-  const loadReviews = async () => {
+  const loadReviews = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getAccommodationReviews(
-        accommodationCode,
-        accommodationType,
-        1,
-        showAll ? 50 : 6,
-        sortBy
-      );
+      const data = await getAccommodationReviews(accommodationCode, accommodationType, 1, showAll ? 50 : 6, sortBy);
       setReviews(data.reviews);
       setSummary(data.summary);
       setError(null);
@@ -56,23 +41,29 @@ export default function AccommodationReviews({
     } finally {
       setLoading(false);
     }
-  };
+  }, [accommodationCode, accommodationType, showAll, sortBy]);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    setIsLoggedIn(!!token);
+    loadReviews();
+  }, [accommodationCode, accommodationType, sortBy, loadReviews]);
 
   const handleGoToProfile = () => {
     const currentPath = window.location.pathname;
-    const lang = currentPath.split('/')[1] || 'es';
+    const lang = currentPath.split("/")[1] || "es";
     router.push(`/${lang}/profile`);
   };
 
   const handleLogin = () => {
     const currentPath = window.location.pathname;
-    const lang = currentPath.split('/')[1] || 'es';
+    const lang = currentPath.split("/")[1] || "es";
     router.push(`/${lang}/login`);
   };
 
   const handleMarkHelpful = async (reviewId: string) => {
     const token = Cookies.get("token");
-    
+
     if (!token) {
       setNotification({
         titulo: dict.CLIENT.ACCOMMODATION.LOGIN_REQUIRED_TITLE || "Inicio de sesión requerido",
@@ -87,12 +78,8 @@ export default function AccommodationReviews({
       // Pasar el tipo de alojamiento al servicio
       await markReviewHelpful(reviewId, accommodationType);
       setHelpfulReviews(prev => new Set([...prev, reviewId]));
-      
-      setReviews(prev => prev.map(review => 
-        review.id === reviewId 
-          ? { ...review, helpfulCount: review.helpfulCount + 1 }
-          : review
-      ));
+
+      setReviews(prev => prev.map(review => (review.id === reviewId ? { ...review, helpfulCount: review.helpfulCount + 1 } : review)));
 
       setNotification({
         titulo: dict.CLIENT.ACCOMMODATION.HELPFUL_SUCCESS_TITLE || "¡Gracias!",
@@ -100,7 +87,6 @@ export default function AccommodationReviews({
         code: 200,
         tipo: "success",
       });
-
     } catch (err: any) {
       console.error("Error marking review as helpful:", err);
       setNotification({
@@ -113,10 +99,10 @@ export default function AccommodationReviews({
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -124,8 +110,8 @@ export default function AccommodationReviews({
   const getRatingTrophies = (rating: number, size: "sm" | "md" | "lg" = "sm") => {
     const sizeClasses = {
       sm: "w-4 h-4",
-      md: "w-5 h-5", 
-      lg: "w-6 h-6"
+      md: "w-5 h-5",
+      lg: "w-6 h-6",
     };
 
     const trophyCount = Math.floor(rating / 2);
@@ -136,7 +122,7 @@ export default function AccommodationReviews({
         {Array.from({ length: trophyCount }).map((_, i) => (
           <FaTrophy key={i} className={`${sizeClasses[size]} text-yellow-400`} />
         ))}
-        
+
         {hasHalfTrophy && (
           <div className="relative">
             <FaTrophy className={`${sizeClasses[size]} text-gray-600`} />
@@ -145,7 +131,7 @@ export default function AccommodationReviews({
             </div>
           </div>
         )}
-        
+
         {Array.from({ length: 5 - trophyCount - (hasHalfTrophy ? 1 : 0) }).map((_, i) => (
           <FaTrophy key={`empty-${i}`} className={`${sizeClasses[size]} text-gray-600`} />
         ))}
@@ -173,7 +159,7 @@ export default function AccommodationReviews({
 
   const RatingBar = ({ rating, count }: { rating: number; count: number }) => {
     const percentage = summary ? (count / summary.totalReviews) * 100 : 0;
-    
+
     return (
       <div className="flex items-center space-x-3">
         {/* Rating number con fondo */}
@@ -181,15 +167,12 @@ export default function AccommodationReviews({
           <span className="text-sm text-glacier-200 font-medium w-6 text-center">{rating}</span>
           <FaTrophy className="w-3 h-3 text-yellow-400" />
         </div>
-        
+
         {/* Progress bar */}
         <div className="flex-1 bg-zinc-600 rounded-full h-2 min-w-0 relative overflow-hidden">
-          <div 
-            className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-2 rounded-full transition-all duration-500 ease-out"
-            style={{ width: `${percentage}%` }}
-          />
+          <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-2 rounded-full transition-all duration-500 ease-out" style={{ width: `${percentage}%` }} />
         </div>
-        
+
         {/* Count */}
         <span className="text-sm text-glacier-300 w-10 text-right font-medium">{count}</span>
       </div>
@@ -207,18 +190,12 @@ export default function AccommodationReviews({
           </p>
           <div className="flex flex-col sm:flex-row gap-2 mt-3">
             {isLoggedIn ? (
-              <button
-                onClick={handleGoToProfile}
-                className="inline-flex items-center px-4 py-2 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors text-sm font-medium"
-              >
+              <button onClick={handleGoToProfile} className="inline-flex items-center px-4 py-2 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors text-sm font-medium">
                 <FaUserCircle className="mr-2" />
                 {dict.CLIENT.ACCOMMODATION.GO_TO_PROFILE || "Ir al Perfil"}
               </button>
             ) : (
-              <button
-                onClick={handleLogin}
-                className="inline-flex items-center px-4 py-2 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors text-sm font-medium"
-              >
+              <button onClick={handleLogin} className="inline-flex items-center px-4 py-2 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors text-sm font-medium">
                 <FaUser className="mr-2" />
                 {dict.CLIENT.ACCOMMODATION.LOGIN_TO_REVIEW || "Inicia sesión para escribir una reseña"}
               </button>
@@ -259,22 +236,17 @@ export default function AccommodationReviews({
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold text-glacier-200 mb-2 border-b-2 border-glacier-500 pb-2">
-            {dict.CLIENT.ACCOMMODATION.REVIEWS_TITLE || "Reseñas de Usuarios"}
-          </h2>
-          <p className="text-sm text-glacier-300">
-            {dict.CLIENT.ACCOMMODATION.REVIEWS_SUBTITLE || "Lo que dicen otros huéspedes"}
-          </p>
+          <h2 className="text-lg sm:text-xl font-semibold text-glacier-200 mb-2 border-b-2 border-glacier-500 pb-2">{dict.CLIENT.ACCOMMODATION.REVIEWS_TITLE || "Reseñas de Usuarios"}</h2>
+          <p className="text-sm text-glacier-300">{dict.CLIENT.ACCOMMODATION.REVIEWS_SUBTITLE || "Lo que dicen otros huéspedes"}</p>
         </div>
-        
+
         {summary && summary.totalReviews > 0 && (
           <div className="flex items-center space-x-2 mt-3 sm:mt-0">
             <FaSort className="text-glacier-400" />
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-zinc-600 text-glacier-200 border border-zinc-500 rounded px-3 py-1 text-sm focus:ring-2 focus:ring-glacier-500"
-            >
+              onChange={e => setSortBy(e.target.value as any)}
+              className="bg-zinc-600 text-glacier-200 border border-zinc-500 rounded px-3 py-1 text-sm focus:ring-2 focus:ring-glacier-500">
               <option value="newest">{dict.CLIENT.ACCOMMODATION.SORT_OPTIONS?.NEWEST || "Más recientes"}</option>
               <option value="oldest">{dict.CLIENT.ACCOMMODATION.SORT_OPTIONS?.OLDEST || "Más antiguos"}</option>
               <option value="rating_high">{dict.CLIENT.ACCOMMODATION.SORT_OPTIONS?.RATING_HIGH || "Mejor valorados"}</option>
@@ -296,24 +268,14 @@ export default function AccommodationReviews({
             <div className="lg:col-span-1 flex justify-center items-center bg-zinc-800 rounded-lg p-6 border border-zinc-600 shadow-lg">
               <div className="text-center">
                 <div className="mb-4">
-                  <div className={`text-6xl font-bold mb-3 ${getRatingColor(summary.averageRating)}`}>
-                    {summary.averageRating.toFixed(1)}
-                  </div>
-                  <div className="text-lg font-semibold text-glacier-200 mb-3">
-                    {getRatingText(summary.averageRating)}
-                  </div>
-                  <div className="flex justify-center mb-4">
-                    {getRatingTrophies(summary.averageRating, "lg")}
-                  </div>
+                  <div className={`text-6xl font-bold mb-3 ${getRatingColor(summary.averageRating)}`}>{summary.averageRating.toFixed(1)}</div>
+                  <div className="text-lg font-semibold text-glacier-200 mb-3">{getRatingText(summary.averageRating)}</div>
+                  <div className="flex justify-center mb-4">{getRatingTrophies(summary.averageRating, "lg")}</div>
                 </div>
-                
+
                 <div className="border-t border-zinc-600 pt-4">
-                  <p className="text-sm font-medium text-glacier-200 mb-1">
-                    {(dict.CLIENT.ACCOMMODATION.REVIEWS_COUNT || "{{count}} reseñas").replace('{{count}}', summary.totalReviews.toString())}
-                  </p>
-                  <p className="text-xs text-glacier-400">
-                    {(dict.CLIENT.ACCOMMODATION.RATING_OUT_OF_10 || "{{rating}} de 10").replace('{{rating}}', summary.averageRating.toFixed(1))}
-                  </p>
+                  <p className="text-sm font-medium text-glacier-200 mb-1">{(dict.CLIENT.ACCOMMODATION.REVIEWS_COUNT || "{{count}} reseñas").replace("{{count}}", summary.totalReviews.toString())}</p>
+                  <p className="text-xs text-glacier-400">{(dict.CLIENT.ACCOMMODATION.RATING_OUT_OF_10 || "{{rating}} de 10").replace("{{rating}}", summary.averageRating.toFixed(1))}</p>
                 </div>
               </div>
             </div>
@@ -321,17 +283,11 @@ export default function AccommodationReviews({
             {/* Rating Distribution - Una sola columna vertical */}
             <div className="lg:col-span-2 bg-zinc-800 rounded-lg p-6 border border-zinc-600 shadow-lg">
               <div className="flex flex-col h-full">
-                <h3 className="text-lg font-semibold text-glacier-200 mb-6 text-center lg:text-left">
-                  {dict.CLIENT.ACCOMMODATION.RATING_BREAKDOWN || "Desglose de Valoraciones"}
-                </h3>
-                
+                <h3 className="text-lg font-semibold text-glacier-200 mb-6 text-center lg:text-left">{dict.CLIENT.ACCOMMODATION.RATING_BREAKDOWN || "Desglose de Valoraciones"}</h3>
+
                 <div className="flex-1 flex flex-col justify-center space-y-2">
                   {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(rating => (
-                    <RatingBar
-                      key={rating}
-                      rating={rating}
-                      count={summary.ratingDistribution[rating as keyof typeof summary.ratingDistribution]}
-                    />
+                    <RatingBar key={rating} rating={rating} count={summary.ratingDistribution[rating as keyof typeof summary.ratingDistribution]} />
                   ))}
                 </div>
               </div>
@@ -341,19 +297,13 @@ export default function AccommodationReviews({
           {/* Detailed Ratings */}
           {summary.detailedAverages && (
             <div className="bg-zinc-800 rounded-lg p-4 mb-6">
-              <h3 className="text-md font-semibold text-glacier-200 mb-4">
-                {dict.CLIENT.ACCOMMODATION.DETAILED_RATINGS || "Valoraciones Detalladas"}
-              </h3>
+              <h3 className="text-md font-semibold text-glacier-200 mb-4">{dict.CLIENT.ACCOMMODATION.DETAILED_RATINGS || "Valoraciones Detalladas"}</h3>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
                 {Object.entries(summary.detailedAverages).map(([key, value]) => (
                   <div key={key} className="text-center">
-                    <div className={`text-lg font-semibold mb-1 ${getRatingColor(value)}`}>
-                      {value.toFixed(1)}
-                    </div>
+                    <div className={`text-lg font-semibold mb-1 ${getRatingColor(value)}`}>{value.toFixed(1)}</div>
                     {getRatingTrophies(value, "sm")}
-                    <p className="text-xs text-glacier-300 mt-2">
-                      {dict.CLIENT.ACCOMMODATION[key.toUpperCase() as keyof typeof dict.CLIENT.ACCOMMODATION] || key}
-                    </p>
+                    <p className="text-xs text-glacier-300 mt-2">{dict.CLIENT.ACCOMMODATION[key.toUpperCase() as keyof typeof dict.CLIENT.ACCOMMODATION] || key}</p>
                   </div>
                 ))}
               </div>
@@ -362,17 +312,13 @@ export default function AccommodationReviews({
 
           {/* Reviews List */}
           <div className="space-y-4">
-            {reviews.slice(0, showAll ? reviews.length : 6).map((review) => (
+            {reviews.slice(0, showAll ? reviews.length : 6).map(review => (
               <div key={review.id} className="bg-zinc-800 rounded-lg p-4 border border-zinc-600">
                 {/* Review Header */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-glacier-600 rounded-full flex items-center justify-center">
-                      {review.userAvatar ? (
-                        <img src={review.userAvatar} alt={review.userName} className="w-10 h-10 rounded-full" />
-                      ) : (
-                        <FaUser className="text-glacier-200" />
-                      )}
+                      {review.userAvatar ? <Image width="40" height="40" src={review.userAvatar} alt={review.userName} className="w-10 h-10 rounded-full" /> : <FaUser className="text-glacier-200" />}
                     </div>
                     <div>
                       <h4 className="font-semibold text-glacier-100">{review.userName}</h4>
@@ -382,47 +328,35 @@ export default function AccommodationReviews({
                         {review.isVerifiedStay && (
                           <>
                             <FaCheckCircle className="w-3 h-3 text-green-400" />
-                            <span className="text-green-400">
-                              {dict.CLIENT.ACCOMMODATION.VERIFIED_STAY || "Estancia Verificada"}
-                            </span>
+                            <span className="text-green-400">{dict.CLIENT.ACCOMMODATION.VERIFIED_STAY || "Estancia Verificada"}</span>
                           </>
                         )}
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className={`text-lg font-bold mb-1 ${getRatingColor(review.rating)}`}>
-                      {review.rating}/10
-                    </div>
+                    <div className={`text-lg font-bold mb-1 ${getRatingColor(review.rating)}`}>{review.rating}/10</div>
                     {getRatingTrophies(review.rating, "sm")}
-                    <p className="text-xs text-glacier-400 mt-1">
-                      {getRatingText(review.rating)}
-                    </p>
+                    <p className="text-xs text-glacier-400 mt-1">{getRatingText(review.rating)}</p>
                   </div>
                 </div>
 
                 {/* Review Content */}
                 <div className="mb-3">
-                  {review.title && (
-                    <h5 className="font-medium text-glacier-200 mb-2">{review.title}</h5>
-                  )}
+                  {review.title && <h5 className="font-medium text-glacier-200 mb-2">{review.title}</h5>}
                   <p className="text-glacier-300 text-sm leading-relaxed">{review.comment}</p>
-                  
+
                   {(review.pros || review.cons) && (
                     <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {review.pros && (
                         <div className="bg-zinc-700 rounded p-2">
-                          <p className="text-xs font-medium text-green-400 mb-1">
-                            {dict.CLIENT.ACCOMMODATION.PROS_LABEL || "Lo mejor:"}
-                          </p>
+                          <p className="text-xs font-medium text-green-400 mb-1">{dict.CLIENT.ACCOMMODATION.PROS_LABEL || "Lo mejor:"}</p>
                           <p className="text-xs text-glacier-300">{review.pros}</p>
                         </div>
                       )}
                       {review.cons && (
                         <div className="bg-zinc-700 rounded p-2">
-                          <p className="text-xs font-medium text-red-400 mb-1">
-                            {dict.CLIENT.ACCOMMODATION.CONS_LABEL || "A mejorar:"}
-                          </p>
+                          <p className="text-xs font-medium text-red-400 mb-1">{dict.CLIENT.ACCOMMODATION.CONS_LABEL || "A mejorar:"}</p>
                           <p className="text-xs text-glacier-300">{review.cons}</p>
                         </div>
                       )}
@@ -436,21 +370,15 @@ export default function AccommodationReviews({
                     onClick={() => handleMarkHelpful(review.id)}
                     disabled={helpfulReviews.has(review.id)}
                     className={`flex items-center space-x-1 text-xs transition-colors ${
-                      helpfulReviews.has(review.id)
-                        ? 'text-glacier-500 cursor-not-allowed'
-                        : 'text-glacier-400 hover:text-glacier-200 cursor-pointer'
+                      helpfulReviews.has(review.id) ? "text-glacier-500 cursor-not-allowed" : "text-glacier-400 hover:text-glacier-200 cursor-pointer"
                     }`}
-                    title={!isLoggedIn 
-                      ? (dict.CLIENT.ACCOMMODATION.LOGIN_TOOLTIP || "Inicia sesión para marcar como útil")
-                      : (dict.CLIENT.ACCOMMODATION.HELPFUL_TOOLTIP || "Marcar como útil")
-                    }
-                  >
+                    title={!isLoggedIn ? dict.CLIENT.ACCOMMODATION.LOGIN_TOOLTIP || "Inicia sesión para marcar como útil" : dict.CLIENT.ACCOMMODATION.HELPFUL_TOOLTIP || "Marcar como útil"}>
                     <FaThumbsUp className="w-3 h-3" />
                     <span>
                       {dict.CLIENT.ACCOMMODATION.HELPFUL || "Útil"} ({review.helpfulCount})
                     </span>
                   </button>
-                  
+
                   {review.detailedRatings && (
                     <div className="flex space-x-2 text-xs text-glacier-400">
                       <span>L: {review.detailedRatings.cleanliness}/10</span>
@@ -468,14 +396,8 @@ export default function AccommodationReviews({
           {/* Show More/Less Button */}
           {reviews.length > 6 && (
             <div className="text-center mt-6">
-              <button
-                onClick={() => setShowAll(!showAll)}
-                className="px-6 py-2 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors"
-              >
-                {showAll 
-                  ? (dict.CLIENT.ACCOMMODATION.SHOW_LESS || "Ver Menos")
-                  : (dict.CLIENT.ACCOMMODATION.SHOW_MORE || "Ver Más")
-                }
+              <button onClick={() => setShowAll(!showAll)} className="px-6 py-2 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors">
+                {showAll ? dict.CLIENT.ACCOMMODATION.SHOW_LESS || "Ver Menos" : dict.CLIENT.ACCOMMODATION.SHOW_MORE || "Ver Más"}
               </button>
             </div>
           )}
@@ -486,27 +408,17 @@ export default function AccommodationReviews({
           <div className="w-16 h-16 bg-zinc-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <FaTrophy className="text-glacier-400 text-2xl" />
           </div>
-          <h3 className="text-lg font-semibold text-glacier-200 mb-2">
-            {dict.CLIENT.ACCOMMODATION.NO_REVIEWS || "Aún no hay reseñas"}
-          </h3>
-          <p className="text-glacier-400 mb-6">
-            {dict.CLIENT.ACCOMMODATION.NO_REVIEWS_DESC || "Sé el primero en compartir tu experiencia después de tu estancia"}
-          </p>
-          
+          <h3 className="text-lg font-semibold text-glacier-200 mb-2">{dict.CLIENT.ACCOMMODATION.NO_REVIEWS || "Aún no hay reseñas"}</h3>
+          <p className="text-glacier-400 mb-6">{dict.CLIENT.ACCOMMODATION.NO_REVIEWS_DESC || "Sé el primero en compartir tu experiencia después de tu estancia"}</p>
+
           {isLoggedIn ? (
-            <button 
-              onClick={handleGoToProfile}
-              className="inline-flex items-center px-6 py-3 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors font-medium"
-            >
+            <button onClick={handleGoToProfile} className="inline-flex items-center px-6 py-3 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors font-medium">
               <FaUserCircle className="mr-2" />
               {dict.CLIENT.ACCOMMODATION.WRITE_REVIEW_PROFILE || "Escribir Reseña desde tu Perfil"}
             </button>
           ) : (
             <div className="space-y-3">
-              <button 
-                onClick={handleLogin}
-                className="inline-flex items-center px-6 py-3 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors font-medium"
-              >
+              <button onClick={handleLogin} className="inline-flex items-center px-6 py-3 bg-glacier-600 hover:bg-glacier-700 text-white rounded-lg transition-colors font-medium">
                 <FaUser className="mr-2" />
                 {dict.CLIENT.ACCOMMODATION.LOGIN_TO_REVIEW || "Inicia sesión para escribir una reseña"}
               </button>
@@ -519,12 +431,7 @@ export default function AccommodationReviews({
       )}
 
       {/* Componente de notificación al final */}
-      {notification && (
-        <NotificationComponent
-          Notifications={notification}
-          onClose={() => setNotification(undefined)}
-        />
-      )}
+      {notification && <NotificationComponent Notifications={notification} onClose={() => setNotification(undefined)} />}
     </div>
   );
 }
