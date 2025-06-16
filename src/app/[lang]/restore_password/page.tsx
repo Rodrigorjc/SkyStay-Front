@@ -11,7 +11,7 @@ import axiosClient from "@/lib/axiosClient";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & { className?: string }>(({ className, ...props }, ref) => {
-  return <input className={`px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`} ref={ref} {...props} />;
+  return <input className={`px-4 py-3 border border-zinc-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 bg-zinc-700 text-glacier-100 placeholder-glacier-400 ${className}`} ref={ref} {...props} />;
 });
 Input.displayName = "Input";
 
@@ -21,11 +21,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = ({ variant = "default", className = "", children, ...props }) => {
-  const baseStyles = "py-3 rounded-full font-medium transition-all duration-300";
+  const baseStyles = "py-3 rounded-lg font-medium transition-all duration-300";
   const variantStyles = {
-    default: "bg-(--color-glacier-500) text-white active:scale-98",
-    outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50",
-    disabled: "bg-gray-400 cursor-not-allowed text-white",
+    default: "bg-glacier-600 hover:bg-glacier-700 text-white active:scale-98",
+    outline: "border border-zinc-600 bg-zinc-700 text-glacier-200 hover:bg-zinc-600",
+    disabled: "bg-zinc-600 cursor-not-allowed text-glacier-400",
   };
 
   return (
@@ -63,16 +63,34 @@ export default function RestorePassword() {
     return null;
   }
 
+  // Función helper para obtener textos con fallback
+  const getText = (path: string, fallback: string) => {
+    try {
+      const keys = path.split('.');
+      let value = dict;
+      for (const key of keys) {
+        value = value?.[key];
+      }
+      return value || fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      setErrors({ email: dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.REQUIRED });
+      setErrors({ 
+        email: getText('CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.REQUIRED', 'El email es requerido')
+      });
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setErrors({ email: dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.INVALID });
+      setErrors({ 
+        email: getText('CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.INVALID', 'Email inválido')
+      });
       return;
     }
 
@@ -82,8 +100,8 @@ export default function RestorePassword() {
         email: email,
       });
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_SUCCESS.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_SUCCESS.MESSAGE,
+        titulo: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_SUCCESS.TITLE', 'Código enviado'),
+        mensaje: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_SUCCESS.MESSAGE', 'Se ha enviado un código a tu email'),
         code: 200,
         tipo: "success",
       });
@@ -92,10 +110,10 @@ export default function RestorePassword() {
       }, 1000);
     } catch (error) {
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_ERROR.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_ERROR.MESSAGE,
-        code: 200,
-        tipo: "success",
+        titulo: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_ERROR.TITLE', 'Error'),
+        mensaje: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.SEND_ERROR.MESSAGE', 'Error al enviar el código'),
+        code: 500,
+        tipo: "error",
       });
     } finally {
       setIsLoading(false);
@@ -106,7 +124,7 @@ export default function RestorePassword() {
     e.preventDefault();
     const fullCode = code.join("");
     if (fullCode.length !== 6) {
-      toast.error(dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.VALIDATION_ERROR.MESSAGE);
+      toast.error(getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.VALIDATION_ERROR.MESSAGE', 'Código inválido'));
       return;
     }
 
@@ -117,8 +135,8 @@ export default function RestorePassword() {
         email: email,
       });
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.MESSAGE,
+        titulo: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.TITLE', 'Código verificado'),
+        mensaje: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.MESSAGE', 'El código ha sido verificado correctamente'),
         code: 200,
         tipo: "success",
       });
@@ -134,8 +152,8 @@ export default function RestorePassword() {
       }
 
       setNotification({
-        titulo: errorData?.title || dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.TITLE,
-        mensaje: errorData?.message || dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.MESSAGE,
+        titulo: errorData?.title || getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.TITLE', 'Error'),
+        mensaje: errorData?.message || getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.MESSAGE', 'Código incorrecto'),
         code: errorStatus || 500,
         tipo: "error",
       });
@@ -149,13 +167,13 @@ export default function RestorePassword() {
     const newErrors: Record<string, string> = {};
 
     if (!password) {
-      newErrors.password = dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.REQUIRED;
+      newErrors.password = getText('CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.REQUIRED', 'La contraseña es requerida');
     } else if (!validatePassword(password)) {
-      newErrors.password = dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.INVALID;
+      newErrors.password = getText('CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.INVALID', 'Contraseña inválida');
     }
 
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.MISMATCH;
+      newErrors.confirmPassword = getText('CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.MISMATCH', 'Las contraseñas no coinciden');
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -170,18 +188,20 @@ export default function RestorePassword() {
         email: email,
       });
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED.MESSAGE,
+        titulo: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED.TITLE', 'Contraseña actualizada'),
+        mensaje: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED.MESSAGE', 'Tu contraseña ha sido actualizada correctamente'),
         code: 200,
         tipo: "success",
       });
-      router.push(`/${lang}/login`);
+      setTimeout(() => {
+        router.push(`/${lang}/login`);
+      }, 2000);
     } catch (error) {
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED_ERROR.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED_ERROR.MESSAGE,
-        code: 200,
-        tipo: "success",
+        titulo: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED_ERROR.TITLE', 'Error'),
+        mensaje: getText('CLIENT.CODE_VALIDATION.NOTIFICATIONS.PASSWORD_CHANGED_ERROR.MESSAGE', 'Error al cambiar la contraseña'),
+        code: 500,
+        tipo: "error",
       });
     } finally {
       setIsLoading(false);
@@ -218,18 +238,27 @@ export default function RestorePassword() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col text-black">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
       <Navbar />
       <div className="flex flex-col flex-grow items-center justify-center p-4">
-        <div className="w-full max-w-md p-8 bg-(--color-glacier-50) rounded-2xl shadow-md">
+        <div className="w-full max-w-md p-8 bg-zinc-800 rounded-xl shadow-2xl border border-glacier-700">
           {step === "email" && (
             <>
-              <h2 className="text-2xl text-(--color-glacier-600) font-bold mb-4">{dict.CLIENT.RESTORE_PASSWORD.RECOVER_PASSWORD}</h2>
-              <p className="text-gray-600 mb-6">{dict.CLIENT.RESTORE_PASSWORD.ADD_EMAIL}</p>
-              <form onSubmit={handleEmailSubmit}>
-                <div className="mb-4 w-full">
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    {dict.CLIENT.RESTORE_PASSWORD.EMAIL}:
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-glacier-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔐</span>
+                </div>
+                <h2 className="text-2xl text-glacier-200 font-bold mb-2">
+                  {getText('CLIENT.RESTORE_PASSWORD.RECOVER_PASSWORD', 'Recuperar contraseña')}
+                </h2>
+                <p className="text-glacier-400 text-sm">
+                  {getText('CLIENT.RESTORE_PASSWORD.ADD_EMAIL', 'Ingresa tu email para recuperar tu contraseña')}
+                </p>
+              </div>
+              <form onSubmit={handleEmailSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-glacier-300">
+                    {getText('CLIENT.RESTORE_PASSWORD.EMAIL', 'Email')}
                   </label>
                   <Input
                     id="email"
@@ -237,18 +266,19 @@ export default function RestorePassword() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="correo@ejemplo.com"
-                    className={errors.email ? "border-red-500" : "w-full text-black"}
+                    className={errors.email ? "border-red-500" : "w-full"}
                   />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
                 </div>
                 <Button
                   type="submit"
                   disabled={isLoading || !email.trim()}
-                  className={`w-full py-3 rounded-full font-medium text-white
-                            transition-all duration-300 ${
-                              isLoading || !email.trim() ? "bg-gray-400 cursor-not-allowed" : "bg-(--color-glacier-500) hover:bg-(--color-glacier-600) hover:scale-105 active:scale-98"
-                            }`}>
-                  {isLoading ? dict.CLIENT.CODE_VALIDATION.BUTTONS.LOADING : dict.CLIENT.CODE_VALIDATION.BUTTONS.VERIFY}
+                  className={`w-full ${
+                    isLoading || !email.trim() 
+                      ? "bg-zinc-600 cursor-not-allowed text-glacier-400" 
+                      : "bg-glacier-600 hover:bg-glacier-700 hover:scale-105 active:scale-98"
+                  }`}>
+                  {isLoading ? 'Enviando...' : 'Enviar código'}
                 </Button>
               </form>
             </>
@@ -256,27 +286,36 @@ export default function RestorePassword() {
 
           {step === "code" && (
             <>
-              <h2 className="text-2xl font-bold text-(--color-glacier-600) mb-4">{dict.CLIENT.CODE_VALIDATION.TITLE}</h2>
-              <p className="text-center text-gray-600 mb-6">
-                {dict.CLIENT.CODE_VALIDATION.SUBTITLE}
-                {email && <span className="font-bold block mt-1">{email}</span>}
-              </p>
-              <form onSubmit={handleCodeSubmit}>
-                <div className="flex justify-center space-x-2 mb-8">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-glacier-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">📧</span>
+                </div>
+                <h2 className="text-2xl font-bold text-glacier-200 mb-2">
+                  {getText('CLIENT.CODE_VALIDATION.TITLE', 'Verificar código')}
+                </h2>
+                <p className="text-glacier-400 text-sm mb-2">
+                  {getText('CLIENT.CODE_VALIDATION.SUBTITLE', 'Ingresa el código enviado a tu email')}
+                </p>
+                {email && <span className="text-glacier-300 font-medium text-sm bg-zinc-700 px-3 py-1 rounded-full">{email}</span>}
+              </div>
+              <form onSubmit={handleCodeSubmit} className="space-y-6">
+                <div className="flex justify-center space-x-2">
                   {Array(6)
                     .fill(null)
                     .map((_, index) => (
-                      <div key={index} className="w-12 h-16 relative">
+                      <div key={index} className="w-12 h-14">
                         <input
                           ref={el => {
                             inputRefs.current[index] = el;
                           }}
                           type="text"
                           maxLength={1}
-                          className={`w-full h-full text-center text-2xl font-bold rounded-lg border-2
-                                    focus:outline-none focus:ring-2 transition-all ${
-                                      code[index] ? "border-(--color-glacier-500) bg-(--color-glacier-100) text-(--color-glacier-800)" : "border-gray-300 bg-white text-gray-700"
-                                    } focus:ring-(--color-glacier-400) focus:border-(--color-glacier-500)`}
+                          className={`w-full h-full text-center text-xl font-bold rounded-lg border-2
+                                    focus:outline-none focus:ring-2 transition-all bg-zinc-700 text-glacier-100 ${
+                                      code[index] 
+                                        ? "border-glacier-500 bg-zinc-600 text-glacier-100" 
+                                        : "border-zinc-600"
+                                    } focus:ring-glacier-400 focus:border-glacier-500`}
                           value={code[index]}
                           onChange={e => handleCodeChange(index, e.target.value)}
                           onKeyDown={e => handleKeyDown(index, e)}
@@ -286,26 +325,37 @@ export default function RestorePassword() {
                       </div>
                     ))}
                 </div>
-                <button
+                <Button
+                  type="submit"
                   disabled={isLoading || code.join("").length !== 6}
-                  className={`w-full py-3 rounded-full font-medium text-white
-                            transition-all duration-300 ${
-                              isLoading || code.join("").length !== 6 ? "bg-gray-400 cursor-not-allowed" : "bg-(--color-glacier-500) hover:bg-(--color-glacier-600) hover:scale-105 active:scale-98"
-                            }`}>
-                  {isLoading ? dict.CLIENT.CODE_VALIDATION.BUTTONS.LOADING : dict.CLIENT.CODE_VALIDATION.BUTTONS.VERIFY}
-                </button>
+                  className={`w-full ${
+                    isLoading || code.join("").length !== 6 
+                      ? "bg-zinc-600 cursor-not-allowed text-glacier-400" 
+                      : "bg-glacier-600 hover:bg-glacier-700 hover:scale-105 active:scale-98"
+                  }`}>
+                  {isLoading ? 'Verificando...' : 'Verificar código'}
+                </Button>
               </form>
             </>
           )}
 
           {step === "password" && (
             <>
-              <h2 className="text-2xl text-(--color-glacier-600) font-bold mb-4">{dict.CLIENT.RESTORE_PASSWORD.NEW_PASSWORD}</h2>
-              <p className="text-gray-600 mb-6">{dict.CLIENT.LOGIN.PASSWORD.MESSAGE}</p>
-              <form onSubmit={handlePasswordSubmit}>
-                <div className="mb-4 w-full">
-                  <label htmlFor="password" className="block text-sm font-medium mb-1">
-                    {dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.LABEL}
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-glacier-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔑</span>
+                </div>
+                <h2 className="text-2xl text-glacier-200 font-bold mb-2">
+                  {getText('CLIENT.RESTORE_PASSWORD.NEW_PASSWORD', 'Nueva contraseña')}
+                </h2>
+                <p className="text-glacier-400 text-sm">
+                  {getText('CLIENT.LOGIN.PASSWORD.MESSAGE', 'Mínimo 6 caracteres, incluyendo números y símbolos')}
+                </p>
+              </div>
+              <form onSubmit={handlePasswordSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium mb-2 text-glacier-300">
+                    {getText('CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.LABEL', 'Contraseña')}
                   </label>
                   <div className="relative">
                     <Input
@@ -313,17 +363,21 @@ export default function RestorePassword() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      className={errors.password ? "border-red-500 w-full pr-10" : "w-full pr-10"}
+                      className={errors.password ? "border-red-500 pr-12" : "pr-12 w-full"}
                     />
-                    <button type="button" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700" onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? <MdVisibilityOff></MdVisibilityOff> : <MdVisibility></MdVisibility>}
+                    <button 
+                      type="button" 
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-glacier-400 hover:text-glacier-200 transition-colors" 
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
                     </button>
                   </div>
-                  {errors.password && <p className="text-red-500 text-sm mt-1 w-full">{errors.password}</p>}
+                  {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
                 </div>
-                <div className="mb-6 w-full">
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
-                    {dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL}
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2 text-glacier-300">
+                    {getText('CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL', 'Confirmar contraseña')}
                   </label>
                   <div className="relative">
                     <Input
@@ -331,27 +385,38 @@ export default function RestorePassword() {
                       type={showConfirmPassword ? "text" : "password"}
                       value={confirmPassword}
                       onChange={e => setConfirmPassword(e.target.value)}
-                      className={errors.confirmPassword ? "border-red-500 w-full pr-10" : "w-full pr-10"}
+                      className={errors.confirmPassword ? "border-red-500 pr-12" : "pr-12 w-full"}
                     />
                     <button
                       type="button"
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                      {showConfirmPassword ? <MdVisibilityOff></MdVisibilityOff> : <MdVisibility></MdVisibility>}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-glacier-400 hover:text-glacier-200 transition-colors"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
                     </button>
                   </div>
-                  {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
                 </div>
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full py-3 rounded-full font-medium text-white
-    transition-all duration-300 ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-(--color-glacier-500) hover:bg-(--color-glacier-600) hover:scale-105 active:scale-98"}`}>
-                  {isLoading ? dict.CLIENT.CODE_VALIDATION.BUTTONS.LOADING : "Actualizar contraseña"}
+                  className={`w-full ${
+                    isLoading 
+                      ? "bg-zinc-600 cursor-not-allowed text-glacier-400" 
+                      : "bg-glacier-600 hover:bg-glacier-700 hover:scale-105 active:scale-98"
+                  }`}>
+                  {isLoading ? 'Actualizando...' : 'Actualizar contraseña'}
                 </Button>
               </form>
             </>
           )}
+
+          {/* Indicador de pasos */}
+          <div className="flex justify-center mt-8 space-x-2">
+            <div className={`w-2 h-2 rounded-full transition-all ${step === "email" ? "bg-glacier-500" : "bg-zinc-600"}`}></div>
+            <div className={`w-2 h-2 rounded-full transition-all ${step === "code" ? "bg-glacier-500" : "bg-zinc-600"}`}></div>
+            <div className={`w-2 h-2 rounded-full transition-all ${step === "password" ? "bg-glacier-500" : "bg-zinc-600"}`}></div>
+          </div>
         </div>
       </div>
       {notification && <NotificationComponent Notifications={notification} onClose={() => setNotification(undefined)} />}
