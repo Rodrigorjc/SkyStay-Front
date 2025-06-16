@@ -9,8 +9,8 @@ export async function generateStaticParams() {
   return SUPPORTED_LANGUAGES.map(lang => ({ lang }));
 }
 
-export default async function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
-  const { lang } = await Promise.resolve(params);
+export default function LangLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
+  const lang = params.lang;
 
   if (!SUPPORTED_LANGUAGES.includes(lang)) {
     notFound();
