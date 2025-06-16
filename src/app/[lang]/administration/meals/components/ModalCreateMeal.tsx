@@ -62,7 +62,7 @@ export default function ModalCreateFlight({ onClose, onSuccess, isOpen }: Flight
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.MEALS.ADD_SINGLE_MEAL}
