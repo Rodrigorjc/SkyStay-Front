@@ -1,12 +1,13 @@
 "use client";
 import { useDictionary } from "@/app/context/DictionaryContext";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loader from "@/app/components/ui/Loader";
 import { FlightsDetailsVO } from "./types/detailsFlight";
 import { getCabinsByCode, getFlightByCode } from "../services/flight.service";
 import { InfoCardFlight } from "@/app/components/ui/admin/InfoCard";
 import { CabinsInfoVO } from "../types/flight";
+import Image from "next/image";
 
 export default function FlightsDetails() {
   const { dict } = useDictionary();
@@ -16,9 +17,8 @@ export default function FlightsDetails() {
   const [flight, setFlight] = useState<FlightsDetailsVO>();
   const [cabins, setCabins] = useState<CabinsInfoVO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchFlightDetails = async () => {
+  const fetchFlightDetails = useCallback(async () => {
     try {
       const response = await getFlightByCode(flightsCode as string);
       const responseCabins = await getCabinsByCode(flightsCode as string);
@@ -33,11 +33,11 @@ export default function FlightsDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.ERROR_LOAD_FLIGHT, flightsCode]);
 
   useEffect(() => {
     fetchFlightDetails();
-  }, [flightsCode]);
+  }, [flightsCode, fetchFlightDetails]);
 
   if (loading) {
     return (
@@ -54,14 +54,6 @@ export default function FlightsDetails() {
       </div>
     );
   }
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <div className="px-10 py-6 m-4 rounded-md">
@@ -100,7 +92,7 @@ export default function FlightsDetails() {
               {flight.airline.image && (
                 <section className="mt-6">
                   <h2 className="text-xl font-semibold text-glacier-400 font-mono uppercase mb-4">{dict.ADMINISTRATION.HOTEL_DETAILS.IMAGE}</h2>
-                  <img src={flight.airline.image} alt={flight.airline.name} className="w-full h-72 object-cover rounded-xl shadow-md border border-zinc-700" />
+                  <Image src={flight.airline.image} alt={flight.airline.name} width={288} height={288} className="w-full h-72 object-cover rounded-xl shadow-md border border-zinc-700" />
                 </section>
               )}
             </>
