@@ -1,4 +1,15 @@
 {
+  "ACCOMMODATION": {
+    "EXPLORE": "Explore",
+    "EXPLORE_CITIES": "Explore the most visited cities",
+    "FEATURED_PLACES": "Featured Places",
+    "FEATURED_SUBTITLE": "Unique experiences in extraordinary destinations",
+    "POPULAR_DESTINATIONS": "Popular Destinations",
+    "READY_TO_EXPLORE": "Ready for your next adventure?",
+    "TOP_RATED": "Top Rated Accommodations",
+    "TOP_RATED_SUBTITLE": "Discover the places with the best reviews from our guests",
+    "TRANSITION_MESSAGE": "Thousands of unique accommodations await you. Find the perfect place to create unforgettable memories."
+  },
   "ADMINISTRATION": {
     "ADDITIONAL_BAGGAGE": {
       "ADD_BAGGAGE": "Add additional baggage",
@@ -54,12 +65,10 @@
     },
     "AIRPLANES": {
       "ACTIVE": "Active",
-      "AIRLINE_NAME": "Airline name",
-      "DETAILS_TITLE": "Detailed airplane information",
-      "CABINS": "Airplane cabins",
       "ADD_AIRPLANE": "Add airplane",
       "ADD_AIRPLANE_TYPE": "Add airplane type",
       "ADD_SEAT_CONFIGURATION": "Add seat configuration",
+      "AIRLINE_NAME": "Airline name",
       "AIRPLANE": "Airplane",
       "AIRPLANES_CODE": "Airplane code",
       "AIRPLANE_CABIN": "Airplane cabin",
@@ -67,10 +76,12 @@
       "AIRPLANE_TYPE_CONFIGURATION": "Airplane type configuration",
       "AIRPLANE_TYPE_NAME": "Airplane name",
       "CABIN": "Cabin",
+      "CABINS": "Airplane cabins",
       "CAPACITY": "Capacity",
       "CARGO_PLANES": "Cargo plane",
       "COMMERCIAL": "Commercial",
       "DECOMMISSIONED": "Decommissioned",
+      "DETAILS_TITLE": "Detailed airplane information",
       "ERRORS": {
         "AIRPLANE_TYPE": {
           "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the airplane type. Please try again",
@@ -240,6 +251,8 @@
       "ERRORS": {
         "CREATION_FAILED_MESSAGE": "An error occurred while trying to create the flight. Please try again",
         "CREATION_FAILED_TITLE": "Error creating flight",
+        "INVALID_CABIN_PRICES_MESSAGE": "Cabin prices must be greater than 10€",
+        "INVALID_CABIN_PRICES_TITLE": "Invalid cabin prices",
         "INVALID_TIMES_MESSAGE": "Arrival time cannot be earlier than departure time",
         "INVALID_TIMES_TITLE": "Form error",
         "LOAD_FAILURE_MESSAGE": "Initial data could not be loaded",
@@ -250,14 +263,12 @@
         "MISSING_AIRLINE_TITLE": "Select an airline",
         "MISSING_AIRPORTS_MESSAGE": "You must select both departure and arrival airports",
         "MISSING_AIRPORTS_TITLE": "Select both airports",
+        "MISSING_MEALS_MESSAGE": "You must select at least one meal for the flight",
+        "MISSING_MEALS_TITLE": "Select meals",
         "REQUIRED_FIELDS_MESSAGE": "Please complete all required fields",
         "REQUIRED_FIELDS_TITLE": "Form error",
         "SAME_AIRPORTS_MESSAGE": "Departure and arrival airports cannot be the same",
-        "SAME_AIRPORTS_TITLE": "Same airports",
-        "INVALID_CABIN_PRICES_TITLE": "Invalid cabin prices",
-        "INVALID_CABIN_PRICES_MESSAGE": "Cabin prices must be greater than 10€",
-        "MISSING_MEALS_TITLE": "Select meals",
-        "MISSING_MEALS_MESSAGE": "You must select at least one meal for the flight"
+        "SAME_AIRPORTS_TITLE": "Same airports"
       },
       "MEALS": "Meals",
       "MEAL_NAME": "Meal name",
@@ -282,6 +293,10 @@
       "ARRIVAL": "Arrival date & time",
       "ARRIVAL_AIRPORT": "Arrival airport",
       "CABINS": "Airplane cabins",
+      "CABIN_AVAILABLE_SEATS": "Available seats in cabin",
+      "CABIN_PRICE": "Seat class price",
+      "CABIN_SEAT_CLASS": "Seat class",
+      "CABIN_TOTAL_SEATS": "Total seats in cabin",
       "CAPACITY": "Capacity",
       "CITY": "City",
       "CODE": "Flight code",
@@ -299,11 +314,7 @@
       "TERMINAL": "Terminals",
       "TITLE": "Flight details",
       "TYPE": "Type",
-      "WEBSITE": "Website",
-      "CABIN_SEAT_CLASS": "Seat class",
-      "CABIN_PRICE": "Seat class price",
-      "CABIN_TOTAL_SEATS": "Total seats in cabin",
-      "CABIN_AVAILABLE_SEATS": "Available seats in cabin"
+      "WEBSITE": "Website"
     },
     "HOTELS": {
       "ADDRESS": "Address",
@@ -454,366 +465,305 @@
     },
     "VIEW_IMAGE": "View image"
   },
-  "ACCOMMODATION": {
-    "POPULAR_DESTINATIONS": "Popular Destinations",
-    "EXPLORE_CITIES": "Explore the most visited cities",
-    "EXPLORE": "Explore",
-    "TOP_RATED": "Top Rated Accommodations",
-    "TOP_RATED_SUBTITLE": "Discover the places with the best reviews from our guests",
-    "FEATURED_PLACES": "Featured Places",
-    "FEATURED_SUBTITLE": "Unique experiences in extraordinary destinations",
-    "READY_TO_EXPLORE": "Ready for your next adventure?",
-    "TRANSITION_MESSAGE": "Thousands of unique accommodations await you. Find the perfect place to create unforgettable memories."
-  },
   "CLIENT": {
-     "ACCOMMODATION": {
-      "ERROR_UNKNOWN": "An unknown error occurred",
-      "FAVORITE_LOGIN_TITLE": "Login required",
-      "FAVORITE_LOGIN_MESSAGE": "You must log in to save accommodations to favorites",
-      "ERROR_INCOMPLETE": "Incomplete accommodation information",
-      "FAVORITE_ERROR_TITLE": "Error",
-      "FAVORITE_ERROR_MESSAGE": "Could not update favorite",
-      "LOADING": "Loading...",
-      "ERROR": "Error",
-      "IMAGE_ALT": "Image {{index}}",
-      "GALLERY_PHOTOS_COUNT": "+{{count}} photos",
-      "SECTION_APARTMENT": "Apartment Reservation",
-      "SECTION_HOTEL_ROOMS": "Available Rooms",
-      "APARTMENT_CAPACITY": "Capacity: {{capacity}} guests",
-      "IMMEDIATE_BOOKING": "Available for immediate booking",
-      "TAX_INCLUDED": "Taxes included",
-      "RESERVE_APARTMENT": "Reserve Entire Apartment",
-      "ROOM_TYPES_INFO": "Available room types: {{count}}",
-      "SELECT_AND_RESERVE_INFO": "Select quantity and reserve",
-      "RESERVE_SELECTION": "Reserve Selection",
-      "NO_AVAILABILITY": "No availability at this time.",
-      "AVAILABILITY": {
-        "LAST": "Last {{count}} rooms available!",
-        "FEW": "Few rooms left!",
-        "AVAILABLE": "Available"
-      },
-      "DESCRIPTION_TITLE": "Description",
-      "CONTACT_INFO_TITLE": "Contact Information",
+    "ACCOMMODATION": {
       "ADDRESS_LABEL": "Address",
-      "CITY_LABEL": "City",
-      "PHONE_LABEL": "Phone",
-      "EMAIL_LABEL": "Email",
       "AMENITIES_TITLE": "Services & Amenities",
+      "APARTMENT_CAPACITY": "Capacity: {{capacity}} guests",
+      "AVAILABILITY": {
+        "AVAILABLE": "Available",
+        "FEW": "Few rooms left!",
+        "LAST": "Last {{count}} rooms available!"
+      },
       "CAPACITY_LABEL": "Capacity: {{capacity}} guests",
-      "QUANTITY_LABEL": "Quantity",
-      "SWIPE_INFO": "Swipe horizontally to see all options",
-      "SELECT_INFO": "Select quantity and reserve",
-      "GALLERY_TITLE": "Image Gallery",
-      "GALLERY_NAVIGATION": "Use arrows or click thumbnails to navigate",
-      "REVIEWS_TITLE": "User Reviews",
-      "REVIEWS_SUBTITLE": "What other guests say",
-      "NO_REVIEWS": "No reviews yet",
-      "NO_REVIEWS_DESC": "Be the first to share your experience after your stay",
-      "WRITE_REVIEW_PROFILE": "Write a Review from your Profile",
-      "REVIEW_INFO": "Reviews can only be written after completing a stay and are managed from your profile",
-      "GO_TO_PROFILE": "Go to Profile",
-      "LOGIN_TO_REVIEW": "Log in to write a review",
-      "OVERALL_RATING": "Overall Rating",
-      "RATING_OUT_OF_10": "{{rating}} out of 10",
-      "REVIEW_DATE": "Review Date",
-      "VERIFIED_STAY": "Verified Stay",
-      "HELPFUL": "Helpful",
-      "REVIEWS_COUNT": "{{count}} reviews",
-      "SHOW_MORE": "Show More",
-      "SHOW_LESS": "Show Less",
-      "RATING_BREAKDOWN": "Rating Breakdown",
-      "EXCELLENT": "Excellent",
-      "VERY_GOOD": "Very Good",
-      "GOOD": "Good",
-      "REGULAR": "Regular",
-      "MALO": "Poor",
-      "DETAILED_RATINGS": "Detailed Ratings",
+      "CITY_LABEL": "City",
       "CLEANLINESS": "Cleanliness",
       "COMFORT": "Comfort",
-      "LOCATION": "Location",
-      "SERVICE": "Service",
-      "VALUE": "Value for Money",
-      "PROS_LABEL": "Best:",
       "CONS_LABEL": "To improve:",
+      "CONTACT_INFO_TITLE": "Contact Information",
+      "DESCRIPTION_TITLE": "Description",
+      "DETAILED_RATINGS": "Detailed Ratings",
+      "EMAIL_LABEL": "Email",
+      "ERROR": "Error",
+      "ERROR_INCOMPLETE": "Incomplete accommodation information",
+      "ERROR_LOADING": "Error loading reviews:",
+      "ERROR_UNKNOWN": "An unknown error occurred",
+      "EXCELLENT": "Excellent",
+      "FAVORITE_ERROR_MESSAGE": "Could not update favorite",
+      "FAVORITE_ERROR_TITLE": "Error",
+      "FAVORITE_LOGIN_MESSAGE": "You must log in to save accommodations to favorites",
+      "FAVORITE_LOGIN_TITLE": "Login required",
+      "GALLERY_NAVIGATION": "Use arrows or click thumbnails to navigate",
+      "GALLERY_PHOTOS_COUNT": "+{{count}} photos",
+      "GALLERY_TITLE": "Image Gallery",
+      "GOOD": "Good",
+      "GO_TO_PROFILE": "Go to Profile",
+      "HELPFUL": "Helpful",
+      "HELPFUL_ERROR_MESSAGE": "Could not mark review as helpful. Please try again.",
+      "HELPFUL_ERROR_TITLE": "Error",
+      "HELPFUL_SUCCESS_MESSAGE": "You have marked this review as helpful",
+      "HELPFUL_SUCCESS_TITLE": "Thank you!",
+      "HELPFUL_TOOLTIP": "Mark as helpful",
+      "IMAGE_ALT": "Image {{index}}",
+      "IMMEDIATE_BOOKING": "Available for immediate booking",
+      "LOADING": "Loading...",
+      "LOCATION": "Location",
+      "LOGIN_REQUIRED_MESSAGE": "You must be logged in to mark reviews as helpful",
+      "LOGIN_REQUIRED_TITLE": "Login Required",
+      "LOGIN_TOOLTIP": "Log in to mark as helpful",
+      "LOGIN_TO_REVIEW": "Log in to write a review",
+      "MALO": "Poor",
+      "NO_AVAILABILITY": "No availability at this time.",
+      "NO_REVIEWS": "No reviews yet",
+      "NO_REVIEWS_DESC": "Be the first to share your experience after your stay",
+      "OVERALL_RATING": "Overall Rating",
+      "PHONE_LABEL": "Phone",
+      "PROS_LABEL": "Best:",
+      "QUANTITY_LABEL": "Quantity",
+      "RATING_BREAKDOWN": "Rating Breakdown",
+      "RATING_OUT_OF_10": "{{rating}} out of 10",
+      "REGULAR": "Regular",
+      "RESERVE_APARTMENT": "Reserve Entire Apartment",
+      "RESERVE_SELECTION": "Reserve Selection",
+      "REVIEWS_COUNT": "{{count}} reviews",
+      "REVIEWS_SUBTITLE": "What other guests say",
+      "REVIEWS_TITLE": "User Reviews",
+      "REVIEW_DATE": "Review Date",
+      "REVIEW_INFO": "Reviews can only be written after completing a stay and are managed from your profile",
+      "ROOM_TYPES_INFO": "Available room types: {{count}}",
+      "SECTION_APARTMENT": "Apartment Reservation",
+      "SECTION_HOTEL_ROOMS": "Available Rooms",
+      "SELECT_AND_RESERVE_INFO": "Select quantity and reserve",
+      "SELECT_INFO": "Select quantity and reserve",
+      "SERVICE": "Service",
+      "SHOW_LESS": "Show Less",
+      "SHOW_MORE": "Show More",
       "SORT_OPTIONS": {
+        "HELPFUL": "Most helpful",
         "NEWEST": "Most recent",
         "OLDEST": "Oldest",
         "RATING_HIGH": "Best rated",
-        "RATING_LOW": "Lowest rated",
-        "HELPFUL": "Most helpful"
+        "RATING_LOW": "Lowest rated"
       },
-      "LOGIN_REQUIRED_TITLE": "Login Required",
-      "LOGIN_REQUIRED_MESSAGE": "You must be logged in to mark reviews as helpful",
-      "HELPFUL_SUCCESS_TITLE": "Thank you!",
-      "HELPFUL_SUCCESS_MESSAGE": "You have marked this review as helpful",
-      "HELPFUL_ERROR_TITLE": "Error",
-      "HELPFUL_ERROR_MESSAGE": "Could not mark review as helpful. Please try again.",
-      "LOGIN_TOOLTIP": "Log in to mark as helpful",
-      "HELPFUL_TOOLTIP": "Mark as helpful",
-      "ERROR_LOADING": "Error loading reviews:"
-    },
-    "COLLAGE": {
-      "SECTION_TITLE": "Suggested Destinations",
-      "LOADING": "Loading destinations...",
-      "ERROR_FETCH": "Error fetching destinations",
-      "ITEM": {
-        "FALLBACK_NAME": "Unnamed destination",
-        "DISCOVER": "Discover this destination"
-      }
-    },
-    "TOP_RATED": {
-      "SECTION_TITLE": "Top Rated Accommodations",
-      "LOADING": "Loading accommodations...",
-      "NO_DATA": "No accommodations available at the moment",
-      "ERROR_FETCH": "Error fetching top rated destinations"
+      "SWIPE_INFO": "Swipe horizontally to see all options",
+      "TAX_INCLUDED": "Taxes included",
+      "VALUE": "Value for Money",
+      "VERIFIED_STAY": "Verified Stay",
+      "VERY_GOOD": "Very Good",
+      "WRITE_REVIEW_PROFILE": "Write a Review from your Profile"
     },
     "AMENITIES": {
-      "SECTION_TITLE": "Services & Amenities",
       "OPTIONS": {
-        "WiFi": "Wi-Fi",
-        "Piscina": "Swimming Pool",
-        "Gimnasio": "Gym",
-        "Desayuno incluido": "Breakfast Included",
-        "TV por cable": "Cable TV",
-        "Estacionamiento": "Parking",
-        "Spa": "Spa",
-        "Restaurante": "Restaurant",
-        "Aire acondicionado": "Air Conditioning",
-        "Bar": "Bar",
-        "Lavandería": "Laundry",
-        "Servicio a la habitación": "Room Service",
-        "Caja fuerte": "Safe",
-        "Terraza": "Terrace",
-        "Jacuzzi": "Jacuzzi",
         "Accesibilidad": "Accessibility",
-        "Sala de conferencias": "Conference Room",
-        "Mascotas permitidas": "Pet Friendly",
-        "Servicio de limpieza": "Cleaning Service",
-        "Zona infantil": "Kids Area",
+        "Aire acondicionado": "Air Conditioning",
         "Ascensor": "Elevator",
-        "Seguridad 24h": "24h Security",
-        "Sauna": "Sauna",
+        "Bar": "Bar",
+        "Caja fuerte": "Safe",
+        "Desayuno incluido": "Breakfast Included",
+        "Estacionamiento": "Parking",
+        "Gimnasio": "Gym",
         "Gimnasio 24h": "24/7 Gym",
-        "Transporte al aeropuerto": "Airport Shuttle"
-      }
+        "Jacuzzi": "Jacuzzi",
+        "Lavandería": "Laundry",
+        "Mascotas permitidas": "Pet Friendly",
+        "Piscina": "Swimming Pool",
+        "Restaurante": "Restaurant",
+        "Sala de conferencias": "Conference Room",
+        "Sauna": "Sauna",
+        "Seguridad 24h": "24h Security",
+        "Servicio a la habitación": "Room Service",
+        "Servicio de limpieza": "Cleaning Service",
+        "Spa": "Spa",
+        "TV por cable": "Cable TV",
+        "Terraza": "Terrace",
+        "Transporte al aeropuerto": "Airport Shuttle",
+        "WiFi": "Wi-Fi",
+        "Zona infantil": "Kids Area"
+      },
+      "SECTION_TITLE": "Services & Amenities"
     },
     "BENEFITS": {
       "PAY_ON_SITE": {
-        "TITLE": "Book now, pay at the property",
-        "DESCRIPTION": "FREE cancellation on most rooms"
-      },
-      "WORLDWIDE": {
-        "TITLE": "Millions of properties worldwide",
-        "DESCRIPTION": "Hotels, hostels, apartments and more..."
+        "DESCRIPTION": "FREE cancellation on most rooms",
+        "TITLE": "Book now, pay at the property"
       },
       "SUPPORT24": {
-        "TITLE": "24/7 Customer Support",
-        "DESCRIPTION": "We're here when you need us"
+        "DESCRIPTION": "We're here when you need us",
+        "TITLE": "24/7 Customer Support"
+      },
+      "WORLDWIDE": {
+        "DESCRIPTION": "Hotels, hostels, apartments and more...",
+        "TITLE": "Millions of properties worldwide"
       }
-    },
-    "SEARCHBAR": {
-      "LABEL": {
-        "DESTINATION": "Destination",
-        "DATES": "Dates",
-        "GUESTS": "Guests"
-      },
-      "PLACEHOLDER": {
-        "DESTINATION": "Where are you going?",
-        "DATES": "Select dates",
-        "ADULTS": "Adults",
-        "CHILDREN": "Children",
-        "ROOMS": "Rooms"
-      },
-      "ACTIONS": {
-        "SEARCH": "Search",
-        "SEARCH_MOBILE": "Search accommodations",
-        "DONE": "Done"
-      },
-      "NOTIF": {
-        "INVALID_DEST": {
-          "TITLE": "Invalid data",
-          "MESSAGE": "Please enter a destination"
-        },
-        "INVALID_DATE": {
-          "TITLE": "Invalid date",
-          "PAST": "Check-in cannot be before today",
-          "ORDER": "Check-out must be after check-in"
-        }
-      }
-    },
-    "FILTERS": {
-      "MIN_PRICE": "Minimum",
-      "MAX_PRICE": "Maximum",
-      "STAR": "star",
-      "STARS": "stars",
-      "TITLE": "Filters",
-      "PRICE_RANGE": "Price Range",
-      "PRICE_MIN": 0,
-      "PRICE_MAX": 500,
-      "PRICE_STEP": 10,
-      "TYPE_TITLE": "Accommodation Type",
-      "TYPE_OPTIONS": {
-        "HOTEL": "Hotel",
-        "APARTMENT": "Apartment"
-      },
-      "STARS_TITLE": "Rating",
-      "STARS_SINGULAR": "star",
-      "STARS_PLURAL": "stars",
-      "AMENITIES_TITLE": "Amenities",
-      "AMENITIES_OPTIONS": {
-        "WiFi": "Wi-Fi",
-        "Piscina": "Swimming Pool",
-        "Gimnasio": "Gym",
-        "Desayuno incluido": "Breakfast Included",
-        "TV por cable": "Cable TV",
-        "Estacionamiento": "Parking",
-        "Spa": "Spa",
-        "Restaurante": "Restaurant",
-        "Aire acondicionado": "Air Conditioning",
-        "Bar": "Bar",
-        "Lavandería": "Laundry",
-        "Servicio a la habitación": "Room Service",
-        "Caja fuerte": "Safe",
-        "Terraza": "Terrace",
-        "Jacuzzi": "Jacuzzi",
-        "Accesibilidad": "Accessibility",
-        "Sala de conferencias": "Conference Room",
-        "Mascotas permitidas": "Pet Friendly",
-        "Servicio de limpieza": "Cleaning Service",
-        "Zona infantil": "Kids Area",
-        "Ascensor": "Elevator",
-        "Seguridad 24h": "24h Security",
-        "Sauna": "Sauna",
-        "Gimnasio 24h": "24/7 Gym",
-        "Transporte al aeropuerto": "Airport Shuttle"
-      }
-
     },
     "CARD": {
-      "TYPE_LABEL": "{{type}}",
-      "FROM_LABEL": "from",
-      "PER_NIGHT_LABEL": "per night",
       "FAVORITE_LABEL": "Add to favorites",
-      "UNFAVORITE_LABEL": "Remove from favorites",
+      "FROM_LABEL": "from",
       "NOTIF": {
-        "LOGIN_REQUIRED": {
-          "TITLE": "Login required",
-          "MESSAGE": "You must log in to save favorites"
-        },
         "ERROR": {
           "FAVORITE": {
-            "TITLE": "Error",
-            "MESSAGE": "Could not update favorite"
+            "MESSAGE": "Could not update favorite",
+            "TITLE": "Error"
           }
+        },
+        "LOGIN_REQUIRED": {
+          "MESSAGE": "You must log in to save favorites",
+          "TITLE": "Login required"
         }
-      }
+      },
+      "PER_NIGHT_LABEL": "per night",
+      "TYPE_LABEL": "{{type}}",
+      "UNFAVORITE_LABEL": "Remove from favorites"
     },
-    "PAYMENT": {
-      "TITLE": "Payment Method",
-      "ERROR": {
-        "TITLE": "Error",
-        "SUBMIT": "Error processing payment. Please try again."
+    "COLLAGE": {
+      "ERROR_FETCH": "Error fetching destinations",
+      "ITEM": {
+        "DISCOVER": "Discover this destination",
+        "FALLBACK_NAME": "Unnamed destination"
       },
-      "METHOD": {
-        "CARD": "Card",
-        "PAYPAL": "PayPal"
-      },
-      "CARD": {
-        "NUMBER_LABEL": "Card Number",
-        "PLACEHOLDER_NUMBER": "1234 5678 9012 3456",
-        "EXPIRY_LABEL": "Expiration",
-        "PLACEHOLDER_EXPIRY": "MM/YY",
-        "CVV_LABEL": "CVV",
-        "PLACEHOLDER_CVV": "123",
-        "HOLDER_LABEL": "Cardholder Name",
-        "PLACEHOLDER_HOLDER": "Name Surname",
-        "SECURE_NOTICE": "Secure card. Do not share your details.",
-        "FLIP_INSTRUCTION": "Click the card to flip",
-        "PAY_BUTTON": "Pay {{type}}"
-      },
-      "PAYPAL": {
-        "EMAIL_LABEL": "PayPal Email",
-        "PLACEHOLDER_EMAIL": "example@paypal.com",
-        "PASSWORD_LABEL": "PayPal Password",
-        "PLACEHOLDER_PASSWORD": "********",
-        "PAY_BUTTON": "Pay with PayPal"
-      }
+      "LOADING": "Loading destinations...",
+      "SECTION_TITLE": "Suggested Destinations"
     },
-    "RESERVATION": {
-      "LOADING": "Loading accommodation details…",
-      "ERROR": {
-        "NO_CODE": "No accommodation code provided",
-        "NO_DETAILS": "No accommodation details found",
-        "LOAD": "Error loading accommodation details",
-        "AVAILABILITY": "Error checking availability",
-        "DATES": "Please select check-in and check-out dates before continuing",
-        "NO_AVAIL": "No availability for the selected date range",
-        "TITLE": "Error"
+    "FILTERS": {
+      "AMENITIES_OPTIONS": {
+        "Accesibilidad": "Accessibility",
+        "Aire acondicionado": "Air Conditioning",
+        "Ascensor": "Elevator",
+        "Bar": "Bar",
+        "Caja fuerte": "Safe",
+        "Desayuno incluido": "Breakfast Included",
+        "Estacionamiento": "Parking",
+        "Gimnasio": "Gym",
+        "Gimnasio 24h": "24/7 Gym",
+        "Jacuzzi": "Jacuzzi",
+        "Lavandería": "Laundry",
+        "Mascotas permitidas": "Pet Friendly",
+        "Piscina": "Swimming Pool",
+        "Restaurante": "Restaurant",
+        "Sala de conferencias": "Conference Room",
+        "Sauna": "Sauna",
+        "Seguridad 24h": "24h Security",
+        "Servicio a la habitación": "Room Service",
+        "Servicio de limpieza": "Cleaning Service",
+        "Spa": "Spa",
+        "TV por cable": "Cable TV",
+        "Terraza": "Terrace",
+        "Transporte al aeropuerto": "Airport Shuttle",
+        "WiFi": "Wi-Fi",
+        "Zona infantil": "Kids Area"
       },
-      "BUTTON": {
-        "BACK": "Go Back",
-        "CONTINUE": "Continue to Payment",
-        "PAY": "Proceed to Secure Payment"
+      "AMENITIES_TITLE": "Amenities",
+      "MAX_PRICE": "Maximum",
+      "MIN_PRICE": "Minimum",
+      "PRICE_RANGE": "Price Range",
+      "STAR": "star",
+      "STARS": "stars",
+      "STARS_PLURAL": "stars",
+      "STARS_SINGULAR": "star",
+      "STARS_TITLE": "Rating",
+      "TITLE": "Filters",
+      "TYPE_OPTIONS": {
+        "APARTMENT": "Apartment",
+        "HOTEL": "Hotel"
       },
-      "TITLES": {
-        "DETAILS": "Reservation Details",
-        "PAY": "Complete Payment"
+      "TYPE_TITLE": "Accommodation Type"
+    },
+    "FLIGHTS": {
+      "AIRLINE": "Airline",
+      "ARRIVAL": "Time of arrival",
+      "ARRIVAL_CITY": "Arrival city",
+      "AVAILABLE_SEATS": "available seats",
+      "DEPATURE": "Time of departure",
+      "DEPATURE_CITY": "Departure city",
+      "DETAILS": "See details",
+      "DURATION": "Duration",
+      "ERRORS": {
+        "ERROR_LOADING": "An error occurred while trying to load the flights. Please try again",
+        "ERROR_SELECT_SEATS_MESSAGE": "You can only select up to 10 seats.",
+        "ERROR_SELECT_SEATS_TITLE": "Error selecting seats",
+        "LOADIN_DATA_FLIGHT": "Error loading flight data. Please try again",
+        "PURCHASE_MESSAGE_ERROR": "The purchase could not be completed. Please check your details and try again.",
+        "PURCHASE_TITLE_ERROR": "Ticket purchase error"
       },
-      "LABELS": {
-        "DATES": "Stay Dates",
-        "CHECKIN": "Check-in",
-        "CHECKOUT": "Check-out",
-        "APARTMENT": "Entire Apartment",
-        "ROOMS": "Selected Rooms",
-        "AVAILABILITY": "Availability",
-        "SUMMARY": "Reservation Summary",
-        "ACCOMMODATION": "Accommodation",
+      "FILTER": "Filters",
+      "FLIGHT_CODE": {
+        "ARRIVAL": "Time of arrival",
+        "ARRIVAL_DESTINATION": "Arrival city",
+        "AVAILABLE": "Available",
+        "CABINS_AVAILABLE": "Available cabins",
+        "CAPACITY": "Capacity",
+        "CHECK_OUT": {
+          "CLOSE": "Close",
+          "COLUMN": "Column",
+          "EMAIL": "Email",
+          "GO_TO_PAYMENT": "Go to payment",
+          "LOCATION": "Location",
+          "NAME": "Name",
+          "NEXT_PASSENGER": "Next passenger",
+          "NIF": "NIF",
+          "NOT_AVAILABLE": "N/A",
+          "NO_DATA": "No data",
+          "NO_PRICE": "No price",
+          "PASSENGER": "Passenger",
+          "PASSENGER_DETAILS": "Passenger details",
+          "PHONE": "Phone",
+          "PROCEED_TO_PAYMENT": "Proceed to payment",
+          "ROW": "Row",
+          "SEAT": "Seat",
+          "SEAT_CLASS_AND_PRICE": "Seat class and price",
+          "SEAT_SUMMARY_TITLE": "Seat Summary",
+          "SELECTED_SEATS": "Selected seats",
+          "SURNAME": "Surname",
+          "TITLE": "Checkout"
+        },
+        "CONTINUE": "Continue",
+        "DEPATURE": "Time of departure",
+        "DEPATURE_DESTINATION": "Departure city",
+        "DETAILS": "Airplane details",
+        "EMPTY_SELECTION": "Empty selection",
+        "MANUFACTURER": "Manufacturer",
+        "MAX_SEATS": "Maximum 10 seats. Click to select or deselect",
+        "MEALS_AVAILABLE": "Available meals",
+        "OCCUPIED": "Occupied",
+        "PASSENGERS": "passengers",
+        "PRICE": "Price",
+        "REGISTRATION": "Registration",
+        "SEAT": "Seat",
+        "SEATS_AVAILABLE": "Available seats",
+        "SELECTED": "Selected",
+        "SELECT_YOUR_SEAT": "Select your seat",
+        "STATUS": "Status",
         "TYPE": "Type",
-        "TOTAL": "Total"
+        "VIEW_SELECTION": "View selection",
+        "YEAR": "Year",
+        "YOUR_SEATS": "Your seats"
       },
-      "MSG": {
-        "APARTMENT_FULL": "You will reserve the entire apartment for the selected dates.",
-        "ROOMS": "Individual rooms",
-        "CAPACITY": "Capacity"
-      },
-      "DEFAULT": {
-        "ROOM_TYPE": "Standard"
-      },
-      "STEPS": {
-        "Seleccion": "Selection",
-        "Detalles": "Details",
-        "Pago": "Payment"
+      "LAST_SEATS_1": "Last",
+      "LAST_SEATS_2": "seats!",
+      "LOWEST_PRICE": "Cheapest seat prices",
+      "NEXT_FLIGHT": "Find your next flight",
+      "NO_SEATS": "No seats available",
+      "RESET": "Reset search",
+      "SEARCH": "Search flights",
+      "SUCCESS": {
+        "PURCHASE_MESSAGE_SUCCESS": "The tickets have been purchased successfully. Check your email for more details.",
+        "PURCHASE_TITLE_SUCCESS": "Purchase successful"
       }
     },
-    "RESULTS": {
-      "HEADING": "Results for {{destination}}",
-      "ALL_DESTINATIONS": "all destinations",
-      "RESULTS_FOUND": "results found",
-      "LOADING": "Loading accommodations...",
-      "NO_RESULTS": "No results found",
-      "NO_RESULTS_DESC": "Try adjusting your filters or search",
-      "SHOWING": "Showing",
-      "RESULTS": "results",
-      "SORT": {
-        "RELEVANCE": "Relevance",
-        "PRICE_LOW": "Price: Low to High",
-        "PRICE_HIGH": "Price: High to Low", 
-        "RATING": "Best Rated",
-        "NAME": "Name A-Z"
-      },
-      "FILTERS": {
-        "SHOW": "Show filters",
-        "HIDE": "Hide filters",
-        "TITLE": "Filters"
-      },
-      "ERROR": {
-        "LOAD": "We couldn't load accommodations. Please try again.",
-        "TITLE": "Error"
-      }
-    },
-    "NAVIGATION": {
-      "FLIGHT": "Flight",
-      "HOME": "Home"
+    "FOOTER": {
+      "ABOUT": "About us",
+      "ACCOMMODATION": "Accommodation",
+      "CONTACT": "Contact",
+      "COOKIES_POLICY": "Cookie policy",
+      "EMAIL": "Email",
+      "EXPLORE": "Explore",
+      "FLIGHTS": "Flights",
+      "FOLLOW_US": "Follow us on",
+      "LEGAL": "Legal",
+      "LEGAL_NOTICE": "Legal notice",
+      "PRIVACY_POLICY": "Privacy policy",
+      "TERMS_OF_SERVICE": "Terms of Service",
+      "TITLE": "All rights reserved."
     },
     "LOGIN": {
       "CLICK_HERE": "Click here",
@@ -841,6 +791,71 @@
       },
       "PASSWORD": "Password",
       "START_TEXT": "Your journey starts here. Come in!"
+    },
+    "NAVIGATION": {
+      "FLIGHT": "Flight",
+      "HOME": "Home"
+    },
+    "PAYMENT": {
+      "CARD": {
+        "CVV_LABEL": "CVV",
+        "EXPIRY_LABEL": "Expiration",
+        "FLIP_INSTRUCTION": "Click the card to flip",
+        "HOLDER_LABEL": "Cardholder Name",
+        "NUMBER_LABEL": "Card Number",
+        "PAY_BUTTON": "Pay {{type}}",
+        "PLACEHOLDER_CVV": "123",
+        "PLACEHOLDER_EXPIRY": "MM/YY",
+        "PLACEHOLDER_HOLDER": "Name Surname",
+        "PLACEHOLDER_NUMBER": "1234 5678 9012 3456",
+        "SECURE_NOTICE": "Secure card. Do not share your details."
+      },
+      "ERROR": {
+        "SUBMIT": "Error processing payment. Please try again.",
+        "TITLE": "Error"
+      },
+      "METHOD": {
+        "CARD": "Card",
+        "PAYPAL": "PayPal"
+      },
+      "PAYPAL": {
+        "EMAIL_LABEL": "PayPal Email",
+        "PASSWORD_LABEL": "PayPal Password",
+        "PAY_BUTTON": "Pay with PayPal",
+        "PLACEHOLDER_EMAIL": "example@paypal.com",
+        "PLACEHOLDER_PASSWORD": "********"
+      },
+      "TITLE": "Payment Method"
+    },
+    "PAYMENT_GATEWAY": {
+      "CARD": "Card",
+      "CARD_HOLDER": {
+        "LABEL": "Card Holder Name",
+        "PLACEHOLDER": "Juan Ávila"
+      },
+      "CARD_NUMBER": {
+        "LABEL": "Card Number",
+        "PLACEHOLDER": "1234 5678 9012 3456"
+      },
+      "CVV": {
+        "LABEL": "CVV",
+        "PLACEHOLDER": "123"
+      },
+      "EXPIRY_DATE": {
+        "LABEL": "Expiry Date",
+        "PLACEHOLDER": "MM/YY"
+      },
+      "FLIP_CARD": "Click on the logo to switch cards",
+      "PAYPAL": "PayPal",
+      "PAYPAL_EMAIL": {
+        "LABEL": "PayPal Email",
+        "PLACEHOLDER": "example@paypal.com"
+      },
+      "PAYPAL_PASSWORD": {
+        "LABEL": "PayPal Password",
+        "PLACEHOLDER": "********"
+      },
+      "SECURE_CARD_MESSAGE": "This is a secure card. Do not share your details."
     },
     "REGISTER": {
       "ACCOUNT_STEP": {
@@ -919,10 +934,10 @@
         },
         "NIF": {
           "INVALID": "NIF number format is invalid",
+          "INVALID_DATA": "NIF number or letter is invalid",
           "LABEL": "NIF Number: *",
           "PLACEHOLDER": "NIF Number",
-          "REQUIRED": "NIF number is required",
-          "INVALID_DATA": "NIF number or letter is invalid"
+          "REQUIRED": "NIF number is required"
         },
         "PHONE": {
           "INVALID": "Phone number format is invalid",
@@ -942,6 +957,114 @@
       "SUBTITLE": "Fill all form fields to go to next step",
       "TITLE": "Sign Up Your User Account"
     },
+    "RESERVATION": {
+      "BUTTON": {
+        "BACK": "Go Back",
+        "CONTINUE": "Continue to Payment",
+        "PAY": "Proceed to Secure Payment"
+      },
+      "DEFAULT": {
+        "ROOM_TYPE": "Standard"
+      },
+      "ERROR": {
+        "AVAILABILITY": "Error checking availability",
+        "DATES": "Please select check-in and check-out dates before continuing",
+        "LOAD": "Error loading accommodation details",
+        "NO_AVAIL": "No availability for the selected date range",
+        "NO_CODE": "No accommodation code provided",
+        "NO_DETAILS": "No accommodation details found",
+        "TITLE": "Error"
+      },
+      "LABELS": {
+        "ACCOMMODATION": "Accommodation",
+        "APARTMENT": "Entire Apartment",
+        "AVAILABILITY": "Availability",
+        "CHECKIN": "Check-in",
+        "CHECKOUT": "Check-out",
+        "DATES": "Stay Dates",
+        "ROOMS": "Selected Rooms",
+        "SUMMARY": "Reservation Summary",
+        "TOTAL": "Total",
+        "TYPE": "Type"
+      },
+      "LOADING": "Loading accommodation details…",
+      "MSG": {
+        "APARTMENT_FULL": "You will reserve the entire apartment for the selected dates.",
+        "CAPACITY": "Capacity",
+        "ROOMS": "Individual rooms"
+      },
+      "STEPS": {
+        "Detalles": "Details",
+        "Pago": "Payment",
+        "Seleccion": "Selection"
+      },
+      "TITLES": {
+        "DETAILS": "Reservation Details",
+        "PAY": "Complete Payment"
+      }
+    },
+    "RESTORE_PASSWORD": {
+      "ADD_EMAIL": "Please enter your email address to receive a verification code.",
+      "EMAIL": "Email",
+      "NEW_PASSWORD": "Set new password",
+      "RECOVER_PASSWORD": "Recover password"
+    },
+    "RESULTS": {
+      "ALL_DESTINATIONS": "all destinations",
+      "ERROR": {
+        "LOAD": "We couldn't load accommodations. Please try again.",
+        "TITLE": "Error"
+      },
+      "FILTERS": {
+        "HIDE": "Hide filters",
+        "SHOW": "Show filters",
+        "TITLE": "Filters"
+      },
+      "HEADING": "Results for {{destination}}",
+      "LOADING": "Loading accommodations...",
+      "NO_RESULTS": "No results found",
+      "NO_RESULTS_DESC": "Try adjusting your filters or search",
+      "RESULTS": "results",
+      "RESULTS_FOUND": "results found",
+      "SHOWING": "Showing",
+      "SORT": {
+        "NAME": "Name A-Z",
+        "PRICE_HIGH": "Price: High to Low",
+        "PRICE_LOW": "Price: Low to High",
+        "RATING": "Best Rated",
+        "RELEVANCE": "Relevance"
+      }
+    },
+    "SEARCHBAR": {
+      "ACTIONS": {
+        "DONE": "Done",
+        "SEARCH": "Search",
+        "SEARCH_MOBILE": "Search accommodations"
+      },
+      "LABEL": {
+        "DATES": "Dates",
+        "DESTINATION": "Destination",
+        "GUESTS": "Guests"
+      },
+      "NOTIF": {
+        "INVALID_DATE": {
+          "ORDER": "Check-out must be after check-in",
+          "PAST": "Check-in cannot be before today",
+          "TITLE": "Invalid date"
+        },
+        "INVALID_DEST": {
+          "MESSAGE": "Please enter a destination",
+          "TITLE": "Invalid data"
+        }
+      },
+      "PLACEHOLDER": {
+        "ADULTS": "Adults",
+        "CHILDREN": "Children",
+        "DATES": "Select dates",
+        "DESTINATION": "Where are you going?",
+        "ROOMS": "Rooms"
+      }
+    },
     "SIDEBAR": {
       "ACCOMMODATIONS": "Accommodations",
       "FLIGHTS": "Flights",
@@ -957,187 +1080,66 @@
       "REGISTER": "Register",
       "WELCOME": "Welcome"
     },
-    "FOOTER": {
-      "ABOUT": "About us",
-      "CONTACT": "Contact",
-      "EMAIL": "Email",
-      "FOLLOW_US": "Follow us on",
-      "PRIVACY_POLICY": "Privacy policy",
-      "COOKIES_POLICY": "Cookie policy",
-      "LEGAL_NOTICE": "Legal notice",
-      "TERMS_OF_SERVICE": "Terms of Service",
-      "EXPLORE": "Explore",
-      "FLIGHTS": "Flights",
-      "ACCOMMODATION": "Accommodation",
-      "TITLE": "All rights reserved.",
-      "LEGAL": "Legal"
-    },
-    "FLIGHTS": {
-      "LOWEST_PRICE": "Cheapest seat prices",
-      "DEPATURE": "Time of departure",
-      "ARRIVAL": "Time of arrival",
-      "DEPATURE_CITY": "Departure city",
-      "ARRIVAL_CITY": "Arrival city",
-      "DURATION": "Duration",
-      "AIRLINE": "Airline",
-      "DETAILS": "See details",
-      "NO_SEATS": "No seats available",
-      "LAST_SEATS_1": "Last",
-      "LAST_SEATS_2": "seats!",
-      "AVAILABLE_SEATS": "available seats",
-      "NEXT_FLIGHT": "Find your next flight",
-      "SEARCH": "Search flights",
-      "RESET": "Reset search",
-      "FILTER": "Filters",
-      "FLIGHT_CODE": {
-        "STATUS": "Status",
-        "DETAILS": "Airplane details",
-        "TYPE": "Type",
-        "REGISTRATION": "Registration",
-        "CAPACITY": "Capacity",
-        "PASSENGERS": "passengers",
-        "YEAR": "Year",
-        "DEPATURE_DESTINATION": "Departure city",
-        "ARRIVAL_DESTINATION": "Arrival city",
-        "DEPATURE": "Time of departure",
-        "ARRIVAL": "Time of arrival",
-        "MANUFACTURER": "Manufacturer",
-        "MEALS_AVAILABLE": "Available meals",
-        "CABINS_AVAILABLE": "Available cabins",
-        "PRICE": "Price",
-        "SEATS_AVAILABLE": "Available seats",
-        "SELECT_YOUR_SEAT": "Select your seat",
-        "MAX_SEATS": "Maximum 10 seats. Click to select or deselect",
-        "SELECTED": "Selected",
-        "AVAILABLE": "Available",
-        "OCCUPIED": "Occupied",
-        "VIEW_SELECTION": "View selection",
-        "YOUR_SEATS": "Your seats",
-        "SEAT": "Seat",
-        "EMPTY_SELECTION": "Empty selection",
-        "CONTINUE": "Continue",
-        "CHECK_OUT": {
-          "TITLE": "Checkout",
-          "SEAT_SUMMARY_TITLE": "Seat Summary",
-          "PASSENGER_DETAILS": "Passenger details",
-          "NAME": "Name",
-          "SURNAME": "Surname",
-          "EMAIL": "Email",
-          "NIF": "NIF",
-          "PHONE": "Phone",
-          "NO_DATA": "No data",
-          "NEXT_PASSENGER": "Next passenger",
-          "GO_TO_PAYMENT": "Go to payment",
-          "LOCATION": "Location",
-          "ROW": "Row",
-          "COLUMN": "Column",
-          "SEAT_CLASS_AND_PRICE": "Seat class and price",
-          "NOT_AVAILABLE": "N/A",
-          "NO_PRICE": "No price",
-          "PROCEED_TO_PAYMENT": "Proceed to payment",
-          "CLOSE": "Close",
-          "PASSENGER": "Passenger",
-          "SELECTED_SEATS": "Selected seats",
-          "SEAT": "Seat"
-        }
-      },
-      "ERRORS": {
-        "ERROR_LOADING": "An error occurred while trying to load the flights. Please try again",
-        "PURCHASE_TITLE_ERROR": "Ticket purchase error",
-        "PURCHASE_MESSAGE_ERROR": "The purchase could not be completed. Please check your details and try again.",
-        "ERROR_SELECT_SEATS_TITLE": "Error selecting seats",
-        "ERROR_SELECT_SEATS_MESSAGE": "You can only select up to 10 seats.",
-        "LOADIN_DATA_FLIGHT": "Error loading flight data. Please try again"
-      },
-      "SUCCESS": {
-        "PURCHASE_TITLE_SUCCESS": "Purchase successful",
-        "PURCHASE_MESSAGE_SUCCESS": "The tickets have been purchased successfully. Check your email for more details."
-      }
-    },
-    "PAYMENT_GATEWAY": {
-      "CARD": "Card",
-      "PAYPAL": "PayPal",
-      "CARD_NUMBER": {
-        "LABEL": "Card Number",
-        "PLACEHOLDER": "1234 5678 9012 3456"
-      },
-      "EXPIRY_DATE": {
-        "LABEL": "Expiry Date",
-        "PLACEHOLDER": "MM/YY"
-      },
-      "CVV": {
-        "LABEL": "CVV",
-        "PLACEHOLDER": "123"
-      },
-      "CARD_HOLDER": {
-        "LABEL": "Card Holder Name",
-        "PLACEHOLDER": "Juan Ávila"
-      },
-      "PAYPAL_EMAIL": {
-        "LABEL": "PayPal Email",
-        "PLACEHOLDER": "example@paypal.com"
-      },
-      "PAYPAL_PASSWORD": {
-        "LABEL": "PayPal Password",
-        "PLACEHOLDER": "********"
-      },
-      "FLIP_CARD": "Click on the logo to switch cards",
-      "SECURE_CARD_MESSAGE": "This is a secure card. Do not share your details."
+    "TOP_RATED": {
+      "ERROR_FETCH": "Error fetching top rated destinations",
+      "LOADING": "Loading accommodations...",
+      "NO_DATA": "No accommodations available at the moment",
+      "SECTION_TITLE": "Top Rated Accommodations"
     }
   },
   "CODE_VALIDATION": {
-    "TITLE": "Verification Code",
-    "SUBTITLE": "Enter the 6-digit code sent to your email:",
     "BUTTONS": {
-      "VERIFY": "Verify Code",
       "LOADING": "Verifying...",
-      "RESEND": "Resend Code"
+      "RESEND": "Resend Code",
+      "VERIFY": "Verify Code"
     },
     "NOTIFICATIONS": {
-      "VALIDATION_ERROR": {
-        "TITLE": "Validation Error",
-        "MESSAGE": "Please enter the complete 6-digit code"
-      },
-      "SUCCESS": {
-        "TITLE": "Verification Successful",
-        "MESSAGE": "Your email has been successfully verified"
-      },
       "ERROR": {
-        "TITLE": "Verification Error",
-        "MESSAGE": "Invalid verification code. Please try again"
-      },
-      "SEND_SUCCESS": {
-        "TITLE": "Code Sent",
-        "MESSAGE": "A verification code has been sent to your email"
-      },
-      "SEND_ERROR": {
-        "TITLE": "Send Error",
-        "MESSAGE": "Could not send a new code. Please try again later"
-      },
-      "RESEND_SUCCESS": {
-        "TITLE": "Code Resent",
-        "MESSAGE": "A new verification code has been sent to your email"
-      },
-      "RESEND_ERROR": {
-        "TITLE": "Resend Error",
-        "MESSAGE": "Could not send a new code. Please try again later"
+        "MESSAGE": "Invalid verification code. Please try again",
+        "TITLE": "Verification Error"
       },
       "PASSWORD_CHANGED": {
-        "TITLE": "Password changed",
-        "MESSAGE": "Your password has been change successfully"
+        "MESSAGE": "Your password has been change successfully",
+        "TITLE": "Password changed"
       },
       "PASSWORD_CHANGED_ERROR": {
-        "TITLE": "Password changed Error",
-        "MESSAGE": "There was a problem changing your password"
+        "MESSAGE": "There was a problem changing your password",
+        "TITLE": "Password changed Error"
+      },
+      "RESEND_ERROR": {
+        "MESSAGE": "Could not send a new code. Please try again later",
+        "TITLE": "Resend Error"
+      },
+      "RESEND_SUCCESS": {
+        "MESSAGE": "A new verification code has been sent to your email",
+        "TITLE": "Code Resent"
+      },
+      "SEND_ERROR": {
+        "MESSAGE": "Could not send a new code. Please try again later",
+        "TITLE": "Send Error"
+      },
+      "SEND_SUCCESS": {
+        "MESSAGE": "A verification code has been sent to your email",
+        "TITLE": "Code Sent"
+      },
+      "SUCCESS": {
+        "MESSAGE": "Your email has been successfully verified",
+        "TITLE": "Verification Successful"
+      },
+      "VALIDATION_ERROR": {
+        "MESSAGE": "Please enter the complete 6-digit code",
+        "TITLE": "Validation Error"
       }
     },
     "RESEND_MODAL": {
-      "TITLE": "Resend Verification Code",
-      "SUBTITLE": "Enter your email address to receive a new verification code",
+      "CANCEL": "Cancel",
       "EMAIL_PLACEHOLDER": "Enter your email",
       "SEND": "Send Code",
-      "CANCEL": "Cancel"
-    }
+      "SUBTITLE": "Enter your email address to receive a new verification code",
+      "TITLE": "Resend Verification Code"
+    },
+    "SUBTITLE": "Enter the 6-digit code sent to your email:",
+    "TITLE": "Verification Code"
   },
   "ENGLISH": "English ",
   "FAQ": {
@@ -1145,16 +1147,16 @@
     "ANSWER_2": "You can leave a review after you’ve completed your flight or finished your stay at the hotel or apartment. Reviews help other users make better decisions.",
     "ANSWER_3": "Yes, check-in is mandatory before your flight. You need to complete it to confirm your attendance, select or confirm your seat, and get your boarding pass.",
     "ANSWER_4": "Yes, you can manage your reservations from your profile. Change or cancellation policies depend on the provider (airline, hotel, or apartment).",
+    "ANSWER_5": "Depending on your destination, you will need a passport or national ID card. Always check the specific requirements of the country.",
+    "ANSWER_6": "You can use the 'Forgot Password' option on the login page to receive a recovery link via email.",
+    "ANSWER_7": "Yes, you can book for others, just make sure to enter the correct details of the person who will travel or stay.",
     "QUESTION_1": "How can I book a flight?",
     "QUESTION_2": "When can I leave a review?",
     "QUESTION_3": "Is check-in necessary?",
     "QUESTION_4": "Can I change or cancel a reservation?",
     "QUESTION_5": "What documents do I need to travel?",
-    "ANSWER_5": "Depending on your destination, you will need a passport or national ID card. Always check the specific requirements of the country.",
     "QUESTION_6": "How can I recover my password if I forget it?",
-    "ANSWER_6": "You can use the 'Forgot Password' option on the login page to receive a recovery link via email.",
     "QUESTION_7": "Can I book flights or accommodations for other people?",
-    "ANSWER_7": "Yes, you can book for others, just make sure to enter the correct details of the person who will travel or stay.",
     "TITLE": "Frequently asked questions"
   },
   "FORBIDDEN": {
@@ -1163,44 +1165,44 @@
     "TITLE": "Access denied"
   },
   "HOME": {
-    "WELCOME": "Welcome to SkyStay",
-    "SEARCH_BAR": {
-      "IDEAL_FLIGHT": "Find your ideal flight",
-      "PERFECT_ACCOMMODATION": "Find your perfect accommodation",
-      "FLIGHTS": "Flights",
-      "ACCOMMODATION": "Accommodation",
-      "ORIGIN": "Origin",
-      "CITY_HOTEL_OR_APPARTMENT": "City, hotel or flat",
-      "DESTINATION": "Destination",
-      "DATE_OF_ARRIVAL": "Date of arrival",
-      "SEARCH_FLIGHTS": "Search for flights",
-      "SEARCH_ACCOMMODATION": "Search for accommodation"
-    },
     "BENEFITS": {
-      "TITLE": "Why choose our platform?",
       "DESCRIPTION": "We help you plan your ideal trip with smart, secure and fast tools.",
       "FIRST": {
-        "TITLE": "Best prices",
-        "DESCRIPTION": "Compare between different airlines and accommodations to find the best deal."
-      },
-      "SECOND": {
-        "TITLE": "Accommodation for everyone",
-        "DESCRIPTION": "From hotels to flats, with real reviews and affordable prices."
-      },
-      "THIRD": {
-        "TITLE": "Secure payments",
-        "DESCRIPTION": "We protect your data with encryption and trusted payment methods."
+        "DESCRIPTION": "Compare between different airlines and accommodations to find the best deal.",
+        "TITLE": "Best prices"
       },
       "FOURTH": {
-        "TITLE": "Smooth experience",
-        "DESCRIPTION": "Fast and clear interface to make booking simple and hassle-free."
-      }
+        "DESCRIPTION": "Fast and clear interface to make booking simple and hassle-free.",
+        "TITLE": "Smooth experience"
+      },
+      "SECOND": {
+        "DESCRIPTION": "From hotels to flats, with real reviews and affordable prices.",
+        "TITLE": "Accommodation for everyone"
+      },
+      "THIRD": {
+        "DESCRIPTION": "We protect your data with encryption and trusted payment methods.",
+        "TITLE": "Secure payments"
+      },
+      "TITLE": "Why choose our platform?"
     },
     "CALL_TO_ACTION": {
-      "TITLE": "Explore the world with us",
+      "MOST_VISITED_DESTINATIONS": "Some of the most visited destinations by our travellers:",
       "SUBTITLE": "Plan your ideal trip from a single platform. Find flights, accommodation and personalised recommendations. Easy, fast and reliable.",
-      "MOST_VISITED_DESTINATIONS": "Some of the most visited destinations by our travellers:"
-    }
+      "TITLE": "Explore the world with us"
+    },
+    "SEARCH_BAR": {
+      "ACCOMMODATION": "Accommodation",
+      "CITY_HOTEL_OR_APPARTMENT": "City, hotel or flat",
+      "DATE_OF_ARRIVAL": "Date of arrival",
+      "DESTINATION": "Destination",
+      "FLIGHTS": "Flights",
+      "IDEAL_FLIGHT": "Find your ideal flight",
+      "ORIGIN": "Origin",
+      "PERFECT_ACCOMMODATION": "Find your perfect accommodation",
+      "SEARCH_ACCOMMODATION": "Search for accommodation",
+      "SEARCH_FLIGHTS": "Search for flights"
+    },
+    "WELCOME": "Welcome to SkyStay"
   },
   "NOT_FOUND": {
     "BUTTON": "Go back to the previous page",
