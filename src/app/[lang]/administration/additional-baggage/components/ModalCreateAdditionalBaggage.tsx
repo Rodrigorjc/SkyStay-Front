@@ -3,7 +3,6 @@ import { InputWithLabel, InputWithLabelAndSymbol } from "@/app/components/ui/adm
 import Modal from "@/app/components/ui/admin/Modal";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 import Button from "@/app/components/ui/Button";
-import Pagination from "@/app/components/ui/Pagination";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -55,7 +54,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
       }
     }
     fetchData();
-  }, []);
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
 
   const onSubmit = async (data: AdditonalBaggageFormValues) => {
     try {
@@ -93,7 +92,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         {step === 1 && (
           <Card>
             <CardHeader color="glacier" className="pt-4">
