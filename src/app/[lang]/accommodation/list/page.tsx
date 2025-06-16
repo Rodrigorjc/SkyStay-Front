@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import AccommodationCard from "../components/AccommodationCard";
 import AccommodationFilters from "../components/AccommodationFilters";
@@ -29,20 +29,19 @@ export default function Results() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState<string>("relevance");
 
-  const params = Object.fromEntries(searchParams as any);
-
   useEffect(() => {
     const loadAccommodations = async () => {
       try {
         setLoading(true);
-        const data = await fetchAccommodations(params);
+        // Crear params aquí directamente
+        const currentParams = Object.fromEntries(searchParams as any);
+        const data = await fetchAccommodations(currentParams);
         setAccommodations(data);
         setFilteredAccommodations(data);
         setIsFiltered(false);
         setError(null);
-        // NO resetear el sortBy aquí
       } catch (err) {
-        setError(dict?.CLIENT.RESULTS.ERROR.LOAD || "");
+        setError(dict?.CLIENT?.RESULTS?.ERROR?.LOAD || "Error loading accommodations");
         setAccommodations([]);
         setFilteredAccommodations([]);
       } finally {
@@ -50,8 +49,16 @@ export default function Results() {
       }
     };
 
-    loadAccommodations();
-  }, [searchParams, params, dict?.CLIENT.RESULTS.ERROR.LOAD]); // NO incluir sortBy como dependencia
+    // Solo ejecutar si dict está disponible
+    if (dict) {
+      loadAccommodations();
+    }
+  }, [searchParams, dict]); // Solo searchParams y dict
+
+  // Crear params solo cuando se necesite para display
+  const params = useMemo(() => {
+    return Object.fromEntries(searchParams as any);
+  }, [searchParams]);
 
   // Función de ordenación corregida
   const handleSort = useCallback(
