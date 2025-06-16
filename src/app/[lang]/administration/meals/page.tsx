@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loader from "@/app/components/ui/Loader";
 import Pagination from "@/app/components/ui/Pagination";
 import { useDictionary } from "@/app/context/DictionaryContext";
@@ -27,7 +27,7 @@ export default function FlightsPage() {
   const [isCreating, setIsCreating] = useState(false);
   const handleCreate = () => setIsCreating(true);
 
-  const fetchMeals = async () => {
+  const fetchMeals = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllMeals(20, page);
@@ -43,11 +43,11 @@ export default function FlightsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, page]);
 
   useEffect(() => {
     fetchMeals();
-  }, [page]);
+  }, [page, fetchMeals]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);

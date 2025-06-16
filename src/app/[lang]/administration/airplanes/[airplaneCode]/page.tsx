@@ -1,8 +1,7 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
-import { use, useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AirplaneAllCodeVO, Cabin } from "./types/airplane.info";
 import Loader from "@/app/components/ui/Loader";
 import { getBasicInfoByCode, getCabinsWithSeatsByAirplaneCode } from "./services/airplane.info.service";
@@ -13,7 +12,7 @@ import { Title } from "../../components/Title";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import Link from "next/link";
 
-export default function airplaneCodePage({ params }: { params: Promise<{ airplaneCode: string }> }) {
+export default function AirplaneCodePage({ params }: { params: Promise<{ airplaneCode: string }> }) {
   const { dict } = useDictionary();
   const lang = useLanguage();
   const { airplaneCode } = React.use(params);
@@ -23,23 +22,23 @@ export default function airplaneCodePage({ params }: { params: Promise<{ airplan
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await getBasicInfoByCode(airplaneCode);
+      setAirplaneBasicInfo(data);
+      const cabinData = await getCabinsWithSeatsByAirplaneCode(airplaneCode);
+      setCabinDetails(cabinData);
+    } catch (error) {
+      console.error("Error fetching airplane data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [airplaneCode]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const data = await getBasicInfoByCode(airplaneCode);
-        setAirplaneBasicInfo(data);
-        const cabinData = await getCabinsWithSeatsByAirplaneCode(airplaneCode);
-        setCabinDetails(cabinData);
-        console.log("Basic Info:", cabinData);
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
-  }, []);
+  }, [fetchData, airplaneCode]);
 
   return (
     <>

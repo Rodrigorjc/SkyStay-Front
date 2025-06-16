@@ -1,6 +1,7 @@
 import "../globals.css";
 import { notFound } from "next/navigation";
 import { DictionaryProvider } from "@context";
+import Script from "next/script";
 
 const SUPPORTED_LANGUAGES = ["en", "es"];
 
@@ -19,7 +20,7 @@ export default async function LangLayout({ children, params }: { children: React
     <html lang={lang}>
       <head>
         <link rel="icon" href="/favicon.png" />
-        <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+        <Script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></Script>
         <title>SkyStay</title>
       </head>
       <body className="bg-zinc-800">

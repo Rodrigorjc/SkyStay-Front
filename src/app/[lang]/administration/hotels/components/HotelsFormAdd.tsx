@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { set, z } from "zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,7 +63,7 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
 
   const { dict } = useDictionary();
 
-  const fetchCities = async () => {
+  const fetchCities = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllCitiesPaginated(20, page);
@@ -80,9 +80,9 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE]);
 
-  const fetchRoomConfigurations = async () => {
+  const fetchRoomConfigurations = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllRoomConfigurations();
@@ -97,12 +97,12 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE]);
 
   useEffect(() => {
     fetchCities();
     fetchRoomConfigurations();
-  }, [page]);
+  }, [page, fetchCities, fetchRoomConfigurations]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -150,7 +150,7 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     }
   };
 
-  const fetchRoomTypes = async () => {
+  const fetchRoomTypes = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllRoomType();
@@ -165,11 +165,11 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_TITLE, dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_MESSAGE]);
 
   useEffect(() => {
     fetchRoomTypes();
-  }, []);
+  }, [fetchRoomTypes]);
 
   useEffect(() => {
     const rooms = Array.from({ length: roomTypeCount }).map(() => ({
@@ -181,7 +181,7 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
   }, [roomTypeCount, setValue]);
 
   return (
-    <Modal onSubmit={e => e.preventDefault()} onClose={onClose}>
+    <Modal onClose={onClose}>
       {step === 1 && (
         <Card>
           <CardHeader color="glacier">{dict.ADMINISTRATION.HOTELS.INFO}</CardHeader>

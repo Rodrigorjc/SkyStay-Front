@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 interface LocationSelectorProps {
-  onChange: (latlng: { lat: number; lng: number }) => void;
+  onChange: Function;
   initialPosition?: { lat: number; lng: number };
 }
 
@@ -14,10 +14,12 @@ export default function LocationSelector({ onChange, initialPosition = { lat: 0,
   const [position, setPosition] = useState(initialPosition);
 
   useEffect(() => {
-    if (position.lat !== initialPosition.lat || position.lng !== initialPosition.lng) {
+    const isSamePosition = position.lat === initialPosition.lat && position.lng === initialPosition.lng;
+
+    if (!isSamePosition) {
       setPosition(initialPosition);
     }
-  }, [initialPosition.lat, initialPosition.lng]);
+  }, [initialPosition, position]);
 
   useEffect(() => {
     L.Icon.Default.mergeOptions({

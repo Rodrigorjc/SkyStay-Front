@@ -67,7 +67,7 @@ export default function ModalCreateAirline({ onClose, onSuccess }: AirlineAddPro
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.AIRLINE.ADD_AIRLINE}

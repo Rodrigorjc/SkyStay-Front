@@ -68,7 +68,7 @@ export default function ModalEditAirline({ onClose, onSuccess, originalData }: M
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.AIRLINE.EDIT_AIRLINE}

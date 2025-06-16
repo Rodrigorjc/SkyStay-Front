@@ -2,7 +2,7 @@
 
 import { useDictionary } from "@/app/context/DictionaryContext";
 import { UserAdminVO } from "@/types/admin/user";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FlightsDetailsVO } from "./flights/[flightsCode]/types/detailsFlight";
 import * as service from "./services/dashboard.service";
 import Loader from "@/app/components/ui/Loader";
@@ -19,35 +19,37 @@ export default function Administration() {
   const [totalFlightsActive, setTotalFlightsActive] = useState(0);
   const [totalUsersAccounts, setTotalUsersAccounts] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [revenue, users, flights, flightsActive, usersAccounts] = await Promise.all([
-          service.getTotalRevenue(),
-          service.getLast5Users(),
-          service.getLast5Flights(),
-          service.getTotalFlightsActive(),
-          service.getTotalUsersAccounts(),
-        ]);
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [revenue, users, flights, flightsActive, usersAccounts] = await Promise.all([
+        service.getTotalRevenue(),
+        service.getLast5Users(),
+        service.getLast5Flights(),
+        service.getTotalFlightsActive(),
+        service.getTotalUsersAccounts(),
+      ]);
 
-        setTotalRevenue(revenue.response.objects);
-        setLast5Users(users.response.objects);
-        setLast5Flights(flights.response.objects);
-        setTotalFlightsActive(flightsActive.response.objects);
-        setTotalUsersAccounts(usersAccounts.response.objects);
-      } catch (error) {
-        return (
-          <div className="flex items-center justify-center min-h-screen w-full">
-            <h1 className="text-2xl text-red-600">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
-          </div>
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+      setTotalRevenue(revenue.response.objects);
+      setLast5Users(users.response.objects);
+      setLast5Flights(flights.response.objects);
+      setTotalFlightsActive(flightsActive.response.objects);
+      setTotalUsersAccounts(usersAccounts.response.objects);
+    } catch (error) {
+      return (
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <h1 className="text-2xl text-red-600">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
+        </div>
+      );
+    } finally {
+      setLoading(false);
+    }
     fetchData();
-  }, []);
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   if (loading) {
     return (

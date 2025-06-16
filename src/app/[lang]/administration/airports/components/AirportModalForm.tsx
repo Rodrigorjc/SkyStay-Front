@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDictionary } from "@context";
 import LocationSelector from "@/app/components/ui/MapSelector";
 import { Coordinates } from "@/types/common/coordinates";
@@ -49,16 +49,7 @@ export default function AirportModalForm({ onClose, onSuccess }: Props) {
 
   const [cities, setCities] = useState<CityVO[]>([]);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    getValues,
-    reset,
-    trigger,
-    formState: { errors },
-  } = useForm<AirportFormValues>({
+  const { register, handleSubmit, setValue, watch, getValues, trigger } = useForm<AirportFormValues>({
     resolver: zodResolver(airportFormSchema),
     defaultValues: {
       name: "",
@@ -73,25 +64,26 @@ export default function AirportModalForm({ onClose, onSuccess }: Props) {
     },
   });
 
+  const fetchCities = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await getAllCities();
+      setCities(response.objects);
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
+
   useEffect(() => {
-    const fetchCities = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getAllCities();
-        setCities(response.objects);
-      } catch (error) {
-        setNotification({
-          tipo: "error",
-          titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
-          code: 500,
-          mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchCities();
-  }, []);
+  }, [fetchCities]);
 
   const handleLocationChange = async ({ lat, lng }: Coordinates) => {
     setValue("latitude", lat.toString());
@@ -137,7 +129,7 @@ export default function AirportModalForm({ onClose, onSuccess }: Props) {
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.AIRPORTS.ADD_AIRPORT}

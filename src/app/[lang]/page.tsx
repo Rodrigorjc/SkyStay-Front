@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { getLast5Flights } from "./services/home.service";
 import { CityImageVO } from "@/types/home/city";
 import Footer from "../components/ui/Footer";
-import Navigation from "../components/ui/Navigation";
 
 export default function Home({}: { params: { lang: string } }) {
   const { dict } = useDictionary();

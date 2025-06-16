@@ -1,7 +1,7 @@
 import { IoMdClose } from "react-icons/io";
 
 interface ModalProps {
-  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit?: () => void;
   children: React.ReactNode;
   onClose: () => void;
   className?: string;

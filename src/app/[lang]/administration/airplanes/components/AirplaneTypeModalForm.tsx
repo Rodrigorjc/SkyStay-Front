@@ -64,7 +64,7 @@ export default function AirplaneTypeFormAdd({ onClose, onSuccess }: Props) {
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.AIRPLANES.ADD_AIRPLANE_TYPE}

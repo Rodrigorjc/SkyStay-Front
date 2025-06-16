@@ -1,7 +1,7 @@
 "use client";
 import { DictionaryProvider, useDictionary } from "@/app/context/DictionaryContext";
 import { usePathname } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import { LuLockKeyhole } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 

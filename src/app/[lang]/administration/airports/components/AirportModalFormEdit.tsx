@@ -5,7 +5,7 @@ import { InputWithLabel } from "@/app/components/ui/admin/Label";
 import Modal from "@/app/components/ui/admin/Modal";
 import Button from "@/app/components/ui/Button";
 import StepsForm from "@/app/components/ui/admin/StepsForm";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDictionary } from "@context";
 import LocationSelector from "@/app/components/ui/MapSelector";
 import { Coordinates } from "@/types/common/coordinates";
@@ -112,27 +112,27 @@ export default function AirportModalFormEdit({ onClose, onSuccess, defaultValues
     }
   };
 
-  useEffect(() => {
-    const fetchCities = async () => {
-      try {
-        const response = await getAllCities();
-        setCities(response.objects.flat());
-      } catch (error) {
-        setNotification({
-          tipo: "error",
-          titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
-          code: 500,
-          mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
-        });
-      }
-    };
+  const fetchCities = useCallback(async () => {
+    try {
+      const response = await getAllCities();
+      setCities(response.objects.flat());
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
+      });
+    }
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
 
+  useEffect(() => {
     fetchCities();
-  }, []);
+  }, [fetchCities]);
 
   return (
     <>
-      <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+      <Modal onClose={onClose}>
         {step === 1 && (
           <Card>
             <CardHeader color="glacier" className="pt-4">

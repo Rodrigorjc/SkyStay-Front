@@ -6,13 +6,12 @@ interface PaginationProps {
   page: number;
   hasPreviousPage: boolean;
   hasNextPage: boolean;
-  onPageChange: (newPage: number) => void;
+  onPageChange: (arg0: number) => void;
 }
 
 const Pagination: FC<PaginationProps> = ({ page, hasPreviousPage, hasNextPage, onPageChange }) => {
   return (
     <div className="flex justify-center items-center gap-4 mt-6">
-      {/* Botón de "Anterior" */}
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={!hasPreviousPage}

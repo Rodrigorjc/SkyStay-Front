@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loader from "@/app/components/ui/Loader";
 import Pagination from "@/app/components/ui/Pagination";
 import { useDictionary } from "@/app/context/DictionaryContext";
@@ -22,7 +22,7 @@ export default function AdminUsersPage() {
   const [notification, setNotification] = useState<Notifications | null>(null);
   const handleCloseNotification = () => setNotification(null);
 
-  const fetchHotels = async () => {
+  const fetchHotels = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllHotels(20, page);
@@ -38,11 +38,11 @@ export default function AdminUsersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, page]);
 
   useEffect(() => {
     fetchHotels();
-  }, [page]);
+  }, [page, fetchHotels]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);

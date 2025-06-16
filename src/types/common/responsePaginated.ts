@@ -1,4 +1,3 @@
-import { DataVO } from "./data";
 import { MessageResponseVO } from "./message";
 
 export interface ResponsePaginatedVO<T> {

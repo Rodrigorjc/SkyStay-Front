@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
+import { useCallback, useEffect, useState } from "react";
 import { useDictionary } from "@context";
 import {
   createAirplanePart1,
@@ -13,8 +12,7 @@ import {
   getAllAirplanesTypesEmun,
   getAllSeatConfigurations,
 } from "../services/airplane.service";
-import { AirplaneForm1VO, AirplaneForm2VO, AirplanesTypesFormVO, SeatConfigurationVO } from "../types/airplane";
-import { IoInformationCircleOutline } from "react-icons/io5";
+import { AirplaneForm2VO, AirplanesTypesFormVO, SeatConfigurationVO } from "../types/airplane";
 import Loader from "@/app/components/ui/Loader";
 import { Notifications } from "@/app/interfaces/Notifications";
 import NotificationComponent from "@/app/components/ui/admin/Notificaciones";
@@ -50,14 +48,7 @@ export type AirplaneForm1ValuesVO = z.infer<typeof AirplaneFormSchema>;
 export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
   const { dict } = useDictionary();
 
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    trigger,
-    getValues,
-    formState: { errors },
-  } = useForm<AirplaneForm1ValuesVO>({
+  const { handleSubmit, register, setValue, trigger, getValues } = useForm<AirplaneForm1ValuesVO>({
     resolver: zodResolver(AirplaneFormSchema),
     defaultValues: {
       airplane_type_id: undefined,
@@ -79,12 +70,13 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
   const [airplaneTypes, setAirplaneTypes] = useState<[AirplanesTypesFormVO]>();
   const [seatConfiguration, setSeatConfiguration] = useState<[SeatConfigurationVO]>();
   const [airlines, setAirlines] = useState<[AirlineReducedVO]>();
+  const [airplaneSeatClasses, setAirplaneSeatClasses] = useState<string[]>([]);
   const [idAirplane, setAirplaneId] = useState<number>(0);
   const [numberOfCabins, setNumberOfCabins] = useState<number>(1);
   const [cabinsData, setCabinsData] = useState<AirplaneForm2VO[]>([]);
   const [selectedAirplaneType, setSelectedAirplaneType] = useState<number | null>(null);
   const [selectedSeatConfigurations, setSelectedSeatConfigurations] = useState<number[]>([]);
-  const [airplaneSeatClasses, setAirplaneSeatClasses] = useState<string[]>([]);
+
   const [capacity, setCapacity] = useState<number>(0);
   const [remainingSeats, setRemainingSeats] = useState<number>(0);
 
@@ -97,46 +89,46 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     if (selectedAirline) setValue("airline_id", selectedAirline);
   }, [selectedAirline, setValue]);
 
+  const fetchData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const seatClassesResponse = await getAllAirplanesSeatClases();
+      const typesResponse = await getAllAirplanesTypesEmun();
+      const statusesResponse = await getAllAirplanesStatus();
+      const airplaneTypes = await getAllAirplanesTypes();
+      const seatConfigurationResponse = await getAllSeatConfigurations();
+      const allAirlinesResponse = await getAllAirlines();
+      setAirplaneSeatClasses(seatClassesResponse.response.objects);
+      setAirplaneTypesEnum(typesResponse.response.objects);
+      setAirplaneStatuses(statusesResponse.response.objects);
+      setAirplaneTypes(airplaneTypes.response.objects);
+      setSeatConfiguration(seatConfigurationResponse.response.objects);
+      setAirlines(allAirlinesResponse.response.objects);
+
+      setCabinsData([
+        {
+          airplane_id: idAirplane,
+          seat_configuration_id: 0,
+          seat_class: "",
+          rowStart: 0,
+          rowEnd: 0,
+        },
+      ]);
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE, idAirplane]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const seatClassesResponse = await getAllAirplanesSeatClases();
-        const typesResponse = await getAllAirplanesTypesEmun();
-        const statusesResponse = await getAllAirplanesStatus();
-        const airplaneTypes = await getAllAirplanesTypes();
-        const seatConfigurationResponse = await getAllSeatConfigurations();
-        const allAirlinesResponse = await getAllAirlines();
-        setAirplaneSeatClasses(seatClassesResponse.response.objects);
-        setAirplaneTypesEnum(typesResponse.response.objects);
-        setAirplaneStatuses(statusesResponse.response.objects);
-        setAirplaneTypes(airplaneTypes.response.objects);
-        setSeatConfiguration(seatConfigurationResponse.response.objects);
-        setAirlines(allAirlinesResponse.response.objects);
-
-        setCabinsData([
-          {
-            airplane_id: idAirplane,
-            seat_configuration_id: 0,
-            seat_class: "",
-            rowStart: 0,
-            rowEnd: 0,
-          },
-        ]);
-      } catch (error) {
-        setNotification({
-          tipo: "error",
-          titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
-          code: 500,
-          mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleNumberOfCabinsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -632,7 +624,7 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
         </div>
       ) : (
         <>
-          <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+          <Modal onClose={onClose}>
             <Card>
               <div>
                 <CardHeader color="glacier" className="pt-4">

@@ -59,10 +59,6 @@ export default function RestorePassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const codeRefs = Array(6)
-    .fill(0)
-    .map(() => React.createRef<HTMLInputElement>());
-
   if (!dict || Object.keys(dict).length === 0) {
     return null;
   }
@@ -204,26 +200,6 @@ export default function RestorePassword() {
     }
   };
 
-  const handleCodeKeyDown = (index: number, e: React.KeyboardEvent) => {
-    // Mover al input anterior al presionar backspace
-    if (e.key === "Backspace" && !code[index] && index > 0) {
-      codeRefs[index - 1].current?.focus();
-    }
-  };
-
-  const handleResendCode = async () => {
-    setIsLoading(true);
-    try {
-      // Aquí iría la llamada a la API para reenviar el código
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simular llamada API
-      toast.success(dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_SUCCESS.MESSAGE);
-    } catch (error) {
-      toast.error(dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.MESSAGE);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -248,12 +224,12 @@ export default function RestorePassword() {
         <div className="w-full max-w-md p-8 bg-(--color-glacier-50) rounded-2xl shadow-md">
           {step === "email" && (
             <>
-              <h2 className="text-2xl text-(--color-glacier-600) font-bold mb-4">Recuperar contraseña</h2>
-              <p className="text-gray-600 mb-6">Introduce tu correo electrónico para recibir un código de verificación</p>
+              <h2 className="text-2xl text-(--color-glacier-600) font-bold mb-4">{dict.CLIENT.RESTORE_PASSWORD.RECOVER_PASSWORD}</h2>
+              <p className="text-gray-600 mb-6">{dict.CLIENT.RESTORE_PASSWORD.ADD_EMAIL}</p>
               <form onSubmit={handleEmailSubmit}>
                 <div className="mb-4 w-full">
                   <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    Email:
+                    {dict.CLIENT.RESTORE_PASSWORD.EMAIL}:
                   </label>
                   <Input
                     id="email"
@@ -324,7 +300,7 @@ export default function RestorePassword() {
 
           {step === "password" && (
             <>
-              <h2 className="text-2xl text-(--color-glacier-600) font-bold mb-4">Establecer nueva contraseña</h2>
+              <h2 className="text-2xl text-(--color-glacier-600) font-bold mb-4">{dict.CLIENT.RESTORE_PASSWORD.NEW_PASSWORD}</h2>
               <p className="text-gray-600 mb-6">{dict.CLIENT.LOGIN.PASSWORD.MESSAGE}</p>
               <form onSubmit={handlePasswordSubmit}>
                 <div className="mb-4 w-full">

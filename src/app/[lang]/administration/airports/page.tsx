@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllAirports } from "./services/airports.service";
 import Loader from "@/app/components/ui/Loader";
 import Pagination from "@/app/components/ui/Pagination";
@@ -17,7 +17,7 @@ export default function AdminUsersPage() {
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchUsers = async () => {
+  const fetchAirports = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getAllAirports(20, page);
@@ -33,11 +33,11 @@ export default function AdminUsersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE]);
 
   useEffect(() => {
-    fetchUsers();
-  }, [page]);
+    fetchAirports();
+  }, [page, fetchAirports]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -55,7 +55,7 @@ export default function AdminUsersPage() {
     <div>
       <Title title={dict.ADMINISTRATION.SIDEBAR.AIRPORTS} />
       <div className="p-1 m-4">
-        <TableAirports data={airports} onRefresh={fetchUsers} />
+        <TableAirports data={airports} onRefresh={fetchAirports} />
         <Pagination page={page} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onPageChange={handlePageChange} />
       </div>
     </div>

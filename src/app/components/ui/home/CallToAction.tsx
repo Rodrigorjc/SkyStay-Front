@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 
 import "swiper/css";

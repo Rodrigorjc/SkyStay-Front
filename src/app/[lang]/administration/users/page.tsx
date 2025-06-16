@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllUsers } from "./services/user.service";
 import { UserAdminVO } from "@/types/admin/user";
 import TableUser from "./components/TableUser";
@@ -18,27 +18,27 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      try {
-        const response = await getAllUsers(20, page, search);
-        setUsers(response.objects);
-        setHasNextPage(response.hasNextPage);
-        setHasPreviousPage(response.hasPreviousPage);
-      } catch (error) {
-        return (
-          <div className="flex items-center justify-center min-h-screen w-full">
-            <h1 className="text-2xl">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
-          </div>
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchUsers = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await getAllUsers(20, page, search);
+      setUsers(response.objects);
+      setHasNextPage(response.hasNextPage);
+      setHasPreviousPage(response.hasPreviousPage);
+    } catch (error) {
+      return (
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <h1 className="text-2xl">{dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE}</h1>
+        </div>
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, [page, search, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE]);
 
+  useEffect(() => {
     fetchUsers();
-  }, [page, search]);
+  }, [page, fetchUsers]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);

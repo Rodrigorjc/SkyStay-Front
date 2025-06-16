@@ -1,7 +1,6 @@
-'use client';
+"use client";
 import AccommodationSearchBar from "./components/AccommodationSearchBar";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
+
 import { useDictionary } from "@context";
 import AccommodationCollage from "@/app/[lang]/accommodation/components/AccommodationCollage";
 import TopRatedAccommodations from "@/app/[lang]/accommodation/components/TopRatedAccomodations";
@@ -13,36 +12,33 @@ import { getLast5Flights } from "../services/home.service";
 import { CityImageVO } from "@/types/home/city";
 
 const AccommodationPage = () => {
-    const router = useRouter();
-    const pathname = usePathname();
-    const lang = pathname.split("/")[1] || "en";
-    const { dict } = useDictionary();
-    const [cities, setCities] = useState<CityImageVO[]>([]);
+  const { dict } = useDictionary();
+  const [cities, setCities] = useState<CityImageVO[]>([]);
 
-    useEffect(() => {
-        async function fetchCities() {
-            const response = await getLast5Flights();
-            setCities(response.response.objects);
-        }
-        fetchCities();
-    }, []);
-
-    if (!dict || Object.keys(dict).length === 0) {
-        return null;
+  useEffect(() => {
+    async function fetchCities() {
+      const response = await getLast5Flights();
+      setCities(response.response.objects);
     }
+    fetchCities();
+  }, []);
 
-    return (
-        <div className="flex flex-col space-y-5">
-            <AccommodationSearchBar onSearch={() => {}} />
-            <div className="space-y-10">
-                <TopRatedAccommodations />
-                <Benefits />
-                <AccommodationCollage />
-                <CityDestinations destinations={cities} />
-            </div>
-            <TransitionSection />
-        </div>
-    );
+  if (!dict || Object.keys(dict).length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col space-y-5">
+      <AccommodationSearchBar onSearch={() => {}} />
+      <div className="space-y-10">
+        <TopRatedAccommodations />
+        <Benefits />
+        <AccommodationCollage />
+        <CityDestinations destinations={cities} />
+      </div>
+      <TransitionSection />
+    </div>
+  );
 };
 
 export default AccommodationPage;

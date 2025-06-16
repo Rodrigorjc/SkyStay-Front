@@ -4,7 +4,7 @@ import Modal from "@/app/components/ui/admin/Modal";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/admin/Table";
 import Button from "@/app/components/ui/Button";
 import { createFlight, getAllAirlinesReduced, getAllAirplanesReduced, getAllAirportsReduced, getCabinsInfo } from "../services/flight.service";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { set, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -68,28 +68,29 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
   const pad = (n: number) => n.toString().padStart(2, "0");
   const minDateTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const airlinesResponse = await getAllAirlinesReduced(1000, 0);
-        const airplanesResponse = await getAllAirplanesReduced(1000, 0);
-        const airportsResponse = await getAllAirportsReduced(1000, 0);
-        const mealResponse = await getAllMeals(1000, 1);
-        setAirlines(airlinesResponse.objects);
-        setAirplanes(airplanesResponse.objects);
-        setAirports(airportsResponse.objects);
-        setMeals(mealResponse.objects);
-      } catch (error) {
-        setNotification({
-          tipo: "error",
-          titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
-          code: 500,
-          mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
-        });
-      }
+  const fetchData = useCallback(async () => {
+    try {
+      const airlinesResponse = await getAllAirlinesReduced(1000, 0);
+      const airplanesResponse = await getAllAirplanesReduced(1000, 0);
+      const airportsResponse = await getAllAirportsReduced(1000, 0);
+      const mealResponse = await getAllMeals(1000, 1);
+      setAirlines(airlinesResponse.objects);
+      setAirplanes(airplanesResponse.objects);
+      setAirports(airportsResponse.objects);
+      setMeals(mealResponse.objects);
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
+      });
     }
+  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
+
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleCloseNotification = () => setNotification(null);
 
@@ -120,28 +121,6 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
 
   const [numberCabin, setNumberCabin] = useState<CabinVO>([]);
 
-  const fetchCabins = async (plane_id: number) => {
-    try {
-      const response = await getCabinsInfo(plane_id);
-      const cabinsArray = Array.isArray(response.response.objects) ? response.response.objects : [];
-      setNumberCabin(cabinsArray);
-      setValue(
-        "cabins",
-        cabinsArray.map((cabin: { id: number }) => ({
-          id: cabin.id,
-          price: 0,
-        }))
-      );
-    } catch (error) {
-      setNotification({
-        tipo: "error",
-        titulo: dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_TITLE,
-        code: 500,
-        mensaje: dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_MESSAGE,
-      });
-    }
-  };
-
   const { register, handleSubmit, setValue, trigger, watch } = useForm<FlightFormValues>({
     resolver: zodResolver(flightFormSchema),
     defaultValues: {
@@ -154,6 +133,31 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
       cabins: [],
     },
   });
+
+  const fetchCabins = useCallback(
+    async (plane_id: number) => {
+      try {
+        const response = await getCabinsInfo(plane_id);
+        const cabinsArray = Array.isArray(response.response.objects) ? response.response.objects : [];
+        setNumberCabin(cabinsArray);
+        setValue(
+          "cabins",
+          cabinsArray.map((cabin: { id: number }) => ({
+            id: cabin.id,
+            price: 0,
+          }))
+        );
+      } catch (error) {
+        setNotification({
+          tipo: "error",
+          titulo: dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_TITLE,
+          code: 500,
+          mensaje: dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_MESSAGE,
+        });
+      }
+    },
+    [dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_TITLE, dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_MESSAGE, setValue]
+  );
 
   useEffect(() => {
     if (selectedAirline) setValue("airlineId", selectedAirline);
@@ -175,7 +179,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
         </div>
       ) : (
         <>
-          <Modal onClose={onClose} onSubmit={e => e.preventDefault()}>
+          <Modal onClose={onClose}>
             {step === 1 && (
               <Card>
                 <CardHeader color="glacier">1. {dict.ADMINISTRATION.FLIGHTS.DEPARTURE_ARRIVAL_TIME}</CardHeader>
