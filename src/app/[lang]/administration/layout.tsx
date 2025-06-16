@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, use, useCallback, useEffect, useState } from "react";
 import Sidebar from "@/app/[lang]/administration/components/AdminSidebar";
 import { useDictionary } from "@context";
 import { decodeToken } from "@/lib/services/common.service";
@@ -18,23 +18,24 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const params = useParams();
   const lang = params.lang;
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await decodeToken();
-        setUser(response);
-        if (!response) {
-          throw new Error("Token decoding failed: response is null");
-        }
-        if (!["ADMIN", "MODERATOR"].includes(response.role)) {
-          router.replace(`/${lang}/forbidden`);
-        }
-      } catch (error) {
+  const fetchUserInfo = useCallback(async () => {
+    try {
+      const response = await decodeToken();
+      setUser(response);
+      if (!response) {
+        throw new Error("Token decoding failed: response is null");
+      }
+      if (!["ADMIN", "MODERATOR"].includes(response.role)) {
         router.replace(`/${lang}/forbidden`);
       }
-    };
+    } catch (error) {
+      router.replace(`/${lang}/forbidden`);
+    }
+  }, [lang, router]);
+
+  useEffect(() => {
     fetchUserInfo();
-  }, []);
+  }, [fetchUserInfo]);
 
   if (!dict || !user) {
     return null;
