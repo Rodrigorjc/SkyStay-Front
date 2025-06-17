@@ -8,7 +8,9 @@ import Link from "next/link";
 const Footer: React.FC = () => {
   const lang = useLanguage();
   const { dict } = useDictionary();
-
+  if (!dict) {
+    return null;
+  }
   const socialLinks = [
     { icon: <FaXTwitter size={20} />, href: "https://x.com" },
     { icon: <FaInstagram size={20} />, href: "https://instagram.com" },
@@ -28,10 +30,6 @@ const Footer: React.FC = () => {
     { name: dict.CLIENT.FOOTER.TERMS_OF_SERVICE, href: `/${lang}/legal` },
     { name: dict.CLIENT.FOOTER.LEGAL_NOTICE, href: `/${lang}/legal` },
   ];
-
-  if (!dict) {
-    return null;
-  }
 
   return (
     <footer className="w-full bg-glacier-500/50 backdrop-blur-md border-t border-white/20 text-white mt-10 pt-10 px-6">

@@ -20,6 +20,9 @@ const CallToAction: React.FC<CallToActionProps> = ({ destinations }) => {
   const lang = useLanguage();
   const { dict } = useDictionary();
 
+  if (!dict) {
+    return null;
+  }
   return (
     <section className="w-full py-8 text-white">
       <div className="mx-auto mb-6">
