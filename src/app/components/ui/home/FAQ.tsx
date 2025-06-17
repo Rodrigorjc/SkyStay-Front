@@ -13,7 +13,9 @@ const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const { dict } = useDictionary();
-
+  if (!dict) {
+    return null;
+  }
   const faqData: FAQItem[] = [
     {
       question: dict.FAQ.QUESTION_1,

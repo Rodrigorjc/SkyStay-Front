@@ -225,25 +225,27 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     return (seatPattern.replace(/[\s\-]/g, "").match(/[A-Z]/gi) || []).length;
   };
 
-  const getCabinSeats = (cabin: AirplaneForm2VO): number => {
-    const rowStart = cabin.rowStart || 0;
-    const rowEnd = cabin.rowEnd || 0;
-    if (rowStart <= 0 || rowEnd <= 0 || rowEnd < rowStart) return 0;
-    const rows = rowEnd - rowStart + 1;
-    const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
-    const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
-    return rows * seatsPerRow;
-  };
+  const getCabinSeats = useCallback(
+    (cabin: AirplaneForm2VO): number => {
+      const rowStart = cabin.rowStart || 0;
+      const rowEnd = cabin.rowEnd || 0;
+      if (rowStart <= 0 || rowEnd <= 0 || rowEnd < rowStart) return 0;
+      const rows = rowEnd - rowStart + 1;
+      const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
+      const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
+      return rows * seatsPerRow;
+    },
+    [seatConfiguration]
+  );
 
   useEffect(() => {
     if (!capacity || capacity <= 0) {
       setRemainingSeats(0);
       return;
     }
-
     const totalAssignedSeats = cabinsData.reduce((sum, cabin) => sum + getCabinSeats(cabin), 0);
     setRemainingSeats(capacity - totalAssignedSeats);
-  }, [cabinsData, capacity, seatConfiguration]);
+  }, [cabinsData, capacity, seatConfiguration, getCabinSeats]);
 
   const handleCabinDataChange = (index: number, field: string, value: any) => {
     const updatedCabins = [...cabinsData];

@@ -14,7 +14,9 @@ const SearchBarHome: React.FC = () => {
   const [mode, setMode] = useState<"flights" | "accommodation">("flights");
   const isFlights = mode === "flights";
   const language = useLanguage();
-
+  if (!dict) {
+    return null;
+  }
   return (
     <section className="w-full max-w-[1500px] mx-auto mb-8 px-8 py-8 rounded-2xl bg-glacier-700/40 backdrop-blur-md border border-white/20 text-white shadow-md">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">

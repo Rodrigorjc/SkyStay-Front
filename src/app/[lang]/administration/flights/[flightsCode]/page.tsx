@@ -39,7 +39,7 @@ export default function FlightsDetails() {
     fetchFlightDetails();
   }, [flightsCode, fetchFlightDetails]);
 
-  if (loading) {
+  if (loading || !dict) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loader />
