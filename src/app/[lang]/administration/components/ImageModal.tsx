@@ -11,6 +11,8 @@ interface Props {
 export default function ImageModal({ imageUrl, onClose }: Props) {
   const [imgError, setImgError] = useState(false);
   const { dict } = useDictionary();
+  if (!dict) return null;
+
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-zinc-800 p-6 rounded-3xl shadow-2xl w-full max-w-2xl relative">
