@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getAccommodationDetails, getAvailabilityForRooms } from "../services/accommodationService";
 import DatePicker from "react-datepicker";
@@ -50,12 +50,16 @@ export default function ReservationPage() {
   const type = searchParams.get("type") || "hotel";
   const [notification, setNotification] = useState<Notifications>();
 
-  const selectedRooms = roomsParam
-    .map(r => {
-      const [roomId, qty] = r.split(":");
-      return { roomId, qty: Number(qty) };
-    })
-    .filter(r => r.qty > 0);
+  const selectedRooms = useMemo(
+    () =>
+      roomsParam
+        .map(r => {
+          const [roomId, qty] = r.split(":");
+          return { roomId, qty: Number(qty) };
+        })
+        .filter(r => r.qty > 0),
+    [roomsParam]
+  );
 
   const [accommodation, setAccommodation] = useState<Accommodation | null>(null);
   const [step, setStep] = useState<Step>(Step.Detalles);
@@ -67,55 +71,90 @@ export default function ReservationPage() {
   const [availableDates, setAvailableDates] = useState<DateRange[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  // Cargar detalles
+  // Cargar detalles del alojamiento (solo una vez)
   useEffect(() => {
     const loadDetails = async () => {
       if (!code) {
-        setError(dict.CLIENT.RESERVATION.ERROR.NO_CODE);
+        setError(dict?.CLIENT?.RESERVATION?.ERROR?.NO_CODE || "Código requerido");
         setLoading(false);
         return;
       }
+
       try {
         setLoading(true);
         const res = await getAccommodationDetails(code, type, {});
-        if (res?.response?.objects) setAccommodation(res.response.objects);
-        else setError(dict.CLIENT.RESERVATION.ERROR.NO_DETAILS);
-      } catch {
-        setError(dict.CLIENT.RESERVATION.ERROR.LOAD);
+        if (res?.response?.objects) {
+          setAccommodation(res.response.objects);
+        } else {
+          setError(dict?.CLIENT?.RESERVATION?.ERROR?.NO_DETAILS || "No se pudieron cargar los detalles");
+        }
+      } catch (error) {
+        setError(dict?.CLIENT?.RESERVATION?.ERROR?.LOAD || "Error al cargar");
       } finally {
         setLoading(false);
       }
     };
-    loadDetails();
-  }, [code, type, dict.CLIENT.RESERVATION.ERROR.LOAD, dict.CLIENT.RESERVATION.ERROR.NO_CODE, dict.CLIENT.RESERVATION.ERROR.NO_DETAILS]);
 
-  const selectedRoomsString = JSON.stringify(selectedRooms);
+    loadDetails();
+  }, [code, type]); // Solo dependencias esenciales, sin dict
+
+  // Cargar disponibilidad (separado y controlado)
   useEffect(() => {
-    let active = true;
-    const loadAvail = async () => {
-      if (!code) return;
+    let isMounted = true;
+
+    const loadAvailability = async () => {
+      if (!code || !accommodation) return;
+
+      // Verificar si tenemos los datos necesarios
+      const hasApartmentData = isApartment && accommodation.availableRooms;
+      const hasHotelData = !isApartment && selectedRooms.length > 0;
+
+      if (!hasApartmentData && !hasHotelData) {
+        return;
+      }
+
       try {
-        setLoading(true);
         let ids = "";
-        if (isApartment && accommodation?.availableRooms) ids = accommodation.availableRooms.map(r => r.roomConfigId).join(",");
-        else ids = selectedRooms.map(r => r.roomId).join(",");
-        const params = { roomConfigIds: ids, accommodationType: type, code };
+        if (isApartment && accommodation.availableRooms) {
+          ids = accommodation.availableRooms.map(r => r.roomConfigId).join(",");
+        } else if (!isApartment) {
+          ids = selectedRooms.map(r => r.roomId).join(",");
+        }
+
+        if (!ids) {
+          setAvailableDates([]);
+          return;
+        }
+
+        const params = {
+          roomConfigIds: ids,
+          accommodationType: type,
+          code,
+        };
+
         const data = await getAvailabilityForRooms(params);
         const dates: string[] = Array.isArray(data?.data) ? data.data : [];
-        setAvailableDates(convertRanges(dates));
-      } catch {
-        if (active) setError(dict.CLIENT.RESERVATION.ERROR.AVAILABILITY);
-        setAvailableDates([]);
-      } finally {
-        if (active) setLoading(false);
+
+        if (isMounted) {
+          setAvailableDates(convertRanges(dates));
+        }
+      } catch (error) {
+        if (isMounted) {
+          setError(dict?.CLIENT?.RESERVATION?.ERROR?.AVAILABILITY || "Error de disponibilidad");
+          setAvailableDates([]);
+        }
       }
     };
-    const should = code && ((isApartment && accommodation) || (!isApartment && selectedRooms.length));
-    if (should) loadAvail();
+
+    // Solo ejecutar si ya tenemos accommodation
+    if (accommodation) {
+      loadAvailability();
+    }
+
     return () => {
-      active = false;
+      isMounted = false;
     };
-  }, [code, type, isApartment, accommodation, selectedRoomsString, dict.CLIENT.RESERVATION.ERROR.AVAILABILITY, selectedRooms]);
+  }, [code, type, isApartment, accommodation, selectedRooms.length]); // selectedRooms.length en lugar del objeto completo
 
   const convertRanges = (dates: string[]): DateRange[] => {
     if (!dates.length) return [];
