@@ -111,7 +111,13 @@ function FlightsPageContent() {
     }
   }, [origin, destination, fetchFlights, filters]);
 
-  if (!dict) return null;
+  if (!dict) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-white">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="py-10 px-4 flex flex-col items-center gap-8 min-h-screen">
@@ -212,19 +218,19 @@ function FlightsPageContent() {
 
       <div className="border-b-2 border-glacier-400/50 max-w-[1850px] w-full my-4"></div>
 
-      {error && (
-        <div className="text-center text-white mt-4 text-3xl w-full flex flex-col items-center">
-          <p>{dict.CLIENT.FLIGHTS.ERRORS.ERROR_LOADING}</p>
-        </div>
-      )}
       <div className="w-full max-w-[1850px] grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3  gap-6">
         {flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}
+        {error && (
+          <div className="text-center text-white mt-4 text-3xl w-full flex flex-col items-center">
+            <p>{dict.CLIENT.FLIGHTS.ERRORS.ERROR_LOADING}</p>
+          </div>
+        )}
+        {flights.length === 0 && (
+          <div className="text-center h-full mt-4 text-4xl font-extrabold text-gray-200 tracking-tight w-full flex flex-col items-center">
+            <h1>{dict.CLIENT.FLIGHTS.ERRORS.NO_FLIGHTS_FOUND}</h1>
+          </div>
+        )}
       </div>
-      {flights.length === 0 && (
-        <div className="text-center h-full mt-4 text-4xl font-extrabold text-gray-200 tracking-tight w-full flex flex-col items-center">
-          <h1>{dict.CLIENT.FLIGHTS.ERRORS.NO_FLIGHTS_FOUND}</h1>
-        </div>
-      )}
     </div>
   );
 }
