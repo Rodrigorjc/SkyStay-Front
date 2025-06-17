@@ -33,7 +33,6 @@ export type HotelFormValues = z.infer<typeof hotelEditFormSchema>;
 
 const EditHotelModal: React.FC<EditHotelModalProps> = ({ onClose, initialData, onSuccess }) => {
   const { dict } = useDictionary();
-
   const [notification, setNotification] = useState<Notifications | null>(null);
   const handleCloseNotification = () => setNotification(null);
 
@@ -62,6 +61,7 @@ const EditHotelModal: React.FC<EditHotelModalProps> = ({ onClose, initialData, o
     }
   };
 
+  if (!dict) return null;
   return (
     <Modal onClose={onClose}>
       <Card>

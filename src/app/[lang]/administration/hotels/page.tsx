@@ -12,7 +12,6 @@ import { Title } from "../components/Title";
 
 export default function AdminUsersPage() {
   const { dict } = useDictionary();
-
   const [hotel, setHotels] = useState<HotelVO[]>([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -38,7 +37,7 @@ export default function AdminUsersPage() {
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, page]);
+  }, [page, dict]);
 
   useEffect(() => {
     fetchHotels();
@@ -56,6 +55,7 @@ export default function AdminUsersPage() {
     );
   }
 
+  if (!dict) return null;
   return (
     <div>
       <Title title={dict.ADMINISTRATION.SIDEBAR.HOTELS} />
