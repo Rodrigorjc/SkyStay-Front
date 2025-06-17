@@ -86,7 +86,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
         mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
       });
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchData();
@@ -156,7 +156,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
         });
       }
     },
-    [dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_TITLE, dict.ADMINISTRATION.FLIGHTS.ERRORS.CREATION_FAILED_MESSAGE, setValue]
+    [dict, setValue]
   );
 
   useEffect(() => {
