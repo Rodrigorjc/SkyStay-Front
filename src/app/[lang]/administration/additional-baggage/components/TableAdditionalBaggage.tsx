@@ -23,17 +23,11 @@ export default function AdditionalBaggageTable({ data }: AdditionalBaggageTableP
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.CODE}</TableHead>
+                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.ID}</TableHead>
                 <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.NAME}</TableHead>
                 <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.WEIGHT}</TableHead>
                 <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.PRICE}</TableHead>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_CODE}</TableHead>
                 <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_NAME}</TableHead>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_PHONE}</TableHead>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_EMAIL}</TableHead>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_WEBSITE}</TableHead>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_IATA_CODE}</TableHead>
-                <TableHead>{dict.ADMINISTRATION.ADDITIONAL_BAGGAGE.AIRLINE_IMAGE}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -43,15 +37,7 @@ export default function AdditionalBaggageTable({ data }: AdditionalBaggageTableP
                   <TableCell>{d.name}</TableCell>
                   <TableCell>{d.weight}</TableCell>
                   <TableCell>{d.extraAmount}</TableCell>
-                  <TableCell>{d.airline.code}</TableCell>
                   <TableCell>{d.airline.name}</TableCell>
-                  <TableCell>{d.airline.phone}</TableCell>
-                  <TableCell>{d.airline.email}</TableCell>
-                  <TableCell>{d.airline.website}</TableCell>
-                  <TableCell>{d.airline.iataCode}</TableCell>
-                  <TableCell>
-                    <Button text={dict.ADMINISTRATION.SHOW} onClick={() => setSelectedImage(d.airline.image)} color="light" />
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -25,6 +25,7 @@
         "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the additional baggage. Please try again",
         "CREATION_FAILED_TITLE": "Error adding baggage"
       },
+      "ID": "ID",
       "NAME": "Baggage name",
       "PRICE": "Price",
       "SUCCESS": {

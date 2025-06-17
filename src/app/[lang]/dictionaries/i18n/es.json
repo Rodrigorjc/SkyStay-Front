@@ -25,6 +25,7 @@
         "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el equipaje adicional. Por favor, inténtelo de nuevo",
         "CREATION_FAILED_TITLE": "Error al añadir equipaje"
       },
+      "ID": "ID",
       "NAME": "Nombre del equipaje",
       "PRICE": "Precio",
       "SUCCESS": {
