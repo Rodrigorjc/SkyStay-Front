@@ -1,20 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import { 
   FaHeart, 
   FaStar, 
   FaMapMarkerAlt, 
   FaEye, 
-  FaTrash,
-  FaExternalLinkAlt,
   FaWifi,
   FaParking,
   FaSwimmingPool
 } from "react-icons/fa";
-import { getUserFavorites, removeFavorite } from "../services/profileService";
+import { getUserFavorites } from "../services/profileService";
+import { toggleFavoriteAccommodation } from "../../accommodation/services/accommodationService";
 import { Favorite } from "../types/Profile";
 import { Notifications } from "@/app/interfaces/Notifications";
+import { useDictionary } from "@/app/context/DictionaryContext";
 import Loader from "@/app/components/ui/Loader";
 
 interface FavoritesTabProps {
@@ -22,9 +24,15 @@ interface FavoritesTabProps {
 }
 
 export default function FavoritesTab({ onNotification }: FavoritesTabProps) {
+  const { dict } = useDictionary();
+  const pathname = usePathname();
+  const router = useRouter();
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState<string | null>(null);
+
+  // Extraer el idioma de la URL actual
+  const lang = pathname.split("/")[1] || "en";
 
   useEffect(() => {
     loadFavorites();
@@ -48,30 +56,65 @@ export default function FavoritesTab({ onNotification }: FavoritesTabProps) {
     }
   };
 
-  const handleRemoveFavorite = async (accommodationCode: string, type: string) => {
-    try {
-      setRemoving(accommodationCode);
-      await removeFavorite(accommodationCode, type);
-      
-      setFavorites(prev => prev.filter(fav => fav.accommodationCode !== accommodationCode));
-      
+  const handleRemoveFavorite = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    favorite: Favorite
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const token = Cookies.get("token");
+    if (!token) {
       onNotification({
-        titulo: "Favorito eliminado",
-        mensaje: "El alojamiento se ha eliminado de tus favoritos",
+        titulo: dict?.CLIENT?.CARD?.NOTIF?.LOGIN_REQUIRED?.TITLE || "Iniciar sesión requerido",
+        mensaje: dict?.CLIENT?.CARD?.NOTIF?.LOGIN_REQUIRED?.MESSAGE || "Debes iniciar sesión para gestionar favoritos",
+        code: 401,
+        tipo: "warning",
+      });
+      return;
+    }
+
+    if (removing === favorite.accommodationCode) return;
+
+    try {
+      setRemoving(favorite.accommodationCode);
+      
+      // Usar toggleFavoriteAccommodation para eliminar (el favorito actual es true, así que lo toggleamos para eliminarlo)
+      await toggleFavoriteAccommodation(
+        favorite.accommodationCode,
+        favorite.type,
+        true // Pasamos true porque queremos eliminarlo (toggle de true a false)
+      );
+      
+      // Actualizar la lista local eliminando el favorito
+      setFavorites(prevFavorites => 
+        prevFavorites.filter(fav => fav.accommodationCode !== favorite.accommodationCode)
+      );
+
+      onNotification({
+        titulo: "Éxito",
+        mensaje: "Favorito eliminado correctamente",
         tipo: "success",
         code: 200
       });
     } catch (error: any) {
-      console.error('Error al eliminar favorito:', error);
+      console.error('Error removing favorite:', error);
       onNotification({
-        titulo: "Error",
-        mensaje: "No se pudo eliminar el favorito",
+        titulo: dict?.CLIENT?.CARD?.NOTIF?.ERROR?.FAVORITE?.TITLE || "Error",
+        mensaje: dict?.CLIENT?.CARD?.NOTIF?.ERROR?.FAVORITE?.MESSAGE || "Error al eliminar favorito",
+        code: 500,
         tipo: "error",
-        code: 500
       });
     } finally {
       setRemoving(null);
     }
+  };
+
+  // Función para redirigir al alojamiento
+  const handleViewAccommodation = (favorite: Favorite) => {
+    const accommodationUrl = `/${lang}/accommodation/${favorite.accommodationCode}`;
+    console.log('🔗 Redirigiendo a:', accommodationUrl);
+    router.push(accommodationUrl);
   };
 
   const renderStars = (stars: number) => {
@@ -172,7 +215,7 @@ export default function FavoritesTab({ onNotification }: FavoritesTabProps) {
 
               {/* Botón eliminar */}
               <button
-                onClick={() => handleRemoveFavorite(favorite.accommodationCode, favorite.type)}
+                onClick={(e) => handleRemoveFavorite(e, favorite)}
                 disabled={removing === favorite.accommodationCode}
                 className="absolute top-3 right-3 p-2 bg-black/50 rounded-full hover:bg-red-600 transition-colors"
                 title="Eliminar de favoritos"
@@ -235,19 +278,11 @@ export default function FavoritesTab({ onNotification }: FavoritesTabProps) {
               {/* Acciones */}
               <div className="flex space-x-2">
                 <button
-                  onClick={() => window.open(favorite.viewUrl, '_blank')}
+                  onClick={() => handleViewAccommodation(favorite)}
                   className="flex-1 bg-glacier-600 hover:bg-glacier-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1"
                 >
                   <FaEye />
                   <span>Ver</span>
-                </button>
-                
-                <button
-                  onClick={() => window.open(favorite.bookUrl, '_blank')}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-1"
-                >
-                  <FaExternalLinkAlt />
-                  <span>Reservar</span>
                 </button>
               </div>
             </div>
