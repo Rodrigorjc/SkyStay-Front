@@ -124,7 +124,7 @@ export default function AirportModalFormEdit({ onClose, onSuccess, defaultValues
         mensaje: dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE,
       });
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchCities();

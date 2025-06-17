@@ -79,7 +79,7 @@ export default function AirportModalForm({ onClose, onSuccess }: Props) {
     } finally {
       setIsLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchCities();
