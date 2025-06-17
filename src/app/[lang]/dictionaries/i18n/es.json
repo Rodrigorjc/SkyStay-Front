@@ -118,6 +118,7 @@
       "REGISTRATION_NUMBER": "Número de registro",
       "ROW_END": "Fin de fila",
       "ROW_START": "Inicio de fila",
+      "SEATS_IN_CABIN": "Asientos en la cabina",
       "SEATS_REMAINING": "Asientos restantes",
       "SEAT_CLASS": "Tipo de asiento",
       "SEAT_CONFIGURATION": "Configuración de asientos",
@@ -314,6 +315,12 @@
       "TITLE": "Detalles del vuelo",
       "TYPE": "Tipo",
       "WEBSITE": "Sitio web"
+    },
+    "HOTEL": {
+      "ERRORS": {
+        "ADD_IMAGE_MESSAGE": "No se ha podido subir la imagen intentalo mas tarde",
+        "ADD_IMAGE_TITLE": "Error al subir la imagen"
+      }
     },
     "HOTELS": {
       "ADDRESS": "Dirección",

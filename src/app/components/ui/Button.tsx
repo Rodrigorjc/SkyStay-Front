@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, color = "default", class
   };
 
   return (
-    <button onClick={onClick} className={`${baseStyles} ${colors[color]} ${className} ${disabled ? "disabled" : ""}`} disabled={disabled}>
+    <button type="button" onClick={onClick} className={`${baseStyles} ${colors[color]} ${className} ${disabled ? "disabled" : ""}`} disabled={disabled}>
       {text}
     </button>
   );

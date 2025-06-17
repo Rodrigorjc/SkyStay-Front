@@ -43,14 +43,6 @@ export default function AdminApartmentsTable({ data, onRefresh }: AdminApartment
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageUpload = async (form: AddImageVO) => {
-    if (!form.image) {
-      setNotification({
-        tipo: "error",
-        titulo: dict.ADMINISTRATION.HOTEL_APARTMENT.ERRORS.LOAD_FAILURE_TITLE,
-        code: 500,
-        mensaje: dict.ADMINISTRATION.HOTEL_APARTMENT.ERRORS.LOAD_FAILURE_MESSAGE,
-      });
-    }
     try {
       await addImageApartment(form);
       const notification = {

@@ -148,29 +148,6 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     setSelectedSeatConfigurations(Array(value).fill(null));
   };
 
-  useEffect(() => {
-    const totalAssignedSeats = cabinsData.reduce((sum, cabin) => {
-      const rowStart = cabin.rowStart || 0;
-      const rowEnd = cabin.rowEnd || 0;
-
-      // Validar que rowStart y rowEnd sean válidos
-      if (rowStart <= 0 || rowEnd <= 0 || rowEnd < rowStart) {
-        return sum; // Ignorar esta cabina si los valores no son válidos
-      }
-
-      const rows = rowEnd - rowStart + 1;
-      const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
-
-      // Calcular asientos por fila
-      const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
-
-      // Sumar al total solo si los valores son válidos
-      return sum + (rows > 0 ? rows * seatsPerRow : 0);
-    }, 0);
-
-    setRemainingSeats(capacity - totalAssignedSeats);
-  }, [cabinsData, capacity, seatConfiguration]);
-
   const handleSeatConfigurationSelection = (cabinIndex: number, configIndex: number, config: any) => {
     setSelectedSeatConfigurations(prev => {
       const updatedSelections = [...prev];
@@ -188,35 +165,11 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     });
   };
 
-  const handleCabinDataChange = (index: number, field: string, value: any) => {
-    const updatedCabins = [...cabinsData];
-    updatedCabins[index] = { ...updatedCabins[index], [field]: value };
-
-    const totalAssignedSeats = updatedCabins.reduce((sum, cabin) => {
-      const rows = cabin.rowEnd - cabin.rowStart + 1;
-      const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
-
-      const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
-      return sum + (rows > 0 ? rows * seatsPerRow : 0);
-    }, 0);
-
-    if (totalAssignedSeats <= capacity) {
-      setCabinsData(updatedCabins);
-    } else {
-      setNotification({
-        tipo: "error",
-        titulo: dict.ADMINISTRATION.AIRPLANES.ERRORS.CREATION_FAILED_TITLE,
-        code: 500,
-        mensaje: dict.ADMINISTRATION.AIRPLANES.EXCEEDS_CAPACITY,
-      });
-    }
-  };
-
   const [notification, setNotification] = useState<Notifications | null>(null);
   const handleCloseNotification = () => setNotification(null);
 
-  const handleSuccess = (notif: Notifications) => {
-    onClose();
+  const handleSuccess = (notif: Notifications, closeModal = false) => {
+    if (closeModal) onClose();
     if (onSuccess) onSuccess(notif);
     setNotification(notif);
   };
@@ -247,12 +200,15 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
         rowEnd: cabin.rowEnd,
       }));
       await createAirplanePart2(formattedCabinsData);
-      handleSuccess({
-        tipo: "success",
-        titulo: dict.ADMINISTRATION.AIRPLANES.SUCCESS.CREATION_SUCCESS_TITLE,
-        code: 300,
-        mensaje: dict.ADMINISTRATION.AIRPLANES.SUCCESS.CREATION_SUCCESS_MESSAGE,
-      });
+      handleSuccess(
+        {
+          tipo: "success",
+          titulo: dict.ADMINISTRATION.AIRPLANES.SUCCESS.CREATION_SUCCESS_TITLE,
+          code: 300,
+          mensaje: dict.ADMINISTRATION.AIRPLANES.SUCCESS.CREATION_SUCCESS_MESSAGE,
+        },
+        true
+      );
     } catch (error) {
       setNotification({
         tipo: "error",
@@ -265,9 +221,46 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     }
   };
 
-  // Función para calcular el número de asientos por fila
   const getSeatsPerRow = (seatPattern: string): number => {
-    return (seatPattern.match(/[A-Z]/g) || []).length;
+    return (seatPattern.replace(/[\s\-]/g, "").match(/[A-Z]/gi) || []).length;
+  };
+
+  const getCabinSeats = (cabin: AirplaneForm2VO): number => {
+    const rowStart = cabin.rowStart || 0;
+    const rowEnd = cabin.rowEnd || 0;
+    if (rowStart <= 0 || rowEnd <= 0 || rowEnd < rowStart) return 0;
+    const rows = rowEnd - rowStart + 1;
+    const seatPattern = seatConfiguration?.find(config => config.id === cabin.seat_configuration_id)?.seatPattern;
+    const seatsPerRow = seatPattern ? getSeatsPerRow(seatPattern) : 0;
+    return rows * seatsPerRow;
+  };
+
+  useEffect(() => {
+    if (!capacity || capacity <= 0) {
+      setRemainingSeats(0);
+      return;
+    }
+
+    const totalAssignedSeats = cabinsData.reduce((sum, cabin) => sum + getCabinSeats(cabin), 0);
+    setRemainingSeats(capacity - totalAssignedSeats);
+  }, [cabinsData, capacity, seatConfiguration]);
+
+  const handleCabinDataChange = (index: number, field: string, value: any) => {
+    const updatedCabins = [...cabinsData];
+    updatedCabins[index] = { ...updatedCabins[index], [field]: value };
+
+    const totalAssignedSeats = updatedCabins.reduce((sum, cabin) => sum + getCabinSeats(cabin), 0);
+
+    if (totalAssignedSeats <= capacity) {
+      setCabinsData(updatedCabins);
+    } else {
+      setNotification({
+        tipo: "error",
+        titulo: dict.ADMINISTRATION.AIRPLANES.ERRORS.CREATION_FAILED_TITLE,
+        code: 500,
+        mensaje: dict.ADMINISTRATION.AIRPLANES.EXCEEDS_CAPACITY,
+      });
+    }
   };
 
   const renderStepContent = () => {
@@ -361,10 +354,11 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
                   </TableBody>
                 </Table>
               </div>
-              <div className="flex justify-end mt-8">
+              <div className="flex justify-between mt-8">
+                <Button onClick={() => setStep(1)} color="light" text={dict.ADMINISTRATION.BACK} />
                 <Button
                   onClick={() => {
-                    if (!selectedAirplaneType) {
+                    if (!selectedAirline) {
                       setNotification({
                         tipo: "error",
                         titulo: dict.ADMINISTRATION.FLIGHTS.ERRORS.MISSING_AIRLINE_TITLE,
@@ -466,9 +460,6 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">{dict.ADMINISTRATION.AIRPLANES.REMAINING_SEATS}</label>
-              <div className="text-lg font-semibold text-glacier-500">
-                {dict.ADMINISTRATION.AIRPLANES.SEATS_REMAINING}: {remainingSeats}
-              </div>
             </div>
             <div className="flex flex-col gap-2">
               <SelectWithLabel id="numberOfCabins" label={dict.ADMINISTRATION.AIRPLANES.NUMBER_OF_CABINS} value={numberOfCabins} onChange={e => handleNumberOfCabinsChange(e)} required>
@@ -486,6 +477,17 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
                   <h1 className="text-xl font-medium">
                     {dict.ADMINISTRATION.AIRPLANES.AIRPLANE_CABIN}: {index + 1}
                   </h1>
+                  <div className="text-sm text-glacier-500 flex flex-row gap-4">
+                    <p>
+                      {dict.ADMINISTRATION.AIRPLANES.CAPACITY}: {capacity}
+                    </p>
+                    <p>
+                      {dict.ADMINISTRATION.AIRPLANES.SEATS_IN_CABIN}: {getCabinSeats(cabin)}
+                    </p>
+                    <p>
+                      {dict.ADMINISTRATION.AIRPLANES.SEATS_REMAINING}: {remainingSeats}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -537,7 +539,9 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
                   <TableBody>
                     {seatConfiguration?.map((config, configIndex) => (
                       <TableRow key={config.id} isOdd={configIndex % 2 === 1}>
-                        <TableCell>{config.seatPattern}</TableCell>
+                        <TableCell>
+                          {config.seatPattern} ({getSeatsPerRow(config.seatPattern)})
+                        </TableCell>
                         <TableCell>
                           <Button
                             color={selectedSeatConfigurations[index] === configIndex ? "default" : "light"}
@@ -624,7 +628,7 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
         </div>
       ) : (
         <>
-          <Modal onClose={onClose}>
+          <Modal onClose={onClose} onSubmit={() => {}}>
             <Card>
               <div>
                 <CardHeader color="glacier" className="pt-4">

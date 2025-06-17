@@ -119,6 +119,7 @@
       "REGISTRATION_NUMBER": "Registration number",
       "ROW_END": "Row end",
       "ROW_START": "Row start",
+      "SEATS_IN_CABIN": "Seats in the cabin",
       "SEATS_REMAINING": "Remaining seats",
       "SEAT_CLASS": "Seat class",
       "SEAT_CONFIGURATION": "Seat configuration",
@@ -315,6 +316,12 @@
       "TITLE": "Flight details",
       "TYPE": "Type",
       "WEBSITE": "Website"
+    },
+    "HOTEL": {
+      "ERRORS": {
+        "ADD_IMAGE_MESSAGE": "Could not upload the image, try again later.",
+        "ADD_IMAGE_TITLE": "Error uploading image"
+      }
     },
     "HOTELS": {
       "ADDRESS": "Address",
