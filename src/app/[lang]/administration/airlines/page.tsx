@@ -43,7 +43,7 @@ export default function AirlinePage() {
     } finally {
       setLoading(false);
     }
-  }, [page, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE]);
+  }, [page, dict]);
 
   useEffect(() => {
     fetchAirline();

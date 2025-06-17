@@ -21,6 +21,20 @@ const CodeValidation: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
 
+  // Función helper para obtener textos con fallback
+  const getText = (path: string, fallback: string) => {
+    try {
+      const keys = path.split(".");
+      let value = dict;
+      for (const key of keys) {
+        value = value?.[key];
+      }
+      return value || fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
   useEffect(() => {
     const savedEmail = Cookies.get("registrationEmail");
     if (savedEmail) {
@@ -61,8 +75,8 @@ const CodeValidation: React.FC = () => {
   const validateCode = async () => {
     if (code.join("").length !== 6) {
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.VALIDATION_ERROR.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.VALIDATION_ERROR.MESSAGE,
+        titulo: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.VALIDATION_ERROR.TITLE", "Error de validación"),
+        mensaje: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.VALIDATION_ERROR.MESSAGE", "Por favor ingresa un código de 6 dígitos"),
         code: 400,
         tipo: "error",
       });
@@ -80,8 +94,8 @@ const CodeValidation: React.FC = () => {
       Cookies.remove("registrationEmail");
 
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.MESSAGE,
+        titulo: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.TITLE", "Código verificado"),
+        mensaje: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.SUCCESS.MESSAGE", "Tu cuenta ha sido verificada correctamente"),
         code: 200,
         tipo: "success",
       });
@@ -93,8 +107,8 @@ const CodeValidation: React.FC = () => {
       const errorData = error.response?.data;
 
       setNotification({
-        titulo: errorData?.title || dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.TITLE,
-        mensaje: errorData?.message || dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.MESSAGE,
+        titulo: errorData?.title || getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.TITLE", "Error"),
+        mensaje: errorData?.message || getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.ERROR.MESSAGE", "Código incorrecto o expirado"),
         code: error.response?.status || 500,
         tipo: "error",
       });
@@ -106,8 +120,8 @@ const CodeValidation: React.FC = () => {
   const resendCode = async () => {
     if (!emailInput) {
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.MESSAGE,
+        titulo: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.TITLE", "Error"),
+        mensaje: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.MESSAGE", "Por favor ingresa un email válido"),
         code: 400,
         tipo: "error",
       });
@@ -122,8 +136,8 @@ const CodeValidation: React.FC = () => {
       });
 
       setNotification({
-        titulo: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_SUCCESS.TITLE,
-        mensaje: dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_SUCCESS.MESSAGE,
+        titulo: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_SUCCESS.TITLE", "Código reenviado"),
+        mensaje: getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_SUCCESS.MESSAGE", "Se ha enviado un nuevo código a tu email"),
         code: 200,
         tipo: "success",
       });
@@ -139,8 +153,8 @@ const CodeValidation: React.FC = () => {
       const errorData = error.response?.data;
 
       setNotification({
-        titulo: errorData?.title || dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.TITLE,
-        mensaje: errorData?.message || dict.CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.MESSAGE,
+        titulo: errorData?.title || getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.TITLE", "Error"),
+        mensaje: errorData?.message || getText("CLIENT.CODE_VALIDATION.NOTIFICATIONS.RESEND_ERROR.MESSAGE", "Error al reenviar el código"),
         code: error.response?.status || 500,
         tipo: "error",
       });
@@ -150,39 +164,60 @@ const CodeValidation: React.FC = () => {
   };
 
   if (!dict || Object.keys(dict).length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+        <div className="text-glacier-200 text-xl">Cargando...</div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <Navbar />
       <div className="flex flex-grow justify-center items-center p-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="w-full max-w-md bg-(--color-glacier-50) rounded-2xl shadow-lg p-6">
-          <h2 className="text-2xl font-semibold text-(--color-glacier-600) text-center uppercase mb-4">{dict.CLIENT.CODE_VALIDATION.TITLE}</h2>
-
-          <p className="text-center text-gray-600 mb-6">
-            {dict.CLIENT.CODE_VALIDATION.SUBTITLE}
-            {emailInput && <span className="font-bold block mt-1">{emailInput}</span>}
-          </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-md bg-zinc-800 rounded-xl shadow-2xl border border-glacier-700 p-8"
+        >
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-glacier-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">📧</span>
+            </div>
+            <h2 className="text-2xl font-semibold text-glacier-200 uppercase mb-4">
+              {getText("CLIENT.CODE_VALIDATION.TITLE", "Verificar Código")}
+            </h2>
+            <p className="text-glacier-400 text-sm mb-2">
+              {getText("CLIENT.CODE_VALIDATION.SUBTITLE", "Ingresa el código de 6 dígitos enviado a tu email")}
+            </p>
+            {emailInput && (
+              <span className="text-glacier-300 font-medium text-sm bg-zinc-700 px-3 py-1 rounded-full">
+                {emailInput}
+              </span>
+            )}
+          </div>
 
           <div className="flex justify-center space-x-2 mb-8">
             {Array(6)
               .fill(null)
               .map((_, index) => (
-                <div key={index} className="w-12 h-16 relative">
+                <div key={index} className="w-12 h-14">
                   <input
-                    ref={el => {
+                    ref={(el) => {
                       inputRefs.current[index] = el;
                     }}
                     type="text"
                     maxLength={1}
-                    className={`w-full h-full text-center text-2xl font-bold rounded-lg border-2
-                                    focus:outline-none focus:ring-2 transition-all ${
-                                      code[index] ? "border-(--color-glacier-500) bg-(--color-glacier-100) text-(--color-glacier-800)" : "border-gray-300 bg-white text-gray-700"
-                                    } focus:ring-(--color-glacier-400) focus:border-(--color-glacier-500)`}
+                    className={`w-full h-full text-center text-xl font-bold rounded-lg border-2
+                                    focus:outline-none focus:ring-2 transition-all bg-zinc-700 text-glacier-100 ${
+                                      code[index]
+                                        ? "border-glacier-500 bg-zinc-600 text-glacier-100"
+                                        : "border-zinc-600"
+                                    } focus:ring-glacier-400 focus:border-glacier-500`}
                     value={code[index]}
-                    onChange={e => handleCodeChange(index, e.target.value)}
-                    onKeyDown={e => handleKeyDown(index, e)}
+                    onChange={(e) => handleCodeChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={index === 0 ? handlePaste : undefined}
                     disabled={isLoading}
                   />
@@ -194,43 +229,78 @@ const CodeValidation: React.FC = () => {
             <button
               onClick={validateCode}
               disabled={isLoading || code.join("").length !== 6}
-              className={`w-full py-3 rounded-full font-medium text-white
-                            transition-all duration-300 ${
-                              isLoading || code.join("").length !== 6 ? "bg-gray-400 cursor-not-allowed" : "bg-(--color-glacier-500) hover:bg-(--color-glacier-600) active:scale-98"
-                            }`}>
-              {isLoading ? dict.CLIENT.CODE_VALIDATION.BUTTONS.LOADING : dict.CLIENT.CODE_VALIDATION.BUTTONS.VERIFY}
+              className={`w-full py-3 rounded-lg font-medium text-white
+                            transition-all duration-300 hover:scale-105 active:scale-95 ${
+                              isLoading || code.join("").length !== 6
+                                ? "bg-zinc-600 cursor-not-allowed text-glacier-400"
+                                : "bg-glacier-600 hover:bg-glacier-700"
+                            }`}
+            >
+              {isLoading
+                ? getText("CLIENT.CODE_VALIDATION.BUTTONS.LOADING", "Verificando...")
+                : getText("CLIENT.CODE_VALIDATION.BUTTONS.VERIFY", "Verificar Código")}
             </button>
 
-            <button onClick={() => setIsModalOpen(true)} disabled={isLoading} className="text-(--color-glacier-600) hover:text-(--color-glacier-800) text-sm font-medium transition-colors">
-              {dict.CLIENT.CODE_VALIDATION.BUTTONS.RESEND}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              disabled={isLoading}
+              className="text-glacier-400 hover:text-glacier-200 text-sm font-medium transition-colors py-2"
+            >
+              {getText("CLIENT.CODE_VALIDATION.BUTTONS.RESEND", "¿No recibiste el código? Reenviar")}
             </button>
           </div>
         </motion.div>
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-(--color-zinc-800)/75 bg- flex items-center justify-center z-50">
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-(--color-glacier-50) rounded-xl p-6 w-full max-w-md mx-4">
-            <h3 className="text-(--color-glacier-600) text-xl font-semibold mb-4">{dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.TITLE}</h3>
-            <p className="text-gray-600 mb-4">{dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.SUBTITLE}</p>
+        <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-zinc-800 rounded-xl p-6 w-full max-w-md border border-glacier-700 shadow-2xl"
+          >
+            <div className="text-center mb-6">
+              <div className="w-12 h-12 bg-glacier-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg">📨</span>
+              </div>
+              <h3 className="text-glacier-200 text-xl font-semibold mb-2">
+                {getText("CLIENT.CODE_VALIDATION.RESEND_MODAL.TITLE", "Reenviar Código")}
+              </h3>
+              <p className="text-glacier-400 text-sm">
+                {getText("CLIENT.CODE_VALIDATION.RESEND_MODAL.SUBTITLE", "Ingresa tu email para recibir un nuevo código de verificación")}
+              </p>
+            </div>
 
-            <input
-              type="email"
-              className="w-full text-(--color-glacier-400) px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-(--color-glacier-400)"
-              placeholder={dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.EMAIL_PLACEHOLDER}
-              value={emailInput}
-              onChange={e => setEmailInput(e.target.value)}
-            />
+            <div className="mb-6">
+              <input
+                type="email"
+                className="w-full bg-zinc-700 text-glacier-100 placeholder-glacier-400 px-4 py-3 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all"
+                placeholder={getText("CLIENT.CODE_VALIDATION.RESEND_MODAL.EMAIL_PLACEHOLDER", "correo@ejemplo.com")}
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+              />
+            </div>
 
-            <div className="flex justify-end space-x-2">
-              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-700 hover:text-gray-900" disabled={isLoading}>
-                {dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.CANCEL}
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 text-glacier-400 hover:text-glacier-200 transition-colors"
+                disabled={isLoading}
+              >
+                {getText("CLIENT.CODE_VALIDATION.RESEND_MODAL.CANCEL", "Cancelar")}
               </button>
               <button
                 onClick={resendCode}
-                className={`px-4 py-2 text-(--color-glacier-50) rounded-lg ${isLoading ? "bg-gray-400" : "bg-(--color-glacier-500) hover:bg-(--color-glacier-600)"}`}
-                disabled={isLoading}>
-                {isLoading ? dict.CLIENT.CODE_VALIDATION.BUTTONS.LOADING : dict.CLIENT.CODE_VALIDATION.RESEND_MODAL.SEND}
+                className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
+                  isLoading
+                    ? "bg-zinc-600 text-glacier-400 cursor-not-allowed"
+                    : "bg-glacier-600 hover:bg-glacier-700 text-white hover:scale-105 active:scale-95"
+                }`}
+                disabled={isLoading}
+              >
+                {isLoading
+                  ? getText("CLIENT.CODE_VALIDATION.BUTTONS.LOADING", "Enviando...")
+                  : getText("CLIENT.CODE_VALIDATION.RESEND_MODAL.SEND", "Enviar Código")}
               </button>
             </div>
           </motion.div>

@@ -71,7 +71,7 @@ export default function AccommodationPage() {
           children: searchParams.has("children") ? parseInt(searchParams.get("children") || "0") : undefined,
           rooms: searchParams.has("rooms") ? parseInt(searchParams.get("rooms") || "0") : undefined,
         };
-        const typeAccommodation = searchParams.get("typeAccomodation") || "hotel";
+        const typeAccommodation = searchParams.get("type") || "hotel";
 
         const data = await getAccommodationDetails(code, typeAccommodation, params);
         const responseData = data.response.objects;

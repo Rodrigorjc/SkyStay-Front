@@ -25,6 +25,7 @@
         "CREATION_FAILED_MESSAGE": "Se ha producido un error al intentar crear el equipaje adicional. Por favor, inténtelo de nuevo",
         "CREATION_FAILED_TITLE": "Error al añadir equipaje"
       },
+      "ID": "ID",
       "NAME": "Nombre del equipaje",
       "PRICE": "Precio",
       "SUCCESS": {
@@ -118,6 +119,7 @@
       "REGISTRATION_NUMBER": "Número de registro",
       "ROW_END": "Fin de fila",
       "ROW_START": "Inicio de fila",
+      "SEATS_IN_CABIN": "Asientos en la cabina",
       "SEATS_REMAINING": "Asientos restantes",
       "SEAT_CLASS": "Tipo de asiento",
       "SEAT_CONFIGURATION": "Configuración de asientos",
@@ -183,7 +185,7 @@
         "EDIT_FAILED_MESSAGE": "Se ha producido un error al intentar editar el apartamento. Por favor, inténtelo de nuevo",
         "EDIT_FAILED_TITLE": "Error al editar apartamento"
       },
-      "INFO": "Información básica del hotel",
+      "INFO": "Información básica del apartamento",
       "SUCCESS": {
         "UPDATE_APARTMENT_MESSAGE": "El apartamento se ha actualizado correctamente",
         "UPDATE_APARTMENT_TITLE": "Apartamento editado correctamente"
@@ -314,6 +316,12 @@
       "TITLE": "Detalles del vuelo",
       "TYPE": "Tipo",
       "WEBSITE": "Sitio web"
+    },
+    "HOTEL": {
+      "ERRORS": {
+        "ADD_IMAGE_MESSAGE": "No se ha podido subir la imagen intentalo mas tarde",
+        "ADD_IMAGE_TITLE": "Error al subir la imagen"
+      }
     },
     "HOTELS": {
       "ADDRESS": "Dirección",
@@ -681,6 +689,7 @@
         "ERROR_SELECT_SEATS_MESSAGE": "Solo puedes seleccionar hasta 10 asientos.",
         "ERROR_SELECT_SEATS_TITLE": "Error al seleccionar asientos",
         "LOADIN_DATA_FLIGHT": "Error al cargar los datos del vuelo. Por favor, inténtelo de nuevo",
+        "NO_FLIGHTS_FOUND": "No se han encontrado ningun vuelo, lo sentimos.",
         "PURCHASE_MESSAGE_ERROR": "No se pudo completar la compra. Por favor, verifica los datos e inténtalo de nuevo.",
         "PURCHASE_TITLE_ERROR": "Error al comprar los billetes"
       },

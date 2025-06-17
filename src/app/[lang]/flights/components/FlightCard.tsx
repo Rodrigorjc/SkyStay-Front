@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FlightClientVO } from "../types/flight";
 import { useDictionary } from "@/app/context/DictionaryContext";
 import { motion } from "framer-motion";
+import Loader from "@/app/components/ui/Loader";
 
 export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights }) => {
   const { dict } = useDictionary();
@@ -21,6 +22,10 @@ export const FlightCard: React.FC<{ flights: FlightClientVO[] }> = ({ flights })
 
     return `${hours}h ${minutes}m`;
   };
+
+  if (!dict) {
+    return null;
+  }
 
   return (
     <>

@@ -44,8 +44,7 @@ export default function Administration() {
     } finally {
       setLoading(false);
     }
-    fetchData();
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchData();
@@ -59,6 +58,7 @@ export default function Administration() {
     );
   }
 
+  if (!dict) return null;
   return (
     <Card className="p-4 w-fulltext-white">
       <Title title={dict.ADMINISTRATION.DASHBOARD.DASHBOARD} />

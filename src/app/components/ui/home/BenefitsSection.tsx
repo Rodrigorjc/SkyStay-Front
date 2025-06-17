@@ -6,6 +6,9 @@ import { useDictionary } from "@/app/context/DictionaryContext";
 
 const BenefitsSection: React.FC = () => {
   const { dict } = useDictionary();
+  if (!dict) {
+    return null;
+  }
   const benefits = [
     {
       icon: <FiAirplay size={32} className="text-glacier-400" />,

@@ -72,6 +72,7 @@ export default function AdminHotelsTable({ data, onRefresh }: AdminHotelsTablePr
     }, 2500);
   };
 
+  if (!dict) return null;
   return (
     <div>
       <section>

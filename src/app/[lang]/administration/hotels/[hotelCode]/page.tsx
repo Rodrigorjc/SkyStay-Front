@@ -38,7 +38,7 @@ export default function HotelsDetails() {
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE, hotelCode]);
+  }, [dict, hotelCode]);
 
   const handleCreateRoomImage = async (url: string, hotelCode: string, roomType: string) => {
     const parsedHotelCode = Array.isArray(hotelCode) ? hotelCode[0] : hotelCode;

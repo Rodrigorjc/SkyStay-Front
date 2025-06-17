@@ -25,6 +25,7 @@
         "CREATION_FAILED_MESSAGE": "An error occurred while trying to add the additional baggage. Please try again",
         "CREATION_FAILED_TITLE": "Error adding baggage"
       },
+      "ID": "ID",
       "NAME": "Baggage name",
       "PRICE": "Price",
       "SUCCESS": {
@@ -119,6 +120,7 @@
       "REGISTRATION_NUMBER": "Registration number",
       "ROW_END": "Row end",
       "ROW_START": "Row start",
+      "SEATS_IN_CABIN": "Seats in the cabin",
       "SEATS_REMAINING": "Remaining seats",
       "SEAT_CLASS": "Seat class",
       "SEAT_CONFIGURATION": "Seat configuration",
@@ -315,6 +317,12 @@
       "TITLE": "Flight details",
       "TYPE": "Type",
       "WEBSITE": "Website"
+    },
+    "HOTEL": {
+      "ERRORS": {
+        "ADD_IMAGE_MESSAGE": "Could not upload the image, try again later.",
+        "ADD_IMAGE_TITLE": "Error uploading image"
+      }
     },
     "HOTELS": {
       "ADDRESS": "Address",
@@ -682,6 +690,7 @@
         "ERROR_SELECT_SEATS_MESSAGE": "You can only select up to 10 seats.",
         "ERROR_SELECT_SEATS_TITLE": "Error selecting seats",
         "LOADIN_DATA_FLIGHT": "Error loading flight data. Please try again",
+        "NO_FLIGHTS_FOUND": "No flights have been found, sorry.",
         "PURCHASE_MESSAGE_ERROR": "The purchase could not be completed. Please check your details and try again.",
         "PURCHASE_TITLE_ERROR": "Ticket purchase error"
       },

@@ -33,7 +33,7 @@ export default function AdminUsersPage() {
     } finally {
       setLoading(false);
     }
-  }, [page, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE]);
+  }, [page, dict]);
 
   useEffect(() => {
     fetchAirports();

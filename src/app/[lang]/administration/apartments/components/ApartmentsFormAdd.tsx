@@ -82,7 +82,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE, page]);
+  }, [page, dict]);
 
   const fetchRoomConfigurations = useCallback(async () => {
     setLoading(true);
@@ -99,7 +99,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchCities();
@@ -152,15 +152,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     } finally {
       setIsSubmitting(false);
     }
-  }, [
-    dict.ADMINISTRATION.HOTELS.SUCCESS.CREATION_SUCCESS_TITLE,
-    dict.ADMINISTRATION.HOTELS.SUCCESS.CREATION_SUCCESS_MESSAGE,
-    dict.ADMINISTRATION.HOTELS.ERRORS.CREATION_FAILED_TITLE,
-    dict.ADMINISTRATION.HOTELS.ERRORS.CREATION_FAILED_MESSAGE,
-    getValues,
-    onSuccess,
-    setNotification,
-  ]);
+  }, [dict, getValues, onSuccess, setNotification]);
 
   const fetchRoomTypes = useCallback(async () => {
     setLoading(true);
@@ -177,7 +169,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_TITLE, dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_MESSAGE, setRoomTypes, setNotification, setLoading]);
+  }, [dict, setRoomTypes, setNotification, setLoading]);
 
   useEffect(() => {
     fetchRoomTypes();
@@ -192,8 +184,9 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     setValue("rooms", rooms);
   }, [roomTypeCount, setValue]);
 
+  if (!dict) return null;
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} onSubmit={handleSubmit(onSubmit)}>
       {step === 1 && (
         <Card>
           <CardHeader color="glacier">{dict.ADMINISTRATION.APARTMENTS.INFO}</CardHeader>

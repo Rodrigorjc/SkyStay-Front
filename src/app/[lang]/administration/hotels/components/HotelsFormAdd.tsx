@@ -48,65 +48,18 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
   const [step, setStep] = useState(1);
   const [cities, setCities] = useState<CityTableVO[]>([]);
   const [roomTypes, setRoomTypes] = useState<string[]>([]);
-
   const [roomConfigurations, setRoomConfigurations] = useState<RoomConfigurationVO[]>([]);
   const [roomTypeCount, setRoomTypeCount] = useState(1);
   const [selectedCity, setSelectedCity] = useState<number | null>(0);
-
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
-
   const [notification, setNotification] = useState<Notifications | null>(null);
-  const handleCloseNotification = () => setNotification(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { dict } = useDictionary();
 
-  const fetchCities = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await getAllCitiesPaginated(20, page);
-      setCities(response.objects);
-      setHasNextPage(response.hasNextPage);
-      setHasPreviousPage(response.hasPreviousPage);
-    } catch (error) {
-      setNotification({
-        tipo: "error",
-        titulo: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE,
-        code: 500,
-        mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE,
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [page, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE]);
-
-  const fetchRoomConfigurations = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await getAllRoomConfigurations();
-      setRoomConfigurations(response.response.objects);
-    } catch (error) {
-      setNotification({
-        tipo: "error",
-        titulo: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE,
-        code: 500,
-        mensaje: dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE,
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE]);
-
-  useEffect(() => {
-    fetchCities();
-    fetchRoomConfigurations();
-  }, [page, fetchCities, fetchRoomConfigurations]);
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-  };
   const { register, handleSubmit, control, setValue, watch, trigger, getValues } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -127,7 +80,11 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     name: "rooms",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleCloseNotification = () => setNotification(null);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -150,6 +107,42 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     }
   };
 
+  const fetchCities = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await getAllCitiesPaginated(20, page);
+      setCities(response.objects);
+      setHasNextPage(response.hasNextPage);
+      setHasPreviousPage(response.hasPreviousPage);
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict?.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE ?? "Error",
+        code: 500,
+        mensaje: dict?.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE ?? "Could not load cities.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [page, dict]);
+
+  const fetchRoomConfigurations = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await getAllRoomConfigurations();
+      setRoomConfigurations(response.response.objects);
+    } catch (error) {
+      setNotification({
+        tipo: "error",
+        titulo: dict?.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE ?? "Error",
+        code: 500,
+        mensaje: dict?.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE ?? "Could not load room configurations.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [dict]);
+
   const fetchRoomTypes = useCallback(async () => {
     setLoading(true);
     try {
@@ -158,18 +151,14 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     } catch (error) {
       setNotification({
         tipo: "error",
-        titulo: dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_TITLE,
+        titulo: dict?.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_TITLE ?? "Error",
         code: 500,
-        mensaje: dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_MESSAGE,
+        mensaje: dict?.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_MESSAGE ?? "Could not load room types.",
       });
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_TITLE, dict.ADMINISTRATION.HOTELS.ERRORS.LOAD_ROOM_TYPE_MESSAGE]);
-
-  useEffect(() => {
-    fetchRoomTypes();
-  }, [fetchRoomTypes]);
+  }, [dict]);
 
   useEffect(() => {
     const rooms = Array.from({ length: roomTypeCount }).map(() => ({
@@ -180,8 +169,16 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
     setValue("rooms", rooms);
   }, [roomTypeCount, setValue]);
 
+  useEffect(() => {
+    fetchRoomTypes();
+    fetchCities();
+    fetchRoomConfigurations();
+  }, [fetchRoomTypes, page, fetchCities, fetchRoomConfigurations]);
+
+  if (!dict) return null;
+
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} onSubmit={handleSubmit(onSubmit)}>
       {step === 1 && (
         <Card>
           <CardHeader color="glacier">{dict.ADMINISTRATION.HOTELS.INFO}</CardHeader>

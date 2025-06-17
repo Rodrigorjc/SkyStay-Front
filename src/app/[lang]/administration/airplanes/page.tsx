@@ -46,7 +46,7 @@ export default function Page() {
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, page]);
+  }, [page, dict]);
 
   useEffect(() => {
     fetchPlanes();

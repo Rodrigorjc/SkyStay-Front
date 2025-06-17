@@ -43,7 +43,7 @@ export default function FlightsPage() {
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, page]);
+  }, [dict, page]);
 
   useEffect(() => {
     fetchflights();

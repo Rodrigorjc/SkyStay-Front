@@ -11,7 +11,7 @@ interface AdminFlightTableProps {
   onRefresh: () => void;
 }
 
-export default function AdminFlightsTable({ data, onRefresh }: AdminFlightTableProps) {
+export default function AdminFlightsTable({ data }: AdminFlightTableProps) {
   const { dict } = useDictionary();
   const router = useRouter();
 

@@ -58,76 +58,84 @@ const AccountStep: React.FC<{
 
   return (
     <div className="text-left">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl text-(--color-glacier-500) font-semibold">{dict.CLIENT.REGISTER.ACCOUNT_STEP.TITLE}</h2>
-        <h2 className="text-lg text-gray-500">{dict.CLIENT.REGISTER.STEP_INDICATOR.replace("{{current}}", "1").replace("{{total}}", "3")}</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl text-glacier-200 font-semibold">{dict.CLIENT.REGISTER.ACCOUNT_STEP.TITLE}</h2>
+        <h2 className="text-lg text-glacier-400">{dict.CLIENT.REGISTER.STEP_INDICATOR.replace("{{current}}", "1").replace("{{total}}", "3")}</h2>
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.LABEL}</label>
+        <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.LABEL}</label>
         <input
           type="email"
           name="email"
-          className={`form-input w-full px-3 py-2 border ${
-            errors.email ? "border-red-500" : "border-(--color-glacier-500)"
-          } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+          className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all ${
+            errors.email ? "border-red-500" : "border-zinc-600"
+          }`}
           placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.EMAIL.PLACEHOLDER}
           value={data.email}
           onChange={handleChange}
           onBlur={e => validateField("email", e.target.value)}
         />
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1 flex items-center">
+          <p className="text-red-400 text-sm mt-2 flex items-center">
             <MdError className="mr-1" /> {errors.email}
           </p>
         )}
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.LABEL}</label>
+        <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.LABEL}</label>
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             name="password"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.password ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) pr-10`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all pr-12 ${
+              errors.password ? "border-red-500" : "border-zinc-600"
+            }`}
             placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.PASSWORD.PLACEHOLDER}
             value={data.password}
             onChange={handleChange}
             onBlur={e => validateField("password", e.target.value)}
           />
-          <button type="button" className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <FaEye className="h-5 w-5 text-gray-500" /> : <FaEyeSlash className="h-5 w-5 text-gray-500" />}
+          <button
+            type="button"
+            className="absolute inset-y-0 right-0 pr-4 flex items-center text-glacier-400 hover:text-glacier-200 transition-colors"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEye className="h-5 w-5" /> : <FaEyeSlash className="h-5 w-5" />}
           </button>
         </div>
         {errors.password && (
-          <p className="text-red-500 text-xs mt-1 flex items-center">
+          <p className="text-red-400 text-sm mt-2 flex items-center">
             <MdError className="mr-1" /> {errors.password}
           </p>
         )}
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL}</label>
+        <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.LABEL}</label>
         <div className="relative">
           <input
             type={showConfirmPassword ? "text" : "password"}
             name="confirmPassword"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.confirmPassword ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) pr-10`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all pr-12 ${
+              errors.confirmPassword ? "border-red-500" : "border-zinc-600"
+            }`}
             placeholder={dict.CLIENT.REGISTER.ACCOUNT_STEP.CONFIRM_PASSWORD.PLACEHOLDER}
             value={data.confirmPassword}
             onChange={handleChange}
             onBlur={e => validateField("confirmPassword", e.target.value)}
           />
-          <button type="button" className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-            {showConfirmPassword ? <FaEye className="h-5 w-5 text-gray-500" /> : <FaEyeSlash className="h-5 w-5 text-gray-500" />}
+          <button
+            type="button"
+            className="absolute inset-y-0 right-0 pr-4 flex items-center text-glacier-400 hover:text-glacier-200 transition-colors"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? <FaEye className="h-5 w-5" /> : <FaEyeSlash className="h-5 w-5" />}
           </button>
         </div>
         {errors.confirmPassword && (
-          <p className="text-red-500 text-xs mt-1 flex items-center">
+          <p className="text-red-400 text-sm mt-2 flex items-center">
             <MdError className="mr-1" /> {errors.confirmPassword}
           </p>
         )}
@@ -145,100 +153,100 @@ const PersonalStep: React.FC<{
 }> = ({ data, errors, handleChange, validateField, dict }) => {
   return (
     <div className="text-left">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl text-(--color-glacier-500) font-semibold">{dict.CLIENT.REGISTER.PERSONAL_STEP.TITLE}</h2>
-        <h2 className="text-lg text-gray-500">{dict.CLIENT.REGISTER.STEP_INDICATOR.replace("{{current}}", "2").replace("{{total}}", "3")}</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl text-glacier-200 font-semibold">{dict.CLIENT.REGISTER.PERSONAL_STEP.TITLE}</h2>
+        <h2 className="text-lg text-glacier-400">{dict.CLIENT.REGISTER.STEP_INDICATOR.replace("{{current}}", "2").replace("{{total}}", "3")}</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.LABEL}</label>
+          <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.LABEL}</label>
           <input
             type="text"
             name="name"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.name ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all ${
+              errors.name ? "border-red-500" : "border-zinc-600"
+            }`}
             placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.NAME.PLACEHOLDER}
             value={data.name}
             onChange={handleChange}
             onBlur={e => validateField("name", e.target.value)}
           />
           {errors.name && (
-            <p className="text-red-500 text-xs mt-1 flex items-center">
+            <p className="text-red-400 text-sm mt-2 flex items-center">
               <MdError className="mr-1" /> {errors.name}
             </p>
           )}
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.LABEL}</label>
+          <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.LABEL}</label>
           <input
             type="text"
             name="lastName"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.lastName ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all ${
+              errors.lastName ? "border-red-500" : "border-zinc-600"
+            }`}
             placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.LAST_NAME.PLACEHOLDER}
             value={data.lastName}
             onChange={handleChange}
             onBlur={e => validateField("lastName", e.target.value)}
           />
           {errors.lastName && (
-            <p className="text-red-500 text-xs mt-1 flex items-center">
+            <p className="text-red-400 text-sm mt-2 flex items-center">
               <MdError className="mr-1" /> {errors.lastName}
             </p>
           )}
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.LABEL}</label>
+          <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.LABEL}</label>
           <input
             type="text"
             name="nif"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.nif ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all ${
+              errors.nif ? "border-red-500" : "border-zinc-600"
+            }`}
             placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.NIF.PLACEHOLDER}
             value={data.nif}
             onChange={handleChange}
             onBlur={e => validateField("nif", e.target.value)}
           />
           {errors.nif && (
-            <p className="text-red-500 text-xs mt-1 flex items-center">
+            <p className="text-red-400 text-sm mt-2 flex items-center">
               <MdError className="mr-1" /> {errors.nif}
             </p>
           )}
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.LABEL}</label>
+          <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.LABEL}</label>
           <input
             type="text"
             name="phone"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.phone ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 placeholder-glacier-400 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all ${
+              errors.phone ? "border-red-500" : "border-zinc-600"
+            }`}
             placeholder={dict.CLIENT.REGISTER.PERSONAL_STEP.PHONE.PLACEHOLDER}
             value={data.phone}
             onChange={handleChange}
             onBlur={e => validateField("phone", e.target.value)}
           />
           {errors.phone && (
-            <p className="text-red-500 text-xs mt-1 flex items-center">
+            <p className="text-red-400 text-sm mt-2 flex items-center">
               <MdError className="mr-1" /> {errors.phone}
             </p>
           )}
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.LABEL}</label>
+          <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.PERSONAL_STEP.BIRTH_DATE.LABEL}</label>
           <input
             type="date"
             name="birthDate"
-            className={`form-input w-full px-3 py-2 border ${
-              errors.birthDate ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) min-h-[42px]`}
+            className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all min-h-[48px] ${
+              errors.birthDate ? "border-red-500" : "border-zinc-600"
+            }`}
             value={data.birthDate}
             onChange={handleChange}
             onBlur={e => validateField("birthDate", e.target.value)}
@@ -249,22 +257,19 @@ const PersonalStep: React.FC<{
             })()}
           />
           {errors.birthDate && (
-            <p className="text-red-500 text-xs mt-1 flex items-center">
+            <p className="text-red-400 text-sm mt-2 flex items-center">
               <MdError className="mr-1" /> {errors.birthDate}
             </p>
           )}
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-1">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.LABEL}</label>
+          <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.LABEL}</label>
           <select
             name="gender"
-            className={`form-select w-full px-3 py-2 border ${
-              errors.gender ? "border-red-500" : "border-(--color-glacier-500)"
-            } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300) min-h-[42px] pr-10`}
-            style={{
-              backgroundPositionX: "calc(100% - 8px)",
-            }}
+            className={`form-select w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all min-h-[48px] ${
+              errors.gender ? "border-red-500" : "border-zinc-600"
+            }`}
             value={data.gender}
             onChange={handleChange}
             onBlur={e => validateField("gender", e.target.value)}>
@@ -273,7 +278,7 @@ const PersonalStep: React.FC<{
             <option value="2">{dict.CLIENT.REGISTER.PERSONAL_STEP.GENDER.OPTIONS.OTHER}</option>
           </select>
           {errors.gender && (
-            <p className="text-red-500 text-xs mt-1 flex items-center">
+            <p className="text-red-400 text-sm mt-2 flex items-center">
               <MdError className="mr-1" /> {errors.gender}
             </p>
           )}
@@ -291,30 +296,36 @@ const ImageStep: React.FC<{
 }> = ({ data, errors, handleFileChange, dict }) => {
   return (
     <div className="text-left">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl text-(--color-glacier-500) font-semibold">{dict.CLIENT.REGISTER.IMAGE_STEP.TITLE}</h2>
-        <h2 className="text-lg text-gray-500">{dict.CLIENT.REGISTER.STEP_INDICATOR.replace("{{current}}", "3").replace("{{total}}", "3")}</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl text-glacier-200 font-semibold">{dict.CLIENT.REGISTER.IMAGE_STEP.TITLE}</h2>
+        <h2 className="text-lg text-glacier-400">{dict.CLIENT.REGISTER.STEP_INDICATOR.replace("{{current}}", "3").replace("{{total}}", "3")}</h2>
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-600 mb-1">{dict.CLIENT.REGISTER.IMAGE_STEP.UPLOAD_LABEL}</label>
+        <label className="block text-glacier-300 mb-2 font-medium">{dict.CLIENT.REGISTER.IMAGE_STEP.UPLOAD_LABEL}</label>
         <input
           type="file"
           name="img"
           accept="image/*"
-          className={`form-input w-full px-3 py-2 border ${
-            errors.img ? "border-red-500" : "border-(--color-glacier-500)"
-          } rounded-md placeholder:text-(--color-glacier-300) text-(--color-glacier-300)`}
+          className={`form-input w-full px-4 py-3 border rounded-lg bg-zinc-700 text-glacier-100 focus:outline-none focus:ring-2 focus:ring-glacier-500 focus:border-glacier-500 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-glacier-600 file:text-white hover:file:bg-glacier-700 ${
+            errors.img ? "border-red-500" : "border-zinc-600"
+          }`}
           onChange={handleFileChange}
         />
         {errors.img && (
-          <p className="text-red-500 text-xs mt-1 flex items-center">
+          <p className="text-red-400 text-sm mt-2 flex items-center">
             <MdError className="mr-1" /> {errors.img}
           </p>
         )}
         {data.img && (
-          <div className="mt-2">
-            <Image src={URL.createObjectURL(data.img)} alt="Foto de perfil" width={96} height={96} className="w-24 h-24 object-cover rounded-md" />
+          <div className="mt-4">
+            <Image
+              src={URL.createObjectURL(data.img)}
+              alt="Foto de perfil"
+              width={96}
+              height={96}
+              className="w-24 h-24 object-cover rounded-lg border-2 border-glacier-500"
+            />
           </div>
         )}
       </div>
@@ -329,16 +340,16 @@ const ProgressBar: React.FC<{
   const percentage = ((step + 1) / steps.length) * 100;
 
   return (
-    <div className="mb-4">
-      <ul className="flex justify-between text-sm text-gray-400 mb-2">
+    <div className="mb-6">
+      <ul className="flex justify-between text-sm text-glacier-400 mb-3">
         {steps.map((label, idx) => (
-          <li key={label} className={`flex-1 text-center ${idx <= step ? "text-(--color-glacier-700) font-bold" : ""}`}>
+          <li key={label} className={`flex-1 text-center transition-all ${idx <= step ? "text-glacier-200 font-bold" : ""}`}>
             {label}
           </li>
         ))}
       </ul>
-      <div className="w-full bg-gray-300 h-2 rounded-full">
-        <div className="h-2 bg-(--color-glacier-500) rounded-full transition-all duration-400" style={{ width: `${percentage}%` }} />
+      <div className="w-full bg-zinc-700 h-2 rounded-full">
+        <div className="h-2 bg-glacier-500 rounded-full transition-all duration-500" style={{ width: `${percentage}%` }} />
       </div>
     </div>
   );
@@ -704,43 +715,49 @@ const MultiStepForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <Navbar />
       <div className="flex flex-grow justify-center items-center p-4">
-        <div className="w-full max-w-4xl bg-(--color-glacier-50) rounded-2xl shadow-lg p-6">
-          <h2 className="text-2xl font-semibold text-(--color-glacier-600) text-center uppercase mb-2">{dict.CLIENT.REGISTER.TITLE}</h2>
-          <p className="text-center text-gray-500 mb-4">{dict.CLIENT.REGISTER.SUBTITLE}</p>
+        <div className="w-full max-w-4xl bg-zinc-800 rounded-xl shadow-2xl border border-glacier-700 p-8">
+          <h2 className="text-3xl font-bold text-glacier-200 text-center uppercase mb-2">{dict.CLIENT.REGISTER.TITLE}</h2>
+          <p className="text-center text-glacier-400 mb-8">{dict.CLIENT.REGISTER.SUBTITLE}</p>
 
           <ProgressBar step={step} steps={steps} />
 
-          <motion.div key={step} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.6 }}>
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.4 }}
+          >
             {renderStep()}
           </motion.div>
 
-          <div className="flex justify-between mt-4">
+          <div className="flex justify-between mt-8">
             {step > 0 && (
               <button
                 onClick={prevStep}
-                className="bg-gray-600 text-white px-4 py-2 hover:bg-gray-700
-                                transition-all duration-400 hover:scale-105
-                                active:scale-95 active:bg-gray-800 rounded-full">
+                className="bg-zinc-600 hover:bg-zinc-700 text-glacier-200 px-6 py-3 rounded-lg font-medium
+                                transition-all duration-300 hover:scale-105 active:scale-95"
+              >
                 {dict.CLIENT.REGISTER.BUTTONS.PREVIOUS}
               </button>
             )}
             {step < steps.length - 1 ? (
               <button
                 onClick={nextStep}
-                className="bg-(--color-glacier-500) text-white px-4 py-2
-                                hover:bg-(--color-glacier-600) ml-auto transition-all duration-400 hover:scale-105
-                                active:scale-95 active:bg-(--color-glacier-700) rounded-full">
+                className="bg-glacier-600 hover:bg-glacier-700 text-white px-6 py-3 rounded-lg font-medium
+                                ml-auto transition-all duration-300 hover:scale-105 active:scale-95"
+              >
                 {dict.CLIENT.REGISTER.BUTTONS.NEXT}
               </button>
             ) : step === steps.length - 1 ? (
               <button
                 onClick={submitForm}
-                className="bg-green-600 text-white px-4 py-2 hover:bg-green-700 ml-auto
-                                transition-all duration-400 hover:scale-105
-                                active:scale-95 active:bg-green-900 rounded-full">
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium
+                                ml-auto transition-all duration-300 hover:scale-105 active:scale-95"
+              >
                 {dict.CLIENT.REGISTER.BUTTONS.FINISH}
               </button>
             ) : null}

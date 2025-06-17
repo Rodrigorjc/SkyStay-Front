@@ -2,9 +2,11 @@
 import React from "react";
 import { FaXTwitter, FaInstagram, FaFacebook, FaLinkedin } from "react-icons/fa6";
 import Image from "next/image";
-import { useDictionary } from "@/app/context/DictionaryContext";
+import { useDictionary, useLanguage } from "@/app/context/DictionaryContext";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
+  const lang = useLanguage();
   const { dict } = useDictionary();
   if (!dict) {
     return null;
@@ -23,10 +25,10 @@ const Footer: React.FC = () => {
   ];
 
   const legalLinks = [
-    { name: dict.CLIENT.FOOTER.PRIVACY_POLICY, href: "/privacidad" },
-    { name: dict.CLIENT.FOOTER.COOKIES_POLICY, href: "/cookies" },
-    { name: dict.CLIENT.FOOTER.TERMS_OF_SERVICE, href: "/terminos" },
-    { name: dict.CLIENT.FOOTER.LEGAL_NOTICE, href: "/aviso-legal" },
+    { name: dict.CLIENT.FOOTER.PRIVACY_POLICY, href: `/${lang}/legal` },
+    { name: dict.CLIENT.FOOTER.COOKIES_POLICY, href: `/${lang}/legal` },
+    { name: dict.CLIENT.FOOTER.TERMS_OF_SERVICE, href: `/${lang}/legal` },
+    { name: dict.CLIENT.FOOTER.LEGAL_NOTICE, href: `/${lang}/legal` },
   ];
 
   return (
@@ -68,9 +70,9 @@ const Footer: React.FC = () => {
           <ul className="space-y-2 text-sm">
             {legalLinks.map((link, i) => (
               <li key={i}>
-                <a href={link.href} className="hover:underline hover:text-black transition">
+                <Link href={link.href} className="hover:underline hover:text-black transition">
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

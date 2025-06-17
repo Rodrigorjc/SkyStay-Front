@@ -92,7 +92,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
 
   return (
     <>
-      <Modal onClose={onClose}>
+      <Modal onClose={onClose} onSubmit={handleSubmit(onSubmit)}>
         {step === 1 && (
           <Card>
             <CardHeader color="glacier" className="pt-4">

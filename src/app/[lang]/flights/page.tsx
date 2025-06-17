@@ -10,20 +10,21 @@ import { getAllFlights } from "./services/client.flights.service";
 import { useSearchParams } from "next/navigation";
 import Loader from "@/app/components/ui/Loader";
 
-// Componente separado para usar useSearchParams dentro de Suspense
 function FlightsPageContent() {
   const { dict } = useDictionary();
   const searchParams = useSearchParams();
-  const origin = searchParams.get("origin") || null;
-  const destination = searchParams.get("destination") || null;
+  const origin = searchParams.get("origin") || "";
+  const destination = searchParams.get("destination") || "";
+
   const [flights, setFlights] = useState<FlightClientVO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [error, setError] = useState(false);
+
   const [filters, setFilters] = useState({
-    origin: "",
-    destination: "",
+    origin,
+    destination,
     airline: "",
     price: "",
   });
@@ -34,12 +35,13 @@ function FlightsPageContent() {
   };
 
   const handleReset = () => {
-    setFilters({ origin: "", destination: "", airline: "", price: "" });
+    const resetFilters = { origin: "", destination: "", airline: "", price: "" };
+    setFilters(resetFilters);
     setFlights([]);
     setPage(1);
     setHasMore(true);
     setError(false);
-    fetchFlights({ reset: true });
+    fetchFlights({ filters: resetFilters, pageToLoad: 1, reset: true });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,15 +50,23 @@ function FlightsPageContent() {
     setPage(1);
     setHasMore(true);
     setError(false);
-    fetchFlights({ filters, reset: true });
+    fetchFlights({ filters, pageToLoad: 1, reset: true });
   };
 
   const fetchFlights = useCallback(
-    async ({ filters: customFilters = filters, reset = false } = {}) => {
+    async ({
+      filters: customFilters = filters,
+      pageToLoad = 1,
+      reset = false,
+    }: {
+      filters?: typeof filters;
+      pageToLoad?: number;
+      reset?: boolean;
+    } = {}) => {
       if (!hasMore && !reset) return;
       setLoading(true);
       try {
-        const response = await getAllFlights(50, reset ? 1 : page, {
+        const response = await getAllFlights(20, pageToLoad, {
           origin: customFilters.origin || undefined,
           destination: customFilters.destination || undefined,
           airline: customFilters.airline || undefined,
@@ -64,7 +74,6 @@ function FlightsPageContent() {
         });
         setFlights(prev => (reset ? response.objects : [...prev, ...response.objects]));
         setHasMore(response.hasNextPage);
-        setPage(response.currentPage + 1);
       } catch (error) {
         console.error("Error fetching flights:", error);
         setError(true);
@@ -72,40 +81,39 @@ function FlightsPageContent() {
         setLoading(false);
       }
     },
-    [filters, page, hasMore]
+    [filters, hasMore]
   );
+
+  useEffect(() => {
+    fetchFlights({ filters, pageToLoad: 1, reset: true });
+  }, []);
+
+  useEffect(() => {
+    if (page === 1) return;
+    fetchFlights({ filters, pageToLoad: page });
+  }, [page]);
 
   useEffect(() => {
     const handleScroll = () => {
       const bottomReached = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
       if (bottomReached && !loading && hasMore) {
-        fetchFlights();
+        setPage(prev => prev + 1);
       }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore, fetchFlights]);
+  }, [loading, hasMore]);
 
-  useEffect(() => {
-    fetchFlights({ reset: true });
-  }, [fetchFlights]);
-
-  useEffect(() => {
-    if (origin && destination) {
-      setFilters(prev => ({
-        ...prev,
-        origin,
-        destination,
-      }));
-      fetchFlights({ filters: { ...filters, origin, destination }, reset: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [origin, destination]);
-
-  if (!dict) return null;
+  if (!dict) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-white">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
-    <div className="py-10 px-4 flex flex-col items-center gap-8">
+    <div className="py-10 px-4 flex flex-col items-center gap-8 min-h-screen">
       <header className="p-4 flex items-center justify-between">
         <h1 className="text-4xl font-extrabold text-gray-200 tracking-tight">{dict.CLIENT.FLIGHTS.NEXT_FLIGHT}</h1>
       </header>
@@ -123,10 +131,11 @@ function FlightsPageContent() {
                 id="filter-origin"
                 name="origin"
                 type="text"
-                placeholder="Bogotá"
+                placeholder="Sevilla"
                 className="bg-transparent text-white placeholder-glacier-300 w-full focus:outline-none"
                 value={filters.origin}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -141,10 +150,11 @@ function FlightsPageContent() {
                 id="filter-destination"
                 name="destination"
                 type="text"
-                placeholder="Miami"
+                placeholder="Paris"
                 className="bg-transparent text-white placeholder-glacier-300 w-full focus:outline-none"
                 value={filters.destination}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -163,6 +173,7 @@ function FlightsPageContent() {
                 className="bg-transparent text-white placeholder-glacier-300 w-full focus:outline-none"
                 value={filters.airline}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -178,10 +189,11 @@ function FlightsPageContent() {
                 name="price"
                 type="number"
                 min={0}
-                placeholder="300"
+                placeholder="50€"
                 className="bg-transparent placeholder-glacier-300 w-full focus:outline-none appearance-none"
                 value={filters.price}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -203,14 +215,19 @@ function FlightsPageContent() {
 
       <div className="border-b-2 border-glacier-400/50 max-w-[1850px] w-full my-4"></div>
 
+      <div className="w-full max-w-[1850px] grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3  gap-6">
+        {flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}
+      </div>
       {error && (
         <div className="text-center text-white mt-4 text-3xl w-full flex flex-col items-center">
           <p>{dict.CLIENT.FLIGHTS.ERRORS.ERROR_LOADING}</p>
         </div>
       )}
-      <div className="w-full max-w-[1850px] grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3  gap-6">
-        {flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}
-      </div>
+      {flights.length === 0 && (
+        <div className="text-center h-full mt-4 text-4xl font-extrabold text-gray-200 tracking-tight w-full flex flex-col items-center">
+          <h1>{dict.CLIENT.FLIGHTS.ERRORS.NO_FLIGHTS_FOUND}</h1>
+        </div>
+      )}
     </div>
   );
 }

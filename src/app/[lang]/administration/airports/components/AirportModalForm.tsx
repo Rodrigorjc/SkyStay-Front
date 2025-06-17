@@ -79,7 +79,7 @@ export default function AirportModalForm({ onClose, onSuccess }: Props) {
     } finally {
       setIsLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchCities();
@@ -129,7 +129,7 @@ export default function AirportModalForm({ onClose, onSuccess }: Props) {
 
   return (
     <>
-      <Modal onClose={onClose}>
+      <Modal onClose={onClose} onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardHeader color="glacier" className="pt-4">
             {dict.ADMINISTRATION.AIRPORTS.ADD_AIRPORT}
