@@ -57,7 +57,7 @@ export default function AccommodationCollage() {
       </div>
 
       <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-2 sm:grid-cols-9 md:grid-cols-12 auto-rows-[180px] sm:auto-rows-[200px] md:auto-rows-[250px]">
-        {destinations.slice(0, 6).map((dest, idx) => (
+        {destinations.slice(0, 5).map((dest, idx) => (
           <Link
             href={`/${lang}/accommodation/${dest.code}`}
             key={dest.code || `unknown-${idx}`}
