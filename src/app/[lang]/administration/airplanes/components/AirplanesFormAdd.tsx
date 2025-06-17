@@ -124,7 +124,7 @@ export default function AirplaneModalForm({ onClose, onSuccess }: Props) {
     } finally {
       setIsLoading(false);
     }
-  }, [dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_TITLE, dict.ADMINISTRATION.ERRORS.LOAD_FAILURE_MESSAGE, idAirplane]);
+  }, [dict, idAirplane]);
 
   useEffect(() => {
     fetchData();
