@@ -82,7 +82,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_CITY_MESSAGE, page]);
+  }, [page, dict]);
 
   const fetchRoomConfigurations = useCallback(async () => {
     setLoading(true);
@@ -99,7 +99,7 @@ const MultiStepForm: React.FC<ApartmentsFormAddProps> = ({ onClose, onSuccess })
     } finally {
       setLoading(false);
     }
-  }, [dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_TITLE, dict.ADMINISTRATION.HOTEL.ERRORS.LOAD_ROOM_CONFIGURATION_MESSAGE]);
+  }, [dict]);
 
   useEffect(() => {
     fetchCities();
