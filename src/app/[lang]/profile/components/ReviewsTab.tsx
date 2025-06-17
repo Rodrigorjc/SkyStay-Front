@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaStar, FaPlus, FaTimes, FaHotel, FaPlane } from "react-icons/fa";
 import { Review, CreateReviewData } from "../types/Profile";
 import { getUserReviews, createReview } from "../services/profileService";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, isValid } from "date-fns";
 import { es } from "date-fns/locale";
 
 interface ReviewsTabProps {
@@ -80,6 +80,31 @@ export default function ReviewsTab({ onNotification }: ReviewsTabProps) {
         tipo: "error",
         code: 500
       });
+    }
+  };
+
+  // Función para formatear fecha de forma segura
+  const formatDate = (dateString: string) => {
+    try {
+      if (!dateString) return 'Fecha no disponible';
+      
+      // Intentar parsear la fecha
+      const date = parseISO(dateString);
+      
+      // Verificar si la fecha es válida
+      if (!isValid(date)) {
+        // Si no es válida, intentar crear una nueva fecha
+        const fallbackDate = new Date(dateString);
+        if (isValid(fallbackDate)) {
+          return format(fallbackDate, 'dd MMM yyyy', { locale: es });
+        }
+        return 'Fecha inválida';
+      }
+      
+      return format(date, 'dd MMM yyyy', { locale: es });
+    } catch (error) {
+      console.error('Error formateando fecha:', error, 'dateString:', dateString);
+      return 'Error en fecha';
     }
   };
 
@@ -244,7 +269,7 @@ export default function ReviewsTab({ onNotification }: ReviewsTabProps) {
                       {review.targetName}
                     </h3>
                     <span className="text-glacier-400 text-sm">
-                      {format(parseISO(review.createdAt), 'dd MMM yyyy', { locale: es })}
+                      {formatDate(review.createdAt)}
                     </span>
                   </div>
 
