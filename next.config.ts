@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
-    domains: ["cache.marriott.com", "multimedia.andalucia.org", "wallpapers.com", "www.disfrutamadrid.com"],
+    domains: ["cache.marriott.com", "multimedia.andalucia.org", "wallpapers.com", "www.disfrutamadrid.com", "flagcdn.com"],
   },
   reactStrictMode: false,
   async rewrites() {

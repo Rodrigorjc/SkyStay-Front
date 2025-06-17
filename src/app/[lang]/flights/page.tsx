@@ -13,8 +13,8 @@ import Loader from "@/app/components/ui/Loader";
 function FlightsPageContent() {
   const { dict } = useDictionary();
   const searchParams = useSearchParams();
-  const origin = searchParams.get("origin") || null;
-  const destination = searchParams.get("destination") || null;
+  const origin = searchParams.get("origin") || "";
+  const destination = searchParams.get("destination") || "";
 
   const [flights, setFlights] = useState<FlightClientVO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,8 +23,8 @@ function FlightsPageContent() {
   const [error, setError] = useState(false);
 
   const [filters, setFilters] = useState({
-    origin: "",
-    destination: "",
+    origin,
+    destination,
     airline: "",
     price: "",
   });
@@ -85,9 +85,13 @@ function FlightsPageContent() {
   );
 
   useEffect(() => {
+    fetchFlights({ filters, pageToLoad: 1, reset: true });
+  }, []);
+
+  useEffect(() => {
     if (page === 1) return;
-    fetchFlights({ pageToLoad: page });
-  }, [page, fetchFlights]);
+    fetchFlights({ filters, pageToLoad: page });
+  }, [page]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,17 +103,6 @@ function FlightsPageContent() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading, hasMore]);
-
-  useEffect(() => {
-    if (origin && destination) {
-      const newFilters = { ...filters, origin, destination };
-      setFilters(newFilters);
-      setPage(1);
-      fetchFlights({ filters: newFilters, pageToLoad: 1, reset: true });
-    } else {
-      fetchFlights({ pageToLoad: 1, reset: true });
-    }
-  }, [origin, destination, fetchFlights, filters]);
 
   if (!dict) {
     return (
@@ -142,6 +135,7 @@ function FlightsPageContent() {
                 className="bg-transparent text-white placeholder-glacier-300 w-full focus:outline-none"
                 value={filters.origin}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -160,6 +154,7 @@ function FlightsPageContent() {
                 className="bg-transparent text-white placeholder-glacier-300 w-full focus:outline-none"
                 value={filters.destination}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -178,6 +173,7 @@ function FlightsPageContent() {
                 className="bg-transparent text-white placeholder-glacier-300 w-full focus:outline-none"
                 value={filters.airline}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -197,6 +193,7 @@ function FlightsPageContent() {
                 className="bg-transparent placeholder-glacier-300 w-full focus:outline-none appearance-none"
                 value={filters.price}
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -220,17 +217,17 @@ function FlightsPageContent() {
 
       <div className="w-full max-w-[1850px] grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3  gap-6">
         {flights && flights.length > 0 && flights.map(flight => <FlightCard key={flight.code} flights={[flight]} />)}
-        {error && (
-          <div className="text-center text-white mt-4 text-3xl w-full flex flex-col items-center">
-            <p>{dict.CLIENT.FLIGHTS.ERRORS.ERROR_LOADING}</p>
-          </div>
-        )}
-        {flights.length === 0 && (
-          <div className="text-center h-full mt-4 text-4xl font-extrabold text-gray-200 tracking-tight w-full flex flex-col items-center">
-            <h1>{dict.CLIENT.FLIGHTS.ERRORS.NO_FLIGHTS_FOUND}</h1>
-          </div>
-        )}
       </div>
+      {error && (
+        <div className="text-center text-white mt-4 text-3xl w-full flex flex-col items-center">
+          <p>{dict.CLIENT.FLIGHTS.ERRORS.ERROR_LOADING}</p>
+        </div>
+      )}
+      {flights.length === 0 && (
+        <div className="text-center h-full mt-4 text-4xl font-extrabold text-gray-200 tracking-tight w-full flex flex-col items-center">
+          <h1>{dict.CLIENT.FLIGHTS.ERRORS.NO_FLIGHTS_FOUND}</h1>
+        </div>
+      )}
     </div>
   );
 }
