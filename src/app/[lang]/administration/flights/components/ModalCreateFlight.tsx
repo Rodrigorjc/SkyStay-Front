@@ -179,7 +179,7 @@ export default function ModalCreateFlight({ onClose, onSuccess }: FlightAddProps
         </div>
       ) : (
         <>
-          <Modal onClose={onClose}>
+          <Modal onClose={onClose} onSubmit={handleSubmit(onSubmit)}>
             {step === 1 && (
               <Card>
                 <CardHeader color="glacier">1. {dict.ADMINISTRATION.FLIGHTS.DEPARTURE_ARRIVAL_TIME}</CardHeader>

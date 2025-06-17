@@ -178,7 +178,7 @@ const MultiStepForm: React.FC<HotelsFormAddProps> = ({ onClose, onSuccess }) => 
   if (!dict) return null;
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} onSubmit={handleSubmit(onSubmit)}>
       {step === 1 && (
         <Card>
           <CardHeader color="glacier">{dict.ADMINISTRATION.HOTELS.INFO}</CardHeader>

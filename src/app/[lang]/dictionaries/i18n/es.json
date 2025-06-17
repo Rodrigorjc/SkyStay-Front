@@ -183,7 +183,7 @@
         "EDIT_FAILED_MESSAGE": "Se ha producido un error al intentar editar el apartamento. Por favor, inténtelo de nuevo",
         "EDIT_FAILED_TITLE": "Error al editar apartamento"
       },
-      "INFO": "Información básica del hotel",
+      "INFO": "Información básica del apartamento",
       "SUCCESS": {
         "UPDATE_APARTMENT_MESSAGE": "El apartamento se ha actualizado correctamente",
         "UPDATE_APARTMENT_TITLE": "Apartamento editado correctamente"
