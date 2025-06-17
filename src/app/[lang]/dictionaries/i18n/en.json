@@ -690,6 +690,7 @@
         "ERROR_SELECT_SEATS_MESSAGE": "You can only select up to 10 seats.",
         "ERROR_SELECT_SEATS_TITLE": "Error selecting seats",
         "LOADIN_DATA_FLIGHT": "Error loading flight data. Please try again",
+        "NO_FLIGHTS_FOUND": "No flights have been found, sorry.",
         "PURCHASE_MESSAGE_ERROR": "The purchase could not be completed. Please check your details and try again.",
         "PURCHASE_TITLE_ERROR": "Ticket purchase error"
       },
