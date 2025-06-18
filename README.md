@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SkyStay – Frontend
 
-## Getting Started
+## Descripción general
 
-First, run the development server:
+SkyStay Frontend es la aplicación web de interfaz de usuario para la plataforma **SkyStay**, un portal integral de reservas de viajes que permite buscar y reservar vuelos y alojamientos (hoteles y apartamentos) desde un solo lugar. Está desarrollada con Next.js (React y TypeScript), ofreciendo una experiencia rápida e interactiva. La aplicación es **responsive**, soporta español e inglés y se comunica con el backend mediante una API REST para autenticación y gestión de reservas.
+
+## Funcionalidades principales
+
+* ### Búsqueda y reserva de vuelos
+
+  1. Buscar vuelos por origen, destino, fechas y número de pasajeros.
+  2. Visualizar detalles (aerolínea, horarios, precios) y seleccionar asientos.
+  3. Confirmar reserva y recibir el billete electrónico en PDF por correo.
+
+* ### Búsqueda y reserva de alojamientos
+
+  1. Explorar hoteles y apartamentos según ubicación, fechas y número de huéspedes.
+  2. Filtrar por precio, categoría y valoraciones.
+  3. Reservar habitación y recibir factura en PDF por correo.
+
+* ### Gestión de cuenta de usuario
+
+  * Registro e inicio de sesión.
+  * Perfil personal con pestañas de **Reservas**, **Favoritos** y **Reseñas**.
+  * Cancelación de reservas y gestión de favoritos.
+
+* ### Reseñas y calificaciones
+
+  * Dejar y consultar reseñas tras la estancia.
+  * Mostrar puntuaciones promedio y comentarios de otros usuarios.
+
+* ### Favoritos
+
+  * Marcar alojamientos como favoritos para guardar o comparar.
+
+* ### Soporte multilingüe
+
+  * Interfaz en español e inglés.
+  * Cambio de idioma dinámico.
+
+* ### Otras características
+
+  * Navegación por destinos populares.
+  * Indicadores de carga y estados de error.
+  * Páginas de ayuda, contacto y legales (Aviso legal, Privacidad, Cookies).
+
+## Tecnologías utilizadas
+
+* **Next.js 13** (React + TypeScript)
+* **Tailwind CSS** y PostCSS
+* **React Context API** para estado global
+* **JWT** para autenticación
+* **Axios** o `fetch` para llamadas a la API
+* **ESLint** y Prettier para calidad de código
+* **Vercel** para despliegue
+
+## Instalación
+
+Asegúrate de tener **Node.js 18+**.
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/Rodrigorjc/SkyStay-Front.git
+cd SkyStay-Front
+
+# Instalar dependencias
+npm install
+
+# Crear archivo de variables de entorno (.env.local)
+# Ejemplo:
+# NEXT_PUBLIC_API_URL=http://localhost:8080/api
+# NEXT_PUBLIC_OTHER_KEY=...
+
+# Ejecutar en modo desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación se iniciará en [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para producción:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Uso
 
-To learn more about Next.js, take a look at the following resources:
+1. Abrir [http://localhost:3000](http://localhost:3000).
+2. Buscar vuelos o alojamientos desde la página principal.
+3. Seleccionar y reservar (requiere sesión).
+4. Consultar perfil para ver reservas, favoritos y reseñas.
+5. Cambiar idioma usando el selector ES/EN.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Enlaces relevantes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* **Repositorio Backend:** [https://github.com/Noogues/SkyStay-Back](https://github.com/Noogues/SkyStay-Back)
+* **Sitio desplegado:** [https://sky-stay-front.vercel.app](https://sky-stay-front.vercel.app)
 
-## Deploy on Vercel
+## Autores y créditos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* **Rodrigo (Rodrigorjc)** – Desarrollador Full-Stack
+* **Antonio Nogués (Noogues)** – Desarrollador Full-Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Gracias por usar **SkyStay**. ¡Disfruta de tu viaje!
